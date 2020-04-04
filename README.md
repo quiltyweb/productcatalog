@@ -1,6 +1,7 @@
 # Product Catalog
 
 ![Test all the things](https://github.com/quiltyweb/productcatalog/workflows/Test%20all%20the%20things/badge.svg)
+![Heroku](https://heroku-badge.herokuapp.com/?app=productcatalog)
 
 ## Setup
 
