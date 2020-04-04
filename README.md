@@ -14,7 +14,9 @@
 
 ## Deployment
 
-- Heroku requires the following config vars for the app to run:
+We host the app on Heroku. Heroku requires the following config vars for the app to run:
   - `APP_KEY`
   - `ENV_SILENT=true` (for some reason we can't get it to work via `heroku.yml`)
-- While on `master` in ther terminal, run `git push heroku master`
+
+We deploy automatically to Heroku with every merged PR that passes CI via a GitHub integration. If you want to deploy manually do the following:
+- While on `master`, run `git push heroku master`
