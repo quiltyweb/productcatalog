@@ -1,7 +1,10 @@
+setup:
+  config:
+    NODE_ENV: production
+    SESSION_DRIVER: cookie
+    ENV_SILENT: true
 build:
   docker:
     web: Dockerfile
-  config:
-    NODE_ENV: production
 run:
   web: node ace serve

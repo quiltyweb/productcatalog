@@ -8,7 +8,12 @@ services:
     ports:
       - "3333:3333"
     environment:
-      NODE_ENV: local
+      NODE_ENV: development
+      SESSION_DRIVER: cookie
+      PORT: 3333
+      HOST: 0.0.0.0
+      ENV_SILENT: 'true'
+    env_file: .env
     stdin_open: true
     tty: true
     command: node ace serve --watch
