@@ -1,0 +1,15 @@
+version: "3.2"
+services:
+  app:
+    build: .
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+    ports:
+      - "3333:3333"
+    stdin_open: true
+    tty: true
+    command: node ace serve --watch
+volumes:
+  node_modules:
+    external: true
