@@ -25,4 +25,12 @@ RUN yarn
 # Add rest of the client code
 COPY . .
 
-EXPOSE 3333
+# Adonis uses env vars to set host & port.
+# PORT value needs to be based on previous env var to work with how Heroku
+# runs Docker containers.
+ENV HOST=0.0.0.0
+ENV PORT=${PORT:-3333}
+
+EXPOSE $PORT
+
+CMD node ace serve --watch
