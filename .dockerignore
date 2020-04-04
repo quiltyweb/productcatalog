@@ -1,0 +1,15 @@
+# Artifacts
+build
+tmp
+
+# JS stuff
+node_modules
+
+# Secret stuff
+.env
+
+# Local stuff
+.git
+coverage
+.vscode
+.DS_STORE
