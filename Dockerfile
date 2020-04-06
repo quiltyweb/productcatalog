@@ -16,6 +16,9 @@ RUN wget -P /usr/local/share/ca-certificates/cacert.org http://www.cacert.org/ce
 RUN update-ca-certificates
 RUN git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
 
+# Update yarn to avoid warning messages
+RUN curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
+
 WORKDIR /app
 
 # Install dependencies
