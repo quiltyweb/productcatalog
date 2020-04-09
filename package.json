@@ -25,6 +25,7 @@
     "@adonisjs/session": "^2.3.3",
     "@adonisjs/view": "^1.0.13",
     "pg": "^8.0.0",
+    "pg-connection-string": "^2.2.0",
     "proxy-addr": "^2.0.6",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.16"

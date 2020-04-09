@@ -9,6 +9,9 @@ import Env from '@ioc:Adonis/Core/Env'
 import Application from '@ioc:Adonis/Core/Application'
 import { OrmConfigContract } from '@ioc:Adonis/Lucid/Orm'
 import { DatabaseConfigContract } from '@ioc:Adonis/Lucid/Database'
+import parse from 'pg-connection-string'
+
+const parsedPgUrl = parse(String(Env.get('DATABASE_URL', '')))
 
 const databaseConfig: DatabaseConfigContract & { orm: Partial<OrmConfigContract> } = {
   /*
@@ -83,11 +86,11 @@ const databaseConfig: DatabaseConfigContract & { orm: Partial<OrmConfigContract>
     pg: {
       client: 'pg',
       connection: {
-        host: Env.get('DB_HOST', '127.0.0.1') as string,
-        port: Number(Env.get('DB_PORT', 5432)),
-        user: Env.get('DB_USER') as string,
-        password: Env.get('DB_PASSWORD') as string,
-        database: Env.get('DB_NAME') as string,
+        host: parsedPgUrl.host || Env.get('DB_HOST', '127.0.0.1') as string,
+        port: Number(parsedPgUrl.port || Env.get('DB_PORT', 3306)),
+        user: parsedPgUrl.user || Env.get('DB_USER', 'lucid') as string,
+        password: parsedPgUrl.password || Env.get('DB_PASSWORD', 'lucid') as string,
+        database: parsedPgUrl.database || Env.get('DB_NAME', 'lucid') as string,
       },
       healthCheck: false,
       debug: Env.get('LOG_LEVEL') === 'trace',
