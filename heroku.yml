@@ -8,6 +8,7 @@ build:
     web: Dockerfile
 release:
   image: web
-  command: node ace migration:run
+  command:
+    - node ace migration:run
 run:
   web: node ace serve
