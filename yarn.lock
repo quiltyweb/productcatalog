@@ -124,12 +124,12 @@
     "@poppinss/utils" "^2.1.2"
     emittery "^0.5.1"
 
-"@adonisjs/fold@^6.3.4":
-  version "6.3.4"
-  resolved "https://registry.yarnpkg.com/@adonisjs/fold/-/fold-6.3.4.tgz#2e93eef1c7fef34fcc9c9ad192181ae3efa9ea3b"
+"@adonisjs/fold@^6.3.5":
+  version "6.3.5"
+  resolved "https://registry.yarnpkg.com/@adonisjs/fold/-/fold-6.3.5.tgz#b6365c46222376133ece4826ad990c949e7dcd8e"
+  integrity sha512-6YQbqxbMYxs2+TkqVCeX11YcHkvgoERJnZU11V90B9ZAYb3cA54MT+9DBrPWNCVxMnC6mpBHKADJKVFESMIDMQ==
   dependencies:
-    "@poppinss/utils" "^2.1.2"
-    resolve-from "^5.0.0"
+    "@poppinss/utils" "^2.2.0"
 
 "@adonisjs/hash@^1.0.11":
   version "1.0.12"
@@ -359,9 +359,10 @@
   dependencies:
     enquirer "^2.3.4"
 
-"@poppinss/utils@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@poppinss/utils/-/utils-2.1.2.tgz#54b6a7d8cb5f73a7253a33a2fc7ec5892b04fa23"
+"@poppinss/utils@^2.1.2", "@poppinss/utils@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@poppinss/utils/-/utils-2.2.0.tgz#d505170aa368e523d50a62e8a3a08d0b32b058a4"
+  integrity sha512-Y0iOQe2jK4C/uHIRsNbdqJKvsX9qRfy87YcATGo8QwArSpRdV73DRLAoDPBrhnQzUMm7BFWPLlaD/dQc6R1Jgg==
   dependencies:
     fs-readdir-recursive "^1.1.0"
     require-all "^3.0.0"

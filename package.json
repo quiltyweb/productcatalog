@@ -20,7 +20,7 @@
   "dependencies": {
     "@adonisjs/ace": "^6.8.4",
     "@adonisjs/core": "^5.0.0-preview.5",
-    "@adonisjs/fold": "^6.3.4",
+    "@adonisjs/fold": "^6.3.5",
     "@adonisjs/lucid": "^7.6.3",
     "@adonisjs/session": "^2.3.3",
     "@adonisjs/view": "^1.0.13",
