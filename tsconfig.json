@@ -4,7 +4,8 @@
   ],
   "exclude": [
     "node_modules",
-    "build"
+    "build",
+    "test/**/*.spec.ts"
   ],
   "extends": "./node_modules/adonis-preset-ts/tsconfig",
   "compilerOptions": {
@@ -22,7 +23,8 @@
     "types": [
       "@adonisjs/core",
       "@adonisjs/session",
-      "@adonisjs/view"
+      "@adonisjs/view",
+      "jest"
     ]
   }
 }
