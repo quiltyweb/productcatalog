@@ -8,7 +8,7 @@ class CategoryValidator {
       // TODO: The `unique` rule can't be found by the linter, and I can't find
       // it in the source code. The package is in transition to a new version,
       // so check back later.
-    ])
+    ]),
   }))
 
   public messages = {}

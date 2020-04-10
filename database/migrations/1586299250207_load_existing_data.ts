@@ -3,7 +3,7 @@ import Database from '@ioc:Adonis/Lucid/Database'
 import fs from 'fs'
 
 export default class LoadExistingData extends BaseSchema {
-  public async up() {
+  public async up () {
     // Code is run via ace CLI, so we assume PWD to be project root
     const categoriesFilePath = 'categories.json'
     const productsFilePath = 'products.json'
@@ -17,9 +17,9 @@ export default class LoadExistingData extends BaseSchema {
     }
   }
 
-  public async down() { }
+  public async down () { }
 
-  private async loadCategories(categoriesFilePath: string) {
+  private async loadCategories (categoriesFilePath: string) {
     const categories = await JSON.parse(fs.readFileSync(categoriesFilePath, 'utf8'))
 
     try {
@@ -33,8 +33,10 @@ export default class LoadExistingData extends BaseSchema {
     }
   }
 
-  private async loadProducts(productsFilePath: string) {
-    if (!fs.existsSync(productsFilePath)) return
+  private async loadProducts (productsFilePath: string) {
+    if (!fs.existsSync(productsFilePath)) {
+      return
+    }
 
     const products = await JSON.parse(fs.readFileSync(productsFilePath, 'utf8'))
 
