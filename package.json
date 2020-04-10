@@ -21,8 +21,11 @@
     "@adonisjs/ace": "^6.8.4",
     "@adonisjs/core": "^5.0.0-preview.5",
     "@adonisjs/fold": "^6.3.4",
+    "@adonisjs/lucid": "^7.6.3",
     "@adonisjs/session": "^2.3.3",
     "@adonisjs/view": "^1.0.13",
+    "pg": "^8.0.0",
+    "pg-connection-string": "^2.2.0",
     "proxy-addr": "^2.0.6",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.16"
