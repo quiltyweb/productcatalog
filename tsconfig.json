@@ -2,6 +2,9 @@
   "include": [
     "src/**/*"
   ],
+  "exclude": [
+    "src/scripts/**/*"
+  ],
   "compilerOptions": {
     "outDir": "dist",
     "lib": [
