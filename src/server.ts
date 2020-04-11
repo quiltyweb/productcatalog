@@ -3,6 +3,7 @@ import * as Koa from 'koa'
 import * as Router from 'koa-router'
 import { createConnection } from 'typeorm'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 createConnection().then(async connection => {
   const app = new Koa()
   const router = new Router()

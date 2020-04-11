@@ -40,6 +40,7 @@ export class Product {
   @Column()
   public attachmentPath: string
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @ManyToOne(type => Category, category => category.products)
   public category: Category
 }

@@ -1,4 +1,13 @@
-function databaseInfo() {
+interface DatabaseUrl { url: string }
+interface DatabaseInfo {
+  host: string;
+  port: number;
+  username: string;
+  password: string;
+  database: string;
+}
+
+function databaseInfo(): DatabaseUrl | DatabaseInfo {
   if (process.env.DATABASE_URL) return { url: process.env.DATABASE_URL }
 
   return {

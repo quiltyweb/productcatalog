@@ -21,6 +21,7 @@ export class Category {
   @Column()
   public name: string
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @OneToMany(type => Product, product => product.category)
   public products: Product[]
 }
