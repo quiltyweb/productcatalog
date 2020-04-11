@@ -10,30 +10,25 @@
   - Loads env vars from `.env`, which is convenient
 - Create an env file:
   - `cp .env.example .env`
-  - Generate an `APP_KEY` value of random characters
+  - Set the uncommented env var values
 - `docker-compose up --build`
-- Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+
+Optional:
+- Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) (only necessary for deploying or dumping the prod DB)
 
 ### Database
 - To set up or restore your local database using the production DB, run `./scripts/set_local_db_to_prod.sh [DUMP FILENAME]`
-  - The dump filename is an optional arg that will use a local *.sql/*.dump file instead of downloading a new one from Heroku.
+  - The dump filename is an optional arg that will use a local `*.sql` or `*.dump` file instead of downloading a new one from Heroku.
+  - **WARNING:** This will erase any data you currently have on your local DB.
 
 ## Running the app
 
 - `docker-compose up` (add `-d` if you want to run it in the background)
-- Open the browser to `localhost:3333`
+- Open the browser to `localhost:3000`
 
 ## Deployment
 
-We host the app on Heroku. Heroku requires the following config vars for the app to run:
-  - `APP_KEY`
-  - `ENV_SILENT=true` (for some reason we can't get it to work via `heroku.yml`)
+We host the app on Heroku.
 
 We deploy automatically to Heroku with every merged PR that passes CI via a GitHub integration. If you want to deploy manually do the following:
 - While on `master`, run `git push heroku master`
-
-## Notes
-
-- We're on the bleeding edge of Adonis.js, so the default documentation is largely outdated. For relevant guides/docs, to go https://preview.adonisjs.com/guides/quick-start.
-- The Adonis source code is broken up into a bunch of repos and can be difficult to navigate, but their specs can be a good source of basic examples when stuck:
-https://github.com/adonisjs
