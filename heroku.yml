@@ -9,6 +9,6 @@ build:
 release:
   image: web
   command:
-    - node ace migration:run
+    - yarn run migration:run
 run:
-  web: node ace serve
+  web: yarn start
