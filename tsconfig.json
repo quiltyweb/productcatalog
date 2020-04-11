@@ -1,29 +1,21 @@
 {
   "include": [
-    "**/*"
+    "src/**/*"
   ],
   "exclude": [
-    "node_modules",
-    "build"
+    "src/scripts/**/*"
   ],
-  "extends": "./node_modules/adonis-preset-ts/tsconfig",
   "compilerOptions": {
-    "outDir": "build",
-    "rootDir": "./",
-    "sourceMap": true,
-    "paths": {
-      "App/*": [
-        "./app/*"
-      ],
-      "Contracts/*": [
-        "./contracts/*"
-      ]
-    },
-    "types": [
-      "@adonisjs/core",
-      "@adonisjs/session",
-      "@adonisjs/view",
-      "@adonisjs/lucid"
-    ]
+    "outDir": "dist",
+    "lib": [
+      "es5",
+      "es6"
+    ],
+    "target": "ES2017",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
   }
 }

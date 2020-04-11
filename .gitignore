@@ -1,10 +1,19 @@
+.idea/
+
+# JS stuff
 node_modules
+
+# Artifacts
 build
+dist
 coverage
-.vscode
-.DS_STORE
-.env
 tmp
 
 # Local stuff
 database/backups
+.vscode
+.DS_STORE
+yarn-error.log
+
+# Secret stuff
+.env
