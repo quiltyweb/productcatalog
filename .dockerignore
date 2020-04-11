@@ -1,6 +1,7 @@
 # Artifacts
 build
 tmp
+dist
 
 # JS stuff
 node_modules
@@ -13,3 +14,4 @@ node_modules
 coverage
 .vscode
 .DS_STORE
+yarn-error.log

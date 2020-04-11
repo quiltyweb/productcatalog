@@ -3,16 +3,20 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "node ace build",
-    "start": "node ace serve --watch",
-    "lint": "eslint . --ext=.ts"
+    "build": "yarn run tsc",
+    "start": "node ./dist/server.js",
+    "dev": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/server.ts",
+    "lint": "yarn run eslint . --ext=.ts"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^1.3.9",
-    "adonis-preset-ts": "^1.0.4",
+    "@types/koa": "^2.11.3",
+    "@types/koa-router": "^7.4.0",
+    "@types/node": "^13.11.1",
     "eslint": "^6.8.0",
-    "eslint-plugin-adonis": "^1.0.8",
+    "nodemon": "^2.0.3",
     "pino-pretty": "^4.0.0",
+    "ts-node": "^8.8.2",
     "typescript": "^3.8.3",
     "youch": "^2.0.10",
     "youch-terminal": "^1.0.0"
@@ -24,6 +28,8 @@
     "@adonisjs/lucid": "^7.6.3",
     "@adonisjs/session": "^2.3.3",
     "@adonisjs/view": "^1.0.13",
+    "koa": "^2.11.0",
+    "koa-router": "^8.0.8",
     "pg": "^8.0.0",
     "pg-connection-string": "^2.2.0",
     "proxy-addr": "^2.0.6",

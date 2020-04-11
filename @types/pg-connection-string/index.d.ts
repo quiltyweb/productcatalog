@@ -6,7 +6,7 @@ declare module 'pg-connection-string' {
     client_encoding?: string,
     user?: string,
     password?: string,
-    ssl?: bool,
+    ssl?: boolean,
     application_name?: string,
     fallback_application_name?: string
   }
