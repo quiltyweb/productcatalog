@@ -1,6 +1,6 @@
 import 'reflect-metadata'
-import * as Koa from 'koa'
-import * as Router from 'koa-router'
+import Koa from 'koa'
+import Router from 'koa-router'
 import { createConnection } from 'typeorm'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
