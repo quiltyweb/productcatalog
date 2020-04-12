@@ -28,6 +28,8 @@ export class Product {
   @Column()
   public imagePath: string
   @Column()
+  public attachmentPath: string
+  @Column()
   public purchasePrice: string
   @Column()
   public salePrice: string
@@ -37,8 +39,6 @@ export class Product {
   // need to be made consistent.
   @Column()
   public supplierName: string
-  @Column()
-  public attachmentPath: string
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @ManyToOne(type => Category, category => category.products)

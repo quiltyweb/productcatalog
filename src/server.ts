@@ -2,25 +2,17 @@ import 'reflect-metadata'
 import Koa from 'koa'
 import Router from 'koa-router'
 import { createConnection } from 'typeorm'
-import { ApolloServer, gql } from 'apollo-server-koa'
+import { ApolloServer } from 'apollo-server-koa'
+
+import loadSchema from './graphql'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 createConnection().then(async connection => {
   const app = new Koa()
   const router = new Router()
 
-  const typeDefs = gql`
-    type Query {
-      hello: String
-    }
-  `
-  const resolvers = {
-    Query: {
-      hello: (): string => 'world'
-    }
-  }
-
-  const server = new ApolloServer({ typeDefs, resolvers })
+  const schema = await loadSchema(connection)
+  const server = new ApolloServer({ schema })
   app.use(server.getMiddleware())
 
   router.get('/', async (ctx) => {
