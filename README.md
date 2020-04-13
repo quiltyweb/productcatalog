@@ -11,6 +11,7 @@
 - Create an env file:
   - `cp .env.example .env`
   - Set the uncommented env var values
+- `docker volume create productcatalog_node_modules`
 - `docker-compose up --build`
 
 Optional:
