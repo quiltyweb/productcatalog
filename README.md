@@ -11,6 +11,7 @@
 - Create an env file:
   - `cp .env.example .env`
   - Set the uncommented env var values
+- `docker volume create productcatalog_node_modules`
 - `docker-compose up --build`
 
 Optional:
@@ -32,3 +33,15 @@ We host the app on Heroku.
 
 We deploy automatically to Heroku with every merged PR that passes CI via a GitHub integration. If you want to deploy manually do the following:
 - While on `master`, run `git push heroku master`
+
+## Testing
+
+- Run all tests: `./scripts/test`
+
+## Troubleshooting
+
+- To get code editor linters and other functionality working correctly, you have to install linting/testing/type packages locally as well as on your Docker container. This mostly works, but sometimes creates weird conflicts that require a reset per below.
+- Sometimes you'll install packages, then get errors that say your new package is missing :expressionless:. The only thing that seems to fix it is to remove the `node_modules` volume and rebuild the image:
+  - `docker container rm productcatalog_app_1`
+  - `docker volume rm productcatalog_node_modules`
+  - `docker-compose build --no-cache`

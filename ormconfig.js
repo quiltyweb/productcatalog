@@ -11,9 +11,7 @@ function databaseInfo() {
   }
 }
 
-module.exports = {
-  ...databaseInfo(),
-  name: 'default',
+const baseOrmConfig = {
   type: 'postgres',
   synchronize: true,
   logging: false,
@@ -30,5 +28,19 @@ module.exports = {
     entitiesDir: 'src/entity',
     migrationsDir: 'src/migration',
     subscribersDir: 'src/subscriber',
-  },
+  }
 }
+
+module.exports = [
+  {
+    ...baseOrmConfig,
+    ...databaseInfo(),
+    name: 'default',
+  },
+  {
+    ...baseOrmConfig,
+    ...databaseInfo(),
+    name: 'test',
+    database: 'test_' + (process.env.DB_NAME || '')
+  }
+]
