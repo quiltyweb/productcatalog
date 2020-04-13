@@ -1,0 +1,17 @@
+version: "3.2"
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME}
+      DB_PASSWORD: postgres
+      NODE_ENV: test
+    command: yarn run dev
+  db:
+    image: postgres:12.2
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${DB_NAME}
