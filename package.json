@@ -35,7 +35,7 @@
     "graphql-relay": "^0.6.0",
     "koa": "^2.11.0",
     "koa-router": "^8.0.8",
-    "pg": "^8.0.0",
+    "pg": "^8.0.2",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.16",
     "typeorm": "^0.2.24"
