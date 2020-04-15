@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "yarn run tsc",
-    "start": "node ./dist/server.js",
+    "start": "yarn run ts-node ./src/server.ts",
     "dev": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/server.ts",
     "lint": "yarn run eslint . --ext=.ts",
     "test": "yarn run jest",
