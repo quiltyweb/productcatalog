@@ -9,7 +9,7 @@ import {
 } from 'graphql-relay'
 import { Connection as DbConnection } from 'typeorm'
 
-import { Category} from '../entity/Category'
+import { Category } from '../entity/Category'
 import { Product } from '../entity/Product'
 
 import type { GraphQLFieldConfigMap } from 'graphql'
@@ -22,9 +22,9 @@ type GraphQLFieldReturn = GraphQLFieldConfigMap<any, any>
 async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
   const entityManager = connection.manager
 
-  const {nodeInterface, nodeField} = nodeDefinitions(
+  const { nodeInterface, nodeField } = nodeDefinitions(
     globalId => {
-      const {type, id} = fromGlobalId(globalId)
+      const { type, id } = fromGlobalId(globalId)
 
       if (type === 'Category') return entityManager.findOne(Category, id)
       if (type === 'Product') return entityManager.findOne(Product, id)
@@ -43,7 +43,7 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     interfaces: [nodeInterface],
     fields: (): GraphQLFieldReturn => ({
       id: globalIdField(),
-      name: {type: GraphQLString},
+      name: { type: GraphQLString },
       description: {
         type: GraphQLString,
         description: 'Detailed description of the product.'
@@ -83,7 +83,7 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
       id: globalIdField(),
       name: { type: GraphQLString },
       products: {
-        type: connectionDefinitions({nodeType: productType}).connectionType,
+        type: connectionDefinitions({ nodeType: productType }).connectionType,
         description: 'The products that belong to the category.',
         args: connectionArgs,
         resolve: resolveProducts
@@ -92,7 +92,7 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
   })
 
   async function resolveFetchCategories(root, args): Promise<Connection<Category>> {
-    const categories = await entityManager.find(Category, {relations: ['products']})
+    const categories = await entityManager.find(Category, { relations: ['products'] })
     return connectionFromArray(categories, args)
   }
 
@@ -100,12 +100,8 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     name: 'Query',
     fields: (): GraphQLFieldReturn => ({
       node: nodeField,
-      hello: {
-        type: GraphQLString,
-        resolve: (): string => 'world'
-      },
       fetchCategories: {
-        type: connectionDefinitions({nodeType: categoryType}).connectionType,
+        type: connectionDefinitions({ nodeType: categoryType }).connectionType,
         args: connectionArgs,
         resolve: resolveFetchCategories
       }
