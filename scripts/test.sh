@@ -16,15 +16,17 @@ sleep 4
 docker exec -t -u postgres productcatalog_db_1 \
   psql --command "CREATE DATABASE test_${DB_NAME};"
 
+sleep 1
+
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm app \
   yarn run migration:run -c test
 
 EXIT_CODE=$?
 
-docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm app yarn test
-
 if [ ${EXIT_CODE} == 0 ]
 then
+  docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm app yarn test
+
   EXIT_CODE=$?
 fi
 
