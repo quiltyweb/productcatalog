@@ -71,6 +71,8 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     })
   })
 
+  const productConnectionType = connectionDefinitions({ nodeType: productType }).connectionType
+
   async function resolveProducts(category, args): Promise<Connection<Product>> {
     const products = await category.products
     return connectionFromArray(products, args)
@@ -83,7 +85,7 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
       id: globalIdField(),
       name: { type: GraphQLString },
       products: {
-        type: connectionDefinitions({ nodeType: productType }).connectionType,
+        type: productConnectionType,
         description: 'The products that belong to the category.',
         args: connectionArgs,
         resolve: resolveProducts
@@ -91,9 +93,26 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     })
   })
 
+  const categoryConnectionType = connectionDefinitions({ nodeType: categoryType }).connectionType
+
   async function resolveFetchCategories(root, args): Promise<Connection<Category>> {
     const categories = await entityManager.find(Category, { relations: ['products'] })
     return connectionFromArray(categories, args)
+  }
+
+  async function resolveSearchProducts(root, args): Promise<Connection<Product>> {
+    const { searchTerm } = args
+    const products = await entityManager
+      .createQueryBuilder(Product, 'products')
+      // Need to put the whole LIKE string in the variable due to how typeorm
+      // handles interpolation
+      .where(
+        "LOWER(products.name) LIKE :searchTerm",
+        { searchTerm: `%${searchTerm.toLowerCase()}%` }
+      )
+      .getMany()
+
+    return connectionFromArray(products, args)
   }
 
   const queryType = new GraphQLObjectType({
@@ -101,9 +120,24 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     fields: (): GraphQLFieldReturn => ({
       node: nodeField,
       fetchCategories: {
-        type: connectionDefinitions({ nodeType: categoryType }).connectionType,
+        type: categoryConnectionType,
         args: connectionArgs,
-        resolve: resolveFetchCategories
+        resolve: resolveFetchCategories,
+      },
+      searchProducts: {
+        type: productConnectionType,
+        args: {
+          searchTerm: {
+            type: GraphQLString,
+            description: `
+              Search term to use to match products in the DB.
+              Matches on name only, converting the search and the names
+              to lowercase.
+            `,
+          },
+          ...connectionArgs
+        },
+        resolve: resolveSearchProducts,
       }
     })
   })
