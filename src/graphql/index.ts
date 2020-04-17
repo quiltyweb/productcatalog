@@ -1,4 +1,10 @@
-import { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql'
+import {
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLNonNull
+} from 'graphql'
 import {
   nodeDefinitions,
   fromGlobalId,
@@ -43,29 +49,29 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     interfaces: [nodeInterface],
     fields: (): GraphQLFieldReturn => ({
       id: globalIdField(),
-      name: { type: GraphQLString },
+      name: { type: GraphQLNonNull(GraphQLString) },
       description: {
-        type: GraphQLString,
+        type: GraphQLNonNull(GraphQLString),
         description: 'Detailed description of the product.'
       },
       imagePath: {
-        type: GraphQLString,
+        type: GraphQLNonNull(GraphQLString),
         description: 'Path to an image file for the product.'
       },
       attachmentPath: {
-        type: GraphQLString,
+        type: GraphQLNonNull(GraphQLString),
         description: 'Path to an attachment file (usually a PDF) for the product.'
       },
       purchasePrice: {
-        type: GraphQLInt,
+        type: GraphQLNonNull(GraphQLInt),
         description: 'Price at which the store buys the product.'
       },
       salePrice: {
-        type: GraphQLInt,
+        type: GraphQLNonNull(GraphQLInt),
         description: 'Price at which the store sells the product.'
       },
       supplierName: {
-        type: GraphQLString,
+        type: GraphQLNonNull(GraphQLString),
         description: 'Name or RUT of the supplier of the product.'
       }
     })
@@ -83,9 +89,9 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     interfaces: [nodeInterface],
     fields: (): GraphQLFieldReturn => ({
       id: globalIdField(),
-      name: { type: GraphQLString },
+      name: { type: GraphQLNonNull(GraphQLString) },
       products: {
-        type: productConnectionType,
+        type: GraphQLNonNull(productConnectionType),
         description: 'The products that belong to the category.',
         args: connectionArgs,
         resolve: resolveProducts
@@ -120,15 +126,15 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     fields: (): GraphQLFieldReturn => ({
       node: nodeField,
       fetchCategories: {
-        type: categoryConnectionType,
+        type: GraphQLNonNull(categoryConnectionType),
         args: connectionArgs,
         resolve: resolveFetchCategories,
       },
       searchProducts: {
-        type: productConnectionType,
+        type: GraphQLNonNull(productConnectionType),
         args: {
           searchTerm: {
-            type: GraphQLString,
+            type: GraphQLNonNull(GraphQLString),
             description: `
               Search term to use to match products in the DB.
               Matches on name only, converting the search and the names

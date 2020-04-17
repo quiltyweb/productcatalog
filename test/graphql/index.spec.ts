@@ -122,7 +122,7 @@ describe('GraphQL schema', () => {
 
   describe('searchProducts', () => {
     const query = `
-      query($searchTerm: String) {
+      query($searchTerm: String!) {
         searchProducts(searchTerm: $searchTerm) {
           edges {
             node { name }
