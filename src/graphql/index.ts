@@ -1,4 +1,10 @@
-import { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql'
+import {
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLNonNull
+} from 'graphql'
 import {
   nodeDefinitions,
   fromGlobalId,
@@ -9,7 +15,7 @@ import {
 } from 'graphql-relay'
 import { Connection as DbConnection } from 'typeorm'
 
-import { Category} from '../entity/Category'
+import { Category } from '../entity/Category'
 import { Product } from '../entity/Product'
 
 import type { GraphQLFieldConfigMap } from 'graphql'
@@ -22,9 +28,9 @@ type GraphQLFieldReturn = GraphQLFieldConfigMap<any, any>
 async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
   const entityManager = connection.manager
 
-  const {nodeInterface, nodeField} = nodeDefinitions(
+  const { nodeInterface, nodeField } = nodeDefinitions(
     globalId => {
-      const {type, id} = fromGlobalId(globalId)
+      const { type, id } = fromGlobalId(globalId)
 
       if (type === 'Category') return entityManager.findOne(Category, id)
       if (type === 'Product') return entityManager.findOne(Product, id)
@@ -43,33 +49,35 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     interfaces: [nodeInterface],
     fields: (): GraphQLFieldReturn => ({
       id: globalIdField(),
-      name: {type: GraphQLString},
+      name: { type: GraphQLNonNull(GraphQLString) },
       description: {
-        type: GraphQLString,
+        type: GraphQLNonNull(GraphQLString),
         description: 'Detailed description of the product.'
       },
       imagePath: {
-        type: GraphQLString,
+        type: GraphQLNonNull(GraphQLString),
         description: 'Path to an image file for the product.'
       },
       attachmentPath: {
-        type: GraphQLString,
+        type: GraphQLNonNull(GraphQLString),
         description: 'Path to an attachment file (usually a PDF) for the product.'
       },
       purchasePrice: {
-        type: GraphQLInt,
+        type: GraphQLNonNull(GraphQLInt),
         description: 'Price at which the store buys the product.'
       },
       salePrice: {
-        type: GraphQLInt,
+        type: GraphQLNonNull(GraphQLInt),
         description: 'Price at which the store sells the product.'
       },
       supplierName: {
-        type: GraphQLString,
+        type: GraphQLNonNull(GraphQLString),
         description: 'Name or RUT of the supplier of the product.'
       }
     })
   })
+
+  const productConnectionType = connectionDefinitions({ nodeType: productType }).connectionType
 
   async function resolveProducts(category, args): Promise<Connection<Product>> {
     const products = await category.products
@@ -81,9 +89,9 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     interfaces: [nodeInterface],
     fields: (): GraphQLFieldReturn => ({
       id: globalIdField(),
-      name: { type: GraphQLString },
+      name: { type: GraphQLNonNull(GraphQLString) },
       products: {
-        type: connectionDefinitions({nodeType: productType}).connectionType,
+        type: GraphQLNonNull(productConnectionType),
         description: 'The products that belong to the category.',
         args: connectionArgs,
         resolve: resolveProducts
@@ -91,23 +99,51 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     })
   })
 
+  const categoryConnectionType = connectionDefinitions({ nodeType: categoryType }).connectionType
+
   async function resolveFetchCategories(root, args): Promise<Connection<Category>> {
-    const categories = await entityManager.find(Category, {relations: ['products']})
+    const categories = await entityManager.find(Category, { relations: ['products'] })
     return connectionFromArray(categories, args)
+  }
+
+  async function resolveSearchProducts(root, args): Promise<Connection<Product>> {
+    const { searchTerm } = args
+    const products = await entityManager
+      .createQueryBuilder(Product, 'products')
+      // Need to put the whole LIKE string in the variable due to how typeorm
+      // handles interpolation
+      .where(
+        "LOWER(products.name) LIKE :searchTerm",
+        { searchTerm: `%${searchTerm.toLowerCase()}%` }
+      )
+      .getMany()
+
+    return connectionFromArray(products, args)
   }
 
   const queryType = new GraphQLObjectType({
     name: 'Query',
     fields: (): GraphQLFieldReturn => ({
       node: nodeField,
-      hello: {
-        type: GraphQLString,
-        resolve: (): string => 'world'
-      },
       fetchCategories: {
-        type: connectionDefinitions({nodeType: categoryType}).connectionType,
+        type: GraphQLNonNull(categoryConnectionType),
         args: connectionArgs,
-        resolve: resolveFetchCategories
+        resolve: resolveFetchCategories,
+      },
+      searchProducts: {
+        type: GraphQLNonNull(productConnectionType),
+        args: {
+          searchTerm: {
+            type: GraphQLNonNull(GraphQLString),
+            description: `
+              Search term to use to match products in the DB.
+              Matches on name only, converting the search and the names
+              to lowercase.
+            `,
+          },
+          ...connectionArgs
+        },
+        resolve: resolveSearchProducts,
       }
     })
   })
