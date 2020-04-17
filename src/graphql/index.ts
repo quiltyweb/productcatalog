@@ -4,6 +4,7 @@ import {
   GraphQLString,
   GraphQLInt,
   GraphQLNonNull,
+  GraphQLEnumType,
 } from "graphql";
 import {
   nodeDefinitions,
@@ -24,6 +25,10 @@ import type { Connection } from "graphql-relay";
 // graphql package uses 'any' type so we will too
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GraphQLFieldReturn = GraphQLFieldConfigMap<any, any>;
+type SendMessageResponse = {
+  status: string;
+  message: string;
+};
 
 async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
   const entityManager = connection.manager;
@@ -131,6 +136,39 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     return connectionFromArray(products, args);
   }
 
+  const messageStatusEnum = new GraphQLEnumType({
+    name: "MessageStatus",
+    values: {
+      SUCCESS: { value: "success" },
+      FAILURE: { value: "failure" },
+    },
+  });
+
+  const sendMessageResponseType = new GraphQLObjectType({
+    name: "SendMessageResponse",
+    fields: (): GraphQLFieldReturn => ({
+      status: {
+        type: messageStatusEnum,
+      },
+      message: {
+        type: GraphQLNonNull(GraphQLString),
+      },
+    }),
+  });
+
+  async function resolveSendContactMessage(
+    root,
+    args
+  ): Promise<SendMessageResponse> {
+    const { personalIdNumber, email, message, name, phoneNumber } = args;
+
+    // Send email via SendGrid and save response
+
+    const emailResponse = { status: "success", message: "hooray" };
+
+    return emailResponse;
+  }
+
   const queryType = new GraphQLObjectType({
     name: "Query",
     fields: (): GraphQLFieldReturn => ({
@@ -154,6 +192,32 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
           ...connectionArgs,
         },
         resolve: resolveSearchProducts,
+      },
+      sendContactMessage: {
+        type: GraphQLNonNull(sendMessageResponseType),
+        args: {
+          personalIdNumber: {
+            type: GraphQLNonNull(GraphQLString),
+            description: "The ID number of the sender, typically their RUT.",
+          },
+          email: {
+            type: GraphQLNonNull(GraphQLString),
+            description: "The sender's email address.",
+          },
+          message: {
+            type: GraphQLNonNull(GraphQLString),
+            description: "The message body to be sent.",
+          },
+          name: {
+            type: GraphQLString,
+            description: "The sender's name.",
+          },
+          phoneNumber: {
+            type: GraphQLString,
+            description: "The senders' phone number.",
+          },
+        },
+        resolve: resolveSendContactMessage,
       },
     }),
   });

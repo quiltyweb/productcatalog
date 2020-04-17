@@ -192,4 +192,47 @@ describe("GraphQL schema", () => {
       });
     });
   });
+
+  describe("sendContactMessage", () => {
+    const query = `
+      query(
+        $personalIdNumber: String!,
+        $email: String!,
+        $message: String!,
+        $name: String,
+        $phoneNumber: String
+      ) {
+        sendContactMessage(
+          personalIdNumber: $personalIdNumber,
+          email: $email,
+          message: $message,
+          name: $name,
+          phoneNumber: $phoneNumber
+        ) {
+          status
+          message
+        }
+      }
+    `;
+
+    it("sends an email", async () => {
+      await graphql(schema, query);
+
+      // Stub SendGrid functionality and expect it to get called
+    });
+
+    it("returns response status info", async () => {
+      const results = await graphql(schema, query, null, null, {
+        personalIdNumber: "13421234",
+        email: "test@test.com",
+        message: "I want more info",
+        name: "Roberto",
+        phoneNumber: "12341234",
+      });
+      console.log(JSON.stringify(results));
+      const messageResponse = results.data.sendContactMessage;
+
+      expect(messageResponse).toEqual({ status: "SUCCESS", message: "hooray" });
+    });
+  });
 });
