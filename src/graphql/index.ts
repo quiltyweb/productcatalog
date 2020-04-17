@@ -15,6 +15,7 @@ import {
   connectionFromArray,
 } from "graphql-relay";
 import { Connection as DbConnection } from "typeorm";
+import sgMail from "@sendgrid/mail";
 
 import { Category } from "../entity/Category";
 import { Product } from "../entity/Product";
@@ -160,13 +161,43 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     root,
     args
   ): Promise<SendMessageResponse> {
-    const { personalIdNumber, email, message, name, phoneNumber } = args;
+    const { personalIdNumber, emailAddress, message, name, phoneNumber } = args;
 
-    // Send email via SendGrid and save response
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const emailTo = process.env.ADMIN_EMAIL || "";
+    const hostname = process.env.HOSTNAME || "";
 
-    const emailResponse = { status: "success", message: "hooray" };
+    const emailMessage = `
+      Nombre: ${name}
+      RUT: ${personalIdNumber}
+      Email: ${emailAddress}
+      Número de Teléfono: ${phoneNumber}
+      Mensaje: ${message}
+    `;
 
-    return emailResponse;
+    const msg = {
+      to: emailTo,
+      from: `contacto@${hostname}`,
+      subject: "Mensaje de Contacto",
+      text: emailMessage,
+      mailSettings: {
+        sandboxMode: {
+          enable: process.env.NODE_ENV !== "production",
+        },
+      },
+    };
+
+    try {
+      await sgMail.send(msg);
+    } catch (error) {
+      console.error(error);
+
+      const errorMessage = error.response && error.response.body;
+
+      return { status: "failure", message: errorMessage };
+    }
+
+    return { status: "success", message: "Email was sent." };
   }
 
   const queryType = new GraphQLObjectType({
@@ -200,7 +231,7 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
             type: GraphQLNonNull(GraphQLString),
             description: "The ID number of the sender, typically their RUT.",
           },
-          email: {
+          emailAddress: {
             type: GraphQLNonNull(GraphQLString),
             description: "The sender's email address.",
           },

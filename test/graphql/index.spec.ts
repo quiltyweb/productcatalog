@@ -197,14 +197,14 @@ describe("GraphQL schema", () => {
     const query = `
       query(
         $personalIdNumber: String!,
-        $email: String!,
+        $emailAddress: String!,
         $message: String!,
         $name: String,
         $phoneNumber: String
       ) {
         sendContactMessage(
           personalIdNumber: $personalIdNumber,
-          email: $email,
+          emailAddress: $emailAddress,
           message: $message,
           name: $name,
           phoneNumber: $phoneNumber
@@ -224,7 +224,7 @@ describe("GraphQL schema", () => {
     it("returns response status info", async () => {
       const results = await graphql(schema, query, null, null, {
         personalIdNumber: "13421234",
-        email: "test@test.com",
+        emailAddress: "test@test.com",
         message: "I want more info",
         name: "Roberto",
         phoneNumber: "12341234",
