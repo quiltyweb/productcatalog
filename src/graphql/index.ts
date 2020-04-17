@@ -15,7 +15,6 @@ import {
   connectionFromArray,
 } from "graphql-relay";
 import { Connection as DbConnection } from "typeorm";
-import sgMail from "@sendgrid/mail";
 
 import { Category } from "../entity/Category";
 import { Product } from "../entity/Product";
@@ -23,13 +22,11 @@ import { Product } from "../entity/Product";
 import type { GraphQLFieldConfigMap } from "graphql";
 import type { Connection } from "graphql-relay";
 
+import type { SendEmailResponse } from "../types";
+
 // graphql package uses 'any' type so we will too
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GraphQLFieldReturn = GraphQLFieldConfigMap<any, any>;
-type SendMessageResponse = {
-  status: string;
-  message: string;
-};
 
 async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
   const entityManager = connection.manager;
@@ -159,11 +156,11 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
 
   async function resolveSendContactMessage(
     root,
-    args
-  ): Promise<SendMessageResponse> {
+    args,
+    context
+  ): Promise<SendEmailResponse> {
     const { personalIdNumber, emailAddress, message, name, phoneNumber } = args;
 
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const emailTo = process.env.ADMIN_EMAIL || "";
     const hostname = process.env.HOSTNAME || "";
 
@@ -175,29 +172,16 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
       Mensaje: ${message}
     `;
 
-    const msg = {
+    const emailOptions = {
       to: emailTo,
       from: `contacto@${hostname}`,
       subject: "Mensaje de Contacto",
       text: emailMessage,
-      mailSettings: {
-        sandboxMode: {
-          enable: process.env.NODE_ENV !== "production",
-        },
-      },
     };
 
-    try {
-      await sgMail.send(msg);
-    } catch (error) {
-      console.error(error);
+    const response = await context.sendEmail(emailOptions);
 
-      const errorMessage = error.response && error.response.body;
-
-      return { status: "failure", message: errorMessage };
-    }
-
-    return { status: "success", message: "Email was sent." };
+    return response;
   }
 
   const queryType = new GraphQLObjectType({

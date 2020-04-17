@@ -12,6 +12,8 @@ services:
       DB_NAME: ${DB_NAME}
       DB_PASSWORD: postgres
       NODE_ENV: development
+      HOSTNAME: localhost
+      ADMIN_EMAIL: test@test.com
     env_file: .env
     stdin_open: true
     tty: true

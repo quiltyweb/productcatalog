@@ -6,10 +6,10 @@ import faker from "faker";
 
 import loadSchema from "../../src/graphql";
 import { Category } from "../../src/entity/Category";
-// import { Product } from '../../src/entity/Product'
+import { Product } from "../../src/entity/Product";
 
 import type { Connection } from "typeorm";
-import { Product } from "../../src/entity/Product";
+import Email from "../../src/email";
 
 type ProductData = {
   category: Category;
@@ -38,8 +38,6 @@ beforeAll(async () => {
 
   const rangeCount = 5;
   const range = Array(rangeCount).fill(null);
-
-  console.log("Seeding database...");
 
   const categories = range.map(() => ({
     name: faker.commerce.productAdjective(),
@@ -70,8 +68,6 @@ beforeAll(async () => {
   );
 
   await connection.manager.save(products);
-
-  console.log("Database seeded!");
 
   schema = await loadSchema(connection);
 });
@@ -215,24 +211,37 @@ describe("GraphQL schema", () => {
       }
     `;
 
-    it("sends an email", async () => {
-      await graphql(schema, query);
+    const mockResponse = { status: "success", message: "hooray" };
+    const mockSend = jest.fn(async () => mockResponse);
+    Email.send = mockSend;
 
-      // Stub SendGrid functionality and expect it to get called
+    const context = { sendEmail: Email.send };
+    const variables = {
+      personalIdNumber: "13421234",
+      emailAddress: "test@test.com",
+      message: "I want more info",
+      name: "Roberto",
+      phoneNumber: "12341234",
+    };
+
+    it("sends an email", async () => {
+      expect.assertions(1);
+
+      await graphql(schema, query, null, context, variables);
+      expect(mockSend.mock.calls.length).toBe(1);
     });
 
     it("returns response status info", async () => {
-      const results = await graphql(schema, query, null, null, {
-        personalIdNumber: "13421234",
-        emailAddress: "test@test.com",
-        message: "I want more info",
-        name: "Roberto",
-        phoneNumber: "12341234",
-      });
-      console.log(JSON.stringify(results));
+      expect.assertions(1);
+
+      const results = await graphql(schema, query, null, context, variables);
+
       const messageResponse = results.data.sendContactMessage;
 
-      expect(messageResponse).toEqual({ status: "SUCCESS", message: "hooray" });
+      expect(messageResponse).toEqual({
+        ...mockResponse,
+        status: mockResponse.status.toUpperCase(),
+      });
     });
   });
 });

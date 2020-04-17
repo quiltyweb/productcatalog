@@ -9,6 +9,8 @@ services:
       DB_NAME: ${DB_NAME}
       DB_PASSWORD: postgres
       NODE_ENV: test
+      HOSTNAME: localhost
+      ADMIN_EMAIL: test@test.com
     command: yarn run dev
   db:
     image: postgres:12.2

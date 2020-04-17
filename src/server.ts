@@ -6,6 +6,7 @@ import { ApolloServer } from "apollo-server-koa";
 import helmet from "koa-helmet";
 
 import loadSchema from "./graphql";
+import Email from "./email";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 createConnection()
@@ -14,7 +15,8 @@ createConnection()
     const router = new Router();
 
     const schema = await loadSchema(connection);
-    const server = new ApolloServer({ schema });
+    const context = { sendEmail: Email.send };
+    const server = new ApolloServer({ schema, context });
     app.use(server.getMiddleware());
 
     router.get("/", async (ctx) => {

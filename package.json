@@ -12,6 +12,7 @@
     "migration:revert": "yarn run ts-node ./node_modules/typeorm/cli.js migration:revert"
   },
   "devDependencies": {
+    "@sendgrid/helpers": "^7.0.1",
     "@types/faker": "^4.1.11",
     "@types/graphql-relay": "^0.6.0",
     "@types/jest": "^25.2.1",
