@@ -3,23 +3,22 @@ name: Test all the things
 on: push
 
 jobs:
-
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --tag productcatalog
-    - name: Lint Typescript files
-      run: docker run productcatalog:latest yarn run lint
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --tag productcatalog
+      - name: Lint Typescript files
+        run: docker run productcatalog:latest yarn run lint
 
   test:
     runs-on: ubuntu-latest
     env:
       DB_NAME: ${{ secrets.DB_NAME }}
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the docker image
-      run: docker-compose -f docker-compose.ci.yml build
-    - name: Run all tests
-      run: ./scripts/test.sh docker-compose.ci.yml
+      - uses: actions/checkout@v2
+      - name: Build the docker image
+        run: docker-compose -f docker-compose.ci.yml build
+      - name: Run all tests
+        run: ./scripts/test.sh docker-compose.ci.yml
