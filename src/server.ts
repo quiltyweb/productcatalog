@@ -3,6 +3,7 @@ import Koa from 'koa'
 import Router from 'koa-router'
 import { createConnection } from 'typeorm'
 import { ApolloServer } from 'apollo-server-koa'
+import helmet from 'koa-helmet'
 
 import loadSchema from './graphql'
 
@@ -20,6 +21,7 @@ createConnection().then(async connection => {
   })
 
   app
+    .use(helmet())
     .use(router.routes())
     .use(router.allowedMethods())
 
