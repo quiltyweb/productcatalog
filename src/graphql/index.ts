@@ -5,6 +5,8 @@ import {
   GraphQLInt,
   GraphQLNonNull,
   GraphQLEnumType,
+  GraphQLID,
+  GraphQLList,
 } from "graphql";
 import {
   nodeDefinitions,
@@ -13,6 +15,7 @@ import {
   connectionDefinitions,
   connectionArgs,
   connectionFromArray,
+  mutationWithClientMutationId,
 } from "graphql-relay";
 import { Connection as DbConnection } from "typeorm";
 
@@ -27,17 +30,28 @@ import type { SendEmailResponse } from "../types";
 // graphql package uses 'any' type so we will too
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GraphQLFieldReturn = GraphQLFieldConfigMap<any, any>;
+type Entity = Category | Product;
+type CartItem = {
+  product: Product;
+  quantity: number;
+};
+
+declare interface Cart {
+  items: Array<CartItem>;
+}
 
 async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
   const entityManager = connection.manager;
 
-  const { nodeInterface, nodeField } = nodeDefinitions(
-    (globalId) => {
-      const { type, id } = fromGlobalId(globalId);
+  const getObjectFromGlobalId = async (globalId): Promise<Entity> => {
+    const { type, id } = fromGlobalId(globalId);
 
-      if (type === "Category") return entityManager.findOne(Category, id);
-      if (type === "Product") return entityManager.findOne(Product, id);
-    },
+    if (type === "Category") return await entityManager.findOne(Category, id);
+    if (type === "Product") return await entityManager.findOne(Product, id);
+  };
+
+  const { nodeInterface, nodeField } = nodeDefinitions(
+    getObjectFromGlobalId,
     (obj) => {
       /* eslint-disable @typescript-eslint/no-use-before-define */
       if (obj.constructor.name == "Category") return categoryType;
@@ -237,7 +251,62 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     }),
   });
 
-  return new GraphQLSchema({ query: queryType });
+  const cartItemType = new GraphQLObjectType({
+    name: "CartItem",
+    fields: (): GraphQLFieldReturn => ({
+      product: {
+        type: GraphQLNonNull(productType),
+      },
+      quantity: {
+        type: GraphQLNonNull(GraphQLInt),
+      },
+    }),
+  });
+
+  const cartType = new GraphQLObjectType({
+    name: "Cart",
+    fields: (): GraphQLFieldReturn => ({
+      cartItems: {
+        type: GraphQLList(cartItemType),
+      },
+    }),
+  });
+
+  const mutationType = new GraphQLObjectType({
+    name: "Mutation",
+    fields: (): GraphQLFieldReturn => ({
+      addProductToCart: mutationWithClientMutationId({
+        name: "AddProductToCart",
+        inputFields: {
+          productId: {
+            type: GraphQLNonNull(GraphQLID),
+          },
+          quantity: {
+            type: GraphQLNonNull(GraphQLInt),
+          },
+        },
+        outputFields: {
+          cart: {
+            type: cartType,
+            resolve: (payload): Cart => payload.Cart,
+          },
+        },
+        mutateAndGetPayload: async ({ productId, quantity }, ctx) => {
+          const cart = ctx.session.cart || { cartItems: [] };
+          const product = await getObjectFromGlobalId(productId);
+
+          ctx.session.cart = {
+            ...cart,
+            cartItems: cart.cartItems.concat({ product, quantity }),
+          };
+
+          return { Cart: ctx.session.cart };
+        },
+      }),
+    }),
+  });
+
+  return new GraphQLSchema({ query: queryType, mutation: mutationType });
 }
 
 export default loadSchema;

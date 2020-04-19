@@ -1,14 +1,13 @@
 import assert from "assert";
 
-import { createConnection } from "typeorm";
+import { createConnection, Connection } from "typeorm";
 import { graphql, GraphQLSchema } from "graphql";
+import { toGlobalId } from "graphql-relay";
 import faker from "faker";
 
 import loadSchema from "../../src/graphql";
 import { Category } from "../../src/entity/Category";
 import { Product } from "../../src/entity/Product";
-
-import type { Connection } from "typeorm";
 import Email from "../../src/email";
 
 type ProductData = {
@@ -241,6 +240,89 @@ describe("GraphQL schema", () => {
       expect(messageResponse).toEqual({
         ...mockResponse,
         status: mockResponse.status.toUpperCase(),
+      });
+    });
+  });
+
+  describe("addProductToCart", () => {
+    const query = `
+      mutation($productId: ID!, $quantity: Int!) {
+        addProductToCart(input: {
+          productId: $productId,
+          quantity: $quantity
+        }) {
+          cart {
+            cartItems {
+              product { id }
+              quantity
+            }
+          }
+        }
+      }
+    `;
+
+    const quantity = faker.random.number({ min: 1, max: 10 });
+
+    it("returns the cart with the new item", async () => {
+      const product = await connection.manager.findOne(Product, 1);
+      const gqlId = toGlobalId("Product", String(product.id));
+
+      const context = { session: {} };
+      const variables = {
+        quantity,
+        productId: gqlId,
+      };
+
+      const results = await graphql(schema, query, null, context, variables);
+      const cart = results.data.addProductToCart.cart;
+
+      expect(cart).toMatchObject({
+        cartItems: [
+          {
+            product: { id: gqlId },
+            quantity: quantity,
+          },
+        ],
+      });
+    });
+
+    it("includes existing items in the cart returned", async () => {
+      const firstProduct = await connection.manager.findOne(Product, 1);
+      const firstGqlId = toGlobalId("Product", String(firstProduct.id));
+      const secondProduct = await connection.manager.findOne(Product, 2);
+      const secondGqlId = toGlobalId("Product", String(secondProduct.id));
+
+      const context = {
+        session: {
+          cart: {
+            cartItems: [
+              {
+                product: firstProduct,
+                quantity: 3,
+              },
+            ],
+          },
+        },
+      };
+      const variables = {
+        quantity,
+        productId: secondGqlId,
+      };
+
+      const results = await graphql(schema, query, null, context, variables);
+      const cart = results.data.addProductToCart.cart;
+
+      expect(cart).toMatchObject({
+        cartItems: [
+          {
+            product: { id: firstGqlId },
+            quantity: 3,
+          },
+          {
+            product: { id: secondGqlId },
+            quantity,
+          },
+        ],
       });
     });
   });
