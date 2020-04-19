@@ -253,8 +253,12 @@ describe("GraphQL schema", () => {
         }) {
           cart {
             cartItems {
-              product { id }
-              quantity
+              edges {
+                node {
+                  product { id }
+                  quantity
+                }
+              }
             }
           }
         }
@@ -276,16 +280,16 @@ describe("GraphQL schema", () => {
       };
 
       const results = await graphql(schema, query, null, context, variables);
-      const cart = results.data.addProductToCart.cart;
+      const cartItems = results.data.addProductToCart.cart.cartItems.edges.map(
+        (ciEdge) => ciEdge.node
+      );
 
-      expect(cart).toMatchObject({
-        cartItems: [
-          {
-            product: { id: gqlId },
-            quantity: quantity,
-          },
-        ],
-      });
+      expect(cartItems).toEqual([
+        {
+          product: { id: gqlId },
+          quantity: quantity,
+        },
+      ]);
     });
 
     it("includes existing items in the cart returned", async () => {
@@ -314,30 +318,34 @@ describe("GraphQL schema", () => {
       };
 
       const results = await graphql(schema, query, null, context, variables);
-      const cart = results.data.addProductToCart.cart;
+      const cartItems = results.data.addProductToCart.cart.cartItems.edges.map(
+        (ciEdge) => ciEdge.node
+      );
 
-      expect(cart).toMatchObject({
-        cartItems: [
-          {
-            product: { id: firstGqlId },
-            quantity: 3,
-          },
-          {
-            product: { id: secondGqlId },
-            quantity,
-          },
-        ],
-      });
+      expect(cartItems).toEqual([
+        {
+          product: { id: firstGqlId },
+          quantity: 3,
+        },
+        {
+          product: { id: secondGqlId },
+          quantity,
+        },
+      ]);
     });
   });
 
   describe("removeProductFromCart", () => {
     const query = `
-      mutation($productId: ID!) {
-        removeProductFromCart(input: { productId: $productId }) {
+      mutation($cartItemId: ID!) {
+        removeProductFromCart(input: { cartItemId: $cartItemId }) {
           cart {
             cartItems {
-              product { id }
+              edges {
+                node {
+                  product { id }
+                }
+              }
             }
           }
         }
@@ -346,11 +354,11 @@ describe("GraphQL schema", () => {
 
     it("removes the given product from the cart", async () => {
       const firstProduct = await connection.manager.findOne(Product, 1);
-      const firstGqlId = toGlobalId("Product", String(firstProduct.id));
       const firstQuantity = faker.random.number({ min: 1, max: 10 });
       const secondProduct = await connection.manager.findOne(Product, 2);
-      const secondGqlId = toGlobalId("Product", String(secondProduct.id));
       const secondQuantity = faker.random.number({ min: 1, max: 10 });
+      const secondProductId = toGlobalId("Product", String(secondProduct.id));
+      const firstCartItemId = toGlobalId("CartItem", "1");
 
       const context = {
         session: {
@@ -369,33 +377,37 @@ describe("GraphQL schema", () => {
         },
       };
       const variables = {
-        productId: firstGqlId,
+        cartItemId: firstCartItemId,
       };
 
       const results = await graphql(schema, query, null, context, variables);
-      const cart = results.data.removeProductFromCart.cart;
+      const cartItems = results.data.removeProductFromCart.cart.cartItems.edges.map(
+        (ciEdge) => ciEdge.node
+      );
 
-      expect(cart).toMatchObject({
-        cartItems: [
-          {
-            product: { id: secondGqlId },
-          },
-        ],
-      });
+      expect(cartItems).toEqual([
+        {
+          product: { id: secondProductId },
+        },
+      ]);
     });
   });
 
   describe("updateCartItemQuantity", () => {
     const query = `
-      mutation($productId: ID!, $quantity: Int!) {
+      mutation($cartItemId: ID!, $quantity: Int!) {
         updateCartItemQuantity(input: {
-          productId: $productId,
+          cartItemId: $cartItemId,
           quantity: $quantity
         }) {
           cart {
             cartItems {
-              product { id }
-              quantity
+              edges {
+                node {
+                  product { id }
+                  quantity
+                }
+              }
             }
           }
         }
@@ -410,6 +422,7 @@ describe("GraphQL schema", () => {
       const secondProduct = await connection.manager.findOne(Product, 2);
       const secondGqlId = toGlobalId("Product", String(secondProduct.id));
       const secondQuantity = faker.random.number({ min: 1, max: 10 });
+      const firstCartItemId = toGlobalId("CartItem", "1");
 
       const context = {
         session: {
@@ -427,26 +440,27 @@ describe("GraphQL schema", () => {
           },
         },
       };
+
       const variables = {
-        productId: firstGqlId,
+        cartItemId: firstCartItemId,
         quantity: newFirstQuantity,
       };
 
       const results = await graphql(schema, query, null, context, variables);
-      const cart = results.data.updateCartItemQuantity.cart;
+      const cartItems = results.data.updateCartItemQuantity.cart.cartItems.edges.map(
+        (ciEdge) => ciEdge.node
+      );
 
-      expect(cart).toMatchObject({
-        cartItems: [
-          {
-            product: { id: firstGqlId },
-            quantity: newFirstQuantity,
-          },
-          {
-            product: { id: secondGqlId },
-            quantity: secondQuantity,
-          },
-        ],
-      });
+      expect(cartItems).toEqual([
+        {
+          product: { id: firstGqlId },
+          quantity: newFirstQuantity,
+        },
+        {
+          product: { id: secondGqlId },
+          quantity: secondQuantity,
+        },
+      ]);
     });
   });
 });

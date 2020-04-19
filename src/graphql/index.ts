@@ -6,7 +6,6 @@ import {
   GraphQLNonNull,
   GraphQLEnumType,
   GraphQLID,
-  GraphQLList,
 } from "graphql";
 import {
   nodeDefinitions,
@@ -21,6 +20,7 @@ import { Connection as DbConnection } from "typeorm";
 
 import { Category } from "../entity/Category";
 import { Product } from "../entity/Product";
+import { Cart, CartItem } from "../entity/Cart";
 
 import type { GraphQLFieldConfigMap } from "graphql";
 import type { Connection } from "graphql-relay";
@@ -31,14 +31,6 @@ import type { SendEmailResponse } from "../types";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GraphQLFieldReturn = GraphQLFieldConfigMap<any, any>;
 type Entity = Category | Product;
-type CartItem = {
-  product: Product;
-  quantity: number;
-};
-
-declare interface Cart {
-  items: Array<CartItem>;
-}
 
 async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
   const entityManager = connection.manager;
@@ -128,6 +120,7 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     const categories = await entityManager.find(Category, {
       relations: ["products"],
     });
+
     return connectionFromArray(categories, args);
   }
 
@@ -253,7 +246,9 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
 
   const cartItemType = new GraphQLObjectType({
     name: "CartItem",
+    interfaces: [nodeInterface],
     fields: (): GraphQLFieldReturn => ({
+      id: globalIdField(),
       product: {
         type: GraphQLNonNull(productType),
       },
@@ -263,11 +258,18 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
     }),
   });
 
+  const cartItemConnectionType = connectionDefinitions({
+    nodeType: cartItemType,
+  }).connectionType;
+
   const cartType = new GraphQLObjectType({
     name: "Cart",
     fields: (): GraphQLFieldReturn => ({
       cartItems: {
-        type: GraphQLList(cartItemType),
+        type: GraphQLNonNull(cartItemConnectionType),
+        args: connectionArgs,
+        resolve: (cart, args): Connection<CartItem> =>
+          connectionFromArray(cart.cartItems, args),
       },
     }),
   });
@@ -292,13 +294,15 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
           },
         },
         mutateAndGetPayload: async ({ productId, quantity }, ctx) => {
-          const cart = ctx.session.cart || { cartItems: [] };
-          const product = await getObjectFromGlobalId(productId);
+          const cart = new Cart(ctx.session.cart || {});
 
-          ctx.session.cart = {
-            ...cart,
-            cartItems: cart.cartItems.concat({ product, quantity }),
-          };
+          const entity = await getObjectFromGlobalId(productId);
+          const product = entity instanceof Product ? entity : null;
+
+          if (!product) throw Error("Given ID was not for a product.");
+
+          cart.addCartItem(new CartItem(product, quantity));
+          ctx.session.cart = cart;
 
           return { Cart: ctx.session.cart };
         },
@@ -306,7 +310,7 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
       removeProductFromCart: mutationWithClientMutationId({
         name: "RemoveProductFromCart",
         inputFields: {
-          productId: {
+          cartItemId: {
             type: GraphQLNonNull(GraphQLID),
           },
         },
@@ -316,17 +320,12 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
             resolve: (payload): Cart => payload.Cart,
           },
         },
-        mutateAndGetPayload: async ({ productId }, ctx) => {
-          const cart = ctx.session.cart;
-          const productDbId = fromGlobalId(productId).id;
+        mutateAndGetPayload: async ({ cartItemId }, ctx) => {
+          const cart = new Cart(ctx.session.cart);
+          const cartItemIndex = Number(fromGlobalId(cartItemId).id);
 
-          ctx.session.cart = {
-            ...cart,
-            cartItems: cart.cartItems.filter(
-              (cartItem: CartItem) =>
-                cartItem.product.id !== Number(productDbId)
-            ),
-          };
+          cart.removeCartItem(cartItemIndex);
+          ctx.session.cart = cart;
 
           return { Cart: ctx.session.cart };
         },
@@ -334,7 +333,7 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
       updateCartItemQuantity: mutationWithClientMutationId({
         name: "UpdateCartItemQuantity",
         inputFields: {
-          productId: {
+          cartItemId: {
             type: GraphQLNonNull(GraphQLID),
           },
           quantity: {
@@ -347,21 +346,12 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
             resolve: (payload): Cart => payload.Cart,
           },
         },
-        mutateAndGetPayload: async ({ productId, quantity }, ctx) => {
-          const cart = ctx.session.cart;
-          const productDbId = fromGlobalId(productId).id;
+        mutateAndGetPayload: async ({ cartItemId, quantity }, ctx) => {
+          const cart = new Cart(ctx.session.cart);
+          const cartItemIndex = Number(fromGlobalId(cartItemId).id);
 
-          ctx.session.cart = {
-            ...cart,
-            cartItems: cart.cartItems.map((cartItem: CartItem) => {
-              if (cartItem.product.id !== Number(productDbId)) return cartItem;
-
-              return {
-                ...cartItem,
-                quantity,
-              };
-            }),
-          };
+          cart.updateCartItemQuantity(cartItemIndex, quantity);
+          ctx.session.cart = cart;
 
           return { Cart: ctx.session.cart };
         },
