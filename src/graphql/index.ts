@@ -331,6 +331,41 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
           return { Cart: ctx.session.cart };
         },
       }),
+      updateCartItemQuantity: mutationWithClientMutationId({
+        name: "UpdateCartItemQuantity",
+        inputFields: {
+          productId: {
+            type: GraphQLNonNull(GraphQLID),
+          },
+          quantity: {
+            type: GraphQLNonNull(GraphQLInt),
+          },
+        },
+        outputFields: {
+          cart: {
+            type: cartType,
+            resolve: (payload): Cart => payload.Cart,
+          },
+        },
+        mutateAndGetPayload: async ({ productId, quantity }, ctx) => {
+          const cart = ctx.session.cart;
+          const productDbId = fromGlobalId(productId).id;
+
+          ctx.session.cart = {
+            ...cart,
+            cartItems: cart.cartItems.map((cartItem: CartItem) => {
+              if (cartItem.product.id !== Number(productDbId)) return cartItem;
+
+              return {
+                ...cartItem,
+                quantity,
+              };
+            }),
+          };
+
+          return { Cart: ctx.session.cart };
+        },
+      }),
     }),
   });
 

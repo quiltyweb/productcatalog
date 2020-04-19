@@ -384,4 +384,69 @@ describe("GraphQL schema", () => {
       });
     });
   });
+
+  describe("updateCartItemQuantity", () => {
+    const query = `
+      mutation($productId: ID!, $quantity: Int!) {
+        updateCartItemQuantity(input: {
+          productId: $productId,
+          quantity: $quantity
+        }) {
+          cart {
+            cartItems {
+              product { id }
+              quantity
+            }
+          }
+        }
+      }
+    `;
+
+    it("updates the quanity for the given product's cart item", async () => {
+      const firstProduct = await connection.manager.findOne(Product, 1);
+      const firstGqlId = toGlobalId("Product", String(firstProduct.id));
+      const oldFirstQuantity = 3;
+      const newFirstQuantity = oldFirstQuantity + 2;
+      const secondProduct = await connection.manager.findOne(Product, 2);
+      const secondGqlId = toGlobalId("Product", String(secondProduct.id));
+      const secondQuantity = faker.random.number({ min: 1, max: 10 });
+
+      const context = {
+        session: {
+          cart: {
+            cartItems: [
+              {
+                product: firstProduct,
+                quantity: oldFirstQuantity,
+              },
+              {
+                product: secondProduct,
+                quantity: secondQuantity,
+              },
+            ],
+          },
+        },
+      };
+      const variables = {
+        productId: firstGqlId,
+        quantity: newFirstQuantity,
+      };
+
+      const results = await graphql(schema, query, null, context, variables);
+      const cart = results.data.updateCartItemQuantity.cart;
+
+      expect(cart).toMatchObject({
+        cartItems: [
+          {
+            product: { id: firstGqlId },
+            quantity: newFirstQuantity,
+          },
+          {
+            product: { id: secondGqlId },
+            quantity: secondQuantity,
+          },
+        ],
+      });
+    });
+  });
 });
