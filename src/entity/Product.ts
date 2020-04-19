@@ -8,8 +8,32 @@ import {
 } from "typeorm";
 import { Category } from "./Category";
 
+type ProductOptions = {
+  category: Category;
+  name: string;
+  purchasePrice: number;
+  salePrice: number;
+  description?: string;
+  imagePath?: string;
+  attachmentPath?: string;
+  supplierName?: string;
+};
+
 @Entity()
 export class Product {
+  constructor(productOptions: ProductOptions) {
+    if (productOptions) {
+      this.category = productOptions.category;
+      this.name = productOptions.name;
+      this.purchasePrice = productOptions.purchasePrice;
+      this.salePrice = productOptions.salePrice;
+      this.description = productOptions.description || "";
+      this.imagePath = productOptions.imagePath || "";
+      this.attachmentPath = productOptions.attachmentPath || "";
+      this.supplierName = productOptions.supplierName || "";
+    }
+  }
+
   @PrimaryGeneratedColumn()
   public id: number;
 

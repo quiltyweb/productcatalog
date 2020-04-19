@@ -1,27 +1,10 @@
 import faker from "faker";
 
 import { Cart, CartItem } from "../../../src/entity/Cart";
-import { Product } from "../../../src/entity/Product";
-import { Category } from "../../../src/entity/Category";
+import { CategoryFactory, ProductFactory } from "../../fixtures/factories";
 
-const category = new Category();
-category.name = faker.commerce.productAdjective();
-
-const product = new Product();
-
-const purchasePrice = faker.random.number({ min: 10000, max: 100000 });
-
-product.category = category;
-product.name = faker.commerce.productName();
-product.description = faker.lorem.paragraph();
-product.imagePath = faker.internet.url();
-product.attachmentPath = faker.internet.url();
-product.purchasePrice = purchasePrice;
-product.salePrice = faker.random.number({
-  min: 10000,
-  max: purchasePrice,
-});
-product.supplierName = faker.company.companyName();
+const category = CategoryFactory.build();
+const product = ProductFactory.build({ category });
 
 describe("Cart", () => {
   let cart: Cart;

@@ -9,6 +9,7 @@ import loadSchema from "../../../src/graphql";
 import { Category } from "../../../src/entity/Category";
 import { Product } from "../../../src/entity/Product";
 import Email from "../../../src/email";
+import { ProductFactory, CategoryFactory } from "../../fixtures/factories";
 
 type ProductData = {
   category: Category;
@@ -35,35 +36,15 @@ beforeAll(async () => {
   const categoryCount = existingCategories.length;
   assert(categoryCount === 0);
 
-  const rangeCount = 5;
-  const range = Array(rangeCount).fill(null);
+  const recordCount = 5;
+  // const range = Array(rangeCount).fill(null);
 
-  const categories = range.map(() => ({
-    name: faker.commerce.productAdjective(),
-  }));
+  const categories = CategoryFactory.buildMany(recordCount);
   await connection.manager.insert(Category, categories);
   const categoryRecords = await connection.manager.find(Category);
 
   const products = categoryRecords.flatMap((category: Category) =>
-    range.map(() => {
-      const product = new Product();
-
-      const purchasePrice = faker.random.number({ min: 10000, max: 100000 });
-
-      product.category = category;
-      product.name = faker.commerce.productName();
-      product.description = faker.lorem.paragraph();
-      product.imagePath = faker.internet.url();
-      product.attachmentPath = faker.internet.url();
-      product.purchasePrice = purchasePrice;
-      product.salePrice = faker.random.number({
-        min: 10000,
-        max: purchasePrice,
-      });
-      product.supplierName = faker.company.companyName();
-
-      return product;
-    })
+    ProductFactory.buildMany(recordCount, { category })
   );
 
   await connection.manager.save(products);
@@ -146,19 +127,15 @@ describe("GraphQL schema", () => {
 
       // Need to create the product in the `it` function, because `describe`
       // callbacks can't be async
-      const purchasePrice = faker.random.number({ min: 10000, max: 100000 });
       const category = await connection.manager.findOne(Category, 1);
 
-      await connection.manager.insert(Product, {
-        category: category,
-        name: "Guantes de Seguridad",
-        description: faker.lorem.paragraph(),
-        imagePath: faker.internet.url(),
-        attachmentPath: faker.internet.url(),
-        purchasePrice: purchasePrice,
-        salePrice: faker.random.number({ min: 10000, max: purchasePrice }),
-        supplierName: faker.company.companyName(),
-      });
+      await connection.manager.insert(
+        Product,
+        ProductFactory.build({
+          category: category,
+          name: "Guantes de Seguridad",
+        })
+      );
 
       const results = await graphql(schema, query, null, null, {
         searchTerm: "guantes",

@@ -37,16 +37,16 @@ async function loadProducts(
   const categories = await transactionalEntityManager.find(Category);
 
   const productEntities = products.map((product: ProductData) => {
-    const productEntity = new Product();
-
-    productEntity.category = categories[product.categoryId - 1];
-    productEntity.name = product.name;
-    productEntity.description = product.description;
-    productEntity.imagePath = product.imagePath;
-    productEntity.attachmentPath = product.attachmentPath;
-    productEntity.purchasePrice = product.purchasePrice;
-    productEntity.salePrice = product.salePrice;
-    productEntity.supplierName = product.supplierName;
+    const productEntity = new Product({
+      category: categories[product.categoryId - 1],
+      name: product.name,
+      description: product.description,
+      imagePath: product.imagePath,
+      attachmentPath: product.attachmentPath,
+      purchasePrice: product.purchasePrice,
+      salePrice: product.salePrice,
+      supplierName: product.supplierName,
+    });
 
     return productEntity;
   });
