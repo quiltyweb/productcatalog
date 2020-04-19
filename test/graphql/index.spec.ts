@@ -264,6 +264,8 @@ describe("GraphQL schema", () => {
     const quantity = faker.random.number({ min: 1, max: 10 });
 
     it("returns the cart with the new item", async () => {
+      expect.assertions(1);
+
       const product = await connection.manager.findOne(Product, 1);
       const gqlId = toGlobalId("Product", String(product.id));
 
@@ -287,6 +289,8 @@ describe("GraphQL schema", () => {
     });
 
     it("includes existing items in the cart returned", async () => {
+      expect.assertions(1);
+
       const firstProduct = await connection.manager.findOne(Product, 1);
       const firstGqlId = toGlobalId("Product", String(firstProduct.id));
       const secondProduct = await connection.manager.findOne(Product, 2);
@@ -321,6 +325,60 @@ describe("GraphQL schema", () => {
           {
             product: { id: secondGqlId },
             quantity,
+          },
+        ],
+      });
+    });
+  });
+
+  describe("removeProductFromCart", () => {
+    const query = `
+      mutation($productId: ID!) {
+        removeProductFromCart(input: { productId: $productId }) {
+          cart {
+            cartItems {
+              product { id }
+            }
+          }
+        }
+      }
+    `;
+
+    it("removes the given product from the cart", async () => {
+      const firstProduct = await connection.manager.findOne(Product, 1);
+      const firstGqlId = toGlobalId("Product", String(firstProduct.id));
+      const firstQuantity = faker.random.number({ min: 1, max: 10 });
+      const secondProduct = await connection.manager.findOne(Product, 2);
+      const secondGqlId = toGlobalId("Product", String(secondProduct.id));
+      const secondQuantity = faker.random.number({ min: 1, max: 10 });
+
+      const context = {
+        session: {
+          cart: {
+            cartItems: [
+              {
+                product: firstProduct,
+                quantity: firstQuantity,
+              },
+              {
+                product: secondProduct,
+                quantity: secondQuantity,
+              },
+            ],
+          },
+        },
+      };
+      const variables = {
+        productId: firstGqlId,
+      };
+
+      const results = await graphql(schema, query, null, context, variables);
+      const cart = results.data.removeProductFromCart.cart;
+
+      expect(cart).toMatchObject({
+        cartItems: [
+          {
+            product: { id: secondGqlId },
           },
         ],
       });

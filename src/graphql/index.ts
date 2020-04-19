@@ -303,6 +303,34 @@ async function loadSchema(connection: DbConnection): Promise<GraphQLSchema> {
           return { Cart: ctx.session.cart };
         },
       }),
+      removeProductFromCart: mutationWithClientMutationId({
+        name: "RemoveProductFromCart",
+        inputFields: {
+          productId: {
+            type: GraphQLNonNull(GraphQLID),
+          },
+        },
+        outputFields: {
+          cart: {
+            type: cartType,
+            resolve: (payload): Cart => payload.Cart,
+          },
+        },
+        mutateAndGetPayload: async ({ productId }, ctx) => {
+          const cart = ctx.session.cart;
+          const productDbId = fromGlobalId(productId).id;
+
+          ctx.session.cart = {
+            ...cart,
+            cartItems: cart.cartItems.filter(
+              (cartItem: CartItem) =>
+                cartItem.product.id !== Number(productDbId)
+            ),
+          };
+
+          return { Cart: ctx.session.cart };
+        },
+      }),
     }),
   });
 
