@@ -5,10 +5,10 @@ import { graphql, GraphQLSchema } from "graphql";
 import { toGlobalId } from "graphql-relay";
 import faker from "faker";
 
-import loadSchema from "../../src/graphql";
-import { Category } from "../../src/entity/Category";
-import { Product } from "../../src/entity/Product";
-import Email from "../../src/email";
+import loadSchema from "../../../src/graphql";
+import { Category } from "../../../src/entity/Category";
+import { Product } from "../../../src/entity/Product";
+import Email from "../../../src/email";
 
 type ProductData = {
   category: Category;

@@ -20,5 +20,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the docker image
         run: docker-compose -f docker-compose.ci.yml build
-      - name: Run all tests
-        run: ./scripts/test.sh docker-compose.ci.yml
+      - name: Run unit tests
+        run: docker-compose -f docker-compose.ci.yml run app yarn run test:unit
+      - name: Run integration tests
+        run: ./scripts/integration_tests.sh docker-compose.ci.yml

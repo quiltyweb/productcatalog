@@ -1,8 +1,8 @@
 import faker from "faker";
 
-import { Cart, CartItem } from "../../src/entity/Cart";
-import { Product } from "../../src/entity/Product";
-import { Category } from "../../src/entity/Category";
+import { Cart, CartItem } from "../../../src/entity/Cart";
+import { Product } from "../../../src/entity/Product";
+import { Category } from "../../../src/entity/Category";
 
 const category = new Category();
 category.name = faker.commerce.productAdjective();
