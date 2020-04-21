@@ -1,5 +1,11 @@
 import { Product } from "./Product";
 
+type CartItemOptions = {
+  id?: number;
+  product: Product;
+  quantity: number;
+};
+
 export class CartItem {
   public id: number;
   public product: Product;

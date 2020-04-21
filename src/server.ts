@@ -7,7 +7,7 @@ import helmet from "koa-helmet";
 import cors from "@koa/cors";
 import session from "koa-session";
 
-import loadSchema from "./graphql";
+import { schema } from "./graphql";
 import Email from "./email";
 
 import type { Context as KoaContext } from "koa";
@@ -27,7 +27,6 @@ const CONFIG = {
   sameSite: null,
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 createConnection()
   .then(async (connection) => {
     const app = new Koa();
@@ -38,10 +37,16 @@ createConnection()
 
     app.keys = [process.env.APP_KEY];
 
-    const schema = await loadSchema(connection);
     const server = new ApolloServer({
       schema,
-      context: ({ ctx }): KoaContext => ({ ...ctx, sendEmail: Email.send }),
+      context: ({ ctx }): KoaContext => ({
+        ...ctx,
+        // It shouldn't make a difference, but unless I explicitly define
+        // session here, it ends up being undefined in GQL resolvers.
+        session: ctx.session,
+        sendEmail: Email.send,
+        entityManager: connection.manager,
+      }),
     });
 
     router.get("/", async (ctx) => {

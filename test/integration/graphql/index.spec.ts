@@ -1,11 +1,11 @@
 import assert from "assert";
 
 import { createConnection, Connection } from "typeorm";
-import { graphql, GraphQLSchema } from "graphql";
+import { graphql } from "graphql";
 import { toGlobalId } from "graphql-relay";
 import faker from "faker";
 
-import loadSchema from "../../../src/graphql";
+import { schema } from "../../../src/graphql";
 import { Category } from "../../../src/entity/Category";
 import { Product } from "../../../src/entity/Product";
 import Email from "../../../src/email";
@@ -23,13 +23,14 @@ type ProductData = {
 };
 
 // Declaring global variables to be able to make a DB connection
-// and load the GQL schema once instead of inside every 'it' function,
-// because 'describe' functions can't return promises.
+// once instead of inside every 'it' function, because 'describe' functions
+// can't return promises.
 let connection: Connection;
-let schema: GraphQLSchema;
+let baseContext;
 
 beforeAll(async () => {
   connection = await createConnection("test");
+  baseContext = { entityManager: connection.manager };
 
   // Make sure the DB is empty
   const existingCategories = await connection.manager.find(Category);
@@ -48,8 +49,6 @@ beforeAll(async () => {
   );
 
   await connection.manager.save(products);
-
-  schema = await loadSchema(connection);
 });
 
 afterAll(async (done) => {
@@ -82,7 +81,9 @@ describe("GraphQL schema", () => {
     it("returns category fields", async () => {
       expect.assertions(2);
 
-      const results = await graphql(schema, query);
+      const context = { ...baseContext };
+
+      const results = await graphql(schema, query, null, context);
       const categories = results.data.fetchCategories.edges.map(
         (catEdge) => catEdge.node
       );
@@ -96,7 +97,9 @@ describe("GraphQL schema", () => {
     it("returns associated products", async () => {
       expect.assertions(1);
 
-      const results = await graphql(schema, query);
+      const context = { ...baseContext };
+
+      const results = await graphql(schema, query, null, context);
       const categories = results.data.fetchCategories.edges.map(
         (catEdge) => catEdge.node
       );
@@ -125,6 +128,8 @@ describe("GraphQL schema", () => {
     it("returns any matching products", async () => {
       expect.assertions(1);
 
+      const context = { ...baseContext };
+
       // Need to create the product in the `it` function, because `describe`
       // callbacks can't be async
       const category = await connection.manager.findOne(Category, 1);
@@ -137,7 +142,7 @@ describe("GraphQL schema", () => {
         })
       );
 
-      const results = await graphql(schema, query, null, null, {
+      const results = await graphql(schema, query, null, context, {
         searchTerm: "guantes",
       });
       const products = results.data.searchProducts.edges.map(
@@ -153,7 +158,9 @@ describe("GraphQL schema", () => {
       it("returns an empty array", async () => {
         expect.assertions(1);
 
-        const results = await graphql(schema, query, null, null, {
+        const context = { ...baseContext };
+
+        const results = await graphql(schema, query, null, context, {
           searchTerm: "something that definitely doesn't exist",
         });
         const products = results.data.searchProducts.edges.map(
@@ -191,7 +198,6 @@ describe("GraphQL schema", () => {
     const mockSend = jest.fn(async () => mockResponse);
     Email.send = mockSend;
 
-    const context = { sendEmail: Email.send };
     const variables = {
       personalIdNumber: "13421234",
       emailAddress: "test@test.com",
@@ -203,12 +209,16 @@ describe("GraphQL schema", () => {
     it("sends an email", async () => {
       expect.assertions(1);
 
+      const context = { ...baseContext, sendEmail: Email.send };
+
       await graphql(schema, query, null, context, variables);
       expect(mockSend.mock.calls.length).toBe(1);
     });
 
     it("returns response status info", async () => {
       expect.assertions(1);
+
+      const context = { ...baseContext, sendEmail: Email.send };
 
       const results = await graphql(schema, query, null, context, variables);
 
@@ -250,7 +260,8 @@ describe("GraphQL schema", () => {
       const product = await connection.manager.findOne(Product, 1);
       const gqlId = toGlobalId("Product", String(product.id));
 
-      const context = { session: {} };
+      const session = {};
+      const context = { ...baseContext, session };
       const variables = {
         quantity,
         productId: gqlId,
@@ -277,18 +288,18 @@ describe("GraphQL schema", () => {
       const secondProduct = await connection.manager.findOne(Product, 2);
       const secondGqlId = toGlobalId("Product", String(secondProduct.id));
 
-      const context = {
-        session: {
-          cart: {
-            cartItems: [
-              {
-                product: firstProduct,
-                quantity: 3,
-              },
-            ],
-          },
+      const session = {
+        cart: {
+          cartItems: [
+            {
+              id: 1,
+              product: firstProduct,
+              quantity: 3,
+            },
+          ],
         },
       };
+      const context = { ...baseContext, session };
       const variables = {
         quantity,
         productId: secondGqlId,
@@ -337,22 +348,21 @@ describe("GraphQL schema", () => {
       const secondProductId = toGlobalId("Product", String(secondProduct.id));
       const firstCartItemId = toGlobalId("CartItem", "1");
 
-      const context = {
-        session: {
-          cart: {
-            cartItems: [
-              {
-                product: firstProduct,
-                quantity: firstQuantity,
-              },
-              {
-                product: secondProduct,
-                quantity: secondQuantity,
-              },
-            ],
-          },
+      const session = {
+        cart: {
+          cartItems: [
+            {
+              product: firstProduct,
+              quantity: firstQuantity,
+            },
+            {
+              product: secondProduct,
+              quantity: secondQuantity,
+            },
+          ],
         },
       };
+      const context = { ...baseContext, session };
       const variables = {
         cartItemId: firstCartItemId,
       };
@@ -401,23 +411,21 @@ describe("GraphQL schema", () => {
       const secondQuantity = faker.random.number({ min: 1, max: 10 });
       const firstCartItemId = toGlobalId("CartItem", "1");
 
-      const context = {
-        session: {
-          cart: {
-            cartItems: [
-              {
-                product: firstProduct,
-                quantity: oldFirstQuantity,
-              },
-              {
-                product: secondProduct,
-                quantity: secondQuantity,
-              },
-            ],
-          },
+      const session = {
+        cart: {
+          cartItems: [
+            {
+              product: firstProduct,
+              quantity: oldFirstQuantity,
+            },
+            {
+              product: secondProduct,
+              quantity: secondQuantity,
+            },
+          ],
         },
       };
-
+      const context = { ...baseContext, session };
       const variables = {
         cartItemId: firstCartItemId,
         quantity: newFirstQuantity,
