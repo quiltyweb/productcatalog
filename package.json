@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "build": "yarn run tsc",
-    "start": "yarn run ts-node ./src/server.ts",
+    "start": "yarn run build && node ./dist/server.js",
     "dev": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/server.ts",
     "lint": "yarn run eslint . --ext=.ts",
     "test": "yarn run jest",
     "migration:run": "yarn run ts-node ./node_modules/typeorm/cli.js migration:run",
-    "migration:revert": "yarn run ts-node ./node_modules/typeorm/cli.js migration:revert"
+    "migration:revert": "yarn run ts-node ./node_modules/typeorm/cli.js migration:revert",
+    "migration:generate": "yarn run ts-node ./node_modules/typeorm/cli.js migration:generate"
   },
   "devDependencies": {
     "@sendgrid/helpers": "^7.0.1",

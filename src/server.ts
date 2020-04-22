@@ -8,8 +8,10 @@ import helmet from "koa-helmet";
 import loadSchema from "./graphql";
 import Email from "./email";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-createConnection()
+const connectionName =
+  process.env.NODE_ENV === "development" ? "default" : process.env.NODE_ENV;
+
+createConnection(connectionName)
   .then(async (connection) => {
     const app = new Koa();
     const router = new Router();

@@ -13,7 +13,7 @@ function databaseInfo() {
 
 const baseOrmConfig = {
   type: "postgres",
-  synchronize: true,
+  synchronize: false,
   logging: false,
   entities: ["src/entity/**/*.ts"],
   migrations: ["src/migration/**/*.ts"],
@@ -35,6 +35,20 @@ module.exports = [
     ...baseOrmConfig,
     ...databaseInfo(),
     name: "test",
+    synchronize: true,
     database: "test_" + (process.env.DB_NAME || ""),
+  },
+  {
+    ...baseOrmConfig,
+    ...databaseInfo(),
+    name: "production",
+    entities: ["dist/entity/**/*.js"],
+    migrations: ["dist/migration/**/*.js"],
+    subscribers: ["dist/subscriber/**/*.js"],
+    cli: {
+      entitiesDir: "dist/entity",
+      migrationsDir: "dist/migration",
+      subscribersDir: "dist/subscriber",
+    },
   },
 ];
