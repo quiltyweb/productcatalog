@@ -9,7 +9,8 @@
     "lint": "yarn run eslint . --ext=.ts",
     "test": "yarn run jest",
     "migration:run": "yarn run ts-node ./node_modules/typeorm/cli.js migration:run",
-    "migration:revert": "yarn run ts-node ./node_modules/typeorm/cli.js migration:revert"
+    "migration:revert": "yarn run ts-node ./node_modules/typeorm/cli.js migration:revert",
+    "migration:generate": "yarn run ts-node ./node_modules/typeorm/cli.js migration:generate"
   },
   "devDependencies": {
     "@sendgrid/helpers": "^7.0.1",
