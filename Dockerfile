@@ -6,7 +6,7 @@
 FROM node:13.12.0-buster-slim@sha256:cc0d8c39734f51153a52a35bcec871b0829b7cfe256fb39583b3dfc54a323314
 
 RUN apt-get --no-install-recommends update \
-  && apt-get -y --no-install-recommends install git wget ca-certificates \
+  && apt-get -y --no-install-recommends install git wget ca-certificates curl \
   && rm -rf /var/lib/apt/lists/*
 
 # Someone getting fancy with the package installs needs git & valid certificates
