@@ -38,4 +38,17 @@ module.exports = [
     synchronize: true,
     database: "test_" + (process.env.DB_NAME || ""),
   },
+  {
+    ...baseOrmConfig,
+    ...databaseInfo(),
+    name: "production",
+    entities: ["dist/entity/**/*.js"],
+    migrations: ["dist/migration/**/*.js"],
+    subscribers: ["dist/subscriber/**/*.js"],
+    cli: {
+      entitiesDir: "dist/entity",
+      migrationsDir: "dist/migration",
+      subscribersDir: "dist/subscriber",
+    },
+  },
 ];
