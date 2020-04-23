@@ -1,14 +1,13 @@
 setup:
   config:
     NODE_ENV: production
-    SESSION_DRIVER: cookie
-    ENV_SILENT: 'true'
 build:
   docker:
     web: Dockerfile
 release:
   image: web
   command:
+    - yarn run build
     - yarn run migration:run
 run:
   web: yarn start
