@@ -36,6 +36,7 @@
     "typescript-eslint": "^0.0.1-alpha.0"
   },
   "dependencies": {
+    "@koa/cors": "2",
     "@sendgrid/mail": "^7.0.1",
     "apollo-server-koa": "^2.12.0",
     "graphql": "^15.0.0",
