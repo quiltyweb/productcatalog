@@ -19,7 +19,6 @@ createConnection(connectionName)
     const schema = await loadSchema(connection);
     const context = { sendEmail: Email.send };
     const server = new ApolloServer({ schema, context });
-    app.use(server.getMiddleware());
 
     router.get("/", async (ctx) => {
       ctx.body = "Hello World!";
