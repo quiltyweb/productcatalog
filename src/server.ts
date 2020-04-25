@@ -4,6 +4,7 @@ import Router from "koa-router";
 import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-koa";
 import helmet from "koa-helmet";
+import cors from "@koa/cors";
 
 import loadSchema from "./graphql";
 import Email from "./email";
@@ -19,13 +20,16 @@ createConnection(connectionName)
     const schema = await loadSchema(connection);
     const context = { sendEmail: Email.send };
     const server = new ApolloServer({ schema, context });
-    app.use(server.getMiddleware());
 
     router.get("/", async (ctx) => {
       ctx.body = "Hello World!";
     });
 
-    app.use(helmet()).use(router.routes()).use(router.allowedMethods());
+    app
+      .use(cors())
+      .use(helmet())
+      .use(router.routes())
+      .use(router.allowedMethods());
 
     server.applyMiddleware({ app });
 
