@@ -1,13 +1,20 @@
 import sgMail from "@sendgrid/mail";
 
-import type { SendEmailResponse } from "./types";
-
 type SendOptions = {
   to: string;
   from: string;
   subject: string;
   text: string;
 };
+
+export type SendEmailResponse = {
+  status: string;
+  message: string;
+};
+
+export type SendEmail = (
+  sendOptions: SendOptions
+) => Promise<SendEmailResponse>;
 
 declare interface Email {
   send: (sendOptions: SendOptions) => Promise<SendEmailResponse>;

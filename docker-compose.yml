@@ -16,6 +16,7 @@ services:
       NODE_ENV: development
       HOSTNAME: localhost
       ADMIN_EMAIL: test@test.com
+      APP_KEY: supersecretsauce
     env_file: .env
     stdin_open: true
     tty: true

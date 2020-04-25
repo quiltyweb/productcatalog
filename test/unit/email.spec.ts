@@ -2,7 +2,7 @@ import sgMail from "@sendgrid/mail";
 import Response from "@sendgrid/helpers/classes/response";
 import faker from "faker";
 
-import Email from "../src/email";
+import Email from "../../src/email";
 
 jest.mock("@sendgrid/mail");
 const mockedSgMail = sgMail as jest.Mocked<typeof sgMail>;

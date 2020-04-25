@@ -25,7 +25,7 @@ EXIT_CODE=$?
 
 if [ ${EXIT_CODE} == 0 ]
 then
-  docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm app yarn test
+  docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm app yarn test:integration
 
   EXIT_CODE=$?
 fi
@@ -33,7 +33,5 @@ fi
 # TEST CLEANUP
 docker exec -t -u postgres productcatalog_db_1 \
   psql --command "DROP DATABASE IF EXISTS test_${DB_NAME};"
-
-docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 
 exit ${EXIT_CODE}

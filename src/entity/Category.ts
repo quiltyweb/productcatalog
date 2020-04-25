@@ -10,6 +10,10 @@ import { Product } from "./Product";
 
 @Entity()
 export class Category {
+  constructor(name: string) {
+    this.name = name;
+  }
+
   @PrimaryGeneratedColumn()
   public id: number;
 
