@@ -27,7 +27,7 @@ const CONFIG = {
   sameSite: null,
 };
 
-createConnection()
+createConnection(connectionName)
   .then(async (connection) => {
     const app = new Koa();
     const router = new Router();
