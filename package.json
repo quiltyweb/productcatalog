@@ -44,7 +44,7 @@
     "koa": "^2.11.0",
     "koa-helmet": "^5.2.0",
     "koa-router": "^8.0.8",
-    "pg": "^8.0.2",
+    "pg": "^8.0.3",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.16",
     "typeorm": "^0.2.24"
