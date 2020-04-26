@@ -4,7 +4,6 @@ import Router from "koa-router";
 import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-koa";
 import helmet from "koa-helmet";
-import cors from "@koa/cors";
 import session from "koa-session";
 
 import { schema } from "./graphql";
@@ -54,13 +53,12 @@ createConnection(connectionName)
     });
 
     app
-      .use(cors())
       .use(helmet())
       .use(session(CONFIG, app))
       .use(router.routes())
       .use(router.allowedMethods());
 
-    server.applyMiddleware({ app });
+    server.applyMiddleware({ app, cors: false });
 
     app.listen(process.env.PORT);
 
