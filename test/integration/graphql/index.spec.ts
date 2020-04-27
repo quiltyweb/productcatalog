@@ -11,17 +11,6 @@ import { Product } from "../../../src/entity/Product";
 import Email from "../../../src/email";
 import { ProductFactory, CategoryFactory } from "../../fixtures/factories";
 
-type ProductData = {
-  category: Category;
-  name: string;
-  description: string;
-  imagePath: string;
-  attachmentPath: string;
-  purchasePrice: number;
-  salePrice: number;
-  supplierName: string;
-};
-
 // Declaring global variables to be able to make a DB connection
 // once instead of inside every 'it' function, because 'describe' functions
 // can't return promises.
@@ -38,7 +27,6 @@ beforeAll(async () => {
   assert(categoryCount === 0);
 
   const recordCount = 5;
-  // const range = Array(rangeCount).fill(null);
 
   const categories = CategoryFactory.buildMany(recordCount);
   await connection.manager.insert(Category, categories);
