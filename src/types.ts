@@ -1,4 +1,5 @@
 import type { Context as KoaContext } from "koa";
+import type { EntityManager } from "typeorm";
 
 import type { SendEmail } from "./email";
 
@@ -10,4 +11,5 @@ export type TContext = KoaContext & {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   session: any;
   sendEmail: SendEmail;
+  entityManager: EntityManager;
 };
