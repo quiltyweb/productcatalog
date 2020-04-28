@@ -97,8 +97,14 @@ class Queries {
           phoneNumber,
         } = args;
 
-        const emailTo = process.env.ADMIN_EMAIL || "";
-        const hostname = process.env.HOSTNAME || "";
+        const { request } = ctx;
+
+        const { ADMIN_EMAIL: emailTo } = process.env;
+
+        const host = (request && request.host) || "productcatalog.com";
+
+        if (!emailTo)
+          throw Error("Missing ADMIN_EMAIL env var to send emails to.");
 
         const emailMessage = `
             Nombre: ${name}
@@ -110,7 +116,7 @@ class Queries {
 
         const emailOptions = {
           to: emailTo,
-          from: `contacto@${hostname}`,
+          from: `contacto@${host}`,
           subject: "Mensaje de Contacto",
           text: emailMessage,
         };
