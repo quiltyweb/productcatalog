@@ -2,6 +2,7 @@ import assert from "assert";
 
 import { createConnection, Connection } from "typeorm";
 import { graphql } from "graphql";
+import faker from "faker";
 
 import { schema } from "../../../src/graphql";
 import { Category } from "../../../src/entity/Category";
@@ -212,6 +213,114 @@ describe("GraphQL schema", () => {
       const results = await graphql(schema, query, null, context, variables);
 
       const messageResponse = results.data.sendContactMessage;
+
+      expect(messageResponse).toEqual({
+        ...mockResponse,
+        status: mockResponse.status.toUpperCase(),
+      });
+    });
+  });
+
+  describe("sendQuoteRequest", () => {
+    const query = `
+      query(
+        $personalIdNumber: String!,
+        $emailAddress: String!,
+        $name: String!,
+        $companyName: String,
+        $phoneNumber: String,
+        $city: String,
+        $message: String
+      ) {
+        sendQuoteRequest(
+          personalIdNumber: $personalIdNumber,
+          emailAddress: $emailAddress,
+          name: $name,
+          companyName: $companyName,
+          phoneNumber: $phoneNumber,
+          city: $city,
+          message: $message
+        ) {
+          status
+          message
+        }
+      }
+    `;
+
+    const mockResponse = { status: "success", message: "hooray" };
+    const mockSend = jest.fn(async () => mockResponse);
+
+    const variables = {
+      personalIdNumber: "13421234",
+      emailAddress: "test@test.com",
+      message: "I want more info",
+      name: "Roberto",
+      companyName: "Roberto Ltda.",
+      phoneNumber: "12341234",
+      city: "Santiago",
+    };
+
+    it("sends an email", async () => {
+      expect.assertions(1);
+
+      const firstProduct = await connection.manager.findOne(Product);
+      const firstQuantity = faker.random.number({ min: 1, max: 10 });
+
+      const secondProduct = await connection.manager
+        .createQueryBuilder(Product, "products")
+        .where("products.id != :id", { id: firstProduct.id })
+        .getOne();
+      const secondQuantity = faker.random.number({ min: 1, max: 10 });
+
+      const session = {
+        cart: {
+          cartItems: [
+            {
+              product: firstProduct,
+              quantity: firstQuantity,
+            },
+            {
+              product: secondProduct,
+              quantity: secondQuantity,
+            },
+          ],
+        },
+      };
+      const context = { ...baseContext, session, sendEmail: mockSend };
+      await graphql(schema, query, null, context, variables);
+      expect(mockSend.mock.calls.length).toBe(1);
+    });
+
+    it("returns response status info", async () => {
+      expect.assertions(1);
+
+      const firstProduct = await connection.manager.findOne(Product);
+      const firstQuantity = faker.random.number({ min: 1, max: 10 });
+
+      const secondProduct = await connection.manager
+        .createQueryBuilder(Product, "products")
+        .where("products.id != :id", { id: firstProduct.id })
+        .getOne();
+      const secondQuantity = faker.random.number({ min: 1, max: 10 });
+
+      const session = {
+        cart: {
+          cartItems: [
+            {
+              product: firstProduct,
+              quantity: firstQuantity,
+            },
+            {
+              product: secondProduct,
+              quantity: secondQuantity,
+            },
+          ],
+        },
+      };
+      const context = { ...baseContext, session, sendEmail: mockSend };
+
+      const results = await graphql(schema, query, null, context, variables);
+      const messageResponse = results.data.sendQuoteRequest;
 
       expect(messageResponse).toEqual({
         ...mockResponse,
