@@ -1,5 +1,3 @@
-import assert from "assert";
-
 import { createConnection, Connection } from "typeorm";
 import { graphql } from "graphql";
 import { toGlobalId } from "graphql-relay";
@@ -20,34 +18,22 @@ beforeAll(async () => {
   connection = await createConnection("test");
   baseContext = { entityManager: connection.manager };
 
-  // Make sure the DB is empty
-  const categoryCount = await connection
-    .createQueryBuilder(Category, "categories")
-    .getCount();
-  assert(categoryCount === 0);
-
   const recordCount = 2;
 
   // For now, we don't have mutations that modify DB records, and manager.save
   // doesn't return attributes set by the DB (e.g. id). So, it's easier
   // to create a few records here and fetch them with DB queries as needed.
   const categories = CategoryFactory.buildMany(recordCount);
-  await connection.manager.save(categories);
+  await connection.manager.save(Category, categories);
   const categoryRecords = await connection.manager.find(Category);
 
   const products = categoryRecords.flatMap((category: Category) =>
     ProductFactory.buildMany(recordCount, { category })
   );
-  await connection.manager.save(products);
+  await connection.manager.save(Product, products);
 });
 
-afterAll(async (done) => {
-  await connection.createQueryBuilder().delete().from(Product).execute();
-  await connection.createQueryBuilder().delete().from(Category).execute();
-
-  connection.close();
-  done();
-});
+afterAll(async () => await connection.close());
 
 describe("GraphQL schema", () => {
   describe("addProductToCart", () => {
@@ -76,10 +62,8 @@ describe("GraphQL schema", () => {
     it("returns the cart with the new item", async () => {
       expect.assertions(1);
 
-      const product = await connection.manager.findOne(Product, 1);
+      const product = await connection.manager.findOne(Product);
       const gqlId = toGlobalId("Product", String(product.id));
-
-      console.log(JSON.stringify(product));
 
       const session = {};
       const context = { ...baseContext, session };
@@ -89,7 +73,6 @@ describe("GraphQL schema", () => {
       };
 
       const results = await graphql(schema, query, null, context, variables);
-      console.log(JSON.stringify(results));
       const cartItems = results.data.addProductToCart.cart.cartItems.edges.map(
         (ciEdge) => ciEdge.node
       );
@@ -105,10 +88,13 @@ describe("GraphQL schema", () => {
     it("includes existing items in the cart returned", async () => {
       expect.assertions(1);
 
-      const firstProduct = await connection.manager.findOne(Product, 1);
+      const firstProduct = await connection.manager.findOne(Product);
       const firstGqlId = toGlobalId("Product", String(firstProduct.id));
 
-      const secondProduct = await connection.manager.findOne(Product, 2);
+      const secondProduct = await connection.manager
+        .createQueryBuilder(Product, "products")
+        .where("products.id != :id", { id: firstProduct.id })
+        .getOne();
       const secondGqlId = toGlobalId("Product", String(secondProduct.id));
 
       const session = {
@@ -164,10 +150,13 @@ describe("GraphQL schema", () => {
     `;
 
     it("removes the given product from the cart", async () => {
-      const firstProduct = await connection.manager.findOne(Product, 1);
+      const firstProduct = await connection.manager.findOne(Product);
       const firstQuantity = faker.random.number({ min: 1, max: 10 });
 
-      const secondProduct = await connection.manager.findOne(Product, 2);
+      const secondProduct = await connection.manager
+        .createQueryBuilder(Product, "products")
+        .where("products.id != :id", { id: firstProduct.id })
+        .getOne();
       const secondProductId = toGlobalId("Product", String(secondProduct.id));
       const secondQuantity = faker.random.number({ min: 1, max: 10 });
 
@@ -227,12 +216,15 @@ describe("GraphQL schema", () => {
     `;
 
     it("updates the quanity for the given product's cart item", async () => {
-      const firstProduct = await connection.manager.findOne(Product, 1);
+      const firstProduct = await connection.manager.findOne(Product);
       const firstGqlId = toGlobalId("Product", String(firstProduct.id));
       const oldFirstQuantity = 3;
       const newFirstQuantity = oldFirstQuantity + 2;
 
-      const secondProduct = await connection.manager.findOne(Product, 2);
+      const secondProduct = await connection.manager
+        .createQueryBuilder(Product, "products")
+        .where("products.id != :id", { id: firstProduct.id })
+        .getOne();
       const secondGqlId = toGlobalId("Product", String(secondProduct.id));
       const secondQuantity = faker.random.number({ min: 1, max: 10 });
 

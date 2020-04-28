@@ -36,7 +36,9 @@ We deploy automatically to Heroku with every merged PR that passes CI via a GitH
 
 ## Testing
 
-- Run all tests: `./scripts/test`
+- Run all integration tests: `./scripts/integration_tests.sh`
+  - Do not use `yarn run test:integration`, because all integration tests require a test DB, and the bash script takes care of setup and teardown.
+- Run all unit tests: `docker-compose run --rm app yarn run test:unit`
 
 ## Troubleshooting
 

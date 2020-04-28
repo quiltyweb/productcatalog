@@ -1,5 +1,3 @@
-import assert from "assert";
-
 import { createConnection, Connection } from "typeorm";
 import { graphql } from "graphql";
 import faker from "faker";
@@ -20,12 +18,6 @@ beforeAll(async () => {
   connection = await createConnection("test");
   baseContext = { entityManager: connection.manager };
 
-  // Make sure the DB is empty
-  const categoryCount = await connection
-    .createQueryBuilder(Category, "categories")
-    .getCount();
-  assert(categoryCount === 0);
-
   const recordCount = 5;
 
   const categories = CategoryFactory.buildMany(recordCount);
@@ -36,16 +28,10 @@ beforeAll(async () => {
     ProductFactory.buildMany(recordCount, { category })
   );
 
-  await connection.manager.save(products);
+  await connection.manager.save(Product, products);
 });
 
-afterAll(async (done) => {
-  await connection.createQueryBuilder().delete().from(Product).execute();
-  await connection.createQueryBuilder().delete().from(Category).execute();
-
-  connection.close();
-  done();
-});
+afterAll(async () => await connection.close());
 
 describe("GraphQL schema", () => {
   describe("fetchCategories", () => {
@@ -120,10 +106,10 @@ describe("GraphQL schema", () => {
 
       const context = { ...baseContext };
 
+      const category = await connection.manager.findOne(Category);
+
       // Need to create the product in the `it` function, because `describe`
       // callbacks can't be async
-      const category = await connection.manager.findOne(Category, 1);
-
       await connection.manager.save(
         Product,
         ProductFactory.build({
