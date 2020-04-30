@@ -14,26 +14,10 @@ type ProductFactoryOptions = {
   supplierName?: string;
 };
 
-declare interface ProductFactory {
-  buildMany: (
-    count: number,
-    productOptions?: ProductFactoryOptions
-  ) => Array<Product>;
-  build: (productOptions: ProductFactoryOptions) => Product;
-}
-
 type CategoryFactoryOptions = {
   name?: string;
   products?: Array<Product>;
 };
-
-declare interface CategoryFactory {
-  buildMany: (
-    count: number,
-    categoryOptions?: CategoryFactoryOptions
-  ) => Category | Array<Category>;
-  build: (categoryOptions?: CategoryFactoryOptions) => Category;
-}
 
 const newCategory = (categoryOptions: CategoryFactoryOptions): Category => {
   const defaultCategoryAttributes = {
@@ -52,14 +36,17 @@ const newCategory = (categoryOptions: CategoryFactoryOptions): Category => {
   return category;
 };
 
-const CategoryFactory: CategoryFactory = {
-  buildMany: (count, categoryOptions = {}) => {
+const CategoryFactory = {
+  buildMany: (
+    count: number,
+    categoryOptions: CategoryFactoryOptions = {}
+  ): Array<Category> => {
     return Array(count)
       .fill(null)
       .map(() => newCategory(categoryOptions));
   },
 
-  build: (categoryOptions = {}) => {
+  build: (categoryOptions: CategoryFactoryOptions = {}): Category => {
     return newCategory(categoryOptions);
   },
 };
@@ -89,13 +76,16 @@ const newProduct = (productOptions: ProductFactoryOptions): Product => {
   return new Product(productAttributes);
 };
 
-const ProductFactory: ProductFactory = {
-  buildMany: (count, productOptions: ProductFactoryOptions = {}) => {
+const ProductFactory = {
+  buildMany: (
+    count: number,
+    productOptions: ProductFactoryOptions = {}
+  ): Array<Product> => {
     return Array(count)
       .fill(null)
       .map(() => newProduct(productOptions));
   },
-  build: (productOptions: ProductFactoryOptions = {}) => {
+  build: (productOptions: ProductFactoryOptions = {}): Product => {
     return newProduct(productOptions);
   },
 };

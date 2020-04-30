@@ -24,9 +24,12 @@ async function getObjectFromGlobalId(globalId, ctx): Promise<Entity> {
 
 const { nodeInterface, nodeField } = nodeDefinitions(getObjectFromGlobalId);
 const types = new GqlTypes(nodeInterface);
-const { fetchCategories, searchProducts, sendContactMessage } = new Queries(
-  types
-);
+const {
+  fetchCategories,
+  searchProducts,
+  sendContactMessage,
+  sendQuoteRequest,
+} = new Queries(types);
 
 const queryType = new GraphQLObjectType({
   name: "Query",
@@ -35,6 +38,7 @@ const queryType = new GraphQLObjectType({
     fetchCategories,
     searchProducts,
     sendContactMessage,
+    sendQuoteRequest,
   }),
 });
 

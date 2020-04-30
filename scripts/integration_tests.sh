@@ -2,7 +2,6 @@
 
 DOCKER_COMPOSE_FILE="${1:-docker-compose.yml}"
 
-docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 
 ./scripts/wait-for-it.sh localhost:3000 -- echo "Server ready"

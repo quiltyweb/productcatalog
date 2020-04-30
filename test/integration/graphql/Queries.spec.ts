@@ -1,8 +1,5 @@
-import assert from "assert";
-
 import { createConnection, Connection } from "typeorm";
 import { graphql } from "graphql";
-import { toGlobalId } from "graphql-relay";
 import faker from "faker";
 
 import { schema } from "../../../src/graphql";
@@ -10,17 +7,6 @@ import { Category } from "../../../src/entity/Category";
 import { Product } from "../../../src/entity/Product";
 import Email from "../../../src/email";
 import { ProductFactory, CategoryFactory } from "../../fixtures/factories";
-
-type ProductData = {
-  category: Category;
-  name: string;
-  description: string;
-  imagePath: string;
-  attachmentPath: string;
-  purchasePrice: number;
-  salePrice: number;
-  supplierName: string;
-};
 
 // Declaring global variables to be able to make a DB connection
 // once instead of inside every 'it' function, because 'describe' functions
@@ -32,30 +18,20 @@ beforeAll(async () => {
   connection = await createConnection("test");
   baseContext = { entityManager: connection.manager };
 
-  // Make sure the DB is empty
-  const existingCategories = await connection.manager.find(Category);
-  const categoryCount = existingCategories.length;
-  assert(categoryCount === 0);
-
   const recordCount = 5;
-  // const range = Array(rangeCount).fill(null);
 
   const categories = CategoryFactory.buildMany(recordCount);
-  await connection.manager.insert(Category, categories);
+  await connection.manager.save(Category, categories);
   const categoryRecords = await connection.manager.find(Category);
 
   const products = categoryRecords.flatMap((category: Category) =>
     ProductFactory.buildMany(recordCount, { category })
   );
 
-  await connection.manager.save(products);
+  await connection.manager.save(Product, products);
 });
 
-afterAll(async (done) => {
-  await connection.dropDatabase();
-  connection.close();
-  done();
-});
+afterAll(async () => await connection.close());
 
 describe("GraphQL schema", () => {
   describe("fetchCategories", () => {
@@ -130,11 +106,11 @@ describe("GraphQL schema", () => {
 
       const context = { ...baseContext };
 
+      const category = await connection.manager.findOne(Category);
+
       // Need to create the product in the `it` function, because `describe`
       // callbacks can't be async
-      const category = await connection.manager.findOne(Category, 1);
-
-      await connection.manager.insert(
+      await connection.manager.save(
         Product,
         ProductFactory.build({
           category: category,
@@ -231,122 +207,56 @@ describe("GraphQL schema", () => {
     });
   });
 
-  describe("addProductToCart", () => {
+  describe("sendQuoteRequest", () => {
     const query = `
-      mutation($productId: ID!, $quantity: Int!) {
-        addProductToCart(input: {
-          productId: $productId,
-          quantity: $quantity
-        }) {
-          cart {
-            cartItems {
-              edges {
-                node {
-                  product { id }
-                  quantity
-                }
-              }
-            }
-          }
+      query(
+        $personalIdNumber: String!,
+        $emailAddress: String!,
+        $name: String!,
+        $companyName: String,
+        $phoneNumber: String,
+        $city: String,
+        $message: String
+      ) {
+        sendQuoteRequest(
+          personalIdNumber: $personalIdNumber,
+          emailAddress: $emailAddress,
+          name: $name,
+          companyName: $companyName,
+          phoneNumber: $phoneNumber,
+          city: $city,
+          message: $message
+        ) {
+          status
+          message
         }
       }
     `;
 
-    const quantity = faker.random.number({ min: 1, max: 10 });
+    const mockResponse = { status: "success", message: "hooray" };
+    const mockSend = jest.fn(async () => mockResponse);
 
-    it("returns the cart with the new item", async () => {
+    const variables = {
+      personalIdNumber: "13421234",
+      emailAddress: "test@test.com",
+      message: "I want more info",
+      name: "Roberto",
+      companyName: "Roberto Ltda.",
+      phoneNumber: "12341234",
+      city: "Santiago",
+    };
+
+    it("sends an email", async () => {
       expect.assertions(1);
 
-      const product = await connection.manager.findOne(Product, 1);
-      const gqlId = toGlobalId("Product", String(product.id));
-
-      const session = {};
-      const context = { ...baseContext, session };
-      const variables = {
-        quantity,
-        productId: gqlId,
-      };
-
-      const results = await graphql(schema, query, null, context, variables);
-      const cartItems = results.data.addProductToCart.cart.cartItems.edges.map(
-        (ciEdge) => ciEdge.node
-      );
-
-      expect(cartItems).toEqual([
-        {
-          product: { id: gqlId },
-          quantity: quantity,
-        },
-      ]);
-    });
-
-    it("includes existing items in the cart returned", async () => {
-      expect.assertions(1);
-
-      const firstProduct = await connection.manager.findOne(Product, 1);
-      const firstGqlId = toGlobalId("Product", String(firstProduct.id));
-      const secondProduct = await connection.manager.findOne(Product, 2);
-      const secondGqlId = toGlobalId("Product", String(secondProduct.id));
-
-      const session = {
-        cart: {
-          cartItems: [
-            {
-              id: 1,
-              product: firstProduct,
-              quantity: 3,
-            },
-          ],
-        },
-      };
-      const context = { ...baseContext, session };
-      const variables = {
-        quantity,
-        productId: secondGqlId,
-      };
-
-      const results = await graphql(schema, query, null, context, variables);
-      const cartItems = results.data.addProductToCart.cart.cartItems.edges.map(
-        (ciEdge) => ciEdge.node
-      );
-
-      expect(cartItems).toEqual([
-        {
-          product: { id: firstGqlId },
-          quantity: 3,
-        },
-        {
-          product: { id: secondGqlId },
-          quantity,
-        },
-      ]);
-    });
-  });
-
-  describe("removeProductFromCart", () => {
-    const query = `
-      mutation($cartItemId: ID!) {
-        removeProductFromCart(input: { cartItemId: $cartItemId }) {
-          cart {
-            cartItems {
-              edges {
-                node {
-                  product { id }
-                }
-              }
-            }
-          }
-        }
-      }
-    `;
-
-    it("removes the given product from the cart", async () => {
-      const firstProduct = await connection.manager.findOne(Product, 1);
+      const firstProduct = await connection.manager.findOne(Product);
       const firstQuantity = faker.random.number({ min: 1, max: 10 });
-      const secondProduct = await connection.manager.findOne(Product, 2);
+
+      const secondProduct = await connection.manager
+        .createQueryBuilder(Product, "products")
+        .where("products.id != :id", { id: firstProduct.id })
+        .getOne();
       const secondQuantity = faker.random.number({ min: 1, max: 10 });
-      const secondProductId = toGlobalId("Product", String(secondProduct.id));
-      const firstCartItemId = toGlobalId("CartItem", "1");
 
       const session = {
         cart: {
@@ -362,61 +272,29 @@ describe("GraphQL schema", () => {
           ],
         },
       };
-      const context = { ...baseContext, session };
-      const variables = {
-        cartItemId: firstCartItemId,
-      };
-
-      const results = await graphql(schema, query, null, context, variables);
-      const cartItems = results.data.removeProductFromCart.cart.cartItems.edges.map(
-        (ciEdge) => ciEdge.node
-      );
-
-      expect(cartItems).toEqual([
-        {
-          product: { id: secondProductId },
-        },
-      ]);
+      const context = { ...baseContext, session, sendEmail: mockSend };
+      await graphql(schema, query, null, context, variables);
+      expect(mockSend.mock.calls.length).toBe(1);
     });
-  });
 
-  describe("updateCartItemQuantity", () => {
-    const query = `
-      mutation($cartItemId: ID!, $quantity: Int!) {
-        updateCartItemQuantity(input: {
-          cartItemId: $cartItemId,
-          quantity: $quantity
-        }) {
-          cart {
-            cartItems {
-              edges {
-                node {
-                  product { id }
-                  quantity
-                }
-              }
-            }
-          }
-        }
-      }
-    `;
+    it("returns response status info", async () => {
+      expect.assertions(1);
 
-    it("updates the quanity for the given product's cart item", async () => {
-      const firstProduct = await connection.manager.findOne(Product, 1);
-      const firstGqlId = toGlobalId("Product", String(firstProduct.id));
-      const oldFirstQuantity = 3;
-      const newFirstQuantity = oldFirstQuantity + 2;
-      const secondProduct = await connection.manager.findOne(Product, 2);
-      const secondGqlId = toGlobalId("Product", String(secondProduct.id));
+      const firstProduct = await connection.manager.findOne(Product);
+      const firstQuantity = faker.random.number({ min: 1, max: 10 });
+
+      const secondProduct = await connection.manager
+        .createQueryBuilder(Product, "products")
+        .where("products.id != :id", { id: firstProduct.id })
+        .getOne();
       const secondQuantity = faker.random.number({ min: 1, max: 10 });
-      const firstCartItemId = toGlobalId("CartItem", "1");
 
       const session = {
         cart: {
           cartItems: [
             {
               product: firstProduct,
-              quantity: oldFirstQuantity,
+              quantity: firstQuantity,
             },
             {
               product: secondProduct,
@@ -425,27 +303,15 @@ describe("GraphQL schema", () => {
           ],
         },
       };
-      const context = { ...baseContext, session };
-      const variables = {
-        cartItemId: firstCartItemId,
-        quantity: newFirstQuantity,
-      };
+      const context = { ...baseContext, session, sendEmail: mockSend };
 
       const results = await graphql(schema, query, null, context, variables);
-      const cartItems = results.data.updateCartItemQuantity.cart.cartItems.edges.map(
-        (ciEdge) => ciEdge.node
-      );
+      const messageResponse = results.data.sendQuoteRequest;
 
-      expect(cartItems).toEqual([
-        {
-          product: { id: firstGqlId },
-          quantity: newFirstQuantity,
-        },
-        {
-          product: { id: secondGqlId },
-          quantity: secondQuantity,
-        },
-      ]);
+      expect(messageResponse).toEqual({
+        ...mockResponse,
+        status: mockResponse.status.toUpperCase(),
+      });
     });
   });
 });
