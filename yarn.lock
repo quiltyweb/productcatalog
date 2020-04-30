@@ -483,9 +483,9 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
 
-"@sendgrid/client@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@sendgrid/client/-/client-7.0.1.tgz#b85389bb214f5dcfdf0fcbd3746713f57ea33250"
+"@sendgrid/client@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@sendgrid/client/-/client-7.1.0.tgz#ce52f099a81613b6bfad773bd8d54b53dcb308fa"
   dependencies:
     "@sendgrid/helpers" "^7.0.1"
     axios "^0.19.2"
@@ -497,11 +497,11 @@
     chalk "^2.0.1"
     deepmerge "^4.2.2"
 
-"@sendgrid/mail@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@sendgrid/mail/-/mail-7.0.1.tgz#058295972e45ad4d960d77a043cedc0ebe5f856d"
+"@sendgrid/mail@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@sendgrid/mail/-/mail-7.1.0.tgz#828aa975f885fecb36217e7db55ca6006b689873"
   dependencies:
-    "@sendgrid/client" "^7.0.1"
+    "@sendgrid/client" "^7.1.0"
     "@sendgrid/helpers" "^7.0.1"
 
 "@sindresorhus/is@^0.14.0":
