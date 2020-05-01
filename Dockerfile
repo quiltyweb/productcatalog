@@ -3,7 +3,7 @@
 # their own.
 # Using buster-slim instead of alpine, because there's an open issue
 # about flow not working on alpine, and the response is *shrug*
-FROM node:13.12.0-buster-slim@sha256:cc0d8c39734f51153a52a35bcec871b0829b7cfe256fb39583b3dfc54a323314
+FROM node:14.1.0-buster-slim@sha256:798ceb092256294ce7b629384994af4fe3a9a36a9eead7d09348e9d8e59f0b78
 
 RUN apt-get --no-install-recommends update \
   && apt-get -y --no-install-recommends install git wget ca-certificates curl \
