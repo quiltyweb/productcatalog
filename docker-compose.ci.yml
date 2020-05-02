@@ -1,9 +1,9 @@
 version: "3.2"
 services:
-  app:
-    build: .
+  server:
+    build: ./server
     ports:
-      - "3000:3000"
+      - "3333:3333"
     environment:
       DB_HOST: db
       DB_NAME: ${DB_NAME}
@@ -18,3 +18,10 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: ${DB_NAME}
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    command: yarn run start
