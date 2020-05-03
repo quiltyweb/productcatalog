@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
-        run: docker build . --tag productcatalog
+        run: docker build ./server --tag productcatalog
       - name: Lint Typescript files
         run: docker run productcatalog:latest yarn run lint
 
@@ -21,6 +21,6 @@ jobs:
       - name: Build the docker image
         run: docker-compose -f docker-compose.ci.yml build
       - name: Run unit tests
-        run: docker-compose -f docker-compose.ci.yml run app yarn run test:unit
+        run: docker-compose -f docker-compose.ci.yml run server yarn run test:unit
       - name: Run integration tests
         run: ./scripts/integration_tests.sh docker-compose.ci.yml
