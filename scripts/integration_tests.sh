@@ -4,7 +4,7 @@ DOCKER_COMPOSE_FILE="${1:-docker-compose.yml}"
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 
-./scripts/wait-for-it.sh localhost:3000 -- echo "Server ready"
+./scripts/wait-for-it.sh localhost:3333 -- echo "Server ready"
 
 # Tests have been flaky in CI, probably due to the DB not being ready
 # even if the server is running. In other projects, a 4-second sleep
@@ -17,14 +17,14 @@ docker exec -t -u postgres productcatalog_db_1 \
 
 sleep 1
 
-docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm app \
+docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm server \
   yarn run migration:run -c test
 
 EXIT_CODE=$?
 
 if [ ${EXIT_CODE} == 0 ]
 then
-  docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm app yarn test:integration
+  docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm server yarn test:integration
 
   EXIT_CODE=$?
 fi
