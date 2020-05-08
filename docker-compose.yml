@@ -17,6 +17,7 @@ services:
       HOSTNAME: localhost
       ADMIN_EMAIL: test@test.com
       APP_KEY: supersecretsauce
+      API_TOKEN: supersecretspicysauce
     env_file: .env
     stdin_open: true
     tty: true
@@ -35,6 +36,8 @@ services:
       - productcatalog_client_node_modules:/app/node_modules
     depends_on:
       - server
+    environment:
+      API_TOKEN: supersecretspicysauce
     command: yarn run start
 volumes:
   productcatalog_server_node_modules:
