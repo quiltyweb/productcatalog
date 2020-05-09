@@ -3,7 +3,7 @@ setup:
     NODE_ENV: production
 build:
   docker:
-    web: Dockerfile
+    web: server/Dockerfile
 release:
   image: web
   command:
