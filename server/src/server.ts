@@ -8,11 +8,13 @@ import session from "koa-session";
 
 import { schema } from "./graphql";
 import Email from "./email";
+import { authorizeRequest } from "./middleware";
 
 import type { Context as KoaContext } from "koa";
 
-const connectionName =
-  process.env.NODE_ENV === "development" ? "default" : process.env.NODE_ENV;
+const { NODE_ENV, APP_KEY, PORT, API_TOKEN } = process.env;
+
+const connectionName = NODE_ENV === "development" ? "default" : NODE_ENV;
 
 const CONFIG = {
   key: "koa:sess",
@@ -31,10 +33,10 @@ createConnection(connectionName)
     const app = new Koa();
     const router = new Router();
 
-    if (!process.env.APP_KEY)
+    if (!APP_KEY)
       throw Error("An APP_KEY is required to sign session cookies.");
 
-    app.keys = [process.env.APP_KEY];
+    app.keys = [APP_KEY];
 
     const server = new ApolloServer({
       schema,
@@ -53,6 +55,7 @@ createConnection(connectionName)
     });
 
     app
+      .use(authorizeRequest(API_TOKEN))
       .use(helmet())
       .use(session(CONFIG, app))
       .use(router.routes())
@@ -60,8 +63,8 @@ createConnection(connectionName)
 
     server.applyMiddleware({ app, cors: false });
 
-    app.listen(process.env.PORT);
+    app.listen(PORT);
 
-    console.log(`Server running on port ${process.env.PORT}`);
+    console.log(`Server running on port ${PORT}`);
   })
   .catch((error) => console.error(error));

@@ -27,6 +27,10 @@ Optional:
 - `docker-compose up` (add `-d` if you want to run it in the background)
 - Open the browser to `localhost:3000`
 
+### GraphQL Playground
+- Navigate to `localhost:3333/graphql`
+- To make make authorized requests to the GraphQL API, you have to add `{"Authorization": "supersecretspicysauce"}` to the HTTP Headers section in the bottom left corner of the page.
+
 ## Deployment
 
 We host the app on Heroku.
