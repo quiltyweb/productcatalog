@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Home from './pages/home/Home';
 import * as serviceWorker from './serviceWorker';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
+
+const client = new ApolloClient({});
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <Home />
+    <ApolloProvider client={client}>
+      <Home />
+    </ApolloProvider>,
   </React.StrictMode>,
   document.getElementById('root')
 );
