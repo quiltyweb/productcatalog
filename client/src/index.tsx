@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 
+// TODO: REMOVE THIS FAKE TOKEN, AND ADD A ENV VAR
 const client = new ApolloClient({
   headers: { "Authorization": "supersecretspicysauce" }
 });
