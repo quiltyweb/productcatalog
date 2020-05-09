@@ -1,12 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Home from './pages/home/Home';
 import * as serviceWorker from './serviceWorker';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
+
+// TODO: REMOVE THIS FAKE TOKEN, AND ADD A ENV VAR
+const client = new ApolloClient({
+  headers: { "Authorization": "supersecretspicysauce" }
+});
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <Home />
+    </ApolloProvider>,
   </React.StrictMode>,
   document.getElementById('root')
 );
