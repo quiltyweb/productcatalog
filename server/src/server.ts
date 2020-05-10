@@ -59,7 +59,7 @@ createConnection(connectionName)
       .use(router.routes())
       .use(router.allowedMethods());
 
-    server.applyMiddleware({ app, cors: true });
+    server.applyMiddleware({ app, cors: false });
 
     app.listen(PORT);
 
