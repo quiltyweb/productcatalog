@@ -8,11 +8,10 @@ import session from "koa-session";
 
 import { schema } from "./graphql";
 import Email from "./email";
-import { authorizeRequest } from "./middleware";
 
 import type { Context as KoaContext } from "koa";
 
-const { NODE_ENV, APP_KEY, PORT, API_TOKEN } = process.env;
+const { NODE_ENV, APP_KEY, PORT } = process.env;
 
 const connectionName = NODE_ENV === "development" ? "default" : NODE_ENV;
 
@@ -55,13 +54,12 @@ createConnection(connectionName)
     });
 
     app
-      .use(authorizeRequest(API_TOKEN))
       .use(helmet())
       .use(session(CONFIG, app))
       .use(router.routes())
       .use(router.allowedMethods());
 
-    server.applyMiddleware({ app, cors: false });
+    server.applyMiddleware({ app, cors: true });
 
     app.listen(PORT);
 
