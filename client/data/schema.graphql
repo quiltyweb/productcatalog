@@ -1,0 +1,259 @@
+"""
+Direct the client to resolve this field locally, either from the cache or local resolvers.
+"""
+directive @client(
+  """
+  When true, the client will never use the cache for this value. See
+  https://www.apollographql.com/docs/react/essentials/local-state/#forcing-resolvers-with-clientalways-true
+  """
+  always: Boolean
+) on FIELD | FRAGMENT_DEFINITION | INLINE_FRAGMENT
+
+"""
+Export this locally resolved field as a variable to be used in the remainder of this query. See
+https://www.apollographql.com/docs/react/essentials/local-state/#using-client-fields-as-variables
+"""
+directive @export(
+  """The variable name to export this field as."""
+  as: String!
+) on FIELD
+
+"""
+Specify a custom store key for this result. See
+https://www.apollographql.com/docs/react/advanced/caching/#the-connection-directive
+"""
+directive @connection(
+  """Specify the store key."""
+  key: String!
+
+  """
+  An array of query argument names to include in the generated custom store key.
+  """
+  filter: [String!]
+) on FIELD
+
+input AddProductToCartInput {
+  productId: ID!
+  quantity: Int!
+  clientMutationId: String
+}
+
+type AddProductToCartPayload {
+  cart: Cart
+  clientMutationId: String
+}
+
+type Cart {
+  cartItems(after: String, first: Int, before: String, last: Int): CartItemConnection!
+}
+
+type CartItem implements Node {
+  """The ID of an object"""
+  id: ID!
+  product: Product!
+  quantity: Int!
+}
+
+"""A connection to a list of items."""
+type CartItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CartItemEdge]
+}
+
+"""An edge in a connection."""
+type CartItemEdge {
+  """The item at the end of the edge"""
+  node: CartItem
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Category implements Node {
+  """The ID of an object"""
+  id: ID!
+  name: String!
+
+  """The products that belong to the category."""
+  products(after: String, first: Int, before: String, last: Int): ProductConnection!
+}
+
+"""A connection to a list of items."""
+type CategoryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CategoryEdge]
+}
+
+"""An edge in a connection."""
+type CategoryEdge {
+  """The item at the end of the edge"""
+  node: Category
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+enum MessageStatus {
+  SUCCESS
+  FAILURE
+}
+
+type Mutation {
+  addProductToCart(input: AddProductToCartInput!): AddProductToCartPayload
+  removeProductFromCart(input: RemoveProductFromCartInput!): RemoveProductFromCartPayload
+  updateCartItemQuantity(input: UpdateCartItemQuantityInput!): UpdateCartItemQuantityPayload
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Product implements Node {
+  """The ID of an object"""
+  id: ID!
+  name: String!
+
+  """Detailed description of the product."""
+  description: String!
+
+  """Path to an image file for the product."""
+  imagePath: String!
+
+  """Path to an attachment file (usually a PDF) for the product."""
+  attachmentPath: String!
+
+  """Price at which the store buys the product."""
+  purchasePrice: Int!
+
+  """Price at which the store sells the product."""
+  salePrice: Int!
+
+  """Name or RUT of the supplier of the product."""
+  supplierName: String!
+}
+
+"""A connection to a list of items."""
+type ProductConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ProductEdge]
+}
+
+"""An edge in a connection."""
+type ProductEdge {
+  """The item at the end of the edge"""
+  node: Product
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  fetchCategories(after: String, first: Int, before: String, last: Int): CategoryConnection!
+  searchProducts(
+    """
+    Search term to use to match products in the DB.
+    Matches on name only, converting the search and the names
+    to lowercase.
+    """
+    searchTerm: String!
+    after: String
+    first: Int
+    before: String
+    last: Int
+  ): ProductConnection!
+  sendContactMessage(
+    """The ID number of the sender, typically their RUT."""
+    personalIdNumber: String!
+
+    """The sender's email address."""
+    emailAddress: String!
+
+    """The message body to be sent."""
+    message: String!
+
+    """The sender's name."""
+    name: String
+
+    """The senders' phone number."""
+    phoneNumber: String
+  ): SendMessageResponse!
+  sendQuoteRequest(
+    """The ID number of the sender, typically their RUT."""
+    personalIdNumber: String!
+
+    """The sender's email address."""
+    emailAddress: String!
+
+    """The message body to be sent."""
+    message: String
+
+    """The sender's name."""
+    name: String!
+
+    """The name of the sender's company."""
+    companyName: String
+
+    """The senders' phone number."""
+    phoneNumber: String
+
+    """The sender's home city."""
+    city: String
+  ): SendMessageResponse!
+}
+
+input RemoveProductFromCartInput {
+  cartItemId: ID!
+  clientMutationId: String
+}
+
+type RemoveProductFromCartPayload {
+  cart: Cart
+  clientMutationId: String
+}
+
+type SendMessageResponse {
+  status: MessageStatus
+  message: String!
+}
+
+input UpdateCartItemQuantityInput {
+  cartItemId: ID!
+  quantity: Int!
+  clientMutationId: String
+}
+
+type UpdateCartItemQuantityPayload {
+  cart: Cart
+  clientMutationId: String
+}
