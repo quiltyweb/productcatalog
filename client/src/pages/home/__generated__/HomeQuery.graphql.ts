@@ -2,22 +2,11 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type HomeQueryVariables = {};
 export type HomeQueryResponse = {
     readonly fetchCategories: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly name: string;
-                readonly products: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly name: string;
-                        } | null;
-                    } | null> | null;
-                };
-            } | null;
-        } | null> | null;
+        readonly " $fragmentRefs": FragmentRefs<"CategoryList_categories">;
     };
 };
 export type HomeQuery = {
@@ -30,40 +19,21 @@ export type HomeQuery = {
 /*
 query HomeQuery {
   fetchCategories {
-    edges {
-      node {
-        id
-        name
-        products {
-          edges {
-            node {
-              name
-              id
-            }
-          }
-        }
-      }
+    ...CategoryList_categories
+  }
+}
+
+fragment CategoryList_categories on CategoryConnection {
+  edges {
+    node {
+      id
+      name
     }
   }
 }
 */
 
-const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -79,62 +49,9 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
             "args": null,
-            "concreteType": "CategoryEdge",
-            "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Category",
-                "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  (v0/*: any*/),
-                  (v1/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "ProductConnection",
-                    "kind": "LinkedField",
-                    "name": "products",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "ProductEdge",
-                        "kind": "LinkedField",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Product",
-                            "kind": "LinkedField",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              (v1/*: any*/)
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
+            "kind": "FragmentSpread",
+            "name": "CategoryList_categories"
           }
         ],
         "storageKey": null
@@ -172,41 +89,18 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v0/*: any*/),
-                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "ProductConnection",
-                    "kind": "LinkedField",
-                    "name": "products",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "ProductEdge",
-                        "kind": "LinkedField",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Product",
-                            "kind": "LinkedField",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              (v1/*: any*/),
-                              (v0/*: any*/)
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
+                    "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
                     "storageKey": null
                   }
                 ],
@@ -225,9 +119,8 @@ return {
     "metadata": {},
     "name": "HomeQuery",
     "operationKind": "query",
-    "text": "query HomeQuery {\n  fetchCategories {\n    edges {\n      node {\n        id\n        name\n        products {\n          edges {\n            node {\n              name\n              id\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query HomeQuery {\n  fetchCategories {\n    ...CategoryList_categories\n  }\n}\n\nfragment CategoryList_categories on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n"
   }
 };
-})();
-(node as any).hash = '8730234c1c313e4976c354e4b6d7b8ff';
+(node as any).hash = '28507d0c6afb6223ba3bf1b51488357b';
 export default node;
