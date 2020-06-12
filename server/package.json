@@ -39,7 +39,7 @@
     "typescript-eslint": "^0.0.1-alpha.0"
   },
   "dependencies": {
-    "@sendgrid/mail": "^7.1.1",
+    "@sendgrid/mail": "^7.2.0",
     "apollo-server-koa": "^2.14.3",
     "graphql": "^15.1.0",
     "graphql-relay": "^0.6.0",
