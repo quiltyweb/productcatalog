@@ -2,7 +2,8 @@ import React from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
-import CategoryList from "../../components/CategoryList";
+import CategoryList from "../../components/CategoryList/CategoryList";
+import Nav from "../../components/Nav/Nav";
 import "./Home.css";
 import logo from "./logo.png";
 
@@ -31,6 +32,7 @@ const Home: React.FunctionComponent = () => {
             <header className="App-header">
               <p>Bienvenidos a Comercial Gattoni</p>
               <img src={logo} className="App-logo" alt="logo" />
+              <Nav />
             </header>
             <main>
               <CategoryList categories={props.fetchCategories} />
