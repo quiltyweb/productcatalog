@@ -28,8 +28,6 @@ RUN yarn
 # Add rest of the client code
 COPY . .
 
-RUN yarn run build
-
 # PORT value needs to be based on previous env var to work with how Heroku
 # runs Docker containers.
 ENV PORT=${PORT:-3000}
