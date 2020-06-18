@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@types/react-relay": "^7.0.8",
-    "babel-plugin-relay": "^9.1.0",
-    "react-relay": "^9.1.0"
-  }
-}
