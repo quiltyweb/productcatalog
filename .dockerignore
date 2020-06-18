@@ -14,4 +14,7 @@ node_modules
 coverage
 .vscode
 .DS_STORE
-yarn-error.log
+*.log
+
+# Data stuff
+database/backups
