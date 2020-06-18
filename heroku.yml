@@ -3,11 +3,10 @@ setup:
     NODE_ENV: production
 build:
   docker:
-    web: server/Dockerfile
+    web: Dockerfile
 release:
   image: web
   command:
-    - yarn run build
     - yarn run migration:run
 run:
   web: yarn start

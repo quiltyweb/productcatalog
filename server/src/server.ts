@@ -5,6 +5,7 @@ import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-koa";
 import helmet from "koa-helmet";
 import session from "koa-session";
+import serve from "koa-static";
 
 import { schema } from "./graphql";
 import Email from "./email";
@@ -49,9 +50,13 @@ createConnection(connectionName)
       }),
     });
 
-    router.get("/", async (ctx) => {
-      ctx.body = "Hello World!";
-    });
+    if (process.env.NODE_ENV === "production") {
+      app.use(serve(__dirname + "/build"));
+    } else {
+      router.get("/", async (ctx) => {
+        ctx.body = "Hello World!";
+      });
+    }
 
     app
       .use(helmet())
