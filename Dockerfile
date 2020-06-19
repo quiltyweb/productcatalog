@@ -14,6 +14,8 @@ RUN yarn build
 
 FROM node:14.4.0-buster-slim@sha256:c92f4bc74b3233c22d94b264f2912a8935839a008d8c55174cefc5fce9610c7a
 
+WORKDIR /app
+
 RUN apt-get --no-install-recommends update \
   && apt-get -y --no-install-recommends install git wget ca-certificates curl \
   && rm -rf /var/lib/apt/lists/*
