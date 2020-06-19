@@ -9,7 +9,7 @@ WORKDIR /app
 COPY client/package.json client/yarn.lock ./
 RUN yarn
 
-COPY . .
+COPY ./client .
 RUN yarn build
 
 FROM node:14.4.0-buster-slim@sha256:c92f4bc74b3233c22d94b264f2912a8935839a008d8c55174cefc5fce9610c7a
@@ -32,7 +32,7 @@ RUN curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 COPY server/package.json server/yarn.lock ./
 RUN yarn
 
-COPY . .
+COPY ./server .
 RUN yarn build
 
 COPY --from=client /app/build /app/dist/build
