@@ -32,8 +32,6 @@ const Home: React.FunctionComponent = () => {
         return (
           <div className="App">
             <header className="App-header">
-              <p>Bienvenidos a Comercial Gattoni</p>
-              <img src={logo} className="App-logo" alt="logo" />
               <Nav />
             </header>
             <main>
