@@ -44,7 +44,7 @@
     "apollo-server-koa": "^2.15.0",
     "graphql": "^15.1.0",
     "graphql-relay": "^0.6.0",
-    "koa": "^2.12.1",
+    "koa": "^2.13.0",
     "koa-helmet": "^5.2.0",
     "koa-router": "^9.0.1",
     "koa-session": "^6.0.0",
