@@ -4,6 +4,8 @@ import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import Nav from "../../components/Nav/Nav";
+import Footer from "../../components/Footer/Footer";
+
 import "./Home.css";
 import logo from "./logo.png";
 
@@ -37,6 +39,7 @@ const Home: React.FunctionComponent = () => {
             <main>
               <CategoryList categories={props.fetchCategories} />
             </main>
+            <Footer />
           </div>
         );
       }}
