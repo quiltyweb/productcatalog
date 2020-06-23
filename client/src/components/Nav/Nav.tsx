@@ -4,7 +4,7 @@ import styled from "styled-components";
 // TODO: avatar image can be as a background-image in the styled components,
 // with a background-size: cover to preserve the aspect ratio.
 const NavStyled = styled.nav`
-  position: fixed;
+  width: 100%;
   display: flex;
   align-items: center;
   top: 0;
@@ -18,40 +18,7 @@ const NavStyled = styled.nav`
   transition-property: all;
   transition-duration: 0.3s;
   z-index: 99;
-
-  &::before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    // background-image: url("../../assets/hills-7.svg");
-    background-size: cover;
-    background-repeat: repeat-x;
-    background-position: center center;
-  }
-
-  @media (min-width: 760px) {
-    min-height: 15rem;
-    border: 2px dashed red;
-
-    &.is-fixed {
-      transform: translateY(-5rem);
-      background-position: center top;
-      min-height: 12rem;
-
-      .NavBar {
-        margin-top: 5rem;
-      }
-
-      .NavLogo {
-        font-size: 3.5rem;
-      }
-
-      .NavLogo-legend {
-        font-size: 1.2rem;
-      }
-    }
-  }
+  min-height: 5rem;
 `;
 
 const NavDrawer = styled.div`
@@ -108,14 +75,12 @@ const NavBar = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  flex-grow: 1;
   z-index: 2;
-  display: flex;
-  justify-content: center;
   margin: 0;
   padding: 0;
   line-height: 1;
   list-style: none;
-  border: 2px dashed red;
   max-width: 110rem;
   flex-direction: row;
 `;
@@ -182,32 +147,26 @@ const NavBarToggle = styled.button`
 `;
 
 const NavLogo = styled.a`
-   {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 100%;
-    max-width: 20rem;
-    color: black;
-    font-size: 3rem;
-    font-weight: bold;
-    line-height: 1;
-    text-transform: uppercase;
-    transition-property: all;
-    transition-duration: 0.2s;
-
-    @media (min-width: 760px) {
-      align-items: center;
-      font-size: 12px;
-    }
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  max-width: 20rem;
+  color: black;
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 1;
+  text-transform: uppercase;
+  transition-property: all;
+  transition-duration: 0.2s;
+ 
+  @media (min-width: 760px) {
+    align-items: center;
+    font-size: 4rem;
   }
-
+ 
   .NavLogo-legend {
     font-size: 1rem;
-
-    @media (min-width: 760px) {
-      font-size: 12px;
-    }
   }
 `;
 
