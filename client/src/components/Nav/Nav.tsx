@@ -13,8 +13,8 @@ const NavStyled = styled.nav`
   margin: 0;
   padding: 0;
   min-height: 6rem;
-  color: $primary-color-dark;
-  background-color: $color-light;
+  color: #D32F2F;
+  background-color: #FFFFFF;
   transition-property: all;
   transition-duration: 0.3s;
   z-index: 99;
@@ -30,8 +30,9 @@ const NavStyled = styled.nav`
     background-position: center center;
   }
 
-  @include break(md) {
+  @media (min-width: 760px) {
     min-height: 15rem;
+    border: 2px dashed red;
 
     &.is-fixed {
       transform: translateY(-5rem);
@@ -60,10 +61,10 @@ const NavDrawer = styled.div`
   width: 100%;
   height: 100vh;
   transition: all 0.2s;
-  background-color: $color-grey--3;
+  background-color: #E0E0E0;
   transform: translateY(-80rem);
 
-  @include break(md) {
+  @media (min-width: 760px) {
     display: none;
   }
 
@@ -80,8 +81,8 @@ const NavDrawer = styled.div`
       flex-basis: 33%;
       padding: 3rem 0;
       margin: 0;
-      border-bottom: 1px solid $color-light;
-      border-right: 1px solid $color-light;
+      border-bottom: 1px solid #fff;
+      border-right: 1px solid #fff;
     }
   }
 
@@ -96,8 +97,8 @@ const NavDrawer = styled.div`
       flex-basis: 33%;
       padding: 3rem 0;
       margin: 0;
-      border-bottom: 1px solid $color-light;
-      border-right: 1px solid $color-light;
+      border-bottom: 1px solid #fff;
+      border-right: 1px solid #fff;
     }
   }
 `;
@@ -108,43 +109,15 @@ const NavBar = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   z-index: 2;
-
-  @include break(md) {
-    max-width: $container-width-3;
-  }
-
-  &-primary {
-    display: none;
-
-    @include break(md) {
-      display: flex;
-      justify-content: center;
-      margin: 0;
-      padding: 0;
-      line-height: 1;
-      list-style: none;
-    }
-
-    li {
-      display: block;
-      margin: $gutter-v/4 $gutter-h/4;
-
-      @include break(lg) {
-        margin: $gutter-v/2 $gutter-h;
-      }
-    }
-
-    &-link {
-      color: $primary-text-color;
-    }
-
-    &--column {
-      display: flex;
-      flex-direction: column;
-      margin: 0;
-      padding: 0;
-    }
-  }
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  list-style: none;
+  border: 2px dashed red;
+  max-width: 110rem;
+  flex-direction: row;
 `;
 
 const NavBarToggle = styled.button`
@@ -152,7 +125,7 @@ const NavBarToggle = styled.button`
   align-items: center;
   cursor: pointer;
 
-  @include break(md) {
+  @media (min-width: 760px) {
     display: none;
   }
 
@@ -170,7 +143,7 @@ const NavBarToggle = styled.button`
   &-icon,
   &-icon::before,
   &-icon::after {
-    border-top: 0.2rem solid $secondary-text-color;
+    border-top: 0.2rem solid #757575;
   }
 
   &-icon::before,
@@ -196,13 +169,13 @@ const NavBarToggle = styled.button`
 
     .NavBar-toggle-icon::before {
       top: -0.7rem;
-      border-color: $primary-color-dark;
+      border-color: #D32F2F;
       transform: rotate(45deg) translateY(0.7rem);
     }
 
     .NavBar-toggle-icon::after {
       bottom: -0.5rem;
-      border-color: $primary-color-dark;
+      border-color: #D32F2F;
       transform: rotate(-45deg) translateY(-0.7rem);
     }
   }
@@ -223,7 +196,7 @@ const NavLogo = styled.a`
     transition-property: all;
     transition-duration: 0.2s;
 
-    @include break(md) {
+    @media (min-width: 760px) {
       align-items: center;
       font-size: 12px;
     }
@@ -232,21 +205,38 @@ const NavLogo = styled.a`
   .NavLogo-legend {
     font-size: 1rem;
 
-    @include break(md) {
+    @media (min-width: 760px) {
       font-size: 12px;
     }
+  }
+`;
+
+const NavBarList = styled.ul`
+  outline: 1px solid blue;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  list-style: none;
+  margin: 1rem 2rem;
+
+  li {
+    display: block;
+    margin: .5rem;
+    font-size: 1rem;  
   }
 `;
 
 const Nav = () => {
   return (
     <NavStyled>
-      <NavBar>
+       <NavBar>
         <NavLogo>
           <span className="NavLogo-header">Gattoni</span>
           <span className="NavLogo-legend">Seguridad Industrial</span>
         </NavLogo>
-        <ul className="NavBar-primary">
+        <NavBarList>
           <li>
             <a href="www.gattoni.cl" className="NavBar-primary-link">
               Mi Cotización
@@ -267,7 +257,7 @@ const Nav = () => {
               Contacto
             </a>
           </li>
-        </ul>
+        </NavBarList>
         <NavBarToggle>
           <span className="NavBar-toggle-label">Menu</span>
           <span className="NavBar-toggle-icon" />
