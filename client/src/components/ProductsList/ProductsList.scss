@@ -1,0 +1,57 @@
+@import "../../styles/config.mixins.scss";
+@import "../../styles/config.variables";
+
+.ProductsList {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  list-style: none;
+  border-top: 1px solid $color-grey--3;
+  border-left: 1px solid $color-grey--3;
+
+  @include break(md) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    border: none;
+  }
+
+  li {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    margin: 0;
+    padding: $gutter-v $gutter-h;
+    border-bottom: 1px solid $color-grey--3;
+    border-right: 1px solid $color-grey--3;
+
+    @include break(md) {
+      display: block;
+      padding: $gutter-v/2 $gutter-h/2;
+      margin: $gutter-v/4 0;
+      border: none;
+    }
+  }
+
+  &-link {
+    position: relative;
+    display: block;
+    color: $primary-text-color;
+    font-family: $font-secondary;
+    font-size: map-get($font-size-secondary, xs);
+    white-space: nowrap;
+    transition: color .2s;
+
+    @include break(lg) {
+      font-size: map-get($font-size-secondary, sm);
+    }
+
+    &:hover {
+      color: $primary-color-dark;
+    }
+  }
+}
