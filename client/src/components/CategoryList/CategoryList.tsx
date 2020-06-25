@@ -15,6 +15,12 @@ const ProductsList = styled.ul`
   list-style: none;
   border-top: 1px solid grey;
   border-left: 1px solid grey;
+
+  @media (min-width: 760px) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    border: none;
+  }
 `;
 
 const ProductItem = styled.li`
@@ -25,6 +31,12 @@ const ProductItem = styled.li`
   padding: 2rem 2rem;
   border-bottom: 1px solid grey;
   border-right: 1px solid grey;
+  @media (min-width: 760px) {
+    display: block;
+    padding: calc(2rem / 2) calc(2rem / 2);
+    margin: calc(2rem / 4) 0;
+    border: none;
+  }
 `;
 
 const ProductsListLink = styled.a`
@@ -35,7 +47,8 @@ const ProductsListLink = styled.a`
   white-space: nowrap;
   transition: color 0.2s;
   &:hover {
-    color: black;
+    color: red;
+    text-decoration: underline;
   }
 `;
 
@@ -53,7 +66,7 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = ({
           categories.edges.map((item: any) => {
             return (
               <ProductItem key={item.node.id}>
-                <ProductsListLink>{item.node.name}</ProductsListLink>
+                <ProductsListLink href="#">{item.node.name}</ProductsListLink>
               </ProductItem>
             );
           })
