@@ -70,7 +70,6 @@ const FooterComponent = () => {
     <FooterContainer>
       <FooterContent>
         <FooterLinks>
-          <h3>Links</h3>
           <FooterList aria-label="Menu pie de pagina">
             <li><a href="/mi-cotizacion" className="NavBar-primary-link">Mi Cotización</a></li>
             <li><a href="/certificaciones" className="NavBar-primary-link">Certificaciones</a></li>
@@ -86,7 +85,7 @@ const FooterComponent = () => {
           </p>
           <p itemProp="telephone">Teléfono: <a href="tel:52-2-218056">52-2-218056</a></p>
           <p itemProp="faxNumber">Fax: <a href="tel:52-2-216257">52-2-216257</a></p>
-          <p>&copy; Todos los derechos reservados {currDate.getFullYear()} Comercial Gattoni Seguridad Industrial</p>
+          <p>&copy; Todos los derechos reservados {currDate.getFullYear()} Comercial Gattoni.</p>
         </FooterAddress>
       </FooterContent>
     </FooterContainer>
