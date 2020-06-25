@@ -6,6 +6,10 @@ const FooterContainer = styled.footer`
   flex-direction: column;
   margin-top: 2rem;
   background-color: #FAFAFA;
+
+  p {
+    margin: .5rem;
+  }
 `;
 
 const FooterContent = styled.div`
@@ -43,7 +47,7 @@ const FooterLinks  = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  margin: 0;
+  margin: .5rem 0;
   padding: 0;
 `;
 
@@ -74,16 +78,15 @@ const FooterComponent = () => {
           </FooterList>
         </FooterLinks>
         <FooterAddress itemScope itemType="http://schema.org/LocalBusiness">
-          <h3 itemProp="name">Comercial Gattoni</h3>
-          <span itemProp="description"> Seguridad Industrial y Ropa de Trabajo.</span>
-          <div itemProp="address" itemScope itemType="http://schema.org/PostalAddress">
+          <p><strong>Nuestra Dirección:</strong></p>
+          <p itemProp="address" itemScope itemType="http://schema.org/PostalAddress">
             <span itemProp="streetAddress">Rodriguez 757-A </span>
             <span itemProp="addressLocality">Copiapó, </span>
             <span itemProp="addressRegion">Región de Atacama, Chile.</span>
-          </div>
-          <p  itemProp="telephone">Teléfono: <a href="tel:52-2-218056">52-2-218056</a></p>
-          <p  itemProp="faxNumber">Fax: <a href="tel:52-2-216257">52-2-216257</a></p>
-          <p className="Footer-copyright">{currDate.getFullYear()} © Comercial Gattoni Seguridad Industrial, <br /> Todos los derechos Reservados</p>
+          </p>
+          <p itemProp="telephone">Teléfono: <a href="tel:52-2-218056">52-2-218056</a></p>
+          <p itemProp="faxNumber">Fax: <a href="tel:52-2-216257">52-2-216257</a></p>
+          <p>&copy; Todos los derechos reservados {currDate.getFullYear()} Comercial Gattoni Seguridad Industrial</p>
         </FooterAddress>
       </FooterContent>
     </FooterContainer>

@@ -54,10 +54,9 @@ const NavBarContent = styled.div`
 
 const NavLogo = styled.a`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
-  width: 100%;
-  max-width: 20rem;
+  padding: 1rem;
   color: black;
   font-size: 3rem;
   font-weight: bold;
@@ -76,7 +75,7 @@ const NavLogoSubHeading= styled.span`
 const NavBarList = styled.ul`
   display: flex;
   flex-direction: column;
-
+  align-items: center;
   justify-content: center;
   margin: 0;
   padding: 0;
@@ -104,7 +103,7 @@ const Nav = () => {
           </li>
           <li>
             <a href="www.gattoni.cl" className="NavBar-primary-link">
-              Cart
+              Carrito
             </a>
           </li>
           <li>
