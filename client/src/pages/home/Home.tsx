@@ -1,9 +1,8 @@
 import React from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
-import styled, { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
  
-
 import environment from "../../environment";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import Nav from "../../components/Nav/Nav";
