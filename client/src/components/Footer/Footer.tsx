@@ -56,7 +56,7 @@ const FooterComponent = () => {
       <FooterContent>
         <FooterLinks>
           <h3>Links</h3>
-          <FooterList>
+          <FooterList aria-label="Menu pie de pagina">
             <li><a href="/mi-cotizacion" className="NavBar-primary-link">Mi Cotización</a></li>
             <li><a href="/certificaciones" className="NavBar-primary-link">Certificaciones</a></li>
             <li><a href="/contacto" className="NavBar-primary-link">Contacto</a></li>

@@ -65,7 +65,7 @@ const Nav = () => {
           <NavLogoHeading>GATTONI</NavLogoHeading>
           <NavLogoSubHeading>Seguridad Industrial</NavLogoSubHeading>
         </NavLogo>
-        <NavBarList>
+        <NavBarList aria-label="Menu principal">
           <li>
             <a href="www.gattoni.cl" className="NavBar-primary-link">
               Mi Cotización
