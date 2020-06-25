@@ -59,10 +59,12 @@ type CategoryListProps = {
 const CategoryList: React.FunctionComponent<CategoryListProps> = ({
   categories,
 }): JSX.Element => {
+  console.log(categories);
+
   return (
     <>
       <ProductsList>
-        {categories && categories.edges.length > 0 ? (
+        {categories && categories.edges && categories.edges.length > 0 ? (
           categories.edges.map((item: any) => {
             return (
               <ProductItem key={item.node.id}>
