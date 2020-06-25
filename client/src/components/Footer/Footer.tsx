@@ -5,65 +5,48 @@ const FooterContainer = styled.footer`
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
-  font-size: 1rem;
   background-color: #FAFAFA;
 `;
 
 const FooterContent = styled.div`
-  padding-left: 2rem;
-  padding-right: 2rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+  padding-left: 2rem;
+  padding-right: 2rem;
 `;
 
 const FooterAddress = styled.div`
-  flex-basis: 60%;
-  align-self: end;
   display: flex;
   flex-direction: column;
+  flex-basis: 60%;
+  align-self: end;
   align-items: flex-end;
   text-align: right;
- 
 `;
 
 const FooterLinks  = styled.div`
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
   margin: 0;
   padding: 0;
 `;
 
 const FooterList = styled.ul`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   margin: 0;
   padding: 0;
   line-height: 1;
   list-style: none;
-  display: flex;
-  flex-direction: column;
   margin: 0;
   padding: 0;
-
-li {
-  display: block;
-  margin: .5rem;
-  
-  @media (min-width: 760px) {
-    margin: 1rem 2rem;
-  }
-
-  a {
-    color: #212121;
-  }
 }`;
 
 const FooterComponent = () => {
