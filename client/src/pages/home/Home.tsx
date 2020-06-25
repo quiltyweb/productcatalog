@@ -1,14 +1,11 @@
 import React from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
-import { createGlobalStyle } from "styled-components";
- 
+import styled, { createGlobalStyle } from "styled-components";
 import environment from "../../environment";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
-
-// import logo from "./logo.png";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -28,7 +25,23 @@ const GlobalStyle = createGlobalStyle`
     margin: .5rem;
     list-style: none;
   }
-`
+`;
+
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  padding: calc(2rem * 4) 2rem;
+  background-color: #ffffff;
+`;
+
+const MainContent = styled.div`
+  padding: 2rem;
+`;
+
+const MainSidebar = styled.aside`
+  flex-basis: 20%;
+`;
 
 const Home: React.FunctionComponent = () => {
   return (
@@ -56,9 +69,13 @@ const Home: React.FunctionComponent = () => {
             <header>
               <Nav />
             </header>
-            <main>
-              <CategoryList categories={props.fetchCategories} />
-            </main>
+            <Main>
+              <MainContent>content goes here...</MainContent>
+              <MainSidebar>
+                <CategoryList categories={props.fetchCategories} />
+              </MainSidebar>
+            </Main>
+
             <Footer />
           </>
         );
