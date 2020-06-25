@@ -7,6 +7,7 @@ import hillsSVg from './hills.svg';
 const NavContainer = styled.nav`
   display: flex;
   align-items: center;
+  flex-direction: column;
   width: 100%;
   min-height: 5rem;
   top: 0;
@@ -28,11 +29,14 @@ const NavContainer = styled.nav`
     background-position: center center;
   }
 
+  @media (min-width: 760px) {
+    flex-direction: row;
+   }
 `;
 
 const NavBarContent = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   position: relative;
@@ -40,6 +44,12 @@ const NavBarContent = styled.div`
   max-width: 110rem;
   margin: 0;
   padding: 0 2rem;
+
+
+  @media (min-width: 760px) {
+    flex-direction: row;
+   }
+
 `;
 
 const NavLogo = styled.a`
@@ -65,9 +75,17 @@ const NavLogoSubHeading= styled.span`
 `;
 const NavBarList = styled.ul`
   display: flex;
+  flex-direction: column;
+
   justify-content: center;
   margin: 0;
   padding: 0;
+
+
+  @media (min-width: 760px) {
+    flex-direction: row;
+   }
+
 `;
 
 const Nav = () => {
