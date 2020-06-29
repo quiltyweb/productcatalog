@@ -27,21 +27,15 @@ const CardImage = styled.div`
     object-fit: cover;
   }
 `;
-const CardCtaSpan = styled.span`
+
+const CardCta = styled.a`
   padding: 0.75rem;
   border: 1px solid;
   border-radius: 0.25rem;
   text-align: center;
-`;
 
-const CardLink = styled.a`
-  &:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
+  &:focus {
+    outline: 2px solid #D32F2F;
   }
 `;
 
@@ -61,9 +55,9 @@ const Card: React.FunctionComponent<CardProps> = ({ name, description, linkImage
     <CardItem>
       <CardImage><img src={linkImage} alt="" /></CardImage>
       <CardContent>
-        <HeadingCard><CardLink href="http://www.gattoni.cl" aria-describedby="desc-a-card">{name}</CardLink></HeadingCard>
+        <HeadingCard>{name}</HeadingCard>
         <p>{description}</p>
-        <CardCtaSpan id="desc-a-card">Cotizar →</CardCtaSpan>
+        <CardCta href="http://www.gattoni.cl" aria-label={`Cotizar ${name}`}>Cotizar →</CardCta>
       </CardContent>
     </CardItem>
   )
