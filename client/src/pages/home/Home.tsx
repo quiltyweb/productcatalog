@@ -6,6 +6,7 @@ import environment from "../../environment";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
+import Card from "../../components/Card/Card";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -57,6 +58,13 @@ const MainContent = styled.div`
   }
 `;
 
+const CardList = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-column-gap: 1.5rem;
+  grid-row-gap: 1.5rem;
+
+`;
 const MainSidebar = styled.aside`
   flex-basis: 20%;
 `;
@@ -91,7 +99,7 @@ const Home: React.FunctionComponent = () => {
               <MainContent>
                 <h1>Sómos Seguridad Industrial</h1>
                 <h2>
-                  Con más de 20 años de experiencia en la Región de Atacama
+                  Con más de 20 años de experiencia en la Región de Atacama.
                 </h2>
                 <p>
                   Comercial Gattoni le da la más cordial bienvenida y le invita
@@ -106,6 +114,12 @@ const Home: React.FunctionComponent = () => {
                   servicios de Bordados industriales computacionales y más.
                   Distribuidores de Vicsa en Copiapó.
                 </p>
+                <h2 id="heading-destacados">Productos Destacados:</h2>
+                <CardList aria-labelledby="heading-destacados">
+                  <Card name="Lente de seguridad l-300" description="lorem ipsum" linkImage="http://www.gattoni.cl/Visual/LENTE%20SEGURIDAD%20L300.jpg" />
+                  <Card name="Guante Respirador 2 vias m500 masprot" description="lorem ipsum" linkImage="http://www.gattoni.cl/Respiratoria/%C3%ADndice.jpg" />
+                  <Card name="Botin negro economico pu-100" description="lorem ipsum" linkImage="http://www.gattoni.cl/Zapatos/SAMARA.jpg" />
+                </CardList>
               </MainContent>
               <MainSidebar>
                 <CategoryList categories={props.fetchCategories} />
