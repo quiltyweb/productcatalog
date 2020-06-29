@@ -39,7 +39,7 @@ const CardCta = styled.a`
   }
 `;
 
-const HeadingCard = styled.h2`
+const HeadingCard = styled.h3`
   font-size: 1.2rem;
   line-height: normal;
 `;
