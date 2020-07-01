@@ -1,66 +1,52 @@
-import React from 'react';
-import styled from "styled-components";
+import React from 'react'
+import { styled, Card as FPCard, Image } from 'fannypack'
 
-const CardItem = styled.li`
-  cursor: pointer;
-  border: 1px solid #666;
-  border-radius: 0.5rem;
+const CardItem = styled(FPCard.Card)`
   display: flex;
   flex-direction: column;
-  position: relative;
-`;
-
-const CardContent = styled.div`
-  padding: 1rem;
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-`;
-
-const CardImage = styled.div`
-  height: 10.5rem;
-
-  & img {
-    width: 100%;
-    height: 100%;
-    border-radius: 0.5rem;
-    object-fit: cover;
-  }
-`;
+  justify-content: space-between;
+  height: 100%;
+`
 
 const CardCta = styled.a`
   padding: 0.75rem;
   border: 1px solid;
   border-radius: 0.25rem;
   text-align: center;
+  width: 100%;
 
   &:focus {
-    outline: 2px solid #D32F2F;
+    outline: 2px solid #d32f2f;
   }
-`;
-
-const HeadingCard = styled.h3`
-  font-size: 1.2rem;
-  line-height: normal;
-`;
+`
 
 type CardProps = {
-  name: string;
-  description: string;
+  name: string
+  description: string
   linkImage: string
-};
+}
 
-const Card: React.FunctionComponent<CardProps> = ({ name, description, linkImage }): JSX.Element => {
+const Card: React.FunctionComponent<CardProps> = ({
+  name,
+  description,
+  linkImage,
+}): JSX.Element => {
   return (
-    <CardItem>
-      <CardImage><img src={linkImage} alt="" /></CardImage>
-      <CardContent>
-        <HeadingCard>{name}</HeadingCard>
-        <p>{description}</p>
+    <CardItem a11yDescriptionId="description" a11yTitleId="title">
+      <FPCard.Header>
+        <Image fit="cover" src={linkImage} />
+        <FPCard.Title id="title" use="h3">
+          {name}
+        </FPCard.Title>
+      </FPCard.Header>
+      <FPCard.Content id="description">
+        {description}
+      </FPCard.Content>
+      <FPCard.Footer justifyContent="flex-end">
         <CardCta href="http://www.gattoni.cl" aria-label={`Cotizar ${name}`}>Cotizar →</CardCta>
-      </CardContent>
+      </FPCard.Footer>
     </CardItem>
   )
 }
 
-export default Card;
+export default Card

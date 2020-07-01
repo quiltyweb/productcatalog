@@ -1,30 +1,9 @@
 import React from 'react';
-import styled from "styled-components";
-
+import { styled, palette, Columns, Column, space } from "fannypack";
+ 
 const FooterContainer = styled.footer`
-  display: flex;
-  flex-direction: column;
-  margin-top: 2rem;
-  background-color: #FAFAFA;
-
-  p {
-    margin: .5rem;
-  }
-`;
-
-const FooterContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding-left: 2rem;
-  padding-right: 2rem;
-
-
-  @media (min-width: 760px) {
-    flex-direction: row;
-   }
-
+  margin-top: ${space(2, 'major')}rem;
+  background-color: ${palette('white800')};
 `;
 
 const FooterAddress = styled.div`
@@ -38,7 +17,6 @@ const FooterAddress = styled.div`
     align-items: flex-end; 
     text-align: right;
   }
-
 `;
 
 const FooterLinks  = styled.div`
@@ -68,7 +46,8 @@ const FooterComponent = () => {
   const currDate = new Date();
   return (
     <FooterContainer>
-      <FooterContent>
+      <Columns padding="major-3">
+        <Column>
         <FooterLinks>
           <FooterList aria-label="Menu pie de pagina">
             <li><a href="/mi-cotizacion" className="NavBar-primary-link">Mi Cotización</a></li>
@@ -76,6 +55,8 @@ const FooterComponent = () => {
             <li><a href="/contacto" className="NavBar-primary-link">Contacto</a></li>
           </FooterList>
         </FooterLinks>
+        </Column>
+        <Column>
         <FooterAddress itemScope itemType="http://schema.org/LocalBusiness">
           <p><strong>Nuestra Dirección:</strong></p>
           <p itemProp="address" itemScope itemType="http://schema.org/PostalAddress">
@@ -87,7 +68,8 @@ const FooterComponent = () => {
           <p itemProp="faxNumber">Fax: <a href="tel:52-2-216257">52-2-216257</a></p>
           <p>&copy; Todos los derechos reservados {currDate.getFullYear()} Comercial Gattoni.</p>
         </FooterAddress>
-      </FooterContent>
+        </Column>
+      </Columns>
     </FooterContainer>
   );
 };
