@@ -1,7 +1,7 @@
 import React from "react";
 import { graphql } from "babel-plugin-relay/macro";
 import { createFragmentContainer } from "react-relay";
-import styled from "styled-components";
+import { styled, palette } from "fannypack";
 
 const ProductsList = styled.ul`
   display: flex;
@@ -13,8 +13,8 @@ const ProductsList = styled.ul`
   padding: 0;
   line-height: 1;
   list-style: none;
-  border-top: 1px solid grey;
-  border-left: 1px solid grey;
+  border-top: 1px solid ${palette('gray900')};
+  border-left: 1px solid ${palette('gray900')};
 
   @media (min-width: 760px) {
     flex-direction: column;

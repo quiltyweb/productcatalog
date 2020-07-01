@@ -1,39 +1,21 @@
 import React from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
-import styled, { createGlobalStyle } from "styled-components";
+// import styled, { createGlobalStyle } from "styled-components";
+import { ThemeProvider, styled, palette, Columns, Column } from 'fannypack';
 import environment from "../../environment";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
 import Card from "../../components/Card/Card";
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    color: #212121;
-    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-  a {
-    color: #212121;
-    text-decoration: dashed;
-  }
-  a:hover {
-    color:  #D32F2F;
-  }
-  li {
-    margin: .5rem;
-    list-style: none;
-  }
-`;
+import theme from '../../theme';
 
 const Main = styled.main`
   display: flex;
   flex-direction: column;
   max-width: 100%;
   padding: 2rem 2rem;
-  background-color: #ffffff;
+  background-color: ${palette('white')};
 
   @media (min-width: 760px) {
     flex-direction: row;
@@ -58,79 +40,86 @@ const MainContent = styled.div`
   }
 `;
 
-const CardList = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  grid-column-gap: 1.5rem;
-  grid-row-gap: 1.5rem;
+// const CardList = styled.ul`
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+//   grid-column-gap: 1.5rem;
+//   grid-row-gap: 1.5rem;
 
-`;
+// `;
 const MainSidebar = styled.aside`
   flex-basis: 20%;
 `;
 
 const Home: React.FunctionComponent = () => {
   return (
-    <QueryRenderer
-      environment={environment}
-      query={graphql`
-        query HomeQuery {
-          fetchCategories {
-            ...CategoryList_categories
+    <ThemeProvider theme={theme}>
+      <QueryRenderer
+        environment={environment}
+        query={graphql`
+          query HomeQuery {
+            fetchCategories {
+              ...CategoryList_categories
+            }
           }
-        }
-      `}
-      variables={{}}
-      render={({ error, props }: { error: any; props: any }) => {
-        if (error) {
-          return <div>Error!</div>;
-        }
-        if (!props) {
-          return <div>Loading...</div>;
-        }
+        `}
+        variables={{}}
+        render={({ error, props }: { error: any; props: any }) => {
+          if (error) {
+            return <div>Error!</div>;
+          }
+          if (!props) {
+            return <div>Loading...</div>;
+          }
 
-        return (
-          <>
-            <GlobalStyle />
-            <header>
-              <Nav />
-            </header>
-            <Main>
-              <MainContent>
-                <h1>Sómos Seguridad Industrial</h1>
-                <h2>
-                  Con más de 20 años de experiencia en la Región de Atacama.
-                </h2>
-                <p>
-                  Comercial Gattoni le da la más cordial bienvenida y le invita
-                  a conocer su amplia gama de productos de seguridad Industrial.
-                  Somos una Empresa con más de 20 años de experiencia en el área
-                  de venta de artículos de Seguridad Industrial, ubicada en
-                  Copiapó, Región de Atacama.
-                </p>
-                <p>
-                  Ofrecemos a Ud. y empresa productos de la más alta calidad
-                  como Botas de Agua, Mascaras de protección Respiratoria,
-                  servicios de Bordados industriales computacionales y más.
-                  Distribuidores de Vicsa en Copiapó.
-                </p>
-                <h2 id="heading-destacados">Productos Destacados:</h2>
-                <CardList aria-labelledby="heading-destacados">
-                  <Card name="Lente de seguridad l-300" description="lorem ipsum" linkImage="http://www.gattoni.cl/Visual/LENTE%20SEGURIDAD%20L300.jpg" />
-                  <Card name="Guante Respirador 2 vias m500 masprot" description="lorem ipsum" linkImage="http://www.gattoni.cl/Respiratoria/%C3%ADndice.jpg" />
-                  <Card name="Botin negro economico pu-100" description="lorem ipsum" linkImage="http://www.gattoni.cl/Zapatos/SAMARA.jpg" />
-                </CardList>
-              </MainContent>
-              <MainSidebar>
-                <CategoryList categories={props.fetchCategories} />
-              </MainSidebar>
-            </Main>
+          return (
+            <>
+               <header>
+                <Nav />
+              </header>
+              <Main>
+                <MainContent>
+                  <h1>Sómos Seguridad Industrial</h1>
+                  <h2>
+                    Con más de 20 años de experiencia en la Región de Atacama.
+                  </h2>
+                  <p>
+                    Comercial Gattoni le da la más cordial bienvenida y le invita
+                    a conocer su amplia gama de productos de seguridad Industrial.
+                    Somos una Empresa con más de 20 años de experiencia en el área
+                    de venta de artículos de Seguridad Industrial, ubicada en
+                    Copiapó, Región de Atacama.
+                  </p>
+                  <p>
+                    Ofrecemos a Ud. y empresa productos de la más alta calidad
+                    como Botas de Agua, Mascaras de protección Respiratoria,
+                    servicios de Bordados industriales computacionales y más.
+                    Distribuidores de Vicsa en Copiapó.
+                  </p>
+                  <h2 id="heading-destacados">Productos Destacados:</h2>
+                  <Columns aria-labelledby="heading-destacados">
+                    <Column>
+                      <Card name="Lente l-300" description="lorem ipsum" linkImage="http://www.gattoni.cl/Visual/LENTE%20SEGURIDAD%20L300.jpg" />
+                    </Column>
+                    <Column>
+                      <Card name="Guante Respirador 2 vias m500 masprot" description="lorem ipsum" linkImage="http://www.gattoni.cl/Respiratoria/%C3%ADndice.jpg" />
+                    </Column>
+                    <Column>
+                      <Card name="Botin negro economico pu-100" description="lorem ipsum" linkImage="http://www.gattoni.cl/Zapatos/SAMARA.jpg" />
+                    </Column>
+                  </Columns>
+                </MainContent>
+                <MainSidebar>
+                  <CategoryList categories={props.fetchCategories} />
+                </MainSidebar>
+              </Main>
+              <Footer />
+            </>
+          );
+        }}
+      />
+     </ThemeProvider>
 
-            <Footer />
-          </>
-        );
-      }}
-    />
   );
 };
 

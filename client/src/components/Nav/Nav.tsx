@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
-import hillsSVg from './hills.svg';
+import { styled } from "fannypack";
+// import hillsSVg from './hills.svg';
 
 // TODO: avatar image can be as a background-image in the styled components,
 // with a background-size: cover to preserve the aspect ratio.
@@ -17,17 +17,6 @@ const NavContainer = styled.nav`
   padding: 0;
   color: #D32F2F;
   background-color: #FFFFFF;
-
-  &::before {
-    content: '';
-    width: 100%;
-    min-height: 5rem;
-    position: absolute;
-    background-image: url(${hillsSVg});
-    background-size: cover;
-    background-repeat: repeat-x;
-    background-position: center center;
-  }
 
   @media (min-width: 760px) {
     flex-direction: row;
