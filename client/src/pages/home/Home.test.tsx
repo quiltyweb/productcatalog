@@ -1,9 +1,10 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Home from './Home';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<Home />);
-  const linkElement = getByText(/gattoni.cl v1/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders learn react link', async () => {
+  render(<Home />);
+  const headinElemn = await screen.findByRole('heading');
+  expect(headinElemn).toHaveTextContent('Bienvenidos')
+
 });
