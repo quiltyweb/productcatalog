@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputField, Button, Box, TextareaField } from 'fannypack'
+import { InputField, Button, Box, TextareaField, Heading } from 'fannypack'
 import { useFormik } from 'formik'
 
 const ContactForm = () => {
@@ -35,6 +35,7 @@ const ContactForm = () => {
 
   return (
     <Box>
+      <Heading>Contacto - Comercial Gattoni</Heading>
       <form onSubmit={formik.handleSubmit}>
         <InputField
           padding="major-2"
