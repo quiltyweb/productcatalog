@@ -87,7 +87,7 @@ const Nav = () => {
         </NavLogo>
         <NavBarList aria-label="Menu principal">
           <li>
-            <Link to="/" className="NavBar-primary-link">
+            <Link to="/cotizacion" className="NavBar-primary-link">
               Mi Cotización
             </Link>
           </li>

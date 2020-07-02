@@ -1,20 +1,23 @@
 import React from 'react'
-import { InputField, Button, Box, TextareaField, Heading } from 'fannypack'
+import { InputField, Button, Box, TextareaField, Heading, Divider } from 'fannypack'
 import { useFormik } from 'formik'
+import QuoteList from './QuoteList';
 
-const ContactForm = () => {
+const QuoteForm = () => {
   const formik = useFormik({
     initialValues: {
-      nombre: '',
+      nombreCompleto: '',
       empresa: '',
       email: '',
       mensaje: '',
-      telefono: ''
+      telefono: '',
+      ciudad: '',
+      codigoArea: ''
     },
-    validate: ({ nombre, empresa, email, mensaje }) => {
+    validate: ({ nombreCompleto, empresa, email, ciudad, codigoArea, telefono }) => {
       const errors: any = {}
-      if (!nombre) {
-        errors['nombre'] = 'Nombre es requerido';
+      if (!nombreCompleto) {
+        errors['nombreCompleto'] = 'Nombre o Razon social es requerido';
       }
       if (!empresa) {
         errors['empresa'] = 'Empresa es requerido';
@@ -22,10 +25,16 @@ const ContactForm = () => {
       if (!email) {
         errors['email'] = 'Email es requerido';
       }
-      if (!mensaje) {
-        errors['mensaje'] = 'Mensaje es requerido';
+      if (!ciudad) {
+        errors['ciudad'] = 'Ciudad es requerido';
       }
-      
+      if (!codigoArea) {
+        errors['codigoArea'] = 'codigo de Area es requerido';
+      }
+      if (!telefono) {
+        errors['telefono'] = 'Telefono es requerido';
+      }
+   
       return errors;
     },
     onSubmit: (values) => {
@@ -35,21 +44,21 @@ const ContactForm = () => {
 
   return (
     <Box>
-      <Heading>Contacto - Comercial Gattoni</Heading>
+      <Heading use="h1">Mi Cotización:</Heading>
       <form onSubmit={formik.handleSubmit}>
         <InputField
           padding="major-2"
-          id="nombre"
-          name="nombre"
+          id="nombreCompleto"
+          name="nombreCompleto"
           isRequired
           type="text"
-          label="Nombre o Razon social"
-          placeholder="nombre"
-          value={formik.values.nombre}
+          label="Nombre Completo"
+          placeholder="ingrese su nombre completo"
+          value={formik.values.nombreCompleto}
           onChange={formik.handleChange}
-          validationText={formik.errors.nombre}
-          state={formik.errors.nombre ? 'danger' : ''}
-          size="medium"
+          validationText={formik.errors.nombreCompleto}
+          state={formik.errors.nombreCompleto ? 'danger' : ''}
+          size="default"
         />
         <InputField
           padding="major-2"
@@ -63,7 +72,7 @@ const ContactForm = () => {
           onChange={formik.handleChange}
           validationText={formik.errors.empresa}
           state={formik.errors.empresa ? 'danger' : ''}
-          size="medium"
+          size="default"
         />
         <InputField
           padding="major-2"
@@ -77,11 +86,12 @@ const ContactForm = () => {
           onChange={formik.handleChange}
           validationText={formik.errors.email}
           state={formik.errors.email ? 'danger' : ''}
-          size="medium"
+          size="default"
         />
         <InputField
           padding="major-2"
           id="telefono"
+          isRequired
           name="telefono"
           type="text"
           label="Telefono"
@@ -90,22 +100,50 @@ const ContactForm = () => {
           onChange={formik.handleChange}
           validationText={formik.errors.telefono}
           state={formik.errors.telefono ? 'danger' : ''}
+          size="default"
+        />
+         <InputField
+          padding="major-2"
+          id="ciudad"
+          name="ciudad"
+          type="text"
+          isRequired
+          label="Ciudad"
+          placeholder="ingrese su ciudad"
+          value={formik.values.ciudad}
+          onChange={formik.handleChange}
+          validationText={formik.errors.ciudad}
+          state={formik.errors.ciudad ? 'danger' : ''}
           size="medium"
+        />
+        <InputField
+          padding="major-2"
+          id="codigoArea"
+          name="codigoArea"
+          isRequired
+          width="30%"
+          type="text"
+          label="codigo de Area"
+          value={formik.values.codigoArea}
+          onChange={formik.handleChange}
+          validationText={formik.errors.codigoArea}
+          state={formik.errors.codigoArea ? 'danger' : ''}
+          size="default"
         />
         <TextareaField
           padding="major-2"
           name="mensaje"
-          label="Comentario"
-          isRequired
+          label="Observaciones Generales"
           value={formik.values.mensaje}
           onChange={formik.handleChange}
           validationText={formik.errors.mensaje}
           state={formik.errors.mensaje ? 'danger' : ''}
         />
-        <Button margin="major-2" padding="major-1" type="submit">Enviar</Button>
+        <Button alignSelf="flex-end" margin="major-2" padding="major-1" type="submit">Enviar</Button>
       </form>
+      <QuoteList />
     </Box>
   )
 }
 
-export default ContactForm;
+export default QuoteForm;
