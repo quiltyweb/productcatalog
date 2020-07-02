@@ -9,6 +9,7 @@ import Nav from '../../components/Nav/Nav'
 import Footer from '../../components/Footer/Footer'
 import theme from '../../theme'
 import ContactForm from '../../components/ContactForm/ContactForm'
+import QuoteForm from '../../components/QuoteForm/QuoteForm'
 import Main from '../../components/Main/Main'
 
 const MainWrapper = styled.main`
@@ -78,6 +79,9 @@ const Home: React.FunctionComponent = () => {
                     <Switch>
                       <Route path="/contacto">
                         <ContactForm />
+                      </Route>
+                      <Route path="/cotizacion">
+                        <QuoteForm />
                       </Route>
                       <Route path="/">
                         <Main />
