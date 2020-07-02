@@ -41,6 +41,23 @@ export const theme: GattoniThemeConfig = {
     
     `
   },
+  Heading: {
+    base: css`
+      font-weight: bold;
+    `,
+    h1: css`
+      font-size: 2rem;
+    `,
+    h2: css`
+      font-size: 1.25rem;
+    `,
+    h3: css`
+      font-size: 1rem;
+    `,
+    h4: css`
+      font-size: 0.75rem;
+    `
+  },
   palette: {
     secondary: '#f7941d',
     primary: '#041e42',

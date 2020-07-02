@@ -1,5 +1,6 @@
 import React from "react";
 import { styled } from "fannypack";
+import { Link } from "react-router-dom";
 // import hillsSVg from './hills.svg';
 
 // TODO: avatar image can be as a background-image in the styled components,
@@ -86,24 +87,19 @@ const Nav = () => {
         </NavLogo>
         <NavBarList aria-label="Menu principal">
           <li>
-            <a href="www.gattoni.cl" className="NavBar-primary-link">
+            <Link to="/" className="NavBar-primary-link">
               Mi Cotización
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="www.gattoni.cl" className="NavBar-primary-link">
-              Carrito
-            </a>
-          </li>
-          <li>
-            <a href="www.gattoni.cl" className="NavBar-primary-link">
+            <Link to="/certificaciones" className="NavBar-primary-link">
               Certificaciones
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="www.gattoni.cl" className="NavBar-primary-link">
+            <Link to="/contacto" className="NavBar-primary-link">
               Contacto
-            </a>
+            </Link>
           </li>
         </NavBarList>
       </NavBarContent>
