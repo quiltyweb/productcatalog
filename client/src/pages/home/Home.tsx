@@ -1,7 +1,6 @@
 import React from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
-// import styled, { createGlobalStyle } from "styled-components";
 import { ThemeProvider, styled, palette, Columns, Column } from 'fannypack';
 import environment from "../../environment";
 import CategoryList from "../../components/CategoryList/CategoryList";
@@ -40,13 +39,6 @@ const MainContent = styled.div`
   }
 `;
 
-// const CardList = styled.ul`
-//   display: grid;
-//   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-//   grid-column-gap: 1.5rem;
-//   grid-row-gap: 1.5rem;
-
-// `;
 const MainSidebar = styled.aside`
   flex-basis: 20%;
 `;
@@ -66,6 +58,7 @@ const Home: React.FunctionComponent = () => {
         variables={{}}
         render={({ error, props }: { error: any; props: any }) => {
           if (error) {
+            console.log('error: ', error)
             return <div>Error!</div>;
           }
           if (!props) {
@@ -96,6 +89,7 @@ const Home: React.FunctionComponent = () => {
                     servicios de Bordados industriales computacionales y más.
                     Distribuidores de Vicsa en Copiapó.
                   </p>
+                  <ContactForm />
                   <h2 id="heading-destacados">Productos Destacados:</h2>
                   <Columns aria-labelledby="heading-destacados">
                     <Column>
