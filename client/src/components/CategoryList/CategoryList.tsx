@@ -2,6 +2,7 @@ import React from "react";
 import { graphql } from "babel-plugin-relay/macro";
 import { createFragmentContainer } from "react-relay";
 import { styled, palette } from "fannypack";
+import { Link } from "react-router-dom";
 
 const ProductsList = styled.ul`
   display: flex;
@@ -39,7 +40,7 @@ const ProductItem = styled.li`
   }
 `;
 
-const ProductsListLink = styled.a`
+const ProductsListLink = styled(Link)`
   position: relative;
   display: block;
   color: black;
@@ -66,7 +67,10 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = ({
           categories.edges.map((item: any) => {
             return (
               <ProductItem key={item.node.id}>
-                <ProductsListLink href="#">{item.node.name}</ProductsListLink>
+                <ProductsListLink to={`/categoria/${item.node.id}`}>
+                  {item.node.name}
+                </ProductsListLink>
+                {/* <ProductsListLink href="#">{item.node.name}</ProductsListLink> */}
               </ProductItem>
             );
           })

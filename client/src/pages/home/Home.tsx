@@ -10,6 +10,8 @@ import Footer from '../../components/Footer/Footer'
 import theme from '../../theme'
 import ContactForm from '../../components/ContactForm/ContactForm'
 import QuoteForm from '../../components/QuoteForm/QuoteForm'
+import ProductList from '../../components/ProductList/ProductList'
+
 import Main from '../../components/Main/Main'
 
 const MainWrapper = styled.main`
@@ -83,7 +85,10 @@ const Home: React.FunctionComponent = () => {
                       <Route path="/cotizacion">
                         <QuoteForm />
                       </Route>
-                      <Route path="/">
+                      <Route path="/categoria/:categoryId">
+                        <ProductList />
+                      </Route>
+                       <Route path="/">
                         <Main />
                       </Route>
                     </Switch>
