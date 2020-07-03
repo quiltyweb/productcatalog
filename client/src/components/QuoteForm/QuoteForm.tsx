@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputField, Button, Box, TextareaField, Heading, Divider } from 'fannypack'
+import { InputField, Button, Box, TextareaField, Heading } from 'fannypack'
 import { useFormik } from 'formik'
 import QuoteList from './QuoteList';
 
