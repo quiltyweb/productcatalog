@@ -92,7 +92,7 @@ const Nav = () => {
       return errors;
     },
     onSubmit: (values) => {
-      return history.push(`/categoria/${values.searchTerm}`);
+      return history.push(`/resultados/${values.searchTerm}`);
     },
   });
 
