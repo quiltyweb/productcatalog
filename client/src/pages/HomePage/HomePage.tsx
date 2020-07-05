@@ -1,25 +1,24 @@
-import React from 'react'
-import { QueryRenderer } from 'react-relay'
-import { graphql } from 'babel-plugin-relay/macro'
-import { ThemeProvider, styled, palette } from 'fannypack'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import environment from '../../environment'
-import CategoryList from '../../components/CategoryList/CategoryList'
-import Nav from '../../components/Nav/Nav'
-import Footer from '../../components/Footer/Footer'
-import theme from '../../theme'
-import ContactForm from '../../components/ContactForm/ContactForm'
-import QuoteForm from '../../components/QuoteForm/QuoteForm'
-import ProductList from '../../components/ProductList/ProductList'
-
-import Main from '../../components/Main/Main'
+import React from "react";
+import { QueryRenderer } from "react-relay";
+import { graphql } from "babel-plugin-relay/macro";
+import environment from "../../environment";
+import { ThemeProvider, styled, palette } from "fannypack";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import CategoryList from "../../components/CategoryList/CategoryList";
+import Nav from "../../components/Nav/Nav";
+import Footer from "../../components/Footer/Footer";
+import theme from "../../theme";
+import ContactForm from "../../components/ContactForm/ContactForm";
+import QuoteForm from "../../components/QuoteForm/QuoteForm";
+import ProductsPage from "../ProductsPage/ProductsPage";
+import Main from "../../components/Main/Main";
 
 const MainWrapper = styled.main`
   display: flex;
   flex-direction: column;
   max-width: 100%;
   padding: 2rem 2rem;
-  background-color: ${palette('white')};
+  background-color: ${palette("white")};
 
   @media (min-width: 760px) {
     flex-direction: row;
@@ -29,7 +28,7 @@ const MainWrapper = styled.main`
   @media (min-width: 1020px) {
     padding: 2rem 2rem;
   }
-`
+`;
 
 const MainContent = styled.div`
   @media (min-width: 760px) {
@@ -42,20 +41,20 @@ const MainContent = styled.div`
     padding-left: 8rem;
     padding-right: 8rem;
   }
-`
+`;
 
 const MainSidebar = styled.aside`
   flex-basis: 20%;
-`
+`;
 
-const Home: React.FunctionComponent = () => {
+const HomePage: React.FunctionComponent = () => {
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <QueryRenderer
           environment={environment}
           query={graphql`
-            query HomeQuery {
+            query HomePageQuery {
               fetchCategories {
                 ...CategoryList_categories
               }
@@ -64,11 +63,11 @@ const Home: React.FunctionComponent = () => {
           variables={{}}
           render={({ error, props }: { error: any; props: any }) => {
             if (error) {
-              console.log('error: ', error)
-              return <div>Error!</div>
+              console.log("error: ", error);
+              return <div>Error!</div>;
             }
             if (!props) {
-              return <div>Loading...</div>
+              return <div>Loading...</div>;
             }
 
             return (
@@ -85,10 +84,10 @@ const Home: React.FunctionComponent = () => {
                       <Route path="/cotizacion">
                         <QuoteForm />
                       </Route>
-                      <Route path="/categoria/:categoryId">
-                        <ProductList />
+                      <Route path="/categoria/:categoryName">
+                        <ProductsPage />
                       </Route>
-                       <Route path="/">
+                      <Route path="/">
                         <Main />
                       </Route>
                     </Switch>
@@ -99,12 +98,11 @@ const Home: React.FunctionComponent = () => {
                 </MainWrapper>
                 <Footer />
               </>
-            )
+            );
           }}
         />
       </ThemeProvider>
     </Router>
-  )
-}
-
-export default Home
+  );
+};
+export default HomePage;

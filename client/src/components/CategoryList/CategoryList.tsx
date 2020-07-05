@@ -49,7 +49,7 @@ const ProductsListLink = styled(Link)`
   white-space: nowrap;
   transition: color 0.2s;
   &:hover {
-    color: red;
+    color: #d32f2f;
     text-decoration: underline;
   }
 `;
@@ -68,7 +68,11 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = ({
           categories.edges.map((item: any) => {
             return (
               <ProductItem key={item.node.id}>
-                <ProductsListLink to={`/categoria/${item.node.id}`}>
+                {/* <ProductsListLink to={`/categoria/${item.node.name}`}>
+                  {item.node.name}
+                </ProductsListLink> */}
+                {/* TODO: use dinamyc name or id instead of hardcoded "guante" when fetchCateogries query accepts argument categoryID */}
+                <ProductsListLink to={`/categoria/guante`}>
                   {item.node.name}
                 </ProductsListLink>
                 {/* <ProductsListLink href="#">{item.node.name}</ProductsListLink> */}

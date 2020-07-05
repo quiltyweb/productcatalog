@@ -3,21 +3,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomeQueryVariables = {};
-export type HomeQueryResponse = {
+export type HomePageQueryVariables = {};
+export type HomePageQueryResponse = {
     readonly fetchCategories: {
         readonly " $fragmentRefs": FragmentRefs<"CategoryList_categories">;
     };
 };
-export type HomeQuery = {
-    readonly response: HomeQueryResponse;
-    readonly variables: HomeQueryVariables;
+export type HomePageQuery = {
+    readonly response: HomePageQueryResponse;
+    readonly variables: HomePageQueryVariables;
 };
 
 
 
 /*
-query HomeQuery {
+query HomePageQuery {
   fetchCategories {
     ...CategoryList_categories
   }
@@ -38,7 +38,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HomeQuery",
+    "name": "HomePageQuery",
     "selections": [
       {
         "alias": null,
@@ -63,7 +63,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "HomeQuery",
+    "name": "HomePageQuery",
     "selections": [
       {
         "alias": null,
@@ -117,10 +117,10 @@ const node: ConcreteRequest = {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "HomeQuery",
+    "name": "HomePageQuery",
     "operationKind": "query",
-    "text": "query HomeQuery {\n  fetchCategories {\n    ...CategoryList_categories\n  }\n}\n\nfragment CategoryList_categories on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n"
+    "text": "query HomePageQuery {\n  fetchCategories {\n    ...CategoryList_categories\n  }\n}\n\nfragment CategoryList_categories on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n"
   }
 };
-(node as any).hash = '28507d0c6afb6223ba3bf1b51488357b';
+(node as any).hash = '193655a357abe150051a84b86ac79a6f';
 export default node;
