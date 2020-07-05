@@ -3,6 +3,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { createFragmentContainer } from "react-relay";
 import { styled, palette } from "fannypack";
 import { Link } from "react-router-dom";
+import { CategoryList_categories } from "./__generated__/CategoryList_categories.graphql";
 
 const ProductsList = styled.ul`
   display: flex;
@@ -14,8 +15,8 @@ const ProductsList = styled.ul`
   padding: 0;
   line-height: 1;
   list-style: none;
-  border-top: 1px solid ${palette('gray900')};
-  border-left: 1px solid ${palette('gray900')};
+  border-top: 1px solid ${palette("gray900")};
+  border-left: 1px solid ${palette("gray900")};
 
   @media (min-width: 760px) {
     flex-direction: column;
@@ -48,13 +49,13 @@ const ProductsListLink = styled(Link)`
   white-space: nowrap;
   transition: color 0.2s;
   &:hover {
-    color: red;
+    color: #d32f2f;
     text-decoration: underline;
   }
 `;
 
 type CategoryListProps = {
-  categories: any;
+  categories: CategoryList_categories;
 };
 
 const CategoryList: React.FunctionComponent<CategoryListProps> = ({
@@ -63,11 +64,15 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = ({
   return (
     <>
       <ProductsList>
-        {categories && categories.edges.length > 0 ? (
+        {categories && categories.edges && categories.edges.length > 0 ? (
           categories.edges.map((item: any) => {
             return (
               <ProductItem key={item.node.id}>
-                <ProductsListLink to={`/categoria/${item.node.id}`}>
+                {/* <ProductsListLink to={`/categoria/${item.node.name}`}>
+                  {item.node.name}
+                </ProductsListLink> */}
+                {/* TODO: use dinamyc name or id instead of hardcoded "guante" when fetchCateogries query accepts argument categoryID */}
+                <ProductsListLink to={`/categoria/guante`}>
                   {item.node.name}
                 </ProductsListLink>
                 {/* <ProductsListLink href="#">{item.node.name}</ProductsListLink> */}
