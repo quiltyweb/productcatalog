@@ -11,6 +11,7 @@ import theme from "../../theme";
 import ContactForm from "../../components/ContactForm/ContactForm";
 import QuoteForm from "../../components/QuoteForm/QuoteForm";
 import ProductsPage from "../ProductsPage/ProductsPage";
+import SearchResultsPage from "../SearchResultsPage/SearchResultsPage";
 import Main from "../../components/Main/Main";
 
 const MainWrapper = styled.main`
@@ -86,6 +87,9 @@ const HomePage: React.FunctionComponent = () => {
                       </Route>
                       <Route path="/categoria/:categoryName">
                         <ProductsPage />
+                      </Route>
+                      <Route path="/resultados/:searchTerm">
+                        <SearchResultsPage />
                       </Route>
                       <Route path="/">
                         <Main />

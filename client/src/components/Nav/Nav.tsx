@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { styled } from "fannypack";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { InputField, Button } from "fannypack";
 // import hillsSVg from './hills.svg';
 
@@ -78,6 +78,8 @@ const NavBarList = styled.ul`
 `;
 
 const Nav = () => {
+  var history = useHistory();
+
   const formik = useFormik({
     initialValues: {
       searchTerm: "",
@@ -90,9 +92,10 @@ const Nav = () => {
       return errors;
     },
     onSubmit: (values) => {
-      console.log("onSubmit", values);
+      return history.push(`/categoria/${values.searchTerm}`);
     },
   });
+
   return (
     <NavContainer>
       <NavBarContent>
