@@ -22,7 +22,7 @@ export const SearchResultsPage = () => {
           }
         }
       `}
-      variables={{ categoryName: searchTerm }}
+      variables={{ searchTerm: searchTerm }}
       render={({ error, props }: { error: any; props: any }) => {
         if (error) {
           console.log("error: ", error);
