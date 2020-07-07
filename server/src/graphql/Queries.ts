@@ -1,5 +1,9 @@
-import { GraphQLString, GraphQLNonNull } from "graphql";
-import { connectionArgs, connectionFromArray } from "graphql-relay";
+import { GraphQLString, GraphQLNonNull, GraphQLID } from "graphql";
+import {
+  connectionArgs,
+  connectionFromArray,
+  fromGlobalId,
+} from "graphql-relay";
 
 import { Category } from "../entity/Category";
 import { Product } from "../entity/Product";
@@ -29,6 +33,30 @@ class Queries {
         });
 
         return connectionFromArray(categories, args);
+      },
+    };
+  }
+
+  get fetchCategory(): GraphQLFieldConfig<TSource, TContext> {
+    return {
+      type: GraphQLNonNull(this.types.categoryType),
+      args: {
+        categoryId: {
+          type: GraphQLNonNull(GraphQLID),
+          description: "ID of the requested category.",
+        },
+        ...connectionArgs,
+      },
+      resolve: async (root, args, ctx): Promise<Category> => {
+        const category = await ctx.entityManager.findOne(
+          Category,
+          fromGlobalId(args.categoryId).id,
+          {
+            relations: ["products"],
+          }
+        );
+
+        return category;
       },
     };
   }

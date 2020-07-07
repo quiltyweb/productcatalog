@@ -26,6 +26,7 @@ const { nodeInterface, nodeField } = nodeDefinitions(getObjectFromGlobalId);
 const types = new GqlTypes(nodeInterface);
 const {
   fetchCategories,
+  fetchCategory,
   searchProducts,
   sendContactMessage,
   sendQuoteRequest,
@@ -36,6 +37,7 @@ const queryType = new GraphQLObjectType({
   fields: (): GraphQLFieldReturn => ({
     node: nodeField,
     fetchCategories,
+    fetchCategory,
     searchProducts,
     sendContactMessage,
     sendQuoteRequest,
