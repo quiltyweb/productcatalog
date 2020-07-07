@@ -42,7 +42,7 @@
   "dependencies": {
     "@sendgrid/mail": "^7.2.0",
     "apollo-server-koa": "^2.15.0",
-    "graphql": "^15.1.0",
+    "graphql": "^15.3.0",
     "graphql-relay": "^0.6.0",
     "koa": "^2.13.0",
     "koa-helmet": "^5.2.0",
