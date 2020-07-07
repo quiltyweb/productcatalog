@@ -23,7 +23,7 @@ type ProductOptions = {
 export class Product {
   constructor(productOptions: ProductOptions) {
     if (productOptions) {
-      this.category = productOptions.category;
+      this.category = Promise.resolve(productOptions.category);
       this.name = productOptions.name;
       this.purchasePrice = productOptions.purchasePrice;
       this.salePrice = productOptions.salePrice;
@@ -68,5 +68,5 @@ export class Product {
     (category) => category.products,
     { onDelete: "SET NULL" }
   )
-  public category: Category;
+  public category: Promise<Category>;
 }
