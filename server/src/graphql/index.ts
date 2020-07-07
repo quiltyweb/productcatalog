@@ -14,7 +14,7 @@ import type { GraphQLFieldConfigMap } from "graphql";
 type GraphQLFieldReturn = GraphQLFieldConfigMap<any, any>;
 type Entity = Category | Product;
 
-async function getObjectFromGlobalId (globalId, ctx): Promise<Entity> {
+async function getObjectFromGlobalId(globalId, ctx): Promise<Entity> {
   const { type, id } = fromGlobalId(globalId);
 
   if (type === "Category") return await ctx.entityManager.findOne(Category, id);
