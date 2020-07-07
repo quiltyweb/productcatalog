@@ -18,7 +18,7 @@
     "@shopify/jest-koa-mocks": "^2.2.2",
     "@types/faker": "^4.1.12",
     "@types/graphql-relay": "^0.6.0",
-    "@types/jest": "^26.0.0",
+    "@types/jest": "^26.0.3",
     "@types/koa": "^2.11.3",
     "@types/koa-helmet": "^5.2.0",
     "@types/koa-router": "^7.4.1",
