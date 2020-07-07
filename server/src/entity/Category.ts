@@ -27,5 +27,5 @@ export class Category {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @OneToMany((type) => Product, (product) => product.category)
-  public products: Product[];
+  public products: Promise<Product[]>;
 }

@@ -31,7 +31,7 @@ const newCategory = (categoryOptions: CategoryFactoryOptions): Category => {
   };
 
   const category = new Category(categoryAttributes.name);
-  category.products = categoryAttributes.products;
+  category.products = Promise.resolve(categoryAttributes.products);
 
   return category;
 };
