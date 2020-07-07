@@ -1,5 +1,6 @@
 import { createConnection, Connection } from "typeorm";
 import { graphql } from "graphql";
+import { toGlobalId } from "graphql-relay";
 import faker from "faker";
 
 import { schema } from "../../../src/graphql";
@@ -83,6 +84,60 @@ describe("GraphQL schema", () => {
       const products = categories
         .map((cat) => cat.products.edges.map((prodEdge) => prodEdge.node))
         .flat(1);
+
+      expect(products).toContainEqual(
+        expect.objectContaining({ name: expect.any(String) })
+      );
+    });
+  });
+
+  describe("fetchCategories", () => {
+    const query = `
+      query($categoryId: ID!) {
+        fetchCategory(categoryId: $categoryId) {
+          name
+          products {
+            edges {
+              node {
+                name
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    it("returns category fields", async () => {
+      expect.assertions(1);
+
+      const context = { ...baseContext };
+
+      const category = await connection.manager.findOne(Category);
+      const gqlId = toGlobalId("Category", String(category.id));
+      const variables = { categoryId: gqlId };
+
+      const results = await graphql(schema, query, null, context, variables);
+      console.log(JSON.stringify(results));
+      const queriedCategory = results.data.fetchCategory;
+
+      expect(category.name).toEqual(queriedCategory.name);
+    });
+
+    it("returns associated products", async () => {
+      expect.assertions(1);
+
+      const context = { ...baseContext };
+
+      const category = await connection.manager.findOne(Category);
+      const gqlId = toGlobalId("Category", String(category.id));
+      const variables = { categoryId: gqlId };
+
+      const results = await graphql(schema, query, null, context, variables);
+      const queriedCategory = results.data.fetchCategory;
+
+      const products = queriedCategory.products.edges.map(
+        (prodEdge) => prodEdge.node
+      );
 
       expect(products).toContainEqual(
         expect.objectContaining({ name: expect.any(String) })
