@@ -519,10 +519,10 @@
     "@sendgrid/client" "^7.2.1"
     "@sendgrid/helpers" "^7.2.0"
 
-"@shopify/jest-koa-mocks@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@shopify/jest-koa-mocks/-/jest-koa-mocks-2.2.2.tgz#c61b369eba48e015f14e488be332e2aa58e97151"
-  integrity sha512-FOBcvqZi/MLVJXpfnG14m/NPSwdJp14PKXDfVInuwYTU+fHSgGTkD7BdOJtW6RswWcxGCaWS0Ep/UKgaf2Ll8Q==
+"@shopify/jest-koa-mocks@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@shopify/jest-koa-mocks/-/jest-koa-mocks-2.2.3.tgz#c7765a6724b308af6d2e47d8324f2244bb5e045d"
+  integrity sha512-6abN9pmSjbFohmvezA2p/09vGwyTUKU+UYCyZVE4/ZTSdIebBJphSiAtj7NQIG3O8jkdDaK/Ozre6XRIP3GzMw==
   dependencies:
     koa "^2.5.0"
     node-mocks-http "^1.5.8"
