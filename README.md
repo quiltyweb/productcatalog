@@ -36,7 +36,7 @@ Optional:
 We host the app on Heroku.
 
 We deploy automatically to Heroku with every merged PR that passes CI via a GitHub integration. If you want to deploy manually do the following:
-- While on `master`, run `git push heroku master`
+- While on `main`, run `git push heroku main:master`
 
 ## Testing
 
