@@ -28,14 +28,14 @@ const ProductList: React.FunctionComponent<ProductListProps> = ({
                 <Card
                   name={product.node.name}
                   description={product.node.description}
-                  linkImage={`http://gattoni.cl/${fakeCategoryName}/${product.node.imagePath}`}
+                  linkImage={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/${product.node.imagePath}`}
                 />
               </Column>
             );
           })
         ) : (
-          <div>No se encontraron productos para esta Categoria</div>
-        )}
+            <div>No se encontraron productos para esta Categoria</div>
+          )}
       </Columns>
     </Box>
   );

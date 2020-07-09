@@ -24,21 +24,21 @@ const Main = () => {
           <Card
             name="Lente l-300"
             description="lorem ipsum"
-            linkImage="http://www.gattoni.cl/Visual/LENTE%20SEGURIDAD%20L300.jpg"
+            linkImage="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/LENTE%20SEGURIDAD%20L300.jpg"
           />
         </Column>
         <Column>
           <Card
             name="Guante Respirador 2 vias m500 masprot"
             description="lorem ipsum"
-            linkImage="http://www.gattoni.cl/Respiratoria/%C3%ADndice.jpg"
+            linkImage="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/i%CC%81ndice.jpg"
           />
         </Column>
         <Column>
           <Card
             name="Botin negro economico pu-100"
             description="lorem ipsum"
-            linkImage="http://www.gattoni.cl/Zapatos/SAMARA.jpg"
+            linkImage="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/SAMARA.jpg"
           />
         </Column>
       </Columns>
