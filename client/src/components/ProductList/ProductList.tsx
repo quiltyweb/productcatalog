@@ -26,6 +26,7 @@ const ProductList: React.FunctionComponent<ProductListProps> = ({
             return (
               <Column key={product.node.id} spread={3}>
                 <Card
+                  productId={product.node.id}
                   name={product.node.name}
                   description={product.node.description}
                   linkImage={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/${product.node.imagePath}`}

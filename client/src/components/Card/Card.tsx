@@ -1,5 +1,6 @@
 import React from 'react'
-import { styled, Card as FPCard, Image } from 'fannypack'
+import { styled, Card as FPCard, Image, Button } from 'fannypack'
+import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 
 const CardItem = styled(FPCard.Card)`
   display: flex;
@@ -8,7 +9,7 @@ const CardItem = styled(FPCard.Card)`
   height: 100%;
 `
 
-const CardCta = styled.a`
+const CardCta = styled(Button)`
   padding: 0.75rem;
   border: 1px solid;
   border-radius: 0.25rem;
@@ -20,17 +21,22 @@ const CardCta = styled.a`
   }
 `
 
-type CardProps = {
+interface CardProps {
+  productId: string
   name: string
   description: string
   linkImage: string
 }
 
 const Card: React.FunctionComponent<CardProps> = ({
+  productId,
   name,
   description,
-  linkImage,
+  linkImage
 }): JSX.Element => {
+  const { addCartItem } = useHomePageContext();
+
+
   return (
     <CardItem a11yDescriptionId="description" a11yTitleId="title">
       <FPCard.Header>
@@ -43,7 +49,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         {description}
       </FPCard.Content>
       <FPCard.Footer justifyContent="flex-end">
-        <CardCta href="http://www.gattoni.cl" aria-label={`Cotizar ${name}`}>Cotizar →</CardCta>
+        <CardCta onClick={() => addCartItem({ productId, quantity: 1 })} aria-label={`Cotizar ${name}`}>Cotizar →</CardCta>
       </FPCard.Footer>
     </CardItem>
   )

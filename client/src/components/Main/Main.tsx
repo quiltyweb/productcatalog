@@ -1,6 +1,6 @@
 import React from 'react'
-import { Columns, Column, Heading, Paragraph } from 'fannypack'
-import Card from "../../components/Card/Card";
+import {  Heading, Paragraph } from 'fannypack'
+// import Card from "../../components/Card/Card";
 
 const Main = () => {
   return (
@@ -19,9 +19,11 @@ const Main = () => {
         industriales computacionales y más. Distribuidores de Vicsa en Copiapó.
       </Paragraph>
       <Heading use="h2" id="heading-destacados">Productos Destacados:</Heading>
-      <Columns aria-labelledby="heading-destacados">
+      {/* <Columns aria-labelledby="heading-destacados">
         <Column>
           <Card
+            productId="1"
+            addToCart={() => console.log('add to card')}
             name="Lente l-300"
             description="lorem ipsum"
             linkImage="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/LENTE%20SEGURIDAD%20L300.jpg"
@@ -29,6 +31,8 @@ const Main = () => {
         </Column>
         <Column>
           <Card
+            productId="2"
+            addToCart={() => console.log('add to card')}
             name="Guante Respirador 2 vias m500 masprot"
             description="lorem ipsum"
             linkImage="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/i%CC%81ndice.jpg"
@@ -36,12 +40,14 @@ const Main = () => {
         </Column>
         <Column>
           <Card
+            productId="3"
+            addToCart={() => console.log('add to card')}
             name="Botin negro economico pu-100"
             description="lorem ipsum"
             linkImage="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/SAMARA.jpg"
           />
         </Column>
-      </Columns>
+      </Columns> */}
     </>
   )
 }
