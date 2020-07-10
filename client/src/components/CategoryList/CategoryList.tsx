@@ -68,14 +68,9 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = ({
           categories.edges.map((item: any) => {
             return (
               <ProductItem key={item.node.id}>
-                {/* <ProductsListLink to={`/categoria/${item.node.name}`}>
-                  {item.node.name}
-                </ProductsListLink> */}
-                {/* TODO: use dinamyc name or id instead of hardcoded "guante" when fetchCateogries query accepts argument categoryID */}
-                <ProductsListLink to={`/categoria/guante`}>
+                <ProductsListLink to={`/categoria/${item.node.id}`}>
                   {item.node.name}
                 </ProductsListLink>
-                {/* <ProductsListLink href="#">{item.node.name}</ProductsListLink> */}
               </ProductItem>
             );
           })

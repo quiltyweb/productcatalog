@@ -186,6 +186,14 @@ type Query {
     id: ID!
   ): Node
   fetchCategories(after: String, first: Int, before: String, last: Int): CategoryConnection!
+  fetchCategory(
+    """ID of the requested category."""
+    categoryId: ID!
+    after: String
+    first: Int
+    before: String
+    last: Int
+  ): Category!
   searchProducts(
     """
     Search term to use to match products in the DB.

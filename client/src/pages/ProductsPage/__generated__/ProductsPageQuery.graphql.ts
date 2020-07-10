@@ -4,11 +4,15 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ProductsPageQueryVariables = {
-    categoryName: string;
+    categoryId: string;
 };
 export type ProductsPageQueryResponse = {
-    readonly searchProducts: {
-        readonly " $fragmentRefs": FragmentRefs<"ProductList_products">;
+    readonly fetchCategory: {
+        readonly id: string;
+        readonly name: string;
+        readonly products: {
+            readonly " $fragmentRefs": FragmentRefs<"ProductList_products">;
+        };
     };
 };
 export type ProductsPageQuery = {
@@ -20,10 +24,14 @@ export type ProductsPageQuery = {
 
 /*
 query ProductsPageQuery(
-  $categoryName: String!
+  $categoryId: ID!
 ) {
-  searchProducts(searchTerm: $categoryName) {
-    ...ProductList_products
+  fetchCategory(categoryId: $categoryId) {
+    id
+    name
+    products {
+      ...ProductList_products
+    }
   }
 }
 
@@ -44,17 +52,31 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "categoryName",
-    "type": "String!"
+    "name": "categoryId",
+    "type": "ID!"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
-    "name": "searchTerm",
-    "variableName": "categoryName"
+    "name": "categoryId",
+    "variableName": "categoryId"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -65,15 +87,28 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "ProductConnection",
+        "concreteType": "Category",
         "kind": "LinkedField",
-        "name": "searchProducts",
+        "name": "fetchCategory",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
           {
+            "alias": null,
             "args": null,
-            "kind": "FragmentSpread",
-            "name": "ProductList_products"
+            "concreteType": "ProductConnection",
+            "kind": "LinkedField",
+            "name": "products",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "ProductList_products"
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -90,53 +125,54 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "ProductConnection",
+        "concreteType": "Category",
         "kind": "LinkedField",
-        "name": "searchProducts",
+        "name": "fetchCategory",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
-            "concreteType": "ProductEdge",
+            "concreteType": "ProductConnection",
             "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
+            "name": "products",
+            "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Product",
+                "concreteType": "ProductEdge",
                 "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
+                "name": "edges",
+                "plural": true,
                 "selections": [
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "name",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "description",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "imagePath",
+                    "concreteType": "Product",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "description",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "imagePath",
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   }
                 ],
@@ -155,9 +191,9 @@ return {
     "metadata": {},
     "name": "ProductsPageQuery",
     "operationKind": "query",
-    "text": "query ProductsPageQuery(\n  $categoryName: String!\n) {\n  searchProducts(searchTerm: $categoryName) {\n    ...ProductList_products\n  }\n}\n\nfragment ProductList_products on ProductConnection {\n  edges {\n    node {\n      id\n      name\n      description\n      imagePath\n    }\n  }\n}\n"
+    "text": "query ProductsPageQuery(\n  $categoryId: ID!\n) {\n  fetchCategory(categoryId: $categoryId) {\n    id\n    name\n    products {\n      ...ProductList_products\n    }\n  }\n}\n\nfragment ProductList_products on ProductConnection {\n  edges {\n    node {\n      id\n      name\n      description\n      imagePath\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '55ada481cd5dfe0f024ce55742befb63';
+(node as any).hash = '74a0f2c10ddbc304c94618f001cd40c7';
 export default node;
