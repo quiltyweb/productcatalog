@@ -22,6 +22,7 @@ const QuantityPicker: React.FunctionComponent<QuantityPickerProps> = ({ productI
         value={quantity}
         name="quantityPickerInput"
         width="3rem"
+        readOnly // TOOD: readOnly for now
       />
       <Button onClick={ () => incrementCartItem({ productId }) }>+</Button>
     </Group>

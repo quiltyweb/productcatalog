@@ -55,7 +55,12 @@ const HomePage: React.FunctionComponent = () => {
   const [ cart, setCart ] = useState<CartItemProps[]>([]);
 
   // TODO: I'm organising these functions here for now. I'll refactor later.remove console logs later.
+
+  // TODO: consider if we should remove the update input or be readOnly...
   const updateCartItem = ({ productId, quantity }: CartItemProps) => {
+    if (isNaN(quantity) || quantity < 1 ) {
+      return;
+    }
     const newCart = cart.map(item => {
       return item.productId === productId ? {...item, quantity } : item;
     })
@@ -67,18 +72,23 @@ const HomePage: React.FunctionComponent = () => {
   }
 
   const incrementCartItem = ({ productId }: { productId: string }) => {
+    //TODO: should we need a max number here??
     const newCart = cart.map(item => item.productId === productId ? {...item, quantity: item.quantity + 1 } : item);
     setCart(newCart);
   }
 
   const decrementCartItem = ({ productId }: { productId: string }) => {
+    const item = cart.find(item => item.productId === productId)
+    if (item && item.quantity === 0) {
+      return;
+    }
     const newCart = cart.map(item => item.productId === productId ? {...item, quantity: item.quantity - 1 } : item);
     setCart(newCart);
   }
 
   const sumCartItems = (cart: CartItemProps[]): number => {
     const sum = cart.reduce((acc, curr, index, src) => {
-      return acc + curr.quantity
+      return acc + Number(curr.quantity)
     }, 0);
     return sum;
   }
