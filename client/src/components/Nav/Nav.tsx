@@ -41,7 +41,7 @@ const NavBarContent = styled.div`
   }
 `;
 
-const NavLogo = styled.a`
+const NavLogo = styled(Link)`
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -59,7 +59,7 @@ const NavLogoHeading = styled.span`
 `;
 
 const FormStyled = styled.form`
-  display: flex;
+  display: flex;NavLogo
   align-items: flex-end;
 `;
 const NavLogoSubHeading = styled.span`
@@ -103,7 +103,7 @@ const Nav = () => {
   return (
     <NavContainer>
       <NavBarContent>
-        <NavLogo href="/" title="Gattoni">
+        <NavLogo to="/" title="Gattoni">
           <NavLogoHeading>GATTONI</NavLogoHeading>
           <NavLogoSubHeading>Seguridad Industrial</NavLogoSubHeading>
         </NavLogo>
