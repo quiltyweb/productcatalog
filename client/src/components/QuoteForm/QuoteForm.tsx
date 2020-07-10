@@ -1,7 +1,6 @@
 import React from 'react'
 import { InputField, Button, Box, TextareaField, Heading } from 'fannypack'
 import { useFormik } from 'formik'
-import QuoteList from './QuoteList';
 
 const QuoteForm = () => {
   const formik = useFormik({
@@ -141,7 +140,6 @@ const QuoteForm = () => {
         />
         <Button alignSelf="flex-end" margin="major-2" padding="major-1" type="submit">Enviar</Button>
       </form>
-      <QuoteList />
     </Box>
   )
 }

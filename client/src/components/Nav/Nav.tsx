@@ -4,6 +4,7 @@ import { styled } from "fannypack";
 import { Link, useHistory } from "react-router-dom";
 import { InputField, Button } from "fannypack";
 // import hillsSVg from './hills.svg';
+import { useHomePageContext } from '../../pages/HomePage/HomePageContext';
 
 const NavContainer = styled.nav`
   display: flex;
@@ -78,6 +79,9 @@ const NavBarList = styled.ul`
 `;
 
 const Nav = () => {
+  const { cartCount } = useHomePageContext();
+
+
   var history = useHistory();
 
   const formik = useFormik({
@@ -126,7 +130,7 @@ const Nav = () => {
         <NavBarList aria-label="Menu principal">
           <li>
             <Link to="/cotizacion" className="NavBar-primary-link">
-              Mi Cotización
+              Mi Cotización ({cartCount})
             </Link>
           </li>
           <li>

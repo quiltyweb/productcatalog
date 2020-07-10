@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
@@ -9,10 +9,12 @@ import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
 import theme from "../../theme";
 import ContactForm from "../../components/ContactForm/ContactForm";
-import QuoteForm from "../../components/QuoteForm/QuoteForm";
 import ProductsPage from "../ProductsPage/ProductsPage";
 import SearchResultsPage from "../SearchResultsPage/SearchResultsPage";
+import CartPage from "../CartPage/CartPage";
 import Main from "../../components/Main/Main";
+import HomePageContext from "./HomePageContext";
+import { CartItemProps } from './HomePageContext';
 
 const MainWrapper = styled.main`
   display: flex;
@@ -49,6 +51,45 @@ const MainSidebar = styled.aside`
 `;
 
 const HomePage: React.FunctionComponent = () => {
+
+  const [ cart, setCart ] = useState<CartItemProps[]>([]);
+
+  // TODO: I'm organising these functions here for now. I'll refactor later.remove console logs later.
+  const updateCartItem = ({ productId, quantity }: CartItemProps) => {
+    const newCart = cart.map(item => {
+      return item.productId === productId ? {...item, quantity } : item;
+    })
+    setCart(newCart);
+  }
+
+  const addCartItem = ({ productId, quantity }: CartItemProps) => {
+    setCart([...cart, { productId, quantity }]);
+  }
+
+  const incrementCartItem = ({ productId }: { productId: string }) => {
+    const newCart = cart.map(item => item.productId === productId ? {...item, quantity: item.quantity + 1 } : item);
+    setCart(newCart);
+  }
+
+  const decrementCartItem = ({ productId }: { productId: string }) => {
+    const newCart = cart.map(item => item.productId === productId ? {...item, quantity: item.quantity - 1 } : item);
+    setCart(newCart);
+  }
+
+  const sumCartItems = (cart: CartItemProps[]): number => {
+    const sum = cart.reduce((acc, curr, index, src) => {
+      return acc + curr.quantity
+    }, 0);
+    return sum;
+  }
+
+  const removeCartItem = (productId: string) => {
+    console.log('remove item::: ', productId)
+    const filteredCard = cart.filter((item: any) => item.productId !== productId);
+    setCart(filteredCard);
+  }
+
+
   return (
     <Router>
       <ThemeProvider theme={theme}>
@@ -72,6 +113,16 @@ const HomePage: React.FunctionComponent = () => {
             }
 
             return (
+              <HomePageContext.Provider value={{
+                cart,
+                cartCount: sumCartItems(cart),
+                updateCartItem,
+                addCartItem,
+                handleCart: setCart,
+                incrementCartItem,
+                decrementCartItem,
+                removeCartItem
+              }}>
               <>
                 <header>
                   <Nav />
@@ -83,7 +134,7 @@ const HomePage: React.FunctionComponent = () => {
                         <ContactForm />
                       </Route>
                       <Route path="/cotizacion">
-                        <QuoteForm />
+                        <CartPage />
                       </Route>
                       <Route path="/categoria/:categoryName">
                         <ProductsPage />
@@ -102,6 +153,7 @@ const HomePage: React.FunctionComponent = () => {
                 </MainWrapper>
                 <Footer />
               </>
+              </HomePageContext.Provider>
             );
           }}
         />
