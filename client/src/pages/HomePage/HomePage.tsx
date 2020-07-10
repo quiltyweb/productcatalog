@@ -14,7 +14,7 @@ import SearchResultsPage from "../SearchResultsPage/SearchResultsPage";
 import CartPage from "../CartPage/CartPage";
 import Main from "../../components/Main/Main";
 import HomePageContext from "./HomePageContext";
-import { CartItemProps } from './HomePageContext';
+import { CartItemProps } from "./HomePageContext";
 
 const MainWrapper = styled.main`
   display: flex;
@@ -51,61 +51,71 @@ const MainSidebar = styled.aside`
 `;
 
 const HomePage: React.FunctionComponent = () => {
-
-  const [ cart, setCart ] = useState<CartItemProps[]>([]);
+  const [cart, setCart] = useState<CartItemProps[]>([]);
 
   // TODO: I'm organising these functions here for now. I'll refactor later.remove console logs later.
 
   // TODO: consider if we should remove the update input or be readOnly...
   const updateCartItem = ({ productId, quantity }: CartItemProps) => {
-    if (isNaN(quantity) || quantity < 1 ) {
+    if (isNaN(quantity) || quantity < 1) {
       return;
     }
-    const newCart = cart.map(item => {
-      return item.productId === productId ? {...item, quantity } : item;
-    })
+    const newCart = cart.map((item) => {
+      return item.productId === productId ? { ...item, quantity } : item;
+    });
     setCart(newCart);
-  }
+  };
 
   const addCartItem = ({ productId, quantity }: CartItemProps) => {
-    if (cart.some(item => item.productId === productId)) {
-      const newCart = cart.map(item => {
-        return item.productId === productId ? {...item, quantity: item.quantity + 1 } : item;
-      })
-      setCart(newCart);  
+    if (cart.some((item) => item.productId === productId)) {
+      const newCart = cart.map((item) => {
+        return item.productId === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item;
+      });
+      setCart(newCart);
     } else {
       setCart([...cart, { productId, quantity }]);
     }
-  }
+  };
 
   const incrementCartItem = ({ productId }: { productId: string }) => {
     //TODO: should we need a max number here??
-    const newCart = cart.map(item => item.productId === productId ? {...item, quantity: item.quantity + 1 } : item);
+    const newCart = cart.map((item) =>
+      item.productId === productId
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    );
     setCart(newCart);
-  }
+  };
 
   const decrementCartItem = ({ productId }: { productId: string }) => {
-    const item = cart.find(item => item.productId === productId)
+    const item = cart.find((item) => item.productId === productId);
     if (item && item.quantity === 0) {
       return;
     }
-    const newCart = cart.map(item => item.productId === productId ? {...item, quantity: item.quantity - 1 } : item);
+    const newCart = cart.map((item) =>
+      item.productId === productId
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    );
     setCart(newCart);
-  }
+  };
 
   const sumCartItems = (cart: CartItemProps[]): number => {
     const sum = cart.reduce((acc, curr, index, src) => {
-      return acc + Number(curr.quantity)
+      return acc + Number(curr.quantity);
     }, 0);
     return sum;
-  }
+  };
 
   const removeCartItem = (productId: string) => {
-    console.log('remove item::: ', productId)
-    const filteredCard = cart.filter((item: any) => item.productId !== productId);
+    console.log("remove item::: ", productId);
+    const filteredCard = cart.filter(
+      (item: any) => item.productId !== productId
+    );
     setCart(filteredCard);
-  }
-
+  };
 
   return (
     <Router>
@@ -130,46 +140,48 @@ const HomePage: React.FunctionComponent = () => {
             }
 
             return (
-              <HomePageContext.Provider value={{
-                cart,
-                cartCount: sumCartItems(cart),
-                updateCartItem,
-                addCartItem,
-                handleCart: setCart,
-                incrementCartItem,
-                decrementCartItem,
-                removeCartItem
-              }}>
-              <>
-                <header>
-                  <Nav />
-                </header>
-                <MainWrapper>
-                  <MainContent>
-                    <Switch>
-                      <Route path="/contacto">
-                        <ContactForm />
-                      </Route>
-                      <Route path="/cotizacion">
-                        <CartPage />
-                      </Route>
-                      <Route path="/categoria/:categoryName">
-                        <ProductsPage />
-                      </Route>
-                      <Route path="/resultados/:searchTerm">
-                        <SearchResultsPage />
-                      </Route>
-                      <Route path="/">
-                        <Main />
-                      </Route>
-                    </Switch>
-                  </MainContent>
-                  <MainSidebar>
-                    <CategoryList categories={props.fetchCategories} />
-                  </MainSidebar>
-                </MainWrapper>
-                <Footer />
-              </>
+              <HomePageContext.Provider
+                value={{
+                  cart,
+                  cartCount: sumCartItems(cart),
+                  updateCartItem,
+                  addCartItem,
+                  handleCart: setCart,
+                  incrementCartItem,
+                  decrementCartItem,
+                  removeCartItem,
+                }}
+              >
+                <>
+                  <header>
+                    <Nav />
+                  </header>
+                  <MainWrapper>
+                    <MainContent>
+                      <Switch>
+                        <Route path="/contacto">
+                          <ContactForm />
+                        </Route>
+                        <Route path="/cotizacion">
+                          <CartPage />
+                        </Route>
+                        <Route path="/categoria/:categoryId">
+                          <ProductsPage />
+                        </Route>
+                        <Route path="/resultados/:searchTerm">
+                          <SearchResultsPage />
+                        </Route>
+                        <Route path="/">
+                          <Main />
+                        </Route>
+                      </Switch>
+                    </MainContent>
+                    <MainSidebar>
+                      <CategoryList categories={props.fetchCategories} />
+                    </MainSidebar>
+                  </MainWrapper>
+                  <Footer />
+                </>
               </HomePageContext.Provider>
             );
           }}

@@ -1,28 +1,22 @@
 import React from "react";
 import { graphql } from "babel-plugin-relay/macro";
 import { createFragmentContainer } from "react-relay";
-import { Box, Heading, Columns, Column } from "fannypack";
+import { Box, Columns, Column } from "fannypack";
 import Card from "../../components/Card/Card";
 import { ProductList_products } from "./__generated__/ProductList_products.graphql";
 
 type ProductListProps = {
-  categoryName: string;
   products: ProductList_products;
 };
 
 const ProductList: React.FunctionComponent<ProductListProps> = ({
-  categoryName,
   products,
 }) => {
-  const fakeCategoryName = "Guantes";
   return (
     <Box padding="major-2">
-      <Heading use="h2">Categoria: {categoryName}</Heading>
       <Columns aria-labelledby="heading-destacados">
         {products && products.edges && products.edges.length > 0 ? (
           products.edges.map((product: any) => {
-            console.log(product);
-
             return (
               <Column key={product.node.id} spread={3}>
                 <Card
@@ -35,8 +29,8 @@ const ProductList: React.FunctionComponent<ProductListProps> = ({
             );
           })
         ) : (
-            <div>No se encontraron productos para esta Categoria</div>
-          )}
+          <div>No se encontraron productos para esta Categoria</div>
+        )}
       </Columns>
     </Box>
   );
