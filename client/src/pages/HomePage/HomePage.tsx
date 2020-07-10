@@ -67,7 +67,16 @@ const HomePage: React.FunctionComponent = () => {
   };
 
   const addCartItem = ({ productId, quantity }: CartItemProps) => {
-    setCart([...cart, { productId, quantity }]);
+    if (cart.some((item) => item.productId === productId)) {
+      const newCart = cart.map((item) => {
+        return item.productId === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item;
+      });
+      setCart(newCart);
+    } else {
+      setCart([...cart, { productId, quantity }]);
+    }
   };
 
   const incrementCartItem = ({ productId }: { productId: string }) => {

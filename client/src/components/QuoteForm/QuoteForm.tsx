@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputField, Button, Box, TextareaField, Heading } from 'fannypack'
+import { InputField, Button, Box, TextareaField, Heading, Paragraph } from 'fannypack'
 import { useFormik } from 'formik'
 
 const QuoteForm = () => {
@@ -42,8 +42,9 @@ const QuoteForm = () => {
   })
 
   return (
-    <Box>
-      <Heading use="h1">Mi Cotización:</Heading>
+    <Box marginTop="major-4">
+      <Heading use="h2">Formulario de cotización:</Heading>
+      <Paragraph>Si está de acuerdo con el pedido, complete el formulario de cotización:</Paragraph>
       <form onSubmit={formik.handleSubmit}>
         <InputField
           padding="major-2"

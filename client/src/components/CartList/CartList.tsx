@@ -3,8 +3,7 @@ import {
   Box,
   Heading,
   Table,
-  Button,
-  Paragraph
+  Button
 } from 'fannypack'
  import QuantityPicker from '../QuantityPicker/QuantityPicker'
 import { useHomePageContext } from '../../pages/HomePage/HomePageContext';
@@ -13,19 +12,10 @@ import { useHomePageContext } from '../../pages/HomePage/HomePageContext';
 const CartList = (): JSX.Element => {
   const { cart, removeCartItem } = useHomePageContext();
 
-  if (!cart.length) {
-    return (
-      <Box padding="major-2">
-        <Paragraph>No hay Productos en la Cotización.</Paragraph>
-        <Paragraph>Agregue articulos a su cotización navegando a través del menú de categorias</Paragraph>
-      </Box>
-    );
-  }
-
   return (
     <Box padding="major-2">
-      <Heading use="h2">Productos:</Heading>
-      <Table>
+    <Heading>Mi Cotización:</Heading>
+      <Table hasBorder isResponsive>
         <Table.Head>
           <Table.Row>
             <Table.HeadCell>Id producto</Table.HeadCell>
@@ -33,7 +23,7 @@ const CartList = (): JSX.Element => {
 
           </Table.Row>
         </Table.Head>
-        <Table.Body>
+        <Table.Body hasBorders>
           {
             cart.map(item => {
               return(
