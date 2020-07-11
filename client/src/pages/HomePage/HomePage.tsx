@@ -10,6 +10,7 @@ import Footer from "../../components/Footer/Footer";
 import theme from "../../theme";
 import ContactForm from "../../components/ContactForm/ContactForm";
 import ProductsPage from "../ProductsPage/ProductsPage";
+import SingleProductPage from "../SingleProductPage/SingleProductPage";
 import SearchResultsPage from "../SearchResultsPage/SearchResultsPage";
 import CartPage from "../CartPage/CartPage";
 import Main from "../../components/Main/Main";
@@ -34,16 +35,9 @@ const MainWrapper = styled.main`
 `;
 
 const MainContent = styled.div`
-  @media (min-width: 760px) {
-    flex-basis: 80%;
-    padding-left: 4rem;
-    padding-right: 4rem;
-  }
-
-  @media (min-width: 1020px) {
-    padding-left: 8rem;
-    padding-right: 8rem;
-  }
+  flex-basis: 80%;
+  padding-left: 2rem;
+  padding-right: 2rem;
 `;
 
 const MainSidebar = styled.aside`
@@ -170,6 +164,9 @@ const HomePage: React.FunctionComponent = () => {
                         </Route>
                         <Route path="/resultados/:searchTerm">
                           <SearchResultsPage />
+                        </Route>
+                        <Route path="/producto/:productId">
+                          <SingleProductPage />
                         </Route>
                         <Route path="/">
                           <Main />
