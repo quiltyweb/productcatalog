@@ -8,7 +8,6 @@ export type ProductList_products = {
         readonly node: {
             readonly id: string;
             readonly name: string;
-            readonly description: string;
             readonly imagePath: string;
         } | null;
     } | null> | null;
@@ -62,13 +61,6 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "description",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
               "name": "imagePath",
               "storageKey": null
             }
@@ -81,5 +73,5 @@ const node: ReaderFragment = {
   ],
   "type": "ProductConnection"
 };
-(node as any).hash = '4cf9a2afe55f73160187d6698d24f92c';
+(node as any).hash = '3090c27713353e019a3805352313e94f';
 export default node;

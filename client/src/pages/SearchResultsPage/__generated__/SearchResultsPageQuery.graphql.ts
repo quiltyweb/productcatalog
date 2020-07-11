@@ -32,7 +32,6 @@ fragment ProductList_products on ProductConnection {
     node {
       id
       name
-      description
       imagePath
     }
   }
@@ -129,13 +128,6 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "description",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "imagePath",
                     "storageKey": null
                   }
@@ -155,7 +147,7 @@ return {
     "metadata": {},
     "name": "SearchResultsPageQuery",
     "operationKind": "query",
-    "text": "query SearchResultsPageQuery(\n  $searchTerm: String!\n) {\n  searchProducts(searchTerm: $searchTerm) {\n    ...ProductList_products\n  }\n}\n\nfragment ProductList_products on ProductConnection {\n  edges {\n    node {\n      id\n      name\n      description\n      imagePath\n    }\n  }\n}\n"
+    "text": "query SearchResultsPageQuery(\n  $searchTerm: String!\n) {\n  searchProducts(searchTerm: $searchTerm) {\n    ...ProductList_products\n  }\n}\n\nfragment ProductList_products on ProductConnection {\n  edges {\n    node {\n      id\n      name\n      imagePath\n    }\n  }\n}\n"
   }
 };
 })();

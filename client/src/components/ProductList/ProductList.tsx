@@ -18,11 +18,10 @@ const ProductList: React.FunctionComponent<ProductListProps> = ({
         {products && products.edges && products.edges.length > 0 ? (
           products.edges.map((product: any) => {
             return (
-              <Column key={product.node.id} spread={3}>
+              <Column key={product.node.id} spread={4}>
                 <Card
                   productId={product.node.id}
                   name={product.node.name}
-                  description={product.node.description}
                   linkImage={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/${product.node.imagePath}`}
                 />
               </Column>
@@ -43,7 +42,6 @@ export default createFragmentContainer(ProductList, {
         node {
           id
           name
-          description
           imagePath
         }
       }
