@@ -21,6 +21,7 @@ export const QuotePage = () => {
 
   return (
     <>
+      <h2>Ingrese datos de su cotizacion</h2>
       <QuoteForm cartItems={cart} />
     </>
   );

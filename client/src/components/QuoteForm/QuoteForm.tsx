@@ -1,4 +1,8 @@
 import React from "react";
+import { graphql } from "babel-plugin-relay/macro";
+import { fetchQuery } from "react-relay";
+import environment from "../../environment";
+
 import {
   InputField,
   Button,
@@ -8,6 +12,39 @@ import {
   Paragraph,
 } from "fannypack";
 import { useFormik } from "formik";
+
+// personalIdNumber,
+//   emailAddress,
+//   message,
+//   name,
+//   companyName,
+//   phoneNumber,
+//   city,
+
+const query = graphql`
+  query QuoteFormSendQuoteRequestQuery(
+    $personalIdNumber: String!
+    $emailAddress: String!
+    $message: String
+    $name: String!
+    $companyName: String
+    $phoneNumber: String
+    $city: String
+  ) {
+    sendQuoteRequest(
+      personalIdNumber: $personalIdNumber
+      emailAddress: $emailAddress
+      message: $message
+      name: $name
+      companyName: $companyName
+      phoneNumber: $phoneNumber
+      city: $city
+    ) {
+      status
+      message
+    }
+  }
+`;
 
 type ProductItemProps = {
   productId: string;
@@ -60,8 +97,22 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
       return errors;
     },
     onSubmit: (values) => {
-      console.log("onSubmit", values);
-      console.log("cartItems prop", cartItems);
+      console.log("onSubmit >>>", cartItems);
+
+      const variables = {
+        personalIdNumber: "123456",
+        city: values.ciudad,
+        codigoArea: "02",
+        emailAddress: values.email,
+        companyName: values.empresa,
+        message: values.mensaje,
+        name: values.nombreCompleto,
+        phoneNumber: values.telefono,
+      };
+      fetchQuery(environment, query, variables).then((data) => {
+        // access the graphql response
+        console.log("fetchQuery data >>>>", data);
+      });
     },
   });
 
