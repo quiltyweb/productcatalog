@@ -1,50 +1,76 @@
-import React from 'react'
-import { InputField, Button, Box, TextareaField, Heading, Paragraph } from 'fannypack'
-import { useFormik } from 'formik'
+import React from "react";
+import {
+  InputField,
+  Button,
+  Box,
+  TextareaField,
+  Heading,
+  Paragraph,
+} from "fannypack";
+import { useFormik } from "formik";
 
-const QuoteForm = () => {
+type ProductItemProps = {
+  productId: string;
+  quantity: number;
+};
+
+interface QuoteFormProps {
+  cartItems: ProductItemProps[];
+}
+
+const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
   const formik = useFormik({
     initialValues: {
-      nombreCompleto: '',
-      empresa: '',
-      email: '',
-      mensaje: '',
-      telefono: '',
-      ciudad: '',
-      codigoArea: ''
+      nombreCompleto: "",
+      empresa: "",
+      email: "",
+      mensaje: "",
+      telefono: "",
+      ciudad: "",
+      codigoArea: "",
     },
-    validate: ({ nombreCompleto, empresa, email, ciudad, codigoArea, telefono }) => {
-      const errors: any = {}
+    validate: ({
+      nombreCompleto,
+      empresa,
+      email,
+      ciudad,
+      codigoArea,
+      telefono,
+    }) => {
+      const errors: any = {};
       if (!nombreCompleto) {
-        errors['nombreCompleto'] = 'Nombre o Razon social es requerido';
+        errors["nombreCompleto"] = "Nombre o Razon social es requerido";
       }
       if (!empresa) {
-        errors['empresa'] = 'Empresa es requerido';
+        errors["empresa"] = "Empresa es requerido";
       }
       if (!email) {
-        errors['email'] = 'Email es requerido';
+        errors["email"] = "Email es requerido";
       }
       if (!ciudad) {
-        errors['ciudad'] = 'Ciudad es requerido';
+        errors["ciudad"] = "Ciudad es requerido";
       }
       if (!codigoArea) {
-        errors['codigoArea'] = 'codigo de Area es requerido';
+        errors["codigoArea"] = "codigo de Area es requerido";
       }
       if (!telefono) {
-        errors['telefono'] = 'Telefono es requerido';
+        errors["telefono"] = "Telefono es requerido";
       }
-   
+
       return errors;
     },
     onSubmit: (values) => {
-      console.log('onSubmit', values)
+      console.log("onSubmit", values);
+      console.log("cartItems prop", cartItems);
     },
-  })
+  });
 
   return (
     <Box marginTop="major-4">
       <Heading use="h2">Formulario de cotización:</Heading>
-      <Paragraph>Si está de acuerdo con el pedido, complete el formulario de cotización:</Paragraph>
+      <Paragraph>
+        Si está de acuerdo con el pedido, complete el formulario de cotización:
+      </Paragraph>
       <form onSubmit={formik.handleSubmit}>
         <InputField
           padding="major-2"
@@ -57,7 +83,7 @@ const QuoteForm = () => {
           value={formik.values.nombreCompleto}
           onChange={formik.handleChange}
           validationText={formik.errors.nombreCompleto}
-          state={formik.errors.nombreCompleto ? 'danger' : ''}
+          state={formik.errors.nombreCompleto ? "danger" : ""}
           size="default"
         />
         <InputField
@@ -71,7 +97,7 @@ const QuoteForm = () => {
           value={formik.values.empresa}
           onChange={formik.handleChange}
           validationText={formik.errors.empresa}
-          state={formik.errors.empresa ? 'danger' : ''}
+          state={formik.errors.empresa ? "danger" : ""}
           size="default"
         />
         <InputField
@@ -85,7 +111,7 @@ const QuoteForm = () => {
           value={formik.values.email}
           onChange={formik.handleChange}
           validationText={formik.errors.email}
-          state={formik.errors.email ? 'danger' : ''}
+          state={formik.errors.email ? "danger" : ""}
           size="default"
         />
         <InputField
@@ -99,10 +125,10 @@ const QuoteForm = () => {
           value={formik.values.telefono}
           onChange={formik.handleChange}
           validationText={formik.errors.telefono}
-          state={formik.errors.telefono ? 'danger' : ''}
+          state={formik.errors.telefono ? "danger" : ""}
           size="default"
         />
-         <InputField
+        <InputField
           padding="major-2"
           id="ciudad"
           name="ciudad"
@@ -113,7 +139,7 @@ const QuoteForm = () => {
           value={formik.values.ciudad}
           onChange={formik.handleChange}
           validationText={formik.errors.ciudad}
-          state={formik.errors.ciudad ? 'danger' : ''}
+          state={formik.errors.ciudad ? "danger" : ""}
           size="medium"
         />
         <InputField
@@ -127,7 +153,7 @@ const QuoteForm = () => {
           value={formik.values.codigoArea}
           onChange={formik.handleChange}
           validationText={formik.errors.codigoArea}
-          state={formik.errors.codigoArea ? 'danger' : ''}
+          state={formik.errors.codigoArea ? "danger" : ""}
           size="default"
         />
         <TextareaField
@@ -137,12 +163,19 @@ const QuoteForm = () => {
           value={formik.values.mensaje}
           onChange={formik.handleChange}
           validationText={formik.errors.mensaje}
-          state={formik.errors.mensaje ? 'danger' : ''}
+          state={formik.errors.mensaje ? "danger" : ""}
         />
-        <Button alignSelf="flex-end" margin="major-2" padding="major-1" type="submit">Enviar</Button>
+        <Button
+          alignSelf="flex-end"
+          margin="major-2"
+          padding="major-1"
+          type="submit"
+        >
+          Enviar
+        </Button>
       </form>
     </Box>
-  )
-}
+  );
+};
 
 export default QuoteForm;

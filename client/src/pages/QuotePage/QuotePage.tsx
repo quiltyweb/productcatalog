@@ -1,10 +1,9 @@
 import React from "react";
 import { Heading, Paragraph, Box } from "fannypack";
-import CartList from "../../components/CartList/CartList";
 import QuoteForm from "../../components/QuoteForm/QuoteForm";
-import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
+import { useHomePageContext } from "../HomePage/HomePageContext";
 
-export const CartPage = () => {
+export const QuotePage = () => {
   const { cart } = useHomePageContext();
 
   if (!cart.length) {
@@ -22,9 +21,8 @@ export const CartPage = () => {
 
   return (
     <>
-      <CartList />
       <QuoteForm cartItems={cart} />
     </>
   );
 };
-export default CartPage;
+export default QuotePage;
