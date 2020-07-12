@@ -4,6 +4,7 @@ import {
   GraphQLInt,
   GraphQLNonNull,
   GraphQLEnumType,
+  GraphQLInputObjectType,
 } from "graphql";
 import {
   globalIdField,
@@ -16,7 +17,11 @@ import { Product } from "../entity/Product";
 import { Category } from "../entity/Category";
 import { CartItem } from "../entity/Cart";
 
-import type { GraphQLFieldConfigMap, GraphQLInterfaceType } from "graphql";
+import type {
+  GraphQLFieldConfigMap,
+  GraphQLInterfaceType,
+  GraphQLInputFieldConfigMap,
+} from "graphql";
 import type { Connection } from "graphql-relay";
 
 import type { TSource, TContext } from "../types";
@@ -53,6 +58,43 @@ class GqlTypes {
       this.cartItemType
     );
     this.cartType = this.buildCartType(this.cartItemConnectionType);
+  }
+
+  get quoteRequestInputType(): GraphQLInputObjectType {
+    return new GraphQLInputObjectType({
+      name: "QuoteRequestInput",
+      description: "Input object for sending quote requests.",
+      fields: (): GraphQLInputFieldConfigMap => ({
+        personalIdNumber: {
+          type: GraphQLNonNull(GraphQLString),
+          description: "The ID number of the sender, typically their RUT.",
+        },
+        emailAddress: {
+          type: GraphQLNonNull(GraphQLString),
+          description: "The sender's email address.",
+        },
+        message: {
+          type: GraphQLString,
+          description: "The message body to be sent.",
+        },
+        name: {
+          type: GraphQLNonNull(GraphQLString),
+          description: "The sender's name.",
+        },
+        companyName: {
+          type: GraphQLString,
+          description: "The name of the sender's company.",
+        },
+        phoneNumber: {
+          type: GraphQLString,
+          description: "The senders' phone number.",
+        },
+        city: {
+          type: GraphQLString,
+          description: "The sender's home city.",
+        },
+      }),
+    });
   }
 
   private buildProductType(

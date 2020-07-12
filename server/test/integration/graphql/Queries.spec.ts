@@ -300,13 +300,15 @@ describe("GraphQL schema", () => {
         $message: String
       ) {
         sendQuoteRequest(
-          personalIdNumber: $personalIdNumber,
-          emailAddress: $emailAddress,
-          name: $name,
-          companyName: $companyName,
-          phoneNumber: $phoneNumber,
-          city: $city,
-          message: $message
+          input: {
+            personalIdNumber: $personalIdNumber,
+            emailAddress: $emailAddress,
+            name: $name,
+            companyName: $companyName,
+            phoneNumber: $phoneNumber,
+            city: $city,
+            message: $message
+          }
         ) {
           status
           message

@@ -179,33 +179,8 @@ class Queries {
     return {
       type: GraphQLNonNull(this.types.sendMessageResponseType),
       args: {
-        personalIdNumber: {
-          type: GraphQLNonNull(GraphQLString),
-          description: "The ID number of the sender, typically their RUT.",
-        },
-        emailAddress: {
-          type: GraphQLNonNull(GraphQLString),
-          description: "The sender's email address.",
-        },
-        message: {
-          type: GraphQLString,
-          description: "The message body to be sent.",
-        },
-        name: {
-          type: GraphQLNonNull(GraphQLString),
-          description: "The sender's name.",
-        },
-        companyName: {
-          type: GraphQLString,
-          description: "The name of the sender's company.",
-        },
-        phoneNumber: {
-          type: GraphQLString,
-          description: "The senders' phone number.",
-        },
-        city: {
-          type: GraphQLString,
-          description: "The sender's home city.",
+        input: {
+          type: GraphQLNonNull(this.types.quoteRequestInputType),
         },
       },
       resolve: async (root, args, ctx): Promise<SendEmailResponse> => {
@@ -217,7 +192,7 @@ class Queries {
           companyName,
           phoneNumber,
           city,
-        } = args;
+        } = args.input;
 
         const {
           request,
