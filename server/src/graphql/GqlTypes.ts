@@ -32,8 +32,6 @@ class GqlTypes {
   public categoryType: GraphQLObjectType;
   public categoryConnectionType: GraphQLObjectType;
 
-  public sendMessageResponseType: GraphQLObjectType;
-
   public cartItemType: GraphQLObjectType;
   public cartItemConnectionType: GraphQLObjectType;
   public cartType: GraphQLObjectType;
@@ -50,8 +48,6 @@ class GqlTypes {
     this.categoryConnectionType = this.buildCategoryConnectionType(
       this.categoryType
     );
-
-    this.sendMessageResponseType = this.buildSendMessageResponseType();
 
     this.cartItemType = this.buildCartItemType(nodeInterface, this.productType);
     this.cartItemConnectionType = this.buildCartItemConnectionType(
@@ -92,6 +88,28 @@ class GqlTypes {
         city: {
           type: GraphQLString,
           description: "The sender's home city.",
+        },
+      }),
+    });
+  }
+
+  get sendMessageResponseType(): GraphQLObjectType {
+    const messageStatusEnum = new GraphQLEnumType({
+      name: "MessageStatus",
+      values: {
+        SUCCESS: { value: "success" },
+        FAILURE: { value: "failure" },
+      },
+    });
+
+    return new GraphQLObjectType({
+      name: "SendMessageResponse",
+      fields: (): GraphQLFieldConfigMap<TSource, TContext> => ({
+        status: {
+          type: messageStatusEnum,
+        },
+        message: {
+          type: GraphQLNonNull(GraphQLString),
         },
       }),
     });
@@ -174,29 +192,7 @@ class GqlTypes {
     }).connectionType;
   }
 
-  buildSendMessageResponseType(): GraphQLObjectType {
-    const messageStatusEnum = new GraphQLEnumType({
-      name: "MessageStatus",
-      values: {
-        SUCCESS: { value: "success" },
-        FAILURE: { value: "failure" },
-      },
-    });
-
-    return new GraphQLObjectType({
-      name: "SendMessageResponse",
-      fields: (): GraphQLFieldConfigMap<TSource, TContext> => ({
-        status: {
-          type: messageStatusEnum,
-        },
-        message: {
-          type: GraphQLNonNull(GraphQLString),
-        },
-      }),
-    });
-  }
-
-  buildCartItemType(
+  private buildCartItemType(
     nodeInterface: GraphQLInterfaceType,
     productType: GraphQLObjectType
   ): GraphQLObjectType {
@@ -216,7 +212,7 @@ class GqlTypes {
     });
   }
 
-  buildCartItemConnectionType(
+  private buildCartItemConnectionType(
     cartItemType: GraphQLObjectType
   ): GraphQLObjectType {
     return connectionDefinitions({
@@ -224,7 +220,9 @@ class GqlTypes {
     }).connectionType;
   }
 
-  buildCartType(cartItemConnectionType: GraphQLObjectType): GraphQLObjectType {
+  private buildCartType(
+    cartItemConnectionType: GraphQLObjectType
+  ): GraphQLObjectType {
     return new GraphQLObjectType({
       name: "Cart",
       fields: (): GraphQLFieldConfigMap<TSource, TContext> => ({
