@@ -5,6 +5,8 @@ import {
   GraphQLNonNull,
   GraphQLEnumType,
   GraphQLInputObjectType,
+  GraphQLList,
+  GraphQLID,
 } from "graphql";
 import {
   globalIdField,
@@ -27,6 +29,9 @@ import type { Connection } from "graphql-relay";
 import type { TSource, TContext } from "../types";
 
 class GqlTypes {
+  public quoteRequestInputType: GraphQLInputObjectType;
+  public sendMessageResponseType: GraphQLObjectType;
+
   public productType: GraphQLObjectType;
   public productConnectionType: GraphQLObjectType;
   public categoryType: GraphQLObjectType;
@@ -37,6 +42,9 @@ class GqlTypes {
   public cartType: GraphQLObjectType;
 
   constructor(nodeInterface: GraphQLInterfaceType) {
+    this.quoteRequestInputType = this.buildQuoteRequestInputType();
+    this.sendMessageResponseType = this.buildSendMessageResponseType();
+
     this.productType = this.buildProductType(nodeInterface);
     this.productConnectionType = this.buildProductConnectionType(
       this.productType
@@ -56,10 +64,27 @@ class GqlTypes {
     this.cartType = this.buildCartType(this.cartItemConnectionType);
   }
 
-  get quoteRequestInputType(): GraphQLInputObjectType {
+  private buildQuoteRequestInputType(): GraphQLInputObjectType {
     return new GraphQLInputObjectType({
       name: "QuoteRequestInput",
       description: "Input object for sending quote requests.",
+      fields: (): GraphQLInputFieldConfigMap => ({
+        personalDetails: {
+          type: GraphQLNonNull(this.personalDetailsForQuoteInputType),
+        },
+        productsToQuote: {
+          type: GraphQLNonNull(
+            GraphQLList(GraphQLNonNull(this.productToQuoteInputType))
+          ),
+        },
+      }),
+    });
+  }
+
+  private get personalDetailsForQuoteInputType(): GraphQLInputObjectType {
+    return new GraphQLInputObjectType({
+      name: "PersonalDetailsForQuoteInput",
+      description: "Personal details sent with a quote request.",
       fields: (): GraphQLInputFieldConfigMap => ({
         personalIdNumber: {
           type: GraphQLNonNull(GraphQLString),
@@ -93,7 +118,25 @@ class GqlTypes {
     });
   }
 
-  get sendMessageResponseType(): GraphQLObjectType {
+  private get productToQuoteInputType(): GraphQLInputObjectType {
+    return new GraphQLInputObjectType({
+      name: "ProductsToQuoteInput",
+      description:
+        "A list of product IDs and quantities that the user wants quoted.",
+      fields: (): GraphQLInputFieldConfigMap => ({
+        productId: {
+          type: GraphQLID,
+          description: "ID of the product to be quoted.",
+        },
+        quantity: {
+          type: GraphQLInt,
+          description: "Quantity of the product to be quoted.",
+        },
+      }),
+    });
+  }
+
+  private buildSendMessageResponseType(): GraphQLObjectType {
     const messageStatusEnum = new GraphQLEnumType({
       name: "MessageStatus",
       values: {

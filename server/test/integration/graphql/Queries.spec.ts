@@ -276,9 +276,7 @@ describe("GraphQL schema", () => {
       expect.assertions(1);
 
       const context = { ...baseContext, sendEmail: Email.send };
-
       const results = await graphql(schema, query, null, context, variables);
-
       const messageResponse = results.data.sendContactMessage;
 
       expect(messageResponse).toEqual({
@@ -297,17 +295,27 @@ describe("GraphQL schema", () => {
         $companyName: String,
         $phoneNumber: String,
         $city: String,
-        $message: String
+        $message: String,
+        $firstProductId: ID!,
+        $secondProductId: ID!,
+        $firstQuantity: Int!,
+        $secondQuantity: Int!
       ) {
         sendQuoteRequest(
           input: {
-            personalIdNumber: $personalIdNumber,
-            emailAddress: $emailAddress,
-            name: $name,
-            companyName: $companyName,
-            phoneNumber: $phoneNumber,
-            city: $city,
-            message: $message
+            personalDetails: {
+              personalIdNumber: $personalIdNumber,
+              emailAddress: $emailAddress,
+              name: $name,
+              companyName: $companyName,
+              phoneNumber: $phoneNumber,
+              city: $city,
+              message: $message
+            },
+            productsToQuote: [
+              { productId: $firstProductId, quantity: $firstQuantity },
+              { productId: $secondProductId, quantity: $secondQuantity },
+            ]
           }
         ) {
           status
@@ -341,22 +349,17 @@ describe("GraphQL schema", () => {
         .getOne();
       const secondQuantity = faker.random.number({ min: 1, max: 10 });
 
-      const session = {
-        cart: {
-          cartItems: [
-            {
-              product: firstProduct,
-              quantity: firstQuantity,
-            },
-            {
-              product: secondProduct,
-              quantity: secondQuantity,
-            },
-          ],
-        },
+      const productVariables = {
+        ...variables,
+        firstProductId: toGlobalId("Product", String(firstProduct.id)),
+        secondProductId: toGlobalId("Product", String(secondProduct.id)),
+        firstQuantity,
+        secondQuantity,
       };
-      const context = { ...baseContext, session, sendEmail: mockSend };
-      await graphql(schema, query, null, context, variables);
+      const context = { ...baseContext, sendEmail: mockSend };
+
+      await graphql(schema, query, null, context, productVariables);
+
       expect(mockSend.mock.calls.length).toBe(1);
     });
 
@@ -372,23 +375,22 @@ describe("GraphQL schema", () => {
         .getOne();
       const secondQuantity = faker.random.number({ min: 1, max: 10 });
 
-      const session = {
-        cart: {
-          cartItems: [
-            {
-              product: firstProduct,
-              quantity: firstQuantity,
-            },
-            {
-              product: secondProduct,
-              quantity: secondQuantity,
-            },
-          ],
-        },
+      const productVariables = {
+        ...variables,
+        firstProductId: toGlobalId("Product", String(firstProduct.id)),
+        secondProductId: toGlobalId("Product", String(secondProduct.id)),
+        firstQuantity,
+        secondQuantity,
       };
-      const context = { ...baseContext, session, sendEmail: mockSend };
+      const context = { ...baseContext, sendEmail: mockSend };
 
-      const results = await graphql(schema, query, null, context, variables);
+      const results = await graphql(
+        schema,
+        query,
+        null,
+        context,
+        productVariables
+      );
       const messageResponse = results.data.sendQuoteRequest;
 
       expect(messageResponse).toEqual({

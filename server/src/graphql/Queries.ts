@@ -14,7 +14,6 @@ import type { GraphQLFieldConfig } from "graphql";
 
 import type { SendEmailResponse } from "../email";
 import type { TSource, TContext } from "../types";
-import type { CartItem } from "../entity/Cart";
 
 class Queries {
   private types: GQLTypes;
@@ -185,40 +184,47 @@ class Queries {
       },
       resolve: async (root, args, ctx): Promise<SendEmailResponse> => {
         const {
-          personalIdNumber,
-          emailAddress,
-          message,
-          name,
-          companyName,
-          phoneNumber,
-          city,
+          personalDetails: {
+            personalIdNumber,
+            emailAddress,
+            message,
+            name,
+            companyName,
+            phoneNumber,
+            city,
+          },
+          productsToQuote,
         } = args.input;
 
-        const {
-          request,
-          session: { cart },
-        } = ctx;
+        const { request, entityManager } = ctx;
 
         const { ADMIN_EMAIL: emailTo } = process.env;
-
         const host = (request && request.host) || "productcatalog.com";
-
-        if (!cart || cart.cartItems.length == 0)
-          return {
-            status: "failure",
-            message: "No hay productos en el carrito para cotizar.",
-          };
 
         if (!emailTo)
           throw Error("Missing ADMIN_EMAIL env var to send emails to.");
 
-        const cartItemRows = cart.cartItems
+        const products = await Promise.all(
+          productsToQuote.map(async ({ productId, quantity }) => {
+            const { name, salePrice } = await entityManager.findOneOrFail(
+              Product,
+              {
+                select: ["name", "salePrice"],
+                where: { id: fromGlobalId(productId).id },
+              }
+            );
+
+            return { name, salePrice, quantity };
+          })
+        );
+
+        const productRows = products
           .map(
-            (cartItem: CartItem) => `
+            ({ name, quantity, salePrice }) => `
               <tr>
-                <td>${cartItem.product.name}</td>
-                <td>${cartItem.quantity}</td>
-                <td>${cartItem.product.salePrice}</td>
+                <td>${name}</td>
+                <td>${quantity}</td>
+                <td>${salePrice}</td>
               </tr>
             `
           )
@@ -240,7 +246,7 @@ class Queries {
                 <th>Precio Listado</th>
               </thead>
               <tbody>
-                ${cartItemRows}
+                ${productRows}
               </tbody>
             </table>
           `;
