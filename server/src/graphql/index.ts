@@ -28,6 +28,7 @@ const {
   fetchCategories,
   fetchCategory,
   searchProducts,
+  fetchProduct,
   sendContactMessage,
   sendQuoteRequest,
 } = new Queries(types);
@@ -39,6 +40,7 @@ const queryType = new GraphQLObjectType({
     fetchCategories,
     fetchCategory,
     searchProducts,
+    fetchProduct,
     sendContactMessage,
     sendQuoteRequest,
   }),

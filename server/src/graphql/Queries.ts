@@ -45,7 +45,6 @@ class Queries {
           type: GraphQLNonNull(GraphQLID),
           description: "ID of the requested category.",
         },
-        ...connectionArgs,
       },
       resolve: async (root, args, ctx): Promise<Category> => {
         const category = await ctx.entityManager.findOne(
@@ -87,6 +86,26 @@ class Queries {
           .getMany();
 
         return connectionFromArray(products, args);
+      },
+    };
+  }
+
+  get fetchProduct(): GraphQLFieldConfig<TSource, TContext> {
+    return {
+      type: GraphQLNonNull(this.types.productType),
+      args: {
+        productId: {
+          type: GraphQLNonNull(GraphQLID),
+          description: "ID of the requested product.",
+        },
+      },
+      resolve: async (root, args, ctx): Promise<Product> => {
+        const product = await ctx.entityManager.findOne(
+          Product,
+          fromGlobalId(args.productId).id
+        );
+
+        return product;
       },
     };
   }
