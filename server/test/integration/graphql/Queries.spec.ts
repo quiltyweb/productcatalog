@@ -91,7 +91,7 @@ describe("GraphQL schema", () => {
     });
   });
 
-  describe("fetchCategories", () => {
+  describe("fetchCategory", () => {
     const query = `
       query($categoryId: ID!) {
         fetchCategory(categoryId: $categoryId) {
