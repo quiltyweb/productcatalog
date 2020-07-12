@@ -203,6 +203,32 @@ describe("GraphQL schema", () => {
     });
   });
 
+  describe("fetchProduct", () => {
+    const query = `
+      query($productId: ID!) {
+        fetchProduct(productId: $productId) {
+          name
+        }
+      }
+    `;
+
+    it("returns product fields", async () => {
+      expect.assertions(1);
+
+      const context = { ...baseContext };
+
+      const product = await connection.manager.findOne(Product);
+      const gqlId = toGlobalId("Product", String(product.id));
+      const variables = { productId: gqlId };
+
+      const results = await graphql(schema, query, null, context, variables);
+      console.log(JSON.stringify(results));
+      const queriedProduct = results.data.fetchProduct;
+
+      expect(product.name).toEqual(queriedProduct.name);
+    });
+  });
+
   describe("sendContactMessage", () => {
     const query = `
       query(
