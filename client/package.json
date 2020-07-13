@@ -12,7 +12,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-relay": "^7.0.8",
     "@types/react-router-dom": "^5.1.5",
-    "@types/styled-components": "^5.1.0",
+    "@types/styled-components": "^5.1.1",
     "fannypack": "^4.21.36",
     "formik": "^2.1.4",
     "react": "^16.13.1",
