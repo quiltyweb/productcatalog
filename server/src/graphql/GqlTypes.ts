@@ -17,7 +17,6 @@ import {
 
 import { Product } from "../entity/Product";
 import { Category } from "../entity/Category";
-import { CartItem } from "../entity/Cart";
 
 import type {
   GraphQLFieldConfigMap,
@@ -37,10 +36,6 @@ class GqlTypes {
   public categoryType: GraphQLObjectType;
   public categoryConnectionType: GraphQLObjectType;
 
-  public cartItemType: GraphQLObjectType;
-  public cartItemConnectionType: GraphQLObjectType;
-  public cartType: GraphQLObjectType;
-
   constructor(nodeInterface: GraphQLInterfaceType) {
     this.quoteRequestInputType = this.buildQuoteRequestInputType();
     this.sendMessageResponseType = this.buildSendMessageResponseType();
@@ -56,12 +51,6 @@ class GqlTypes {
     this.categoryConnectionType = this.buildCategoryConnectionType(
       this.categoryType
     );
-
-    this.cartItemType = this.buildCartItemType(nodeInterface, this.productType);
-    this.cartItemConnectionType = this.buildCartItemConnectionType(
-      this.cartItemType
-    );
-    this.cartType = this.buildCartType(this.cartItemConnectionType);
   }
 
   private buildQuoteRequestInputType(): GraphQLInputObjectType {
@@ -233,50 +222,6 @@ class GqlTypes {
     return connectionDefinitions({
       nodeType: categoryType,
     }).connectionType;
-  }
-
-  private buildCartItemType(
-    nodeInterface: GraphQLInterfaceType,
-    productType: GraphQLObjectType
-  ): GraphQLObjectType {
-    return new GraphQLObjectType({
-      name: "CartItem",
-      interfaces: [nodeInterface],
-      isTypeOf: (obj): boolean => obj instanceof CartItem,
-      fields: (): GraphQLFieldConfigMap<TSource, TContext> => ({
-        id: globalIdField(),
-        product: {
-          type: GraphQLNonNull(productType),
-        },
-        quantity: {
-          type: GraphQLNonNull(GraphQLInt),
-        },
-      }),
-    });
-  }
-
-  private buildCartItemConnectionType(
-    cartItemType: GraphQLObjectType
-  ): GraphQLObjectType {
-    return connectionDefinitions({
-      nodeType: cartItemType,
-    }).connectionType;
-  }
-
-  private buildCartType(
-    cartItemConnectionType: GraphQLObjectType
-  ): GraphQLObjectType {
-    return new GraphQLObjectType({
-      name: "Cart",
-      fields: (): GraphQLFieldConfigMap<TSource, TContext> => ({
-        cartItems: {
-          type: GraphQLNonNull(cartItemConnectionType),
-          args: connectionArgs,
-          resolve: (cart, args): Connection<CartItem> =>
-            connectionFromArray(cart.cartItems, args),
-        },
-      }),
-    });
   }
 }
 
