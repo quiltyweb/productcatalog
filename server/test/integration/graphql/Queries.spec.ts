@@ -117,7 +117,6 @@ describe("GraphQL schema", () => {
       const variables = { categoryId: gqlId };
 
       const results = await graphql(schema, query, null, context, variables);
-      console.log(JSON.stringify(results));
       const queriedCategory = results.data.fetchCategory;
 
       expect(category.name).toEqual(queriedCategory.name);
