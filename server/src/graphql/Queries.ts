@@ -144,10 +144,11 @@ class Queries {
         } = args;
 
         const { request } = ctx;
-
         const { ADMIN_EMAIL: emailTo } = process.env;
-
-        const host = (request && request.host) || "productcatalog.com";
+        const requestHost = request && request.host;
+        const isInvalidEmailHost =
+          !requestHost || requestHost.includes("localhost");
+        const host = isInvalidEmailHost ? "productcatalog.com" : requestHost;
 
         if (!emailTo)
           throw Error("Missing ADMIN_EMAIL env var to send emails to.");
@@ -197,9 +198,11 @@ class Queries {
         } = args.input;
 
         const { request, entityManager } = ctx;
-
         const { ADMIN_EMAIL: emailTo } = process.env;
-        const host = (request && request.host) || "productcatalog.com";
+        const requestHost = request && request.host;
+        const isInvalidEmailHost =
+          !requestHost || requestHost.includes("localhost");
+        const host = isInvalidEmailHost ? "productcatalog.com" : requestHost;
 
         if (!emailTo)
           throw Error("Missing ADMIN_EMAIL env var to send emails to.");
