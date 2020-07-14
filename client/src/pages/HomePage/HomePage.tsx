@@ -13,6 +13,7 @@ import ProductsPage from "../ProductsPage/ProductsPage";
 import SingleProductPage from "../SingleProductPage/SingleProductPage";
 import SearchResultsPage from "../SearchResultsPage/SearchResultsPage";
 import CartPage from "../CartPage/CartPage";
+import QuotePage from "../QuotePage/QuotePage";
 import Main from "../../components/Main/Main";
 import HomePageContext from "./HomePageContext";
 import { CartItemProps } from "./HomePageContext";
@@ -158,6 +159,9 @@ const HomePage: React.FunctionComponent = () => {
                         </Route>
                         <Route path="/cotizacion">
                           <CartPage />
+                        </Route>
+                        <Route path="/enviar-cotizacion">
+                          <QuotePage />
                         </Route>
                         <Route path="/categoria/:categoryId">
                           <ProductsPage />

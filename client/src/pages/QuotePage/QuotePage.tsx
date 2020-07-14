@@ -1,12 +1,10 @@
 import React from "react";
 import { Heading, Paragraph, Box } from "fannypack";
-import CartList from "../../components/CartList/CartList";
-import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
-import { Link } from "react-router-dom";
+import QuoteForm from "../../components/QuoteForm/QuoteForm";
+import { useHomePageContext } from "../HomePage/HomePageContext";
 
-export const CartPage = () => {
+export const QuotePage = () => {
   const { cart } = useHomePageContext();
-
   if (!cart.length) {
     return (
       <Box>
@@ -22,9 +20,19 @@ export const CartPage = () => {
 
   return (
     <>
-      <CartList />
-      <Link to="/enviar-cotizacion">Enviar Cotización</Link>
+      <h2>Ingrese datos de su cotizacion</h2>
+      productos a cotizar:
+      <ul>
+        {cart.map((item) => {
+          return (
+            <li>
+              {item.quantity} - {item.productId}
+            </li>
+          );
+        })}
+      </ul>
+      <QuoteForm cartItems={cart} />
     </>
   );
 };
-export default CartPage;
+export default QuotePage;
