@@ -1,8 +1,8 @@
 import React from "react";
 import { Heading, Paragraph, Box } from "fannypack";
 import CartList from "../../components/CartList/CartList";
-import QuoteForm from "../../components/QuoteForm/QuoteForm";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
+import { Link } from "react-router-dom";
 
 export const CartPage = () => {
   const { cart } = useHomePageContext();
@@ -23,7 +23,7 @@ export const CartPage = () => {
   return (
     <>
       <CartList />
-      <QuoteForm cartItems={cart} />
+      <Link to="/enviar-cotizacion">Enviar Cotización</Link>
     </>
   );
 };

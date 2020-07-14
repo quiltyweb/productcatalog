@@ -5,7 +5,6 @@ import { useHomePageContext } from "../HomePage/HomePageContext";
 
 export const QuotePage = () => {
   const { cart } = useHomePageContext();
-
   if (!cart.length) {
     return (
       <Box>
@@ -22,6 +21,16 @@ export const QuotePage = () => {
   return (
     <>
       <h2>Ingrese datos de su cotizacion</h2>
+      productos a cotizar:
+      <ul>
+        {cart.map((item) => {
+          return (
+            <li>
+              {item.quantity} - {item.productId}
+            </li>
+          );
+        })}
+      </ul>
       <QuoteForm cartItems={cart} />
     </>
   );
