@@ -1,9 +1,3 @@
-"""Exposes a URL that specifies the behaviour of this scalar."""
-directive @specifiedBy(
-  """The URL that specifies the behaviour of this scalar."""
-  url: String!
-) on SCALAR
-
 """
 Direct the client to resolve this field locally, either from the cache or local resolvers.
 """
@@ -38,147 +32,6 @@ directive @connection(
   filter: [String!]
 ) on FIELD
 
-input AddProductToCartInput {
-  productId: ID!
-  quantity: Int!
-  clientMutationId: String
-}
-
-type AddProductToCartPayload {
-  cart: Cart
-  clientMutationId: String
-}
-
-type Cart {
-  cartItems(after: String, first: Int, before: String, last: Int): CartItemConnection!
-}
-
-type CartItem implements Node {
-  """The ID of an object"""
-  id: ID!
-  product: Product!
-  quantity: Int!
-}
-
-"""A connection to a list of items."""
-type CartItemConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [CartItemEdge]
-}
-
-"""An edge in a connection."""
-type CartItemEdge {
-  """The item at the end of the edge"""
-  node: CartItem
-
-  """A cursor for use in pagination"""
-  cursor: String!
-}
-
-type Category implements Node {
-  """The ID of an object"""
-  id: ID!
-  name: String!
-
-  """The products that belong to the category."""
-  products(after: String, first: Int, before: String, last: Int): ProductConnection!
-}
-
-"""A connection to a list of items."""
-type CategoryConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [CategoryEdge]
-}
-
-"""An edge in a connection."""
-type CategoryEdge {
-  """The item at the end of the edge"""
-  node: Category
-
-  """A cursor for use in pagination"""
-  cursor: String!
-}
-
-enum MessageStatus {
-  SUCCESS
-  FAILURE
-}
-
-type Mutation {
-  addProductToCart(input: AddProductToCartInput!): AddProductToCartPayload
-  removeProductFromCart(input: RemoveProductFromCartInput!): RemoveProductFromCartPayload
-  updateCartItemQuantity(input: UpdateCartItemQuantityInput!): UpdateCartItemQuantityPayload
-}
-
-"""An object with an ID"""
-interface Node {
-  """The id of the object."""
-  id: ID!
-}
-
-"""Information about pagination in a connection."""
-type PageInfo {
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-}
-
-type Product implements Node {
-  """The ID of an object"""
-  id: ID!
-  name: String!
-
-  """Detailed description of the product."""
-  description: String!
-
-  """Path to an image file for the product."""
-  imagePath: String!
-
-  """Path to an attachment file (usually a PDF) for the product."""
-  attachmentPath: String!
-
-  """Price at which the store buys the product."""
-  purchasePrice: Int!
-
-  """Price at which the store sells the product."""
-  salePrice: Int!
-
-  """Name or RUT of the supplier of the product."""
-  supplierName: String!
-}
-
-"""A connection to a list of items."""
-type ProductConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [ProductEdge]
-}
-
-"""An edge in a connection."""
-type ProductEdge {
-  """The item at the end of the edge"""
-  node: Product
-
-  """A cursor for use in pagination"""
-  cursor: String!
-}
-
 type Query {
   """Fetches an object given its ID"""
   node(
@@ -189,10 +42,6 @@ type Query {
   fetchCategory(
     """ID of the requested category."""
     categoryId: ID!
-    after: String
-    first: Int
-    before: String
-    last: Int
   ): Category!
   searchProducts(
     """
@@ -206,6 +55,10 @@ type Query {
     before: String
     last: Int
   ): ProductConnection!
+  fetchProduct(
+    """ID of the requested product."""
+    productId: ID!
+  ): Product!
   sendContactMessage(
     """The ID number of the sender, typically their RUT."""
     personalIdNumber: String!
@@ -246,8 +99,149 @@ type Query {
   ): SendMessageResponse!
 }
 
-input RemoveProductFromCartInput {
-  cartItemId: ID!
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""A connection to a list of items."""
+type CategoryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CategoryEdge]
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""An edge in a connection."""
+type CategoryEdge {
+  """The item at the end of the edge"""
+  node: Category
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Category implements Node {
+  """The ID of an object"""
+  id: ID!
+  name: String!
+
+  """The products that belong to the category."""
+  products(after: String, first: Int, before: String, last: Int): ProductConnection!
+}
+
+"""A connection to a list of items."""
+type ProductConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ProductEdge]
+}
+
+"""An edge in a connection."""
+type ProductEdge {
+  """The item at the end of the edge"""
+  node: Product
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Product implements Node {
+  """The ID of an object"""
+  id: ID!
+  name: String!
+
+  """Detailed description of the product."""
+  description: String!
+
+  """Path to an image file for the product."""
+  imagePath: String!
+
+  """Path to an attachment file (usually a PDF) for the product."""
+  attachmentPath: String!
+
+  """Price at which the store buys the product."""
+  purchasePrice: Int!
+
+  """Price at which the store sells the product."""
+  salePrice: Int!
+
+  """Name or RUT of the supplier of the product."""
+  supplierName: String!
+}
+
+type SendMessageResponse {
+  status: MessageStatus
+  message: String!
+}
+
+enum MessageStatus {
+  SUCCESS
+  FAILURE
+}
+
+type Mutation {
+  addProductToCart(input: AddProductToCartInput!): AddProductToCartPayload
+  removeProductFromCart(input: RemoveProductFromCartInput!): RemoveProductFromCartPayload
+  updateCartItemQuantity(input: UpdateCartItemQuantityInput!): UpdateCartItemQuantityPayload
+}
+
+type AddProductToCartPayload {
+  cart: Cart
+  clientMutationId: String
+}
+
+type Cart {
+  cartItems(after: String, first: Int, before: String, last: Int): CartItemConnection!
+}
+
+"""A connection to a list of items."""
+type CartItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CartItemEdge]
+}
+
+"""An edge in a connection."""
+type CartItemEdge {
+  """The item at the end of the edge"""
+  node: CartItem
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type CartItem implements Node {
+  """The ID of an object"""
+  id: ID!
+  product: Product!
+  quantity: Int!
+}
+
+input AddProductToCartInput {
+  productId: ID!
+  quantity: Int!
   clientMutationId: String
 }
 
@@ -256,18 +250,18 @@ type RemoveProductFromCartPayload {
   clientMutationId: String
 }
 
-type SendMessageResponse {
-  status: MessageStatus
-  message: String!
-}
-
-input UpdateCartItemQuantityInput {
+input RemoveProductFromCartInput {
   cartItemId: ID!
-  quantity: Int!
   clientMutationId: String
 }
 
 type UpdateCartItemQuantityPayload {
   cart: Cart
+  clientMutationId: String
+}
+
+input UpdateCartItemQuantityInput {
+  cartItemId: ID!
+  quantity: Int!
   clientMutationId: String
 }
