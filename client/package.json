@@ -21,7 +21,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.0",
     "styled-components": "^5.1.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.6"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -61,6 +61,6 @@
     "relay-compiler": "^9.1.0",
     "relay-compiler-language-typescript": "^12.0.3",
     "relay-config": "^9.1.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.6"
   }
 }
