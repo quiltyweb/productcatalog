@@ -37,7 +37,6 @@ export const QuotePage = () => {
         <CartList isEditable={false} />
       </QuoteSummaryColumn>
       <FormColumn>
-        <h2>Ingrese datos de su cotizacion</h2>
         <QuoteForm cartItems={cart} />
       </FormColumn>
     </Columns>
