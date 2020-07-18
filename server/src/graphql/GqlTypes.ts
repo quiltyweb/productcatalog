@@ -4,6 +4,9 @@ import {
   GraphQLInt,
   GraphQLNonNull,
   GraphQLEnumType,
+  GraphQLInputObjectType,
+  GraphQLList,
+  GraphQLID,
 } from "graphql";
 import {
   globalIdField,
@@ -14,26 +17,29 @@ import {
 
 import { Product } from "../entity/Product";
 import { Category } from "../entity/Category";
-import { CartItem } from "../entity/Cart";
 
-import type { GraphQLFieldConfigMap, GraphQLInterfaceType } from "graphql";
+import type {
+  GraphQLFieldConfigMap,
+  GraphQLInterfaceType,
+  GraphQLInputFieldConfigMap,
+} from "graphql";
 import type { Connection } from "graphql-relay";
 
 import type { TSource, TContext } from "../types";
 
 class GqlTypes {
+  public quoteRequestInputType: GraphQLInputObjectType;
+  public sendMessageResponseType: GraphQLObjectType;
+
   public productType: GraphQLObjectType;
   public productConnectionType: GraphQLObjectType;
   public categoryType: GraphQLObjectType;
   public categoryConnectionType: GraphQLObjectType;
 
-  public sendMessageResponseType: GraphQLObjectType;
-
-  public cartItemType: GraphQLObjectType;
-  public cartItemConnectionType: GraphQLObjectType;
-  public cartType: GraphQLObjectType;
-
   constructor(nodeInterface: GraphQLInterfaceType) {
+    this.quoteRequestInputType = this.buildQuoteRequestInputType();
+    this.sendMessageResponseType = this.buildSendMessageResponseType();
+
     this.productType = this.buildProductType(nodeInterface);
     this.productConnectionType = this.buildProductConnectionType(
       this.productType
@@ -45,14 +51,100 @@ class GqlTypes {
     this.categoryConnectionType = this.buildCategoryConnectionType(
       this.categoryType
     );
+  }
 
-    this.sendMessageResponseType = this.buildSendMessageResponseType();
+  private buildQuoteRequestInputType(): GraphQLInputObjectType {
+    return new GraphQLInputObjectType({
+      name: "QuoteRequestInput",
+      description: "Input object for sending quote requests.",
+      fields: (): GraphQLInputFieldConfigMap => ({
+        personalDetails: {
+          type: GraphQLNonNull(this.personalDetailsForQuoteInputType),
+        },
+        productsToQuote: {
+          type: GraphQLNonNull(
+            GraphQLList(GraphQLNonNull(this.productToQuoteInputType))
+          ),
+        },
+      }),
+    });
+  }
 
-    this.cartItemType = this.buildCartItemType(nodeInterface, this.productType);
-    this.cartItemConnectionType = this.buildCartItemConnectionType(
-      this.cartItemType
-    );
-    this.cartType = this.buildCartType(this.cartItemConnectionType);
+  private get personalDetailsForQuoteInputType(): GraphQLInputObjectType {
+    return new GraphQLInputObjectType({
+      name: "PersonalDetailsForQuoteInput",
+      description: "Personal details sent with a quote request.",
+      fields: (): GraphQLInputFieldConfigMap => ({
+        personalIdNumber: {
+          type: GraphQLNonNull(GraphQLString),
+          description: "The ID number of the sender, typically their RUT.",
+        },
+        emailAddress: {
+          type: GraphQLNonNull(GraphQLString),
+          description: "The sender's email address.",
+        },
+        message: {
+          type: GraphQLString,
+          description: "The message body to be sent.",
+        },
+        name: {
+          type: GraphQLNonNull(GraphQLString),
+          description: "The sender's name.",
+        },
+        companyName: {
+          type: GraphQLString,
+          description: "The name of the sender's company.",
+        },
+        phoneNumber: {
+          type: GraphQLString,
+          description: "The senders' phone number.",
+        },
+        city: {
+          type: GraphQLString,
+          description: "The sender's home city.",
+        },
+      }),
+    });
+  }
+
+  private get productToQuoteInputType(): GraphQLInputObjectType {
+    return new GraphQLInputObjectType({
+      name: "ProductsToQuoteInput",
+      description:
+        "A list of product IDs and quantities that the user wants quoted.",
+      fields: (): GraphQLInputFieldConfigMap => ({
+        productId: {
+          type: GraphQLID,
+          description: "ID of the product to be quoted.",
+        },
+        quantity: {
+          type: GraphQLInt,
+          description: "Quantity of the product to be quoted.",
+        },
+      }),
+    });
+  }
+
+  private buildSendMessageResponseType(): GraphQLObjectType {
+    const messageStatusEnum = new GraphQLEnumType({
+      name: "MessageStatus",
+      values: {
+        SUCCESS: { value: "success" },
+        FAILURE: { value: "failure" },
+      },
+    });
+
+    return new GraphQLObjectType({
+      name: "SendMessageResponse",
+      fields: (): GraphQLFieldConfigMap<TSource, TContext> => ({
+        status: {
+          type: messageStatusEnum,
+        },
+        message: {
+          type: GraphQLNonNull(GraphQLString),
+        },
+      }),
+    });
   }
 
   private buildProductType(
@@ -130,70 +222,6 @@ class GqlTypes {
     return connectionDefinitions({
       nodeType: categoryType,
     }).connectionType;
-  }
-
-  buildSendMessageResponseType(): GraphQLObjectType {
-    const messageStatusEnum = new GraphQLEnumType({
-      name: "MessageStatus",
-      values: {
-        SUCCESS: { value: "success" },
-        FAILURE: { value: "failure" },
-      },
-    });
-
-    return new GraphQLObjectType({
-      name: "SendMessageResponse",
-      fields: (): GraphQLFieldConfigMap<TSource, TContext> => ({
-        status: {
-          type: messageStatusEnum,
-        },
-        message: {
-          type: GraphQLNonNull(GraphQLString),
-        },
-      }),
-    });
-  }
-
-  buildCartItemType(
-    nodeInterface: GraphQLInterfaceType,
-    productType: GraphQLObjectType
-  ): GraphQLObjectType {
-    return new GraphQLObjectType({
-      name: "CartItem",
-      interfaces: [nodeInterface],
-      isTypeOf: (obj): boolean => obj instanceof CartItem,
-      fields: (): GraphQLFieldConfigMap<TSource, TContext> => ({
-        id: globalIdField(),
-        product: {
-          type: GraphQLNonNull(productType),
-        },
-        quantity: {
-          type: GraphQLNonNull(GraphQLInt),
-        },
-      }),
-    });
-  }
-
-  buildCartItemConnectionType(
-    cartItemType: GraphQLObjectType
-  ): GraphQLObjectType {
-    return connectionDefinitions({
-      nodeType: cartItemType,
-    }).connectionType;
-  }
-
-  buildCartType(cartItemConnectionType: GraphQLObjectType): GraphQLObjectType {
-    return new GraphQLObjectType({
-      name: "Cart",
-      fields: (): GraphQLFieldConfigMap<TSource, TContext> => ({
-        cartItems: {
-          type: GraphQLNonNull(cartItemConnectionType),
-          args: connectionArgs,
-          resolve: (cart, args): Connection<CartItem> =>
-            connectionFromArray(cart.cartItems, args),
-        },
-      }),
-    });
   }
 }
 

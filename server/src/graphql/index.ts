@@ -5,7 +5,6 @@ import { Category } from "../entity/Category";
 import { Product } from "../entity/Product";
 import GqlTypes from "./GqlTypes";
 import Queries from "./Queries";
-import Mutations from "./Mutations";
 
 import type { GraphQLFieldConfigMap } from "graphql";
 
@@ -19,7 +18,6 @@ async function getObjectFromGlobalId(globalId, ctx): Promise<Entity> {
 
   if (type === "Category") return await ctx.entityManager.findOne(Category, id);
   if (type === "Product") return await ctx.entityManager.findOne(Product, id);
-  if (type === "CartItem") return ctx.session.cart.cartItems[id];
 }
 
 const { nodeInterface, nodeField } = nodeDefinitions(getObjectFromGlobalId);
@@ -46,21 +44,6 @@ const queryType = new GraphQLObjectType({
   }),
 });
 
-const {
-  addProductToCart,
-  removeProductFromCart,
-  updateCartItemQuantity,
-} = new Mutations(types);
-
-const mutationType = new GraphQLObjectType({
-  name: "Mutation",
-  fields: (): GraphQLFieldReturn => ({
-    addProductToCart,
-    removeProductFromCart,
-    updateCartItemQuantity,
-  }),
-});
-
-const schema = new GraphQLSchema({ query: queryType, mutation: mutationType });
+const schema = new GraphQLSchema({ query: queryType });
 
 export { schema, getObjectFromGlobalId };
