@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
@@ -48,6 +48,18 @@ const MainSidebar = styled.aside`
 const HomePage: React.FunctionComponent = () => {
   const [cart, setCart] = useState<CartItemProps[]>([]);
 
+  useEffect(() => {
+    const stringifyCart = sessionStorage.getItem('cart');
+    const parsedCart = JSON.parse(stringifyCart || '[]');
+    setCart(parsedCart);
+  }, []);
+
+
+  useEffect(() => {
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
+
   // TODO: I'm organising these functions here for now. I'll refactor later.remove console logs later.
 
   // TODO: consider if we should remove the update input or be readOnly...
@@ -55,15 +67,15 @@ const HomePage: React.FunctionComponent = () => {
     if (isNaN(quantity) || quantity < 1) {
       return;
     }
-    const newCart = cart.map((item) => {
+    const newCart = cart.map((item: CartItemProps) => {
       return item.productId === productId ? { ...item, quantity } : item;
     });
     setCart(newCart);
   };
 
   const addCartItem = ({ productId, quantity }: CartItemProps) => {
-    if (cart.some((item) => item.productId === productId)) {
-      const newCart = cart.map((item) => {
+    if (cart.some((item: CartItemProps) => item.productId === productId)) {
+      const newCart = cart.map((item: CartItemProps) => {
         return item.productId === productId
           ? { ...item, quantity: item.quantity + 1 }
           : item;
@@ -76,7 +88,7 @@ const HomePage: React.FunctionComponent = () => {
 
   const incrementCartItem = ({ productId }: { productId: string }) => {
     //TODO: should we need a max number here??
-    const newCart = cart.map((item) =>
+    const newCart = cart.map((item: CartItemProps) =>
       item.productId === productId
         ? { ...item, quantity: item.quantity + 1 }
         : item
@@ -85,11 +97,11 @@ const HomePage: React.FunctionComponent = () => {
   };
 
   const decrementCartItem = ({ productId }: { productId: string }) => {
-    const item = cart.find((item) => item.productId === productId);
+    const item = cart.find((item: CartItemProps) => item.productId === productId);
     if (item && item.quantity === 0) {
       return;
     }
-    const newCart = cart.map((item) =>
+    const newCart = cart.map((item: CartItemProps) =>
       item.productId === productId
         ? { ...item, quantity: item.quantity - 1 }
         : item
@@ -105,7 +117,6 @@ const HomePage: React.FunctionComponent = () => {
   };
 
   const removeCartItem = (productId: string) => {
-    console.log("remove item::: ", productId);
     const filteredCard = cart.filter(
       (item: any) => item.productId !== productId
     );
