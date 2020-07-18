@@ -8,8 +8,6 @@ import type { SendEmail } from "./email";
 export type TSource = any;
 
 export type TContext = KoaContext & {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  session: any;
   sendEmail: SendEmail;
   entityManager: EntityManager;
 };

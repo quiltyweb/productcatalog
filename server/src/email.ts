@@ -35,7 +35,7 @@ const Email: Email = {
         },
       });
     } catch (error) {
-      console.error(error);
+      console.error(JSON.stringify(error));
 
       const responseBody = error.response.body || { errors: ["Unknown error"] };
       const errorMessages = JSON.stringify(responseBody.errors);
