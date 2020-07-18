@@ -51,7 +51,11 @@ const HomePage: React.FunctionComponent = () => {
   // TODO: I'm organising these functions here for now. I'll refactor later.remove console logs later.
 
   // TODO: consider if we should remove the update input or be readOnly...
-  const updateCartItem = ({ productId, quantity }: CartItemProps) => {
+  type ProductItemUpdateProps = {
+    productId: string;
+    quantity: number;
+  };
+  const updateCartItem = ({ productId, quantity }: ProductItemUpdateProps) => {
     if (isNaN(quantity) || quantity < 1) {
       return;
     }
@@ -61,7 +65,12 @@ const HomePage: React.FunctionComponent = () => {
     setCart(newCart);
   };
 
-  const addCartItem = ({ productId, quantity }: CartItemProps) => {
+  const addCartItem = ({
+    productId,
+    productName,
+    productImage,
+    quantity,
+  }: CartItemProps) => {
     if (cart.some((item) => item.productId === productId)) {
       const newCart = cart.map((item) => {
         return item.productId === productId
@@ -70,7 +79,7 @@ const HomePage: React.FunctionComponent = () => {
       });
       setCart(newCart);
     } else {
-      setCart([...cart, { productId, quantity }]);
+      setCart([...cart, { productId, productName, productImage, quantity }]);
     }
   };
 

@@ -97,8 +97,6 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
       return errors;
     },
     onSubmit: (values) => {
-      console.log("onSubmit >>>", cartItems);
-
       const variables = {
         personalIdNumber: "123456",
         city: values.ciudad,

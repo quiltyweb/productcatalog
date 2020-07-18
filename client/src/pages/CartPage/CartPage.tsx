@@ -1,8 +1,26 @@
 import React from "react";
-import { Heading, Paragraph, Box } from "fannypack";
+import { Heading, Paragraph, Box, styled } from "fannypack";
 import CartList from "../../components/CartList/CartList";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
+
+const SendQuoteLink = styled(Link)`
+  display: block;
+  text-align: right;
+  color: black;
+  font-weight: 600;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  padding: 1rem;
+  transition: color 0.2s;
+  text-decoration: underline;
+  border-radius: 4px;
+  color: #d32f2f;
+  &:hover {
+    color: #ff0000;
+    text-decoration: underline;
+  }
+`;
 
 export const CartPage = () => {
   const { cart } = useHomePageContext();
@@ -23,7 +41,9 @@ export const CartPage = () => {
   return (
     <>
       <CartList />
-      <Link to="/enviar-cotizacion">Enviar Cotización</Link>
+      <SendQuoteLink to="/enviar-cotizacion">
+        Listo, enviar Cotización!
+      </SendQuoteLink>
     </>
   );
 };
