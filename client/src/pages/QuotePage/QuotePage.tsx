@@ -1,5 +1,5 @@
 import React from "react";
-import { Column, Columns, space, palette, styled, Image } from "fannypack";
+import { Column, Columns, palette, styled } from "fannypack";
 import { Heading, Paragraph, Box } from "fannypack";
 import QuoteForm from "../../components/QuoteForm/QuoteForm";
 import { useHomePageContext } from "../HomePage/HomePageContext";
