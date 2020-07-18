@@ -75,28 +75,7 @@ type Query {
     """The senders' phone number."""
     phoneNumber: String
   ): SendMessageResponse!
-  sendQuoteRequest(
-    """The ID number of the sender, typically their RUT."""
-    personalIdNumber: String!
-
-    """The sender's email address."""
-    emailAddress: String!
-
-    """The message body to be sent."""
-    message: String
-
-    """The sender's name."""
-    name: String!
-
-    """The name of the sender's company."""
-    companyName: String
-
-    """The senders' phone number."""
-    phoneNumber: String
-
-    """The sender's home city."""
-    city: String
-  ): SendMessageResponse!
+  sendQuoteRequest(input: QuoteRequestInput!): SendMessageResponse!
 }
 
 """An object with an ID"""
@@ -199,69 +178,41 @@ enum MessageStatus {
   FAILURE
 }
 
-type Mutation {
-  addProductToCart(input: AddProductToCartInput!): AddProductToCartPayload
-  removeProductFromCart(input: RemoveProductFromCartInput!): RemoveProductFromCartPayload
-  updateCartItemQuantity(input: UpdateCartItemQuantityInput!): UpdateCartItemQuantityPayload
+"""Input object for sending quote requests."""
+input QuoteRequestInput {
+  personalDetails: PersonalDetailsForQuoteInput!
+  productsToQuote: [ProductsToQuoteInput!]!
 }
 
-type AddProductToCartPayload {
-  cart: Cart
-  clientMutationId: String
+"""Personal details sent with a quote request."""
+input PersonalDetailsForQuoteInput {
+  """The ID number of the sender, typically their RUT."""
+  personalIdNumber: String!
+
+  """The sender's email address."""
+  emailAddress: String!
+
+  """The message body to be sent."""
+  message: String
+
+  """The sender's name."""
+  name: String!
+
+  """The name of the sender's company."""
+  companyName: String
+
+  """The senders' phone number."""
+  phoneNumber: String
+
+  """The sender's home city."""
+  city: String
 }
 
-type Cart {
-  cartItems(after: String, first: Int, before: String, last: Int): CartItemConnection!
-}
+"""A list of product IDs and quantities that the user wants quoted."""
+input ProductsToQuoteInput {
+  """ID of the product to be quoted."""
+  productId: ID
 
-"""A connection to a list of items."""
-type CartItemConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [CartItemEdge]
-}
-
-"""An edge in a connection."""
-type CartItemEdge {
-  """The item at the end of the edge"""
-  node: CartItem
-
-  """A cursor for use in pagination"""
-  cursor: String!
-}
-
-type CartItem implements Node {
-  """The ID of an object"""
-  id: ID!
-  product: Product!
-  quantity: Int!
-}
-
-input AddProductToCartInput {
-  productId: ID!
-  quantity: Int!
-  clientMutationId: String
-}
-
-type RemoveProductFromCartPayload {
-  cart: Cart
-  clientMutationId: String
-}
-
-input RemoveProductFromCartInput {
-  cartItemId: ID!
-  clientMutationId: String
-}
-
-type UpdateCartItemQuantityPayload {
-  cart: Cart
-  clientMutationId: String
-}
-
-input UpdateCartItemQuantityInput {
-  cartItemId: ID!
-  quantity: Int!
-  clientMutationId: String
+  """Quantity of the product to be quoted."""
+  quantity: Int
 }

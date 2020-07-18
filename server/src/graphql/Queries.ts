@@ -201,7 +201,9 @@ class Queries {
         const { ADMIN_EMAIL: emailTo } = process.env;
         const requestHost = request && request.host;
         const isInvalidEmailHost =
-          !requestHost || requestHost.includes("localhost");
+          !requestHost ||
+          requestHost.includes("localhost") ||
+          requestHost.includes("server");
         const host = isInvalidEmailHost ? "productcatalog.com" : requestHost;
 
         if (!emailTo)
@@ -261,6 +263,7 @@ class Queries {
           text: emailMessage,
           html: emailMessage,
         };
+        console.log(emailOptions);
 
         const response = await ctx.sendEmail(emailOptions);
 

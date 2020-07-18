@@ -49,21 +49,23 @@ const HomePage: React.FunctionComponent = () => {
   const [cart, setCart] = useState<CartItemProps[]>([]);
 
   useEffect(() => {
-    const stringifyCart = sessionStorage.getItem('cart');
-    const parsedCart = JSON.parse(stringifyCart || '[]');
+    const stringifyCart = sessionStorage.getItem("cart");
+    const parsedCart = JSON.parse(stringifyCart || "[]");
     setCart(parsedCart);
   }, []);
 
-
   useEffect(() => {
-    sessionStorage.setItem('cart', JSON.stringify(cart));
+    sessionStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
-
 
   // TODO: I'm organising these functions here for now. I'll refactor later.remove console logs later.
 
   // TODO: consider if we should remove the update input or be readOnly...
-  const updateCartItem = ({ productId, quantity }: CartItemProps) => {
+  type ProductItemUpdateProps = {
+    productId: string;
+    quantity: number;
+  };
+  const updateCartItem = ({ productId, quantity }: ProductItemUpdateProps) => {
     if (isNaN(quantity) || quantity < 1) {
       return;
     }
@@ -73,7 +75,12 @@ const HomePage: React.FunctionComponent = () => {
     setCart(newCart);
   };
 
-  const addCartItem = ({ productId, quantity }: CartItemProps) => {
+  const addCartItem = ({
+    productId,
+    productName,
+    productImage,
+    quantity,
+  }: CartItemProps) => {
     if (cart.some((item: CartItemProps) => item.productId === productId)) {
       const newCart = cart.map((item: CartItemProps) => {
         return item.productId === productId
@@ -82,7 +89,7 @@ const HomePage: React.FunctionComponent = () => {
       });
       setCart(newCart);
     } else {
-      setCart([...cart, { productId, quantity }]);
+      setCart([...cart, { productId, productName, productImage, quantity }]);
     }
   };
 
@@ -97,7 +104,9 @@ const HomePage: React.FunctionComponent = () => {
   };
 
   const decrementCartItem = ({ productId }: { productId: string }) => {
-    const item = cart.find((item: CartItemProps) => item.productId === productId);
+    const item = cart.find(
+      (item: CartItemProps) => item.productId === productId
+    );
     if (item && item.quantity === 0) {
       return;
     }

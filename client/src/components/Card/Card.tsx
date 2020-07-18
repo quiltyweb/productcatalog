@@ -108,7 +108,14 @@ const Card: React.FunctionComponent<CardProps> = ({
           </CardCta>
         )}
         <CardCta
-          onClick={() => addCartItem({ productId, quantity: 1 })}
+          onClick={() =>
+            addCartItem({
+              productId,
+              productName: name,
+              productImage: linkImage,
+              quantity: 1,
+            })
+          }
           aria-label={`Cotizar ${name}`}
         >
           Cotizar →
