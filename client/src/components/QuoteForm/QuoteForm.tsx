@@ -55,13 +55,13 @@ interface QuoteFormProps {
 const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
   const formik = useFormik({
     initialValues: {
-      nombreCompleto: "mel gatt",
-      empresa: "meli Inc",
-      email: "meligatt@gmail.com",
-      mensaje: "sdss fadfasd fsd asdsf dsfds",
-      telefono: "123123123",
-      ciudad: "melbourne",
-      codigoArea: "02",
+      nombreCompleto: "",
+      empresa: "",
+      email: "",
+      mensaje: "",
+      telefono: "",
+      ciudad: "",
+      codigoArea: "",
     },
     validate: ({
       nombreCompleto,
