@@ -2,7 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import { styled } from "fannypack";
 import { Link, useHistory } from "react-router-dom";
-import { Input, Button, Icon } from "fannypack";
+import { Input, Button } from "fannypack";
 import hillsSVg from "./hills.svg";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 
@@ -67,6 +67,7 @@ const FormStyled = styled.form`
 `;
 const NavLogoSubHeading = styled.span`
   font-size: 1rem;
+  font-weight: 500;
 `;
 const NavBarList = styled.ul`
   display: flex;
@@ -75,6 +76,7 @@ const NavBarList = styled.ul`
   justify-content: center;
   margin: 0 0.5rem;
   padding: 0;
+  font-weight: 500;
 
   @media (min-width: 760px) {
     flex-direction: row;
@@ -117,22 +119,31 @@ const Nav = () => {
         >
           <FormStyled
             onSubmit={formik.handleSubmit}
-            style={{ alignItems: "flex-end" }}
+            style={{ alignItems: "center" }}
           >
-            <label htmlFor="searchTerm">
+            <label
+              htmlFor="searchTerm"
+              style={{ fontSize: "1rem", margin: "0 0.5rem" }}
+            >
               Buscar:
-              <Input
-                id="searchTerm"
-                name="searchTerm"
-                type="text"
-                placeholder="ingrese palabra..."
-                value={formik.values.searchTerm}
-                onChange={formik.handleChange}
-                state={formik.errors.searchTerm ? "danger" : ""}
-                size="medium"
-              />
             </label>
-            <Button margin="major-1" padding="major-1" type="submit">
+            <Input
+              id="searchTerm"
+              name="searchTerm"
+              type="text"
+              placeholder="ingrese palabra..."
+              value={formik.values.searchTerm}
+              onChange={formik.handleChange}
+              state={formik.errors.searchTerm ? "danger" : ""}
+              size="small"
+            />
+
+            <Button
+              margin="major-1"
+              padding="major-1"
+              size="small"
+              type="submit"
+            >
               Ir
             </Button>
           </FormStyled>

@@ -18,7 +18,7 @@ const ProductList: React.FunctionComponent<ProductListProps> = ({
         {products && products.edges && products.edges.length > 0 ? (
           products.edges.map((product: any) => {
             return (
-              <Column key={product.node.id} spread={4}>
+              <Column padding="major-2" key={product.node.id} spread={4}>
                 <Card
                   productId={product.node.id}
                   name={product.node.name}
