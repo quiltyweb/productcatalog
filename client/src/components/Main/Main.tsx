@@ -1,12 +1,14 @@
-import React from 'react'
-import {  Heading, Paragraph } from 'fannypack'
-// import Card from "../../components/Card/Card";
+import React from "react";
+import { Heading, Paragraph } from "fannypack";
+import emailImage from "./correo-ventas-comercial-gattoni.png";
 
 const Main = () => {
   return (
     <>
       <Heading>Sómos Seguridad Industrial</Heading>
-      <Heading use="h2">Con más de 20 años de experiencia en la Región de Atacama.</Heading>
+      <Heading use="h2">
+        Con más de 20 años de experiencia en la Región de Atacama.
+      </Heading>
       <Paragraph>
         Comercial Gattoni le da la más cordial bienvenida y le invita a conocer
         su amplia gama de productos de seguridad Industrial. Somos una Empresa
@@ -18,38 +20,45 @@ const Main = () => {
         Agua, Mascaras de protección Respiratoria, servicios de Bordados
         industriales computacionales y más. Distribuidores de Vicsa en Copiapó.
       </Paragraph>
-      <Heading use="h2" id="heading-destacados">Productos Destacados:</Heading>
-      {/* <Columns aria-labelledby="heading-destacados">
-        <Column>
-          <Card
-            productId="1"
-            addToCart={() => console.log('add to card')}
-            name="Lente l-300"
-            description="lorem ipsum"
-            linkImage="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/LENTE%20SEGURIDAD%20L300.jpg"
+      <Heading use="h2" id="heading-direccion">
+        Visítenos en:
+      </Heading>
+      Rodriguez # 757 Local A Copiapó, Chile.{" "}
+      <a
+        href="https://goo.gl/maps/T8kEzuyJijXt6iy66"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        (Ver mapa)
+      </a>
+      <ul>
+        <li>Fono Fax: (52) 2 218056</li>
+        <li>Fono: (52) 2 216257</li>
+        <li>
+          Correo Ventas:{" "}
+          <img
+            style={{ filter: "invert(1)" }}
+            src={emailImage}
+            width="175"
+            height="15"
+            alt="Ventas Comercial Gattoni"
           />
-        </Column>
-        <Column>
-          <Card
-            productId="2"
-            addToCart={() => console.log('add to card')}
-            name="Guante Respirador 2 vias m500 masprot"
-            description="lorem ipsum"
-            linkImage="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/i%CC%81ndice.jpg"
-          />
-        </Column>
-        <Column>
-          <Card
-            productId="3"
-            addToCart={() => console.log('add to card')}
-            name="Botin negro economico pu-100"
-            description="lorem ipsum"
-            linkImage="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/SAMARA.jpg"
-          />
-        </Column>
-      </Columns> */}
+        </li>
+      </ul>
+      <Heading use="h2" id="heading-horarios">
+        Horarios de atención:
+      </Heading>
+      <ul>
+        <li>Lunes a Viernes de 9:30 a 13:30 y 15:30 a 18:30</li>
+      </ul>
+      <Heading use="h2" id="heading-pagos">
+        Medios de Pago:
+      </Heading>
+      <ul>
+        <li>Red compra, Visa 3 cuota, Efectivo ó Transferencia Bancaria.</li>
+      </ul>
     </>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;
