@@ -2,9 +2,9 @@ import React from "react";
 import { useFormik } from "formik";
 import { styled } from "fannypack";
 import { Link, useHistory } from "react-router-dom";
-import { InputField, Button } from "fannypack";
-// import hillsSVg from './hills.svg';
-import { useHomePageContext } from '../../pages/HomePage/HomePageContext';
+import { Input, Button, Icon } from "fannypack";
+import hillsSVg from "./hills.svg";
+import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 
 const NavContainer = styled.nav`
   display: flex;
@@ -16,9 +16,12 @@ const NavContainer = styled.nav`
   right: 0;
   left: 0;
   margin: 0;
-  padding: 0;
+  padding: 1rem 0;
   color: #d32f2f;
   background-color: #ffffff;
+  background-size: cover;
+  background-repeat: repeat-x;
+  background-position: center center;
 
   @media (min-width: 760px) {
     flex-direction: row;
@@ -70,7 +73,7 @@ const NavBarList = styled.ul`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0;
+  margin: 0 0.5rem;
   padding: 0;
 
   @media (min-width: 760px) {
@@ -80,7 +83,6 @@ const NavBarList = styled.ul`
 
 const Nav = () => {
   const { cartCount } = useHomePageContext();
-
 
   var history = useHistory();
 
@@ -101,49 +103,57 @@ const Nav = () => {
   });
 
   return (
-    <NavContainer>
+    <NavContainer style={{ backgroundImage: `url(${hillsSVg})` }}>
       <NavBarContent>
         <NavLogo to="/" title="Gattoni">
           <NavLogoHeading>GATTONI</NavLogoHeading>
           <NavLogoSubHeading>Seguridad Industrial</NavLogoSubHeading>
         </NavLogo>
-
-        <FormStyled onSubmit={formik.handleSubmit}>
-          <InputField
-            padding="major-1"
-            id="searchTerm"
-            name="searchTerm"
-            type="text"
-            label="Buscar"
-            placeholder="ingrese busqueda"
-            value={formik.values.searchTerm}
-            onChange={formik.handleChange}
-            validationText={formik.errors.searchTerm}
-            state={formik.errors.searchTerm ? "danger" : ""}
-            size="medium"
-            isRequired
-          />
-          <Button margin="major-1" padding="major-1" type="submit">
-            buscar
-          </Button>
-        </FormStyled>
-        <NavBarList aria-label="Menu principal">
-          <li>
-            <Link to="/cotizacion" className="NavBar-primary-link">
-              Mi Cotización ({cartCount})
-            </Link>
-          </li>
-          <li>
-            <Link to="/certificaciones" className="NavBar-primary-link">
-              Certificaciones
-            </Link>
-          </li>
-          <li>
-            <Link to="/contacto" className="NavBar-primary-link">
-              Contacto
-            </Link>
-          </li>
-        </NavBarList>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+          }}
+        >
+          <FormStyled
+            onSubmit={formik.handleSubmit}
+            style={{ alignItems: "flex-end" }}
+          >
+            <label htmlFor="searchTerm">
+              Buscar:
+              <Input
+                id="searchTerm"
+                name="searchTerm"
+                type="text"
+                placeholder="ingrese palabra..."
+                value={formik.values.searchTerm}
+                onChange={formik.handleChange}
+                state={formik.errors.searchTerm ? "danger" : ""}
+                size="medium"
+              />
+            </label>
+            <Button margin="major-1" padding="major-1" type="submit">
+              Ir
+            </Button>
+          </FormStyled>
+          <NavBarList aria-label="Menu principal">
+            <li>
+              <Link to="/cotizacion" className="NavBar-primary-link">
+                Mi Cotización ({cartCount})
+              </Link>
+            </li>
+            <li>
+              <Link to="/certificaciones" className="NavBar-primary-link">
+                Certificaciones
+              </Link>
+            </li>
+            <li>
+              <Link to="/contacto" className="NavBar-primary-link">
+                Contacto
+              </Link>
+            </li>
+          </NavBarList>
+        </div>
       </NavBarContent>
     </NavContainer>
   );
