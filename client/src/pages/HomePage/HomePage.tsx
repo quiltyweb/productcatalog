@@ -17,6 +17,7 @@ import QuotePage from "../QuotePage/QuotePage";
 import Main from "../../components/Main/Main";
 import HomePageContext from "./HomePageContext";
 import { CartItemProps } from "./HomePageContext";
+import ScrollToTop from "../ScrollToTop";
 
 const MainWrapper = styled.main`
   display: flex;
@@ -134,80 +135,82 @@ const HomePage: React.FunctionComponent = () => {
 
   return (
     <Router>
-      <ThemeProvider theme={theme}>
-        <QueryRenderer
-          environment={environment}
-          query={graphql`
-            query HomePageQuery {
-              fetchCategories {
-                ...CategoryList_categories
+      <ScrollToTop>
+        <ThemeProvider theme={theme}>
+          <QueryRenderer
+            environment={environment}
+            query={graphql`
+              query HomePageQuery {
+                fetchCategories {
+                  ...CategoryList_categories
+                }
               }
-            }
-          `}
-          variables={{}}
-          render={({ error, props }: { error: any; props: any }) => {
-            if (error) {
-              console.log("error: ", error);
-              return <div>Error!</div>;
-            }
-            if (!props) {
-              return <div>Loading...</div>;
-            }
+            `}
+            variables={{}}
+            render={({ error, props }: { error: any; props: any }) => {
+              if (error) {
+                console.log("error: ", error);
+                return <div>Error!</div>;
+              }
+              if (!props) {
+                return <div>Loading...</div>;
+              }
 
-            return (
-              <HomePageContext.Provider
-                value={{
-                  cart,
-                  cartCount: sumCartItems(cart),
-                  updateCartItem,
-                  addCartItem,
-                  handleCart: setCart,
-                  incrementCartItem,
-                  decrementCartItem,
-                  removeCartItem,
-                }}
-              >
-                <>
-                  <header>
-                    <Nav />
-                  </header>
-                  <MainWrapper>
-                    <MainContent>
-                      <Switch>
-                        <Route path="/contacto">
-                          <ContactForm />
-                        </Route>
-                        <Route path="/cotizacion">
-                          <CartPage />
-                        </Route>
-                        <Route path="/enviar-cotizacion">
-                          <QuotePage />
-                        </Route>
-                        <Route path="/categoria/:categoryId">
-                          <ProductsPage />
-                        </Route>
-                        <Route path="/resultados/:searchTerm">
-                          <SearchResultsPage />
-                        </Route>
-                        <Route path="/producto/:productId">
-                          <SingleProductPage />
-                        </Route>
-                        <Route path="/">
-                          <Main />
-                        </Route>
-                      </Switch>
-                    </MainContent>
-                    <MainSidebar>
-                      <CategoryList categories={props.fetchCategories} />
-                    </MainSidebar>
-                  </MainWrapper>
-                  <Footer />
-                </>
-              </HomePageContext.Provider>
-            );
-          }}
-        />
-      </ThemeProvider>
+              return (
+                <HomePageContext.Provider
+                  value={{
+                    cart,
+                    cartCount: sumCartItems(cart),
+                    updateCartItem,
+                    addCartItem,
+                    handleCart: setCart,
+                    incrementCartItem,
+                    decrementCartItem,
+                    removeCartItem,
+                  }}
+                >
+                  <>
+                    <header>
+                      <Nav />
+                    </header>
+                    <MainWrapper>
+                      <MainContent>
+                        <Switch>
+                          <Route path="/contacto">
+                            <ContactForm />
+                          </Route>
+                          <Route path="/cotizacion">
+                            <CartPage />
+                          </Route>
+                          <Route path="/enviar-cotizacion">
+                            <QuotePage />
+                          </Route>
+                          <Route path="/categoria/:categoryId">
+                            <ProductsPage />
+                          </Route>
+                          <Route path="/resultados/:searchTerm">
+                            <SearchResultsPage />
+                          </Route>
+                          <Route path="/producto/:productId">
+                            <SingleProductPage />
+                          </Route>
+                          <Route path="/">
+                            <Main />
+                          </Route>
+                        </Switch>
+                      </MainContent>
+                      <MainSidebar>
+                        <CategoryList categories={props.fetchCategories} />
+                      </MainSidebar>
+                    </MainWrapper>
+                    <Footer />
+                  </>
+                </HomePageContext.Provider>
+              );
+            }}
+          />
+        </ThemeProvider>
+      </ScrollToTop>
     </Router>
   );
 };

@@ -6,7 +6,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { Box, Columns, Column } from "fannypack";
 import Card from "../../components/Card/Card";
 
-export const SingleProductPage = () => {
+export const SingleProductPage: React.FunctionComponent = () => {
   const { productId } = useParams();
   const { goBack } = useHistory();
 

@@ -16,12 +16,13 @@ export const theme: GattoniThemeConfig = {
   global: {
     base: css`
       html {
-        height: 100%;
+        height: auto;
+        overflow: auto;
         box-sizing: border-box;
         background-color: #fff;
       }
       body {
-        height: 100%;
+        height: auto;
         color: #212121;
         font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
           Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
