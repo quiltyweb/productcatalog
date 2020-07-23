@@ -1,5 +1,5 @@
 import React from "react";
-import { styled, Card as FPCard, Image, Button } from "fannypack";
+import { styled, Card as FPCard, Image, Button, Paragraph } from "fannypack";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
 
@@ -8,13 +8,12 @@ const CardItem = styled(FPCard.Card)`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  padding: 0.7rem;
 `;
 
 const ImageStyled = styled(Image)`
   max-width: 100%;
-  max-height: 250px;
-  margin-right: 0.5rem;
-
+  max-height: 160px;
   @media (min-width: 1020px) {
     max-width: 180px;
   }
@@ -28,7 +27,7 @@ const SingleImageStyled = styled(Image)`
 
 const CardCta = styled(Button)`
   padding: 0;
-  margin: 0.3rem;
+  margin: 0;
   border: 1px solid;
   border-radius: 0.25rem;
   text-align: center;
@@ -83,7 +82,7 @@ const Card: React.FunctionComponent<CardProps> = ({
             <ImageStyled fit="cover" src={linkImage} />
           )}
         </Link>
-        {description && <p>{description}</p>}
+        {description && <Paragraph>{description}</Paragraph>}
       </FPCard.Content>
 
       <FPCard.Footer justifyContent="flex-end">
