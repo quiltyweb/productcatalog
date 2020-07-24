@@ -32,14 +32,17 @@ export const QuotePage = () => {
   }
 
   return (
-    <Columns>
-      <QuoteSummaryColumn>
-        <CartList isEditable={false} />
-      </QuoteSummaryColumn>
-      <FormColumn>
-        <QuoteForm cartItems={cart} />
-      </FormColumn>
-    </Columns>
+    <Box>
+      <Heading>Ingrese datos de su cotización</Heading>
+      <Columns padding="major-2">
+        <QuoteSummaryColumn>
+          <CartList isEditable={false} />
+        </QuoteSummaryColumn>
+        <FormColumn>
+          <QuoteForm cartItems={cart} />
+        </FormColumn>
+      </Columns>
+    </Box>
   );
 };
 export default QuotePage;
