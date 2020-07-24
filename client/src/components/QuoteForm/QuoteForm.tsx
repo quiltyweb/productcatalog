@@ -114,13 +114,23 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
 
       const variables = { input: inputArgs };
 
-      fetchQuery(environment, query, variables).then((data) => {
-        actions.setStatus({
-          message:
-            "Su Cotización ha sido enviada con exito a Comercial Gattoni. Responderemos su pedido a la brevedad, Gracias.",
-        });
-        // TODO: clean react context or session storage after sending quote....
-      });
+      fetchQuery(environment, query, variables).then(
+        ({ sendQuoteRequest }: any) => {
+          if (sendQuoteRequest.status === "FAILURE") {
+            actions.setStatus({
+              message: "Se ha producido un error, intente nuevamente.",
+              error: true,
+            });
+            return;
+          }
+
+          actions.setStatus({
+            message:
+              "Su Cotización ha sido enviada con exito a Comercial Gattoni. Responderemos su pedido a la brevedad, Gracias.",
+          });
+          // TODO: clean react context or session storage after sending quote....
+        }
+      );
     },
   });
 
@@ -239,7 +249,11 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           </Alert>
         )}
         {formik.status && formik.status.message && (
-          <Alert display="inline-block" hasTint type="success">
+          <Alert
+            display="inline-block"
+            hasTint
+            type={formik.status.error ? "danger" : "success"}
+          >
             {formik.status.message}
             <SendQuoteLink to="/">Volver al inicio</SendQuoteLink>
           </Alert>
