@@ -12,7 +12,7 @@ const ProductsList = styled.ul`
   justify-content: space-between;
   flex-wrap: wrap;
   margin: 0;
-  padding: 0;
+  padding: 0 2rem;
   line-height: 1;
   list-style: none;
   border-top: 1px solid ${palette("gray900")};
@@ -36,8 +36,14 @@ const ProductItem = styled.li`
   @media (min-width: 760px) {
     display: block;
     padding: calc(2rem / 2) calc(2rem / 2);
-    margin: calc(2rem / 4) 0;
+    margin: calc(1.5rem / 4) 0;
     border: none;
+    border-radius: 30px;
+    &:hover {
+      color: #d32f2f;
+      background-color: rgba(211, 47, 47, 0.2);
+      transition: background-color 0.2s;
+    }
   }
 `;
 
@@ -45,12 +51,11 @@ const ProductsListLink = styled(Link)`
   position: relative;
   display: block;
   color: black;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
   white-space: nowrap;
-  transition: color 0.2s;
   &:hover {
     color: #d32f2f;
-    text-decoration: underline;
   }
 `;
 

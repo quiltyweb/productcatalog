@@ -136,7 +136,6 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
 
   return (
     <Box marginTop="major-1">
-      <Heading use="h2">Ingrese datos de su cotizacion</Heading>
       <Paragraph>
         Si está de acuerdo con el pedido, complete el formulario de cotización:
       </Paragraph>

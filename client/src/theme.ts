@@ -37,6 +37,9 @@ export const theme: GattoniThemeConfig = {
       a:hover {
         color: #d32f2f;
       }
+      ul {
+        padding: 0 0.5rem;
+      }
       li {
         margin: 0.5rem;
         list-style: none;

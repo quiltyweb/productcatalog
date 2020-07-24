@@ -11,10 +11,17 @@ import {
   Alert,
   Spinner,
   styled,
+  Columns,
+  Column,
+  Paragraph,
 } from "fannypack";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
+import emailImage from "../../assets/correo-ventas-comercial-gattoni.png";
 
+const ListItem = styled.li`
+  list-style: circle;
+`;
 const SendQuoteLink = styled(Link)`
   display: block;
   text-align: right;
@@ -109,92 +116,144 @@ const ContactForm: React.FunctionComponent = () => {
 
   return (
     <Box>
-      <Heading>Contacto - Comercial Gattoni</Heading>
-      <form onSubmit={formik.handleSubmit}>
-        <InputField
-          padding="major-2"
-          id="nombre"
-          name="nombre"
-          isRequired
-          type="text"
-          label="Nombre o Razon social"
-          placeholder="nombre"
-          value={formik.values.nombre}
-          onChange={formik.handleChange}
-          validationText={formik.errors.nombre}
-          state={formik.errors.nombre ? "danger" : ""}
-          size="medium"
-        />
-        <InputField
-          padding="major-2"
-          id="empresa"
-          name="empresa"
-          isRequired
-          type="text"
-          label="Empresa"
-          placeholder="Empresa"
-          value={formik.values.empresa}
-          onChange={formik.handleChange}
-          validationText={formik.errors.empresa}
-          state={formik.errors.empresa ? "danger" : ""}
-          size="medium"
-        />
-        <InputField
-          padding="major-2"
-          id="email"
-          name="email"
-          isRequired
-          type="email"
-          label="E-mail"
-          placeholder="example@email.com"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          validationText={formik.errors.email}
-          state={formik.errors.email ? "danger" : ""}
-          size="medium"
-        />
-        <InputField
-          padding="major-2"
-          id="telefono"
-          name="telefono"
-          type="text"
-          label="Telefono"
-          placeholder="Telefono"
-          value={formik.values.telefono}
-          onChange={formik.handleChange}
-          validationText={formik.errors.telefono}
-          state={formik.errors.telefono ? "danger" : ""}
-          size="medium"
-        />
-        <TextareaField
-          padding="major-2"
-          name="mensaje"
-          label="Comentario"
-          isRequired
-          value={formik.values.mensaje}
-          onChange={formik.handleChange}
-          validationText={formik.errors.mensaje}
-          state={formik.errors.mensaje ? "danger" : ""}
-        />
-        <Button margin="major-2" padding="major-1" type="submit">
-          Enviar
-        </Button>
-        {formik.isSubmitting && !formik.status && (
-          <Alert display="inline-block" hasTint type="warning">
-            <Spinner size="small" /> Enviando...
-          </Alert>
-        )}
-        {formik.status && formik.status.message && (
-          <Alert
-            display="inline-block"
-            hasTint
-            type={formik.status.error ? "danger" : "success"}
-          >
-            {formik.status.message}
-            <SendQuoteLink to="/">Volver al inicio</SendQuoteLink>
-          </Alert>
-        )}
-      </form>
+      <Heading>Ingrese su consulta</Heading>
+      <Columns>
+        <Column>
+          <Box padding="major-3">
+            <Heading use="h2" id="heading-direccion">
+              Visítenos en:
+            </Heading>
+            <Paragraph>
+              Rodriguez # 757 Local A Copiapó, Chile.{" "}
+              <a
+                href="https://goo.gl/maps/T8kEzuyJijXt6iy66"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                (Ver mapa)
+              </a>
+            </Paragraph>
+            <Heading use="h2" id="heading-telefono">
+              Telefono:
+            </Heading>
+            <ul>
+              <ListItem>Fono Fax: (52) 2 218056</ListItem>
+              <ListItem>Fono: (52) 2 216257</ListItem>
+            </ul>
+            <Heading use="h2" id="heading-telefono">
+              Correo ventas:
+            </Heading>
+            <ul>
+              <ListItem>
+                <img
+                  style={{ filter: "invert(1)" }}
+                  src={emailImage}
+                  width="175"
+                  height="15"
+                  alt="Ventas Comercial Gattoni"
+                />
+              </ListItem>
+            </ul>
+            <Heading use="h2" id="heading-horarios">
+              Horarios:
+            </Heading>
+            <ul>
+              <ListItem>
+                Lunes a Viernes de 9:30 a 13:30 y 15:30 a 18:30
+              </ListItem>
+            </ul>
+          </Box>
+        </Column>
+        <Column spread={8}>
+          <Box padding="major-3">
+            <form onSubmit={formik.handleSubmit}>
+              <InputField
+                padding="major-2"
+                id="nombre"
+                name="nombre"
+                isRequired
+                type="text"
+                label="Nombre o Razon social"
+                placeholder="nombre"
+                value={formik.values.nombre}
+                onChange={formik.handleChange}
+                validationText={formik.errors.nombre}
+                state={formik.errors.nombre ? "danger" : ""}
+                size="medium"
+              />
+              <InputField
+                padding="major-2"
+                id="empresa"
+                name="empresa"
+                isRequired
+                type="text"
+                label="Empresa"
+                placeholder="Empresa"
+                value={formik.values.empresa}
+                onChange={formik.handleChange}
+                validationText={formik.errors.empresa}
+                state={formik.errors.empresa ? "danger" : ""}
+                size="medium"
+              />
+              <InputField
+                padding="major-2"
+                id="email"
+                name="email"
+                isRequired
+                type="email"
+                label="E-mail"
+                placeholder="example@email.com"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                validationText={formik.errors.email}
+                state={formik.errors.email ? "danger" : ""}
+                size="medium"
+              />
+              <InputField
+                padding="major-2"
+                id="telefono"
+                name="telefono"
+                type="text"
+                label="Telefono"
+                placeholder="Telefono"
+                value={formik.values.telefono}
+                onChange={formik.handleChange}
+                validationText={formik.errors.telefono}
+                state={formik.errors.telefono ? "danger" : ""}
+                size="medium"
+              />
+              <TextareaField
+                padding="major-2"
+                name="mensaje"
+                label="Comentario"
+                isRequired
+                value={formik.values.mensaje}
+                onChange={formik.handleChange}
+                validationText={formik.errors.mensaje}
+                state={formik.errors.mensaje ? "danger" : ""}
+              />
+              <Button margin="major-2" padding="major-1" type="submit">
+                Enviar
+              </Button>
+              {formik.isSubmitting && !formik.status && (
+                <Alert display="inline-block" hasTint type="warning">
+                  <Spinner size="small" /> Enviando...
+                </Alert>
+              )}
+              {formik.status && formik.status.message && (
+                <Alert
+                  display="inline-block"
+                  hasTint
+                  type={formik.status.error ? "danger" : "success"}
+                >
+                  {formik.status.message}
+                  <SendQuoteLink to="/">Volver al inicio</SendQuoteLink>
+                </Alert>
+              )}
+            </form>
+          </Box>
+        </Column>
+      </Columns>
     </Box>
   );
 };

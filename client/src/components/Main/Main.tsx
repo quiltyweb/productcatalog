@@ -1,6 +1,6 @@
 import React from "react";
 import { Heading, Paragraph } from "fannypack";
-import emailImage from "./correo-ventas-comercial-gattoni.png";
+import emailImage from "../../assets/correo-ventas-comercial-gattoni.png";
 
 const Main = () => {
   return (
