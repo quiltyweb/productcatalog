@@ -40,7 +40,7 @@ const CardCta = styled(Button)`
 `;
 
 const ParagraphStyled = styled(Paragraph)`
-  white-space: pre-line
+  white-space: pre-line;
 `;
 
 interface CardProps {
@@ -118,7 +118,8 @@ const Card: React.FunctionComponent<CardProps> = ({
       </FPCard.Content>
 
       <FPCard.Footer justifyContent="flex-end">
-        {hasPrintCTA && (
+        {/* TODO: Add print and pdf later when functionality is ready */}
+        {/* {hasPrintCTA && (
           <CardCta
             onClick={() => {
               console.log("imprimir");
@@ -127,8 +128,8 @@ const Card: React.FunctionComponent<CardProps> = ({
           >
             imprimir →
           </CardCta>
-        )}
-        {attachmentPath && (
+        )} */}
+        {/* {attachmentPath && (
           <CardCta
             onClick={() => {
               console.log("imprimir");
@@ -137,7 +138,7 @@ const Card: React.FunctionComponent<CardProps> = ({
           >
             Descargar PDF →
           </CardCta>
-        )}
+        )} */}
         <CardCta
           onClick={() =>
             addCartItem({
