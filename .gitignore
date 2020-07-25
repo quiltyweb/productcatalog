@@ -10,11 +10,14 @@ coverage
 tmp
 
 # Local stuff
-database/backups
 .vscode
 .DS_STORE
 yarn-error.log
+.vscode
 
 # Secret stuff
 .env
-.vscode
+
+# Data stuff
+database/backups
+*.sql
