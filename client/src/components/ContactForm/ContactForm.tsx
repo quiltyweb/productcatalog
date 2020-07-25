@@ -172,7 +172,7 @@ const ContactForm: React.FunctionComponent = () => {
                 name="nombre"
                 isRequired
                 type="text"
-                label="Nombre o Razon social"
+                label="Nombre"
                 placeholder="nombre"
                 value={formik.values.nombre}
                 onChange={formik.handleChange}
@@ -224,7 +224,7 @@ const ContactForm: React.FunctionComponent = () => {
               <TextareaField
                 padding="major-2"
                 name="mensaje"
-                label="Comentario"
+                label="Consulta"
                 isRequired
                 value={formik.values.mensaje}
                 onChange={formik.handleChange}

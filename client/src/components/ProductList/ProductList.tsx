@@ -28,7 +28,9 @@ const ProductList: React.FunctionComponent<ProductListProps> = ({
             );
           })
         ) : (
-          <div>No se encontraron productos para esta Categoria</div>
+          <div>
+            No se encontraron productos. Intente con otra palabra o categoría.
+          </div>
         )}
       </Columns>
     </Box>

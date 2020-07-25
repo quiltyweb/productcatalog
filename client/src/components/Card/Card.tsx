@@ -31,11 +31,16 @@ const CardCta = styled(Button)`
   border: 1px solid;
   border-radius: 0.25rem;
   text-align: center;
-  width: 100%;
-  font-size: 0.8rem;
+  width: 80%;
+  font-size: 0.9rem;
+  font-weight: 600;
 
-  &:focus {
-    outline: 2px solid #d32f2f;
+  &:hover {
+    background-color: rgba(211, 47, 47, 0.1);
+  }
+  &:active {
+    background-color: rgba(211, 47, 47, 0.1);
+    transform: translateY(3px);
   }
 `;
 
@@ -117,28 +122,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         {description && <ParagraphStyled>{description}</ParagraphStyled>}
       </FPCard.Content>
 
-      <FPCard.Footer justifyContent="flex-end">
-        {/* TODO: Add print and pdf later when functionality is ready */}
-        {/* {hasPrintCTA && (
-          <CardCta
-            onClick={() => {
-              console.log("imprimir");
-            }}
-            aria-label={`imprimir ${name}`}
-          >
-            imprimir →
-          </CardCta>
-        )} */}
-        {/* {attachmentPath && (
-          <CardCta
-            onClick={() => {
-              console.log("imprimir");
-            }}
-            aria-label={`imprimir ${name}`}
-          >
-            Descargar PDF →
-          </CardCta>
-        )} */}
+      <FPCard.Footer justifyContent="center">
         <CardCta
           onClick={() =>
             addCartItem({
