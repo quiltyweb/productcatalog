@@ -39,6 +39,10 @@ const CardCta = styled(Button)`
   }
 `;
 
+const ParagraphStyled = styled(Paragraph)`
+  white-space: pre-line
+`;
+
 interface CardProps {
   productId: string;
   name: string;
@@ -82,7 +86,7 @@ const Card: React.FunctionComponent<CardProps> = ({
             <ImageStyled fit="cover" src={linkImage} />
           )}
         </Link>
-        {description && <Paragraph>{description}</Paragraph>}
+        {description && <ParagraphStyled>{description}</ParagraphStyled>}
       </FPCard.Content>
 
       <FPCard.Footer justifyContent="flex-end">
