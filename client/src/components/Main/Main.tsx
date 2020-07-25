@@ -1,6 +1,5 @@
 import React from "react";
 import { Heading, Paragraph } from "fannypack";
-import emailImage from "../../assets/correo-ventas-comercial-gattoni.png";
 
 const Main = () => {
   return (
@@ -37,11 +36,11 @@ const Main = () => {
         <li>
           Correo Ventas:{" "}
           <img
-            style={{ filter: "invert(1)" }}
-            src={emailImage}
+            style={{ verticalAlign: "middle" }}
+            src="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/assets/correo-gattoni-punto-cl.jpg"
             width="175"
             height="15"
-            alt="Ventas Comercial Gattoni"
+            alt="comercialgattoni arroba gattoni punto cl"
           />
         </li>
       </ul>
