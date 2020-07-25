@@ -18,3 +18,4 @@ coverage
 
 # Data stuff
 database/backups
+*.sql
