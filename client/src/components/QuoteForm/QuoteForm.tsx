@@ -7,7 +7,6 @@ import {
   Button,
   Box,
   TextareaField,
-  Heading,
   Paragraph,
   Alert,
   Spinner,

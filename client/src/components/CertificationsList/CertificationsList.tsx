@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading, Paragraph, styled } from "fannypack";
+import { Heading, styled } from "fannypack";
 
 const ListItem = styled.li`
   list-style: circle;

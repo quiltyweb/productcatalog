@@ -17,7 +17,6 @@ import {
 } from "fannypack";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
-import emailImage from "../../assets/correo-ventas-comercial-gattoni.png";
 
 const ListItem = styled.li`
   list-style: circle;
@@ -146,11 +145,11 @@ const ContactForm: React.FunctionComponent = () => {
             <ul>
               <ListItem>
                 <img
-                  style={{ filter: "invert(1)" }}
-                  src={emailImage}
+                  style={{ verticalAlign: "middle" }}
+                  src="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/assets/correo-gattoni-punto-cl.jpg"
                   width="175"
                   height="15"
-                  alt="Ventas Comercial Gattoni"
+                  alt="comercialgattoni arroba gattoni punto cl"
                 />
               </ListItem>
             </ul>
@@ -173,7 +172,7 @@ const ContactForm: React.FunctionComponent = () => {
                 name="nombre"
                 isRequired
                 type="text"
-                label="Nombre o Razon social"
+                label="Nombre"
                 placeholder="nombre"
                 value={formik.values.nombre}
                 onChange={formik.handleChange}
@@ -225,7 +224,7 @@ const ContactForm: React.FunctionComponent = () => {
               <TextareaField
                 padding="major-2"
                 name="mensaje"
-                label="Comentario"
+                label="Consulta"
                 isRequired
                 value={formik.values.mensaje}
                 onChange={formik.handleChange}

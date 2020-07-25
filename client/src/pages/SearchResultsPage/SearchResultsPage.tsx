@@ -34,7 +34,7 @@ export const SearchResultsPage = () => {
         }
         return (
           <>
-            <Heading use="h2">Busqueda por: {searchTerm}</Heading>
+            <Heading use="h1">Resultados para: "{searchTerm}"</Heading>
             <ProductList products={props.searchProducts} />
           </>
         );
