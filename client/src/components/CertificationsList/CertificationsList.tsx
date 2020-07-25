@@ -2,7 +2,8 @@ import React from "react";
 import { Heading, styled } from "fannypack";
 
 const ListItem = styled.li`
-  list-style: circle;
+  list-style: disc;
+  padding: 1rem;
 `;
 
 const CertificationsList = () => {

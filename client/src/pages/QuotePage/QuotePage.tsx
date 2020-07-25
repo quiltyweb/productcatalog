@@ -1,17 +1,22 @@
 import React from "react";
-import { Column, Columns, palette, styled } from "fannypack";
-import { Heading, Paragraph, Box } from "fannypack";
+import {
+  Column,
+  Columns,
+  palette,
+  styled,
+  Heading,
+  Paragraph,
+  Box,
+} from "fannypack";
 import QuoteForm from "../../components/QuoteForm/QuoteForm";
 import { useHomePageContext } from "../HomePage/HomePageContext";
 import CartList from "../../components/CartList/CartList";
 
-const QuoteSummaryColumn = styled(Column)`
+const QuoteSummaryBox = styled(Box)`
   background-color: ${palette("white")};
-  padding: 0;
-  margin-right: 1rem;
 `;
 
-const FormColumn = styled(Column)`
+const FormBox = styled(Box)`
   background-color: ${palette("white800")};
   border-radius: 5px;
 `;
@@ -33,14 +38,28 @@ export const QuotePage = () => {
 
   return (
     <Box>
-      <Heading>Ingrese datos de su cotización</Heading>
+      <Heading>Ingrese datos de su cotización:</Heading>
       <Columns padding="major-2">
-        <QuoteSummaryColumn>
-          <CartList isEditable={false} />
-        </QuoteSummaryColumn>
-        <FormColumn>
-          <QuoteForm cartItems={cart} />
-        </FormColumn>
+        <Column
+          spread={6}
+          spreadDesktop={12}
+          spreadTablet={12}
+          spreadMobile={12}
+        >
+          <QuoteSummaryBox>
+            <CartList isEditable={false} />
+          </QuoteSummaryBox>
+        </Column>
+        <Column
+          spread={6}
+          spreadDesktop={12}
+          spreadTablet={12}
+          spreadMobile={12}
+        >
+          <FormBox>
+            <QuoteForm cartItems={cart} />
+          </FormBox>
+        </Column>
       </Columns>
     </Box>
   );

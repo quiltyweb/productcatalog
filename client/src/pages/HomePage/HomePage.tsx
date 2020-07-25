@@ -24,12 +24,11 @@ const MainWrapper = styled.main`
   display: flex;
   flex-direction: column;
   max-width: 100%;
-  padding: 2rem 2rem;
+  padding: 0.5rem;
   background-color: ${palette("white")};
 
   @media (min-width: 760px) {
     flex-direction: row;
-    padding: 2rem 2rem;
   }
 
   @media (min-width: 1020px) {
@@ -39,12 +38,21 @@ const MainWrapper = styled.main`
 
 const MainContent = styled.div`
   flex-basis: 80%;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+
+  @media (min-width: 1020px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 `;
 
 const MainSidebar = styled.aside`
+  margin-top: 3rem;
   flex-basis: 20%;
+  @media (min-width: 425px) {
+    margin-top: 0;
+  }
 `;
 
 const HomePage: React.FunctionComponent = () => {

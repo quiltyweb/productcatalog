@@ -37,10 +37,11 @@ const NavBarContent = styled.div`
   flex-grow: 1;
   max-width: 110rem;
   margin: 0;
-  padding: 0 2rem;
+  padding: 0;
 
-  @media (min-width: 760px) {
+  @media (min-width: 768px) {
     flex-direction: row;
+    padding: 0 1rem;
   }
 `;
 
@@ -56,9 +57,12 @@ const NavLogo = styled(Link)`
 `;
 
 const NavLogoHeading = styled.span`
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #d32f2f;
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
 `;
 
 const FormStyled = styled.form`
@@ -78,7 +82,11 @@ const NavBarList = styled.ul`
   padding: 0;
   font-weight: 500;
 
-  @media (min-width: 760px) {
+  li {
+    text-align: center;
+  }
+
+  @media (min-width: 425px) {
     flex-direction: row;
   }
 `;
@@ -111,60 +119,48 @@ const Nav = () => {
           <NavLogoHeading>GATTONI</NavLogoHeading>
           <NavLogoSubHeading>Seguridad Industrial</NavLogoSubHeading>
         </NavLogo>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-          }}
+        <FormStyled
+          onSubmit={formik.handleSubmit}
+          style={{ alignItems: "center" }}
         >
-          <FormStyled
-            onSubmit={formik.handleSubmit}
-            style={{ alignItems: "center" }}
+          <label
+            htmlFor="searchTerm"
+            style={{ fontSize: "1rem", margin: "0 0.5rem" }}
           >
-            <label
-              htmlFor="searchTerm"
-              style={{ fontSize: "1rem", margin: "0 0.5rem" }}
-            >
-              Buscar:
-            </label>
-            <Input
-              id="searchTerm"
-              name="searchTerm"
-              type="text"
-              placeholder="ingrese palabra..."
-              value={formik.values.searchTerm}
-              onChange={formik.handleChange}
-              state={formik.errors.searchTerm ? "danger" : ""}
-              size="small"
-            />
+            Buscar:
+          </label>
+          <Input
+            id="searchTerm"
+            name="searchTerm"
+            type="text"
+            placeholder="ingrese palabra..."
+            value={formik.values.searchTerm}
+            onChange={formik.handleChange}
+            state={formik.errors.searchTerm ? "danger" : ""}
+            size="small"
+          />
 
-            <Button
-              margin="major-1"
-              padding="major-1"
-              size="small"
-              type="submit"
-            >
-              Ir
-            </Button>
-          </FormStyled>
-          <NavBarList aria-label="Menu principal">
-            <li>
-              <Link to="/cotizacion" className="NavBar-primary-link">
-                Mi Cotización ({cartCount})
-              </Link>
-            </li>
-            <li>
-              <Link to="/certificaciones" className="NavBar-primary-link">
-                Certificaciones
-              </Link>
-            </li>
-            <li>
-              <Link to="/contacto" className="NavBar-primary-link">
-                Contacto
-              </Link>
-            </li>
-          </NavBarList>
-        </div>
+          <Button margin="major-1" padding="major-1" size="small" type="submit">
+            Ir
+          </Button>
+        </FormStyled>
+        <NavBarList aria-label="Menu principal">
+          <li>
+            <Link to="/certificaciones" className="NavBar-primary-link">
+              Certificaciones
+            </Link>
+          </li>
+          <li>
+            <Link to="/contacto" className="NavBar-primary-link">
+              Contacto
+            </Link>
+          </li>
+          <li>
+            <Link to="/cotizacion" className="NavBar-primary-link">
+              Mi Cotización ({cartCount})
+            </Link>
+          </li>
+        </NavBarList>
       </NavBarContent>
     </NavContainer>
   );

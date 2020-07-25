@@ -5,8 +5,11 @@ import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 
 const ImageStyled = styled(Image)`
   max-width: 100%;
-  max-height: 60px;
-  margin-right: 0.5rem;
+  max-height: 90px;
+  margin-right: 1.5rem;
+  @media (min-width: 760px) {
+    max-height: 60px;
+  }
 `;
 
 interface CardProps {
@@ -25,9 +28,9 @@ const CartList: React.FunctionComponent<CardProps> = ({
       <Table hasBorder isResponsive>
         <Table.Head>
           <Table.Row>
-            <Table.HeadCell>Imagen</Table.HeadCell>
-            <Table.HeadCell>Producto</Table.HeadCell>
-            <Table.HeadCell>Cantidad</Table.HeadCell>
+            <Table.HeadCell>Imagen:</Table.HeadCell>
+            <Table.HeadCell>Producto:</Table.HeadCell>
+            <Table.HeadCell>Cantidad:</Table.HeadCell>
           </Table.Row>
         </Table.Head>
         <Table.Body hasBorders>
@@ -50,7 +53,10 @@ const CartList: React.FunctionComponent<CardProps> = ({
                 </Table.Cell>
                 {isEditable && (
                   <Table.Cell>
-                    <Button onClick={() => removeCartItem(item.productId)}>
+                    <Button
+                      onClick={() => removeCartItem(item.productId)}
+                      style={{ whiteSpace: "nowrap" }}
+                    >
                       Borrar
                     </Button>
                   </Table.Cell>
