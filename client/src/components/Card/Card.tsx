@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled, Card as FPCard, Image, Button, Paragraph } from "fannypack";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ const ImageStyled = styled(Image)`
 
 const SingleImageStyled = styled(Image)`
   max-width: 100%;
-  max-height: 300px;
+  max-height: 400px;
   margin-right: 0.5rem;
 `;
 
@@ -53,6 +53,34 @@ interface CardProps {
   isSinglePage?: boolean;
 }
 
+const ImgWithFallback: React.FunctionComponent<{
+  src: string;
+  alt: string;
+  isSinglePage?: boolean;
+}> = ({ src, alt, isSinglePage }) => {
+  const [isUndefined, updateIsUndefined] = useState(false);
+
+  const onError = () => {
+    updateIsUndefined(true);
+  };
+
+  if (isUndefined) {
+    return (
+      <img
+        src="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/noimagen.jpg"
+        alt={alt}
+        title={alt}
+      />
+    );
+  }
+
+  return isSinglePage ? (
+    <SingleImageStyled src={src} alt={alt} title={alt} onError={onError} />
+  ) : (
+    <ImageStyled src={src} alt={alt} title={alt} onError={onError} />
+  );
+};
+
 const Card: React.FunctionComponent<CardProps> = ({
   productId,
   name,
@@ -80,11 +108,11 @@ const Card: React.FunctionComponent<CardProps> = ({
         }}
       >
         <Link to={`/producto/${productId}`}>
-          {isSinglePage ? (
-            <SingleImageStyled fit="cover" src={linkImage} />
-          ) : (
-            <ImageStyled fit="cover" src={linkImage} />
-          )}
+          <ImgWithFallback
+            src={linkImage}
+            alt={name}
+            isSinglePage={isSinglePage}
+          />
         </Link>
         {description && <ParagraphStyled>{description}</ParagraphStyled>}
       </FPCard.Content>

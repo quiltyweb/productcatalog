@@ -9,6 +9,7 @@ import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
 import theme from "../../theme";
 import ContactForm from "../../components/ContactForm/ContactForm";
+import CertificationsList from "../../components/CertificationsList/CertificationsList";
 import ProductsPage from "../ProductsPage/ProductsPage";
 import SingleProductPage from "../SingleProductPage/SingleProductPage";
 import SearchResultsPage from "../SearchResultsPage/SearchResultsPage";
@@ -178,6 +179,9 @@ const HomePage: React.FunctionComponent = () => {
                         <Switch>
                           <Route path="/contacto">
                             <ContactForm />
+                          </Route>
+                          <Route path="/certificaciones">
+                            <CertificationsList />
                           </Route>
                           <Route path="/cotizacion">
                             <CartPage />
