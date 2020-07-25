@@ -54,32 +54,30 @@ export const SingleProductPage: React.FunctionComponent = () => {
         }
 
         return (
-          <>
-            <Box padding="major-2">
-              <Columns style={{ justifyContent: "center" }}>
-                <Column key={props.node.id} spread={9}>
-                  <GoBackButton
-                    palette="primary"
-                    kind="link"
-                    onClick={() => {
-                      goBack();
-                    }}
-                  >
-                    &#8592; volver a resultados
-                  </GoBackButton>
-                  <Card
-                    productId={props.node.id}
-                    name={props.node.name}
-                    description={props.node.description}
-                    attachmentPath={props.node.attachmentPath}
-                    linkImage={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/${props.node.imagePath}`}
-                    hasPrintCTA
-                    isSinglePage
-                  />
-                </Column>
-              </Columns>
-            </Box>
-          </>
+          <Box padding="major-2" marginBottom="major-2">
+            <Columns style={{ justifyContent: "center" }}>
+              <Column key={props.node.id} spread={9}>
+                <GoBackButton
+                  palette="primary"
+                  kind="link"
+                  onClick={() => {
+                    goBack();
+                  }}
+                >
+                  &#8592; volver a resultados
+                </GoBackButton>
+                <Card
+                  productId={props.node.id}
+                  name={props.node.name}
+                  description={props.node.description}
+                  attachmentPath={props.node.attachmentPath}
+                  linkImage={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/${props.node.imagePath}`}
+                  hasPrintCTA
+                  isSinglePage
+                />
+              </Column>
+            </Columns>
+          </Box>
         );
       }}
     />
