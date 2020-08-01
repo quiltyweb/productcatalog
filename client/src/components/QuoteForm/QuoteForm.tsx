@@ -5,12 +5,12 @@ import environment from "../../environment";
 import {
   InputField,
   Button,
-  Box,
   TextareaField,
   Paragraph,
   Alert,
   Spinner,
   styled,
+  Page,
 } from "fannypack";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
@@ -134,7 +134,7 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
   });
 
   return (
-    <Box marginTop="major-1">
+    <Page.Content isFluid breakpoint="desktop">
       <Paragraph>
         Si está de acuerdo con el pedido, complete el formulario de cotización:
       </Paragraph>
@@ -257,7 +257,7 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           </Alert>
         )}
       </form>
-    </Box>
+    </Page.Content>
   );
 };
 
