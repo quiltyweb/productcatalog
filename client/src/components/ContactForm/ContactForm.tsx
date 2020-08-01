@@ -14,6 +14,7 @@ import {
   Columns,
   Column,
   Paragraph,
+  Page,
 } from "fannypack";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
@@ -114,7 +115,7 @@ const ContactForm: React.FunctionComponent = () => {
   });
 
   return (
-    <Box>
+    <Page.Content isFluid breakpoint="desktop">
       <Heading>Ingrese su consulta</Heading>
       <Columns>
         <Column>
@@ -253,7 +254,7 @@ const ContactForm: React.FunctionComponent = () => {
           </Box>
         </Column>
       </Columns>
-    </Box>
+    </Page.Content>
   );
 };
 

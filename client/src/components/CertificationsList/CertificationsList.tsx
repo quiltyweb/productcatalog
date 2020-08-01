@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading, styled } from "fannypack";
+import { Heading, styled, Page } from "fannypack";
 
 const ListItem = styled.li`
   list-style: disc;
@@ -8,8 +8,11 @@ const ListItem = styled.li`
 
 const CertificationsList = () => {
   return (
-    <>
-      <Heading>Certificaciones</Heading>
+    <Page.Content
+      isFluid
+      breakpoint="desktop"
+    >
+       <Heading>Certificaciones</Heading>
       <Heading use="h2">
         Descargue aqui documentos que certifican la calidad de nuestos
         productos.
@@ -97,7 +100,7 @@ const CertificationsList = () => {
           </a>
         </ListItem>
       </ul>
-    </>
+    </Page.Content>
   );
 };
 

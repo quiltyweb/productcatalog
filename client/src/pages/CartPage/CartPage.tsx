@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading, Paragraph, Box, styled } from "fannypack";
+import { Heading, Paragraph, Box, styled, Page } from "fannypack";
 import CartList from "../../components/CartList/CartList";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
@@ -39,12 +39,16 @@ export const CartPage = () => {
   }
 
   return (
-    <>
+    <Page.Content
+    isFluid
+    breakpoint="desktop"
+  >
+
       <CartList />
       <SendQuoteLink to="/enviar-cotizacion">
         Listo, enviar Cotización!
       </SendQuoteLink>
-    </>
+    </Page.Content>
   );
 };
 export default CartPage;

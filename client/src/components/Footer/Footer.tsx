@@ -69,6 +69,7 @@ const FooterComponent = () => {
             </FooterList>
           </FooterLinks>
         </Column>
+
         <Column>
           <FooterAddress itemScope itemType="http://schema.org/LocalBusiness">
             <p>
@@ -82,12 +83,31 @@ const FooterComponent = () => {
               <span itemProp="streetAddress">Rodriguez 757-A </span>
               <span itemProp="addressLocality">Copiapó, </span>
               <span itemProp="addressRegion">Región de Atacama, Chile.</span>
+              <a
+          href="https://goo.gl/maps/T8kEzuyJijXt6iy66"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          (Ver mapa)
+        </a>
             </p>
             <p itemProp="telephone">
               Teléfono: <a href="tel:52-2-218056">52-2-218056</a>
             </p>
             <p itemProp="faxNumber">
               Fax: <a href="tel:52-2-216257">52-2-216257</a>
+            </p>
+             <p>Lunes a Viernes de 9:30 a 13:30 y 15:30 a 18:30</p>
+
+            <p>
+              Correo Ventas:{" "}
+              <img
+                style={{ verticalAlign: "middle" }}
+                src="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/assets/correo-gattoni-punto-cl.jpg"
+                width="175"
+                height="15"
+                alt="comercialgattoni arroba gattoni punto cl"
+              />
             </p>
             <p>
               &copy; Todos los derechos reservados {currDate.getFullYear()}{" "}
