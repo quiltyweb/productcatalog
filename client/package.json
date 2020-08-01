@@ -59,7 +59,7 @@
     "babel-plugin-relay": "^9.1.0",
     "graphql": "^15.1.0",
     "relay-compiler": "^9.1.0",
-    "relay-compiler-language-typescript": "^12.0.3",
+    "relay-compiler-language-typescript": "^13.0.0",
     "relay-config": "^9.1.0",
     "typescript": "^3.8.3"
   }
