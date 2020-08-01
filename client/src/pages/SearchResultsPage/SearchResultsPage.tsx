@@ -4,7 +4,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
 import { useParams } from "react-router-dom";
 import ProductList from "../../components/ProductList/ProductList";
-import { Heading } from "fannypack";
+import { Heading, Page } from "fannypack";
 
 export const SearchResultsPage = () => {
   const { searchTerm } = useParams();
@@ -33,10 +33,10 @@ export const SearchResultsPage = () => {
           return <div>Loading...</div>;
         }
         return (
-          <>
+          <Page.Content isFluid>
             <Heading use="h1">Resultados para: "{searchTerm}"</Heading>
             <ProductList products={props.searchProducts} />
-          </>
+            </Page.Content>
         );
       }}
     />

@@ -3,7 +3,7 @@ import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
 import { useParams, useHistory } from "react-router-dom";
-import { Box, Columns, Column, Button, styled } from "fannypack";
+import { Columns, Column, Button, styled, Page } from "fannypack";
 import Card from "../../components/Card/Card";
 
 const GoBackButton = styled(Button)`
@@ -54,7 +54,7 @@ export const SingleProductPage: React.FunctionComponent = () => {
         }
 
         return (
-          <Box padding="major-2" marginBottom="major-2">
+          <Page.Content isFluid>
             <Columns style={{ justifyContent: "center" }}>
               <Column key={props.node.id} spread={9}>
                 <GoBackButton
@@ -77,7 +77,7 @@ export const SingleProductPage: React.FunctionComponent = () => {
                 />
               </Column>
             </Columns>
-          </Box>
+          </Page.Content>
         );
       }}
     />

@@ -4,7 +4,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
 import { useParams } from "react-router-dom";
 import ProductList from "../../components/ProductList/ProductList";
-import { Heading } from "fannypack";
+import { Heading, Page } from "fannypack";
 
 export const ProductsPage = () => {
   const { categoryId } = useParams();
@@ -34,10 +34,10 @@ export const ProductsPage = () => {
         }
 
         return (
-          <>
+          <Page.Content isFluid>
             <Heading use="h1">Categoría: {props.fetchCategory.name}</Heading>
             <ProductList products={props.fetchCategory.products} />
-          </>
+          </Page.Content>
         );
       }}
     />

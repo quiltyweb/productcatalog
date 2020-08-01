@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
-import { ThemeProvider, styled, palette } from "fannypack";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { ThemeProvider, styled, palette, Flex } from "fannypack";
+import { Switch, Route, useLocation } from "react-router-dom";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
@@ -23,28 +23,15 @@ import ScrollToTop from "../ScrollToTop";
 const MainWrapper = styled.main`
   display: flex;
   flex-direction: column;
-  max-width: 100%;
-  padding: 0.5rem;
   background-color: ${palette("white")};
 
   @media (min-width: 760px) {
     flex-direction: row;
   }
-
-  @media (min-width: 1020px) {
-    padding: 2rem 2rem;
-  }
 `;
 
-const MainContent = styled.div`
-  flex-basis: 80%;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-
-  @media (min-width: 1020px) {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
+const MainContent = styled(Flex)`
+  align-content: center;
 `;
 
 const MainSidebar = styled.aside`
@@ -57,7 +44,8 @@ const MainSidebar = styled.aside`
 
 const HomePage: React.FunctionComponent = () => {
   const [cart, setCart] = useState<CartItemProps[]>([]);
-
+  const location = useLocation();
+  const isHomePage = location.pathname === '/'
   useEffect(() => {
     const stringifyCart = sessionStorage.getItem("cart");
     const parsedCart = JSON.parse(stringifyCart || "[]");
@@ -143,87 +131,87 @@ const HomePage: React.FunctionComponent = () => {
   };
 
   return (
-    <Router>
-      <ScrollToTop>
-        <ThemeProvider theme={theme}>
-          <QueryRenderer
-            environment={environment}
-            query={graphql`
-              query HomePageQuery {
-                fetchCategories {
-                  ...CategoryList_categories
-                }
+    <ScrollToTop>
+      <ThemeProvider theme={theme}>
+        <QueryRenderer
+          environment={environment}
+          query={graphql`
+            query HomePageQuery {
+              fetchCategories {
+                ...CategoryList_categories
               }
-            `}
-            variables={{}}
-            render={({ error, props }: { error: any; props: any }) => {
-              if (error) {
-                console.log("error: ", error);
-                return <div>Error!</div>;
-              }
-              if (!props) {
-                return <div>Loading...</div>;
-              }
+            }
+          `}
+          variables={{}}
+          render={({ error, props }: { error: any; props: any }) => {
+            if (error) {
+              console.log("error: ", error);
+              return <div>Error!</div>;
+            }
+            if (!props) {
+              return <div>Loading...</div>;
+            }
 
-              return (
-                <HomePageContext.Provider
-                  value={{
-                    cart,
-                    cartCount: sumCartItems(cart),
-                    updateCartItem,
-                    addCartItem,
-                    handleCart: setCart,
-                    incrementCartItem,
-                    decrementCartItem,
-                    removeCartItem,
-                  }}
-                >
-                  <>
-                    <header>
-                      <Nav />
-                    </header>
-                    <MainWrapper>
-                      <MainContent>
-                        <Switch>
-                          <Route path="/contacto">
-                            <ContactForm />
-                          </Route>
-                          <Route path="/certificaciones">
-                            <CertificationsList />
-                          </Route>
-                          <Route path="/cotizacion">
-                            <CartPage />
-                          </Route>
-                          <Route path="/enviar-cotizacion">
-                            <QuotePage />
-                          </Route>
-                          <Route path="/categoria/:categoryId">
-                            <ProductsPage />
-                          </Route>
-                          <Route path="/resultados/:searchTerm">
-                            <SearchResultsPage />
-                          </Route>
-                          <Route path="/producto/:productId">
-                            <SingleProductPage />
-                          </Route>
-                          <Route path="/">
-                            <Main />
-                          </Route>
-                        </Switch>
-                      </MainContent>
+            return (
+              <HomePageContext.Provider
+                value={{
+                  cart,
+                  cartCount: sumCartItems(cart),
+                  updateCartItem,
+                  addCartItem,
+                  handleCart: setCart,
+                  incrementCartItem,
+                  decrementCartItem,
+                  removeCartItem,
+                }}
+              >
+                <>
+                  <header>
+                    <Nav />
+                  </header>
+                  <MainWrapper>
+                    <MainContent column flexBasis={isHomePage ? '100%' : '80%'}>
+                      <Switch>
+                        <Route path="/contacto">
+                          <ContactForm />
+                        </Route>
+                        <Route path="/certificaciones">
+                          <CertificationsList />
+                        </Route>
+                        <Route path="/cotizacion">
+                          <CartPage />
+                        </Route>
+                        <Route path="/enviar-cotizacion">
+                          <QuotePage />
+                        </Route>
+                        <Route path="/categoria/:categoryId">
+                          <ProductsPage />
+                        </Route>
+                        <Route path="/resultados/:searchTerm">
+                          <SearchResultsPage />
+                        </Route>
+                        <Route path="/producto/:productId">
+                          <SingleProductPage />
+                        </Route>
+                        <Route path="/">
+                          <Main categories={props.fetchCategories} />
+                        </Route>
+                      </Switch>
+                    </MainContent>
+                    {!isHomePage && (
                       <MainSidebar>
                         <CategoryList categories={props.fetchCategories} />
                       </MainSidebar>
-                    </MainWrapper>
-                    <Footer />
-                  </>
-                </HomePageContext.Provider>
-              );
-            }}
-          />
-        </ThemeProvider>
-      </ScrollToTop>
-    </Router>
+                    )}
+                  </MainWrapper>
+                  <Footer />
+                </>
+              </HomePageContext.Provider>
+            );
+          }}
+        />
+      </ThemeProvider>
+    </ScrollToTop>
   );
 };
 export default HomePage;
