@@ -44,7 +44,7 @@ const Main: React.FunctionComponent<MainProps> = ({
         <Columns>
           {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item: any) => {
             return (
-              <Column spread={3}>
+              <Column spread={3} spreadTablet={4}>
                 <Card.Card>
                   <Card.Content>
                     <Image
