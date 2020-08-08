@@ -48,6 +48,26 @@ export const theme: GattoniThemeConfig = {
         margin: 0.5rem;
         list-style: none;
       }
+      ::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        color: #000000 !important;
+        font-weight: 500;
+      }
+      ::-moz-placeholder {
+        /* Firefox 19+ */
+        color: #000000 !important;
+        font-weight: 500;
+      }
+      :-ms-input-placeholder {
+        /* IE 10+ */
+        color: #000000 !important;
+        font-weight: 500;
+      }
+      :-moz-placeholder {
+        /* Firefox 18- */
+        color: #000000 !important;
+        font-weight: 500;
+      }
     `,
   },
   Heading: {

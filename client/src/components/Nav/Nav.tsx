@@ -29,19 +29,29 @@ const NavContainer = styled.nav`
 `;
 
 const NavBarContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  flex-grow: 1;
-  max-width: 110rem;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto auto;
+  grid-gap: 1rem;
+  width: 100%;
   margin: 0;
   padding: 0;
 
   @media (min-width: 768px) {
-    flex-direction: row;
-    padding: 0 1rem;
+    grid-template-columns: auto 35% auto;
+    grid-template-rows: auto;
+    padding: 0;
+  }
+`;
+
+const NavInput = styled(Input)`
+  input {
+    background-color: #ececec;
+    border-color: #ececec;
+    border-radius: 20px;
+    height: 44px;
+    width: 100%;
+    font-size: 1rem;
   }
 `;
 
@@ -69,7 +79,7 @@ const NavLogoHeading = styled.span`
 `;
 
 const FormStyled = styled.form`
-  display: flex;NavLogo
+  display: flex;
   align-items: flex-end;
 `;
 const NavLogoSubHeading = styled.span`
@@ -127,25 +137,27 @@ const Nav = () => {
           onSubmit={formik.handleSubmit}
           style={{ alignItems: "center" }}
         >
-          <label
-            htmlFor="searchTerm"
-            style={{ fontSize: "1rem", margin: "0 0.5rem" }}
-          >
-            Buscar:
-          </label>
-          <Input
+          <NavInput
+            a11yLabel="Buscador"
             id="searchTerm"
             name="searchTerm"
             type="text"
-            placeholder="Ingrese palabra a buscar"
+            placeholder="Busque en nuestro catalogo"
             value={formik.values.searchTerm}
             onChange={formik.handleChange}
             state={formik.errors.searchTerm ? "danger" : ""}
             size="small"
           />
 
-          <Button margin="major-1" padding="major-1" size="small" type="submit">
-            Ir
+          <Button
+            margin="major-1"
+            padding="major-1"
+            size="small"
+            type="submit"
+            whiteSpace="noWrap"
+            borderRadius="10px"
+          >
+            buscar
           </Button>
         </FormStyled>
         <NavBarList aria-label="Menu principal">
