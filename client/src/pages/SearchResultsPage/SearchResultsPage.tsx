@@ -30,13 +30,13 @@ export const SearchResultsPage = () => {
           return <div>Error!</div>;
         }
         if (!props) {
-          return <div>Loading...</div>;
+          return <div>Cargando...</div>;
         }
         return (
           <Page.Content isFluid>
             <Heading use="h1">Resultados para: "{searchTerm}"</Heading>
             <ProductList products={props.searchProducts} />
-            </Page.Content>
+          </Page.Content>
         );
       }}
     />

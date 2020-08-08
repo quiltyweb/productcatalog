@@ -50,7 +50,7 @@ export const SingleProductPage: React.FunctionComponent = () => {
           return <div>Error!</div>;
         }
         if (!props) {
-          return <div>Loading...</div>;
+          return <div>Cargando...</div>;
         }
 
         return (
