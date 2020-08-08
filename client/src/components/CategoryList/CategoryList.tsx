@@ -37,8 +37,8 @@ const ProductItem = styled.li`
     border: none;
     border-radius: 30px;
     &:hover {
-      color: #d32f2f;
-      background-color: rgba(211, 47, 47, 0.2);
+      color: #;
+      background-color: rgba(199, 28, 0, 0.2);
       transition: background-color 0.2s;
     }
   }
@@ -52,7 +52,7 @@ const ProductsListLink = styled(Link)`
   font-weight: 500;
   white-space: nowrap;
   &:hover {
-    color: #d32f2f;
+    color: rgb(199, 28, 0);
   }
   @media (min-width: 425px) {
     font-size: 1.2rem;
@@ -80,7 +80,7 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = ({
             );
           })
         ) : (
-          <ProductItem>No categories</ProductItem>
+          <ProductItem>No hay cateogrias</ProductItem>
         )}
       </ProductsList>
     </>

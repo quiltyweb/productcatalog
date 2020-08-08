@@ -33,13 +33,16 @@ const CardCta = styled(Button)`
   text-align: center;
   width: 80%;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
+  color: #041e42;
+  background-color: #ffcc00;
+  border-width: 0;
 
   &:hover {
-    background-color: rgba(211, 47, 47, 0.1);
+    background-color: #ffcc00;
   }
   &:active {
-    background-color: rgba(211, 47, 47, 0.1);
+    background-color: #ffcc00;
     transform: translateY(3px);
   }
 `;
@@ -115,7 +118,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         <Link to={`/producto/${productId}`}>
           <ImgWithFallback
             src={linkImage}
-            alt={name}
+            alt={`ver producto: ${name}`}
             isSinglePage={isSinglePage}
           />
         </Link>
@@ -134,7 +137,7 @@ const Card: React.FunctionComponent<CardProps> = ({
           }
           aria-label={`Cotizar ${name}`}
         >
-          Cotizar →
+          Añadir a cotización
         </CardCta>
       </FPCard.Footer>
     </CardItem>
