@@ -56,7 +56,9 @@ const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
                     />
                   </Card.Content>
                   <Card.Footer justifyContent="center">
-                    <Heading use="h2">{item.node.name}</Heading>
+                    <Heading use="h2" style={{ whiteSpace: "nowrap" }}>
+                      {item.node.name}
+                    </Heading>
                   </Card.Footer>
                 </Card.Card>
               </GridItemLink>
