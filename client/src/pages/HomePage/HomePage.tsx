@@ -140,6 +140,7 @@ const HomePage: React.FunctionComponent = () => {
             query HomePageQuery {
               fetchCategories {
                 ...CategoryList_categories
+                ...CategoryGrid_categoryGridItems
               }
             }
           `}

@@ -1,19 +1,11 @@
 import React from "react";
-import {
-  Heading,
-  Paragraph,
-  Columns,
-  Column,
-  Card,
-  Image,
-  Page,
-} from "fannypack";
+import { Heading, Paragraph, Page } from "fannypack";
+import CategoryGrid from "../CategoryGrid/CategoryGrid";
 
 type MainProps = {
   categories: any;
 };
 
-// const TileCategory = styled(Card)``;
 const Main: React.FunctionComponent<MainProps> = ({
   categories,
 }): JSX.Element => {
@@ -21,8 +13,8 @@ const Main: React.FunctionComponent<MainProps> = ({
     <>
       <Page.Content
         // isFluid
-         breakpoint="desktop"
-        wrapperProps={{ backgroundColor: "white800", padding: 'major-4' }}
+        breakpoint="desktop"
+        wrapperProps={{ backgroundColor: "white800", padding: "major-0" }}
       >
         <Heading use="h1">Sómos Seguridad Industrial</Heading>
         <Paragraph>
@@ -34,37 +26,9 @@ const Main: React.FunctionComponent<MainProps> = ({
         </Paragraph>
       </Page.Content>
 
-      <Page.Content
-        breakpoint="desktop"
-      >
-        <Heading use="h2">
-          Categoria de Productos
-        </Heading>
-
-        <Columns>
-          {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item: any) => {
-            return (
-              <Column spread={3} spreadTablet={4}>
-                <Card.Card>
-                  <Card.Content>
-                    <Image
-                      fit="cover"
-                      fitPosition="top"
-                      width={350}
-                      height={150}
-                      src="https://via.placeholder.com/350x150"
-                      alt="Bean"
-                      backgroundColor="whitesmoke"
-                    />
-                  </Card.Content>
-                  <Card.Footer justifyContent="center">
-                    <Heading use="h2">Agricola</Heading>
-                  </Card.Footer>
-                </Card.Card>
-              </Column>
-            );
-          })}
-        </Columns>
+      <Page.Content breakpoint="desktop">
+        <Heading use="h2">Categoria de Productos</Heading>
+        <CategoryGrid categoryGridItems={categories} />
       </Page.Content>
     </>
   );

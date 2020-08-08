@@ -6,7 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type HomePageQueryVariables = {};
 export type HomePageQueryResponse = {
     readonly fetchCategories: {
-        readonly " $fragmentRefs": FragmentRefs<"CategoryList_categories">;
+        readonly " $fragmentRefs": FragmentRefs<"CategoryList_categories" | "CategoryGrid_categoryGridItems">;
     };
 };
 export type HomePageQuery = {
@@ -20,6 +20,16 @@ export type HomePageQuery = {
 query HomePageQuery {
   fetchCategories {
     ...CategoryList_categories
+    ...CategoryGrid_categoryGridItems
+  }
+}
+
+fragment CategoryGrid_categoryGridItems on CategoryConnection {
+  edges {
+    node {
+      id
+      name
+    }
   }
 }
 
@@ -52,6 +62,11 @@ const node: ConcreteRequest = {
             "args": null,
             "kind": "FragmentSpread",
             "name": "CategoryList_categories"
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "CategoryGrid_categoryGridItems"
           }
         ],
         "storageKey": null
@@ -119,8 +134,8 @@ const node: ConcreteRequest = {
     "metadata": {},
     "name": "HomePageQuery",
     "operationKind": "query",
-    "text": "query HomePageQuery {\n  fetchCategories {\n    ...CategoryList_categories\n  }\n}\n\nfragment CategoryList_categories on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n"
+    "text": "query HomePageQuery {\n  fetchCategories {\n    ...CategoryList_categories\n    ...CategoryGrid_categoryGridItems\n  }\n}\n\nfragment CategoryGrid_categoryGridItems on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n\nfragment CategoryList_categories on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n"
   }
 };
-(node as any).hash = '193655a357abe150051a84b86ac79a6f';
+(node as any).hash = '2f781d8db916d92285c8743fa5003227';
 export default node;

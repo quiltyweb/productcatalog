@@ -80,7 +80,7 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = ({
             );
           })
         ) : (
-          <ProductItem>No categories</ProductItem>
+          <ProductItem>No hay cateogrias</ProductItem>
         )}
       </ProductsList>
     </>

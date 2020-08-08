@@ -37,6 +37,10 @@ export const theme: GattoniThemeConfig = {
       a:hover {
         color: #d32f2f;
       }
+      a:focus {
+        outline: 2px solid #041e42;
+        outline-offset: 2px;
+      }
       ul {
         padding: 0 0.5rem;
       }
