@@ -5,6 +5,7 @@ import environment from "../../environment";
 import { useParams, useHistory } from "react-router-dom";
 import { Columns, Column, Button, styled, Page } from "fannypack";
 import Card from "../../components/Card/Card";
+import Loader from "../../components/Loader/Loader";
 
 const GoBackButton = styled(Button)`
   display: block;
@@ -50,7 +51,7 @@ export const SingleProductPage: React.FunctionComponent = () => {
           return <div>Error!</div>;
         }
         if (!props) {
-          return <div>Cargando...</div>;
+          return <Loader />;
         }
 
         return (

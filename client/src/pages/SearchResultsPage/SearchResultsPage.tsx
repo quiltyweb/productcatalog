@@ -5,6 +5,7 @@ import environment from "../../environment";
 import { useParams } from "react-router-dom";
 import ProductList from "../../components/ProductList/ProductList";
 import { Heading, Page } from "fannypack";
+import Loader from "../../components/Loader/Loader";
 
 export const SearchResultsPage = () => {
   const { searchTerm } = useParams();
@@ -30,7 +31,7 @@ export const SearchResultsPage = () => {
           return <div>Error!</div>;
         }
         if (!props) {
-          return <div>Cargando...</div>;
+          return <Loader />;
         }
         return (
           <Page.Content isFluid>

@@ -19,6 +19,7 @@ import Main from "../../components/Main/Main";
 import HomePageContext from "./HomePageContext";
 import { CartItemProps } from "./HomePageContext";
 import ScrollToTop from "../ScrollToTop";
+import Loader from "../../components/Loader/Loader";
 
 const MainWrapper = styled.main`
   display: flex;
@@ -149,7 +150,7 @@ const HomePage: React.FunctionComponent = () => {
               return <div>Error!</div>;
             }
             if (!props) {
-              return <div>Cargando...</div>;
+              return <Loader />;
             }
 
             return (
