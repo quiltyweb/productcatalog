@@ -40,6 +40,7 @@ const MainSidebar = styled.aside`
   flex-basis: 20%;
   @media (min-width: 425px) {
     margin-top: 0;
+    padding: 3rem 0;
   }
 `;
 
@@ -172,6 +173,11 @@ const HomePage: React.FunctionComponent = () => {
                     <Nav />
                   </header>
                   <MainWrapper>
+                    {!isHomePage && (
+                      <MainSidebar>
+                        <CategoryList categories={props.fetchCategories} />
+                      </MainSidebar>
+                    )}
                     <MainContent column flexBasis={isHomePage ? "100%" : "80%"}>
                       <Switch>
                         <Route path="/contacto">
@@ -200,11 +206,6 @@ const HomePage: React.FunctionComponent = () => {
                         </Route>
                       </Switch>
                     </MainContent>
-                    {!isHomePage && (
-                      <MainSidebar>
-                        <CategoryList categories={props.fetchCategories} />
-                      </MainSidebar>
-                    )}
                   </MainWrapper>
                   <Footer />
                 </>

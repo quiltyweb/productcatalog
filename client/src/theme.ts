@@ -55,10 +55,10 @@ export const theme: GattoniThemeConfig = {
       font-weight: bold;
     `,
     h1: css`
-      font-size: 2rem;
+      font-size: 1.5rem;
     `,
     h2: css`
-      font-size: 1.25rem;
+      font-size: 1.2rem;
     `,
     h3: css`
       font-size: 1rem;

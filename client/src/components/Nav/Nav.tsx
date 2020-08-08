@@ -59,9 +59,12 @@ const NavLogo = styled(Link)`
 const NavLogoHeading = styled.span`
   font-size: 2rem;
   font-weight: bold;
-  color: #d32f2f;
+  background: -webkit-linear-gradient(#ffb300, #c71c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
   @media (min-width: 768px) {
-    font-size: 3rem;
+    font-size: 3.1rem;
   }
 `;
 
@@ -70,8 +73,9 @@ const FormStyled = styled.form`
   align-items: flex-end;
 `;
 const NavLogoSubHeading = styled.span`
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: 500;
+  color: #000000;
 `;
 const NavBarList = styled.ul`
   display: flex;
@@ -133,7 +137,7 @@ const Nav = () => {
             id="searchTerm"
             name="searchTerm"
             type="text"
-            placeholder="ingrese palabra..."
+            placeholder="Ingrese palabra a buscar"
             value={formik.values.searchTerm}
             onChange={formik.handleChange}
             state={formik.errors.searchTerm ? "danger" : ""}
@@ -145,6 +149,14 @@ const Nav = () => {
           </Button>
         </FormStyled>
         <NavBarList aria-label="Menu principal">
+          <li>
+            <Link
+              to="/categoria/Q2F0ZWdvcnk6Nw=="
+              className="NavBar-primary-link"
+            >
+              Productos
+            </Link>
+          </li>
           <li>
             <Link to="/certificaciones" className="NavBar-primary-link">
               Certificaciones
