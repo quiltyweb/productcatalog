@@ -5,6 +5,8 @@ import { Link, useHistory } from "react-router-dom";
 import { Input, Button } from "fannypack";
 import hillsSVg from "./hills.svg";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faListUl, faPhone } from "@fortawesome/free-solid-svg-icons";
 
 const NavContainer = styled.nav`
   display: flex;
@@ -17,7 +19,6 @@ const NavContainer = styled.nav`
   left: 0;
   margin: 0;
   padding: 1rem 0;
-  color: #d32f2f;
   background-color: #ffffff;
   background-size: cover;
   background-repeat: repeat-x;
@@ -38,7 +39,7 @@ const NavBarContent = styled.div`
   padding: 0;
 
   @media (min-width: 768px) {
-    grid-template-columns: auto 35% auto;
+    grid-template-columns: auto 30% auto;
     grid-template-rows: auto;
     padding: 0;
   }
@@ -87,17 +88,30 @@ const NavLogoSubHeading = styled.span`
   font-weight: 500;
   color: #000000;
 `;
+
+const Quantity = styled.div`
+  border-radius: 50px;
+  color: #212121;
+  background-color: #ffcc00;
+  width: auto;
+  display: inline-block;
+  padding: 0 0.4rem;
+  margin: 0.3rem;
+`;
+
 const NavBarList = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 0.5rem;
+  margin: 0;
   padding: 0;
   font-weight: 500;
+  color: #212121;
 
   li {
     text-align: center;
+    margin: 0 0.7rem;
   }
 
   @media (min-width: 425px) {
@@ -162,27 +176,32 @@ const Nav = () => {
         </FormStyled>
         <NavBarList aria-label="Menu principal">
           <li>
-            <Link
-              to="/categoria/Q2F0ZWdvcnk6Nw=="
-              className="NavBar-primary-link"
-            >
-              Productos
+            <Link to="/categoria/Q2F0ZWdvcnk6Nw==">Productos</Link>
+          </li>
+
+          <li>
+            <Link to="/contacto">Contacto</Link>
+          </li>
+          <li style={{ minWidth: "210px" }}>
+            <FontAwesomeIcon
+              style={{ marginRight: "0.5rem" }}
+              size="lg"
+              color={cartCount > 0 ? "#d32f2f" : "#777777"}
+              icon={faListUl}
+            />
+            <Link to="/cotizacion">
+              Mi Cotización
+              {cartCount > 0 && <Quantity> {cartCount}</Quantity>}
             </Link>
           </li>
           <li>
-            <Link to="/certificaciones" className="NavBar-primary-link">
-              Certificaciones
-            </Link>
-          </li>
-          <li>
-            <Link to="/contacto" className="NavBar-primary-link">
-              Contacto
-            </Link>
-          </li>
-          <li>
-            <Link to="/cotizacion" className="NavBar-primary-link">
-              Mi Cotización ({cartCount})
-            </Link>
+            <FontAwesomeIcon
+              style={{ marginRight: "0.5rem" }}
+              size="lg"
+              color="#777777"
+              icon={faPhone}
+            />
+            (52) 2 216257
           </li>
         </NavBarList>
       </NavBarContent>
