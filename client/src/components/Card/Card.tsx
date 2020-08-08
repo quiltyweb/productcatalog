@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { styled, Card as FPCard, Image, Button, Paragraph } from "fannypack";
+import {
+  styled,
+  Card as FPCard,
+  Image,
+  Button,
+  Paragraph,
+  Spinner,
+} from "fannypack";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
 
@@ -26,22 +33,48 @@ const SingleImageStyled = styled(Image)`
 `;
 
 const CardCta = styled(Button)`
-  padding: 0;
-  margin: 0;
+  padding: 0 0.5rem;
+  margin: 0 0.5rem;
   border: 1px solid;
   border-radius: 0.25rem;
   text-align: center;
   width: 80%;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: #041e42;
   background-color: #ffcc00;
   border-width: 0;
+  white-space: nowrap;
 
   &:hover {
     background-color: #ffcc00;
   }
   &:active {
+    background-color: #ffcc00;
+    transform: translateY(3px);
+  }
+`;
+const CardLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.5rem;
+  margin: 0 0.5rem;
+  border: 1px solid;
+  border-radius: 0.25rem;
+  text-align: center;
+  width: 80%;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #041e42;
+  border-width: 0;
+
+  &:hover {
+    color: #041e42;
+    background-color: #ffcc00;
+  }
+  &:active {
+    color: #041e42;
     background-color: #ffcc00;
     transform: translateY(3px);
   }
@@ -115,17 +148,30 @@ const Card: React.FunctionComponent<CardProps> = ({
           alignItems: "center",
         }}
       >
-        <Link to={`/producto/${productId}`}>
-          <ImgWithFallback
-            src={linkImage}
-            alt={`ver producto: ${name}`}
-            isSinglePage={isSinglePage}
-          />
-        </Link>
+        <ImgWithFallback
+          src={linkImage}
+          alt={`ver producto: ${name}`}
+          isSinglePage={isSinglePage}
+        />
         {description && <ParagraphStyled>{description}</ParagraphStyled>}
       </FPCard.Content>
 
       <FPCard.Footer justifyContent="center">
+        {isSinglePage ? (
+          <>
+            <CardLink to={`/certificaciones`}>Certificado</CardLink>
+            <CardCta
+              onClick={() => {
+                console.log("descargar ficha tecnica");
+              }}
+              aria-label="ficha tecnica"
+            >
+              Ficha técnica
+            </CardCta>
+          </>
+        ) : (
+          <CardLink to={`/producto/${productId}`}>Ver producto</CardLink>
+        )}
         <CardCta
           onClick={() =>
             addCartItem({
