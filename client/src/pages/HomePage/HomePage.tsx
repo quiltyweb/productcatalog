@@ -19,6 +19,7 @@ import Main from "../../components/Main/Main";
 import HomePageContext from "./HomePageContext";
 import { CartItemProps } from "./HomePageContext";
 import ScrollToTop from "../ScrollToTop";
+import Loader from "../../components/Loader/Loader";
 
 const MainWrapper = styled.main`
   display: flex;
@@ -45,7 +46,7 @@ const MainSidebar = styled.aside`
 const HomePage: React.FunctionComponent = () => {
   const [cart, setCart] = useState<CartItemProps[]>([]);
   const location = useLocation();
-  const isHomePage = location.pathname === '/'
+  const isHomePage = location.pathname === "/";
   useEffect(() => {
     const stringifyCart = sessionStorage.getItem("cart");
     const parsedCart = JSON.parse(stringifyCart || "[]");
@@ -149,7 +150,7 @@ const HomePage: React.FunctionComponent = () => {
               return <div>Error!</div>;
             }
             if (!props) {
-              return <div>Loading...</div>;
+              return <Loader />;
             }
 
             return (
@@ -170,7 +171,7 @@ const HomePage: React.FunctionComponent = () => {
                     <Nav />
                   </header>
                   <MainWrapper>
-                    <MainContent column flexBasis={isHomePage ? '100%' : '80%'}>
+                    <MainContent column flexBasis={isHomePage ? "100%" : "80%"}>
                       <Switch>
                         <Route path="/contacto">
                           <ContactForm />

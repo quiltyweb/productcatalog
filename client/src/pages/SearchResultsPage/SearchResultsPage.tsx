@@ -5,6 +5,7 @@ import environment from "../../environment";
 import { useParams } from "react-router-dom";
 import ProductList from "../../components/ProductList/ProductList";
 import { Heading, Page } from "fannypack";
+import Loader from "../../components/Loader/Loader";
 
 export const SearchResultsPage = () => {
   const { searchTerm } = useParams();
@@ -30,13 +31,13 @@ export const SearchResultsPage = () => {
           return <div>Error!</div>;
         }
         if (!props) {
-          return <div>Loading...</div>;
+          return <Loader />;
         }
         return (
           <Page.Content isFluid>
             <Heading use="h1">Resultados para: "{searchTerm}"</Heading>
             <ProductList products={props.searchProducts} />
-            </Page.Content>
+          </Page.Content>
         );
       }}
     />
