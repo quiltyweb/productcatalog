@@ -37,8 +37,8 @@ const ProductItem = styled.li`
     border: none;
     border-radius: 30px;
     &:hover {
-      color: #;
-      background-color: rgba(199, 28, 0, 0.2);
+      color: #000;
+      background-color: rgba(255, 138, 0, 0.5);
       transition: background-color 0.2s;
     }
   }
@@ -52,7 +52,7 @@ const ProductsListLink = styled(Link)`
   font-weight: 500;
   white-space: nowrap;
   &:hover {
-    color: rgb(199, 28, 0);
+    color: #000;
   }
   @media (min-width: 425px) {
     font-size: 1.2rem;

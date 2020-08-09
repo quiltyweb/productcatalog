@@ -20,12 +20,14 @@ import HomePageContext from "./HomePageContext";
 import { CartItemProps } from "./HomePageContext";
 import ScrollToTop from "../ScrollToTop";
 import Loader from "../../components/Loader/Loader";
+import Banner from "../../components/Banner/Banner";
 
 const MainWrapper = styled.main`
   display: flex;
   flex-direction: column;
   background-color: ${palette("white")};
-
+  max-width: 1200px;
+  margin: 0 auto;
   @media (min-width: 760px) {
     flex-direction: row;
   }
@@ -40,7 +42,7 @@ const MainSidebar = styled.aside`
   flex-basis: 20%;
   @media (min-width: 425px) {
     margin-top: 0;
-    padding: 3rem 0;
+    padding: 4rem 0;
   }
 `;
 
@@ -48,6 +50,7 @@ const HomePage: React.FunctionComponent = () => {
   const [cart, setCart] = useState<CartItemProps[]>([]);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+
   useEffect(() => {
     const stringifyCart = sessionStorage.getItem("cart");
     const parsedCart = JSON.parse(stringifyCart || "[]");
@@ -172,6 +175,7 @@ const HomePage: React.FunctionComponent = () => {
                   <header>
                     <Nav />
                   </header>
+                  {isHomePage && <Banner />}
                   <MainWrapper>
                     {!isHomePage && (
                       <MainSidebar>

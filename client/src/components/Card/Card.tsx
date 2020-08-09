@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  styled,
-  Card as FPCard,
-  Image,
-  Button,
-  Paragraph,
-  Spinner,
-} from "fannypack";
+import { styled, Card as FPCard, Image, Button, Paragraph } from "fannypack";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
 
