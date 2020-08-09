@@ -13,16 +13,18 @@ const NavContainer = styled.nav`
   align-items: center;
   flex-direction: column;
   width: 100%;
-  min-height: 5rem;
+
   top: 0;
   right: 0;
   left: 0;
-  margin: 0;
-  padding: 1rem 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
   background-color: #ffffff;
   background-size: cover;
   background-repeat: repeat-x;
   background-position: center center;
+  font-size: 0.95rem;
 
   @media (min-width: 760px) {
     flex-direction: row;
@@ -52,47 +54,48 @@ const NavInput = styled(Input)`
     border-radius: 20px;
     height: 44px;
     width: 100%;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 `;
 
 const NavLogo = styled(Link)`
   display: flex;
   align-items: center;
+  justify-self: start
   flex-direction: column;
-  padding: 1rem;
+  padding: 0;
   color: black;
-  font-size: 3rem;
   font-weight: bold;
   line-height: 1;
 `;
 
 const NavLogoHeading = styled.span`
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: 800;
   background: -webkit-linear-gradient(#ffb300, #c71c00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
+  color: #c71c00; // fallback color
   @media (min-width: 768px) {
-    font-size: 3.1rem;
+    font-size: 2.9rem;
   }
+`;
+
+const NavLogoSubHeading = styled.span`
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #000000;
 `;
 
 const FormStyled = styled.form`
   display: flex;
   align-items: flex-end;
 `;
-const NavLogoSubHeading = styled.span`
-  font-size: 1.3rem;
-  font-weight: 500;
-  color: #000000;
-`;
 
 const Quantity = styled.div`
   border-radius: 50px;
+  background-color: rgb(255, 204, 0);
   color: #212121;
-  background-color: #ffcc00;
   width: auto;
   display: inline-block;
   padding: 0 0.4rem;
@@ -178,30 +181,26 @@ const Nav = () => {
           <li>
             <Link to="/categoria/Q2F0ZWdvcnk6Nw==">Productos</Link>
           </li>
-
           <li>
-            <Link to="/contacto">Contacto</Link>
-          </li>
-          <li style={{ minWidth: "210px" }}>
             <FontAwesomeIcon
-              style={{ marginRight: "0.5rem" }}
+              style={{ marginRight: "0.2rem" }}
               size="lg"
-              color={cartCount > 0 ? "#d32f2f" : "#777777"}
+              color="#777777"
+              icon={faPhone}
+            />
+            (52) 2 216257
+          </li>
+          <li>
+            <FontAwesomeIcon
+              style={{ marginRight: "0.2rem" }}
+              size="lg"
+              color="#777777"
               icon={faListUl}
             />
             <Link to="/cotizacion">
               Mi Cotización
               {cartCount > 0 && <Quantity> {cartCount}</Quantity>}
             </Link>
-          </li>
-          <li>
-            <FontAwesomeIcon
-              style={{ marginRight: "0.5rem" }}
-              size="lg"
-              color="#777777"
-              icon={faPhone}
-            />
-            (52) 2 216257
           </li>
         </NavBarList>
       </NavBarContent>

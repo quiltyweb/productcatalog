@@ -120,6 +120,14 @@ const ContactForm: React.FunctionComponent = () => {
       <Columns>
         <Column>
           <Box padding="major-3">
+            <Heading use="h1">Sómos Seguridad Industrial</Heading>
+            <Paragraph>
+              Comercial Gattoni le da la más cordial bienvenida y le invita a
+              conocer su amplia gama de productos de seguridad Industrial. Somos
+              una Empresa con más de 20 años de experiencia en el área de venta
+              de artículos de Seguridad Industrial, ubicada en Copiapó, Región
+              de Atacama.
+            </Paragraph>
             <Heading use="h2" id="heading-direccion">
               Visítenos en:
             </Heading>

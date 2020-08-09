@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading, Paragraph, Page } from "fannypack";
+import { Heading, Paragraph, Page, styled } from "fannypack";
 import CategoryGrid from "../CategoryGrid/CategoryGrid";
 
 type MainProps = {
@@ -11,23 +11,32 @@ const Main: React.FunctionComponent<MainProps> = ({
 }): JSX.Element => {
   return (
     <>
-      <Page.Content
-        // isFluid
-        breakpoint="desktop"
-        wrapperProps={{ backgroundColor: "white800", padding: "major-0" }}
+      {/* <Page.Content
+        breakpoint="widescreen"
+        wrapperProps={{
+          padding: "major-1",
+          background: "linear-gradient(90deg, #ff8a00, #f9c100)",
+          color: "#FFFFFF",
+        }}
       >
-        <Heading use="h1">Sómos Seguridad Industrial</Heading>
-        <Paragraph>
-          Comercial Gattoni le da la más cordial bienvenida y le invita a
-          conocer su amplia gama de productos de seguridad Industrial. Somos una
-          Empresa con más de 20 años de experiencia en el área de venta de
-          artículos de Seguridad Industrial, ubicada en Copiapó, Región de
-          Atacama.
+        <Paragraph
+          style={{
+            textAlign: "center",
+            fontSize: "1.4rem",
+            fontWeight: "bold",
+          }}
+        >
+          Sómos Seguridad Industrial en la Región de Atacama.
         </Paragraph>
-      </Page.Content>
+      </Page.Content> */}
 
-      <Page.Content breakpoint="desktop">
-        <Heading use="h2">Categoria de Productos</Heading>
+      <Page.Content breakpoint="widescreen">
+        <Heading
+          use="h1"
+          style={{ textAlign: "center", padding: "1rem", fontSize: "1.7rem" }}
+        >
+          Nuestros productos
+        </Heading>
         <CategoryGrid categoryGridItems={categories} />
       </Page.Content>
     </>
