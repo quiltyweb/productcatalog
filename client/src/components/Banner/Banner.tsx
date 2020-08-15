@@ -1,13 +1,15 @@
 import React from "react";
 import { Paragraph, Page } from "fannypack";
-
 const Banner: React.FunctionComponent = (): JSX.Element => {
   return (
     <Page.Content
       breakpoint="widescreen"
       wrapperProps={{
         padding: "major-1",
-        background: "linear-gradient(90deg, #ff8a00, #f9c100)",
+        backgroundImage:
+          "url('https://product-catalog.sfo2.cdn.digitaloceanspaces.com/assets/blooming-desert4.JPG')",
+        backgroundSize: "cover",
+        backgroundPosition: "0% 18%",
         color: "#FFFFFF",
       }}
     >

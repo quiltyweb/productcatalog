@@ -1,42 +1,31 @@
 import React from "react";
-import { Heading, Paragraph, Page, styled } from "fannypack";
+import { Heading, Page, styled } from "fannypack";
 import CategoryGrid from "../CategoryGrid/CategoryGrid";
 
 type MainProps = {
   categories: any;
 };
-
+const StyledHeading = styled(Heading)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 1.7rem;
+  padding-bottom: 2rem;
+  &:after {
+    content: "";
+    border-bottom: 3px solid #d13903;
+    padding-top: 10px;
+    width: 220px;
+  }
+`;
 const Main: React.FunctionComponent<MainProps> = ({
   categories,
 }): JSX.Element => {
   return (
     <>
-      {/* <Page.Content
-        breakpoint="widescreen"
-        wrapperProps={{
-          padding: "major-1",
-          background: "linear-gradient(90deg, #ff8a00, #f9c100)",
-          color: "#FFFFFF",
-        }}
-      >
-        <Paragraph
-          style={{
-            textAlign: "center",
-            fontSize: "1.4rem",
-            fontWeight: "bold",
-          }}
-        >
-          Sómos Seguridad Industrial en la Región de Atacama.
-        </Paragraph>
-      </Page.Content> */}
-
       <Page.Content breakpoint="widescreen">
-        <Heading
-          use="h1"
-          style={{ textAlign: "center", padding: "1rem", fontSize: "1.7rem" }}
-        >
-          Nuestros productos
-        </Heading>
+        <StyledHeading use="h1">Nuestros Productos</StyledHeading>
         <CategoryGrid categoryGridItems={categories} />
       </Page.Content>
     </>

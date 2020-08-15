@@ -106,7 +106,7 @@ const NavBarList = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   margin: 0;
   padding: 0;
   font-weight: 500;
@@ -114,7 +114,7 @@ const NavBarList = styled.ul`
 
   li {
     text-align: center;
-    margin: 0 0.7rem;
+    margin: 0 0.9rem;
   }
 
   @media (min-width: 425px) {
