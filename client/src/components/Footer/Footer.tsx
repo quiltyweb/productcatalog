@@ -124,7 +124,7 @@ const FooterComponent = () => {
           </Column>
         </Columns>
       </div>
-      <Columns padding="major-2" backgroundColor="#d13903" color="#FFF">
+      <Columns padding="major-2" backgroundColor="#e16204" color="#FFF">
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           &copy; Todos los derechos reservados {currDate.getFullYear()}{" "}
           Comercial Gattoni.

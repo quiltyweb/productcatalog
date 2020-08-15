@@ -14,7 +14,7 @@ const StyledHeading = styled(Heading)`
   padding-bottom: 2rem;
   &:after {
     content: "";
-    border-bottom: 3px solid #d13903;
+    border-bottom: 3px solid #e16204;
     padding-top: 10px;
     width: 220px;
   }
