@@ -20,6 +20,10 @@ const FooterContainer = styled.footer`
     &:hover {
       color: #ffcc00;
     }
+    &:focus {
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
   }
 `;
 
