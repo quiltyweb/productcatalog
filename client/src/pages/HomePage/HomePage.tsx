@@ -20,7 +20,6 @@ import HomePageContext from "./HomePageContext";
 import { CartItemProps } from "./HomePageContext";
 import ScrollToTop from "../ScrollToTop";
 import Loader from "../../components/Loader/Loader";
-import Banner from "../../components/Banner/Banner";
 
 const MainWrapper = styled.main`
   display: flex;
@@ -175,7 +174,6 @@ const HomePage: React.FunctionComponent = () => {
                   <header>
                     <Nav />
                   </header>
-                  {isHomePage && <Banner />}
                   <MainWrapper>
                     {!isHomePage && (
                       <MainSidebar>

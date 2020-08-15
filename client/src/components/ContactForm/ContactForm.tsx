@@ -13,15 +13,11 @@ import {
   styled,
   Columns,
   Column,
-  Paragraph,
   Page,
 } from "fannypack";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
-const ListItem = styled.li`
-  list-style: circle;
-`;
 const SendQuoteLink = styled(Link)`
   display: block;
   text-align: right;
@@ -118,60 +114,6 @@ const ContactForm: React.FunctionComponent = () => {
     <Page.Content isFluid breakpoint="desktop">
       <Heading>Ingrese su consulta</Heading>
       <Columns>
-        <Column>
-          <Box padding="major-3">
-            <Heading use="h1">Sómos Seguridad Industrial</Heading>
-            <Paragraph>
-              Comercial Gattoni le da la más cordial bienvenida y le invita a
-              conocer su amplia gama de productos de seguridad Industrial. Somos
-              una Empresa con más de 20 años de experiencia en el área de venta
-              de artículos de Seguridad Industrial, ubicada en Copiapó, Región
-              de Atacama.
-            </Paragraph>
-            <Heading use="h2" id="heading-direccion">
-              Visítenos en:
-            </Heading>
-            <Paragraph>
-              Rodriguez # 757 Local A Copiapó, Chile.{" "}
-              <a
-                href="https://goo.gl/maps/T8kEzuyJijXt6iy66"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                (Ver mapa)
-              </a>
-            </Paragraph>
-            <Heading use="h2" id="heading-telefono">
-              Telefono:
-            </Heading>
-            <ul>
-              <ListItem>Fono Fax: (52) 2 218056</ListItem>
-              <ListItem>Fono: (52) 2 216257</ListItem>
-            </ul>
-            <Heading use="h2" id="heading-telefono">
-              Correo ventas:
-            </Heading>
-            <ul>
-              <ListItem>
-                <img
-                  style={{ verticalAlign: "middle" }}
-                  src="https://product-catalog.sfo2.cdn.digitaloceanspaces.com/assets/correo-gattoni-punto-cl.jpg"
-                  width="175"
-                  height="15"
-                  alt="comercialgattoni arroba gattoni punto cl"
-                />
-              </ListItem>
-            </ul>
-            <Heading use="h2" id="heading-horarios">
-              Horarios:
-            </Heading>
-            <ul>
-              <ListItem>
-                Lunes a Viernes de 9:30 a 13:30 y 15:30 a 18:30
-              </ListItem>
-            </ul>
-          </Box>
-        </Column>
         <Column spread={8}>
           <Box padding="major-3">
             <form onSubmit={formik.handleSubmit}>
