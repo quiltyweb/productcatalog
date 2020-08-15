@@ -33,7 +33,7 @@ const CardCta = styled(Button)`
   text-align: center;
   width: 80%;
   font-size: 0.88rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #041e42;
   background-color: #ffcc00;
   border-width: 0;
@@ -58,7 +58,7 @@ const CardLink = styled(Link)`
   text-align: center;
   width: 80%;
   font-size: 0.88rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #041e42;
   border-width: 0;
 
@@ -128,7 +128,13 @@ const Card: React.FunctionComponent<CardProps> = ({
   return (
     <CardItem a11yDescriptionId="description" a11yTitleId="title">
       <FPCard.Header>
-        <FPCard.Title id="title" use="h3">
+        <FPCard.Title
+          id="title"
+          use="h3"
+          fontSize="1.1rem"
+          fontWeight="500"
+          textTransform="capitalize"
+        >
           {name}
         </FPCard.Title>
       </FPCard.Header>
@@ -163,7 +169,7 @@ const Card: React.FunctionComponent<CardProps> = ({
             </CardCta>
           </>
         ) : (
-          <CardLink to={`/producto/${productId}`}>Ver producto</CardLink>
+          <CardLink to={`/producto/${productId}`}>ver producto</CardLink>
         )}
         <CardCta
           onClick={() =>

@@ -36,7 +36,7 @@ export const ProductsPage = () => {
 
         return (
           <Page.Content isFluid>
-            <Heading use="h1">Categoría: {props.fetchCategory.name}</Heading>
+            <Heading use="h1">{props.fetchCategory.name}</Heading>
             <ProductList products={props.fetchCategory.products} />
           </Page.Content>
         );
