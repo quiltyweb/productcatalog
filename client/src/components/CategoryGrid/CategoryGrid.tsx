@@ -11,7 +11,7 @@ const GridList = styled.ul`
   @supports (display: grid) {
     display: grid;
     grid-gap: 0.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 `;
 
