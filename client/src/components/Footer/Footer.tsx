@@ -55,7 +55,7 @@ const FooterComponent = () => {
   return (
     <FooterContainer>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        <Columns padding="major-4">
+        <Columns padding="major-6">
           <Column spread={5}>
             <Heading use="h3" fontSize="1.3rem">
               Somos seguridad industrial en Atacama.

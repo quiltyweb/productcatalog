@@ -188,7 +188,7 @@ const Nav = () => {
               color="#777777"
               icon={faPhone}
             />
-            (52) 2 216257
+            <a href="tel:52-2-218056">(52) 2 218056</a>
           </li>
           <li>
             <FontAwesomeIcon
