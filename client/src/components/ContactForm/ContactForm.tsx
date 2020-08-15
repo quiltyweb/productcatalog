@@ -17,6 +17,7 @@ import {
 } from "fannypack";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
+import { ReCaptcha } from "../ReCaptcha/ReCaptcha";
 
 const SendQuoteLink = styled(Link)`
   display: block;
@@ -65,8 +66,9 @@ const ContactForm: React.FunctionComponent = () => {
       email: "",
       mensaje: "",
       telefono: "",
+      recaptcha: "",
     },
-    validate: ({ nombre, empresa, email, mensaje }) => {
+    validate: ({ nombre, empresa, email, mensaje, recaptcha }) => {
       const errors: any = {};
       if (!nombre) {
         errors["nombre"] = "Nombre es requerido";
@@ -79,6 +81,9 @@ const ContactForm: React.FunctionComponent = () => {
       }
       if (!mensaje) {
         errors["mensaje"] = "Mensaje es requerido";
+      }
+      if (!recaptcha) {
+        errors["recaptcha"] = "Debe hacer click en el validador antispam!";
       }
 
       return errors;
@@ -182,9 +187,24 @@ const ContactForm: React.FunctionComponent = () => {
                 validationText={formik.errors.mensaje}
                 state={formik.errors.mensaje ? "danger" : ""}
               />
+              <div>
+                Click boton para verificar antispam:
+                <ReCaptcha
+                  onVerifyCaptcha={(response) => {
+                    formik.setFieldValue("recaptcha", response);
+                  }}
+                />
+                {formik.errors.recaptcha && formik.touched.recaptcha && (
+                  <Alert display="inline-block" hasTint type={"danger"}>
+                    {formik.errors.recaptcha}
+                  </Alert>
+                )}
+              </div>
+
               <Button margin="major-2" padding="major-1" type="submit">
                 Enviar
               </Button>
+
               {formik.isSubmitting && !formik.status && (
                 <Alert display="inline-block" hasTint type="warning">
                   <Spinner size="small" /> Enviando...

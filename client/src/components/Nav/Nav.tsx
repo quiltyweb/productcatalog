@@ -13,18 +13,17 @@ const NavContainer = styled.nav`
   align-items: center;
   flex-direction: column;
   width: 100%;
-
   top: 0;
   right: 0;
   left: 0;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 0;
+  padding: 0.7rem 0;
   background-color: #ffffff;
   background-size: cover;
   background-repeat: repeat-x;
   background-position: center center;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 
   @media (min-width: 760px) {
     flex-direction: row;
@@ -77,12 +76,12 @@ const NavLogoHeading = styled.span`
   -webkit-text-fill-color: transparent;
   color: #c71c00; // fallback color
   @media (min-width: 768px) {
-    font-size: 2.9rem;
+    font-size: 2.2rem;
   }
 `;
 
 const NavLogoSubHeading = styled.span`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
   color: #000000;
 `;
