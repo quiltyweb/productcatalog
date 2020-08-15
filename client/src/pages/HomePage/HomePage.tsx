@@ -21,11 +21,22 @@ import { CartItemProps } from "./HomePageContext";
 import ScrollToTop from "../ScrollToTop";
 import Loader from "../../components/Loader/Loader";
 
+const Header = styled.header`
+  position: fixed;
+  top: 0;
+  box-shadow: 0 0.6px 3px 0 rgba(0, 0, 0, 0.2);
+  opacity: 1;
+  width: 100%;
+  background-color: #fff;
+  z-index: 2;
+`;
+
 const MainWrapper = styled.main`
   display: flex;
   flex-direction: column;
   background-color: ${palette("white")};
   max-width: 1200px;
+  padding-top: 75px;
   margin: 0 auto;
   @media (min-width: 760px) {
     flex-direction: row;
@@ -171,9 +182,9 @@ const HomePage: React.FunctionComponent = () => {
                 }}
               >
                 <>
-                  <header>
+                  <Header>
                     <Nav />
-                  </header>
+                  </Header>
                   <MainWrapper>
                     {!isHomePage && (
                       <MainSidebar>
