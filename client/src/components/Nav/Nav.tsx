@@ -181,13 +181,7 @@ const Nav = () => {
             <Link to="/categoria/Q2F0ZWdvcnk6Nw==">Productos</Link>
           </li>
           <li>
-            <FontAwesomeIcon
-              style={{ marginRight: "0.2rem" }}
-              size="lg"
-              color="#777777"
-              icon={faPhone}
-            />
-            <a href="tel:52-2-218056">(52) 2 218056</a>
+            <Link to="/contacto">Contacto</Link>
           </li>
           <li>
             <FontAwesomeIcon

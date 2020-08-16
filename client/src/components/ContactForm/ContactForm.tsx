@@ -2,6 +2,8 @@ import React from "react";
 import { graphql } from "babel-plugin-relay/macro";
 import { fetchQuery } from "react-relay";
 import environment from "../../environment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import {
   InputField,
   Button,
@@ -14,6 +16,7 @@ import {
   Columns,
   Column,
   Page,
+  Paragraph,
 } from "fannypack";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
@@ -118,9 +121,26 @@ const ContactForm: React.FunctionComponent = () => {
   return (
     <Page.Content isFluid breakpoint="desktop">
       <Heading>Ingrese su consulta</Heading>
+      <Paragraph>
+        También puede contactarnos vía nuestro fono ventas llamando al:{" "}
+        <FontAwesomeIcon
+          style={{ margin: "0 0.5rem" }}
+          size="lg"
+          color="#777777"
+          icon={faPhone}
+        />
+        <a href="tel:52-2-218056">(52) 2 218056</a>
+      </Paragraph>
+      <Paragraph>
+        Campos marcados con{" "}
+        <span style={{ color: "#da291c", fontWeight: "bolder" }}>
+          asterisco (*)
+        </span>{" "}
+        son obligatorios.
+      </Paragraph>
       <Columns>
         <Column spread={8}>
-          <Box padding="major-3">
+          <Box>
             <form onSubmit={formik.handleSubmit}>
               <InputField
                 padding="major-2"
@@ -188,7 +208,10 @@ const ContactForm: React.FunctionComponent = () => {
                 state={formik.errors.mensaje ? "danger" : ""}
               />
               <div>
-                Click boton para verificar antispam:
+                Click en el botón para verificar antispam:
+                <span style={{ color: "#da291c", fontWeight: "bolder" }}>
+                  *
+                </span>
                 <ReCaptcha
                   onVerifyCaptcha={(response) => {
                     formik.setFieldValue("recaptcha", response);
