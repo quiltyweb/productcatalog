@@ -6,7 +6,7 @@ import { Input, Button } from "fannypack";
 import hillsSVg from "./hills.svg";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faListUl, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faListUl } from "@fortawesome/free-solid-svg-icons";
 
 const NavContainer = styled.nav`
   display: flex;
