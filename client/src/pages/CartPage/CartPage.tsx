@@ -27,29 +27,32 @@ export const CartPage = () => {
 
   if (!cart.length) {
     return (
-      <Page.Content
-      isFluid
-      breakpoint="desktop"
-    >
-          <Heading>Mi Cotización:</Heading>
+      <Page.Content isFluid breakpoint="desktop">
+        <Heading>Mi Cotización:</Heading>
         <Paragraph>No hay Productos en la Cotización.</Paragraph>
         <Paragraph>
-          Agregue articulos a su cotización navegando a través del menú de
-          categorias
+          <Link
+            style={{ textDecoration: "underline" }}
+            to="/categoria/Q2F0ZWdvcnk6Nw=="
+          >
+            Click aqui para empezar a agregar productos a su cotización.
+          </Link>
         </Paragraph>
       </Page.Content>
     );
   }
 
   return (
-    <Page.Content
-    isFluid
-    breakpoint="desktop"
-  >
-
+    <Page.Content isFluid breakpoint="desktop">
+      <Heading>Mi Cotización</Heading>
+      {cart.length > 5 && (
+        <SendQuoteLink to="/enviar-cotizacion">
+          Siguiente paso: Ingrese sus datos
+        </SendQuoteLink>
+      )}
       <CartList />
       <SendQuoteLink to="/enviar-cotizacion">
-        Listo, enviar Cotización!
+        Siguiente paso: Ingrese sus datos
       </SendQuoteLink>
     </Page.Content>
   );

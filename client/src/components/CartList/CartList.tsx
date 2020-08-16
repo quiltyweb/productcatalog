@@ -24,7 +24,6 @@ const CartList: React.FunctionComponent<CardProps> = ({
 
   return (
     <Box>
-      {isEditable && <Heading>Mi Cotización:</Heading>}
       <Table hasBorder isResponsive>
         <Table.Head>
           <Table.Row>
