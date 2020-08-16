@@ -31,6 +31,8 @@ const CaptchaButton: React.FunctionComponent<IGoogleRecaptchaProps> = ({
       margin="major-2"
       padding="major-1"
       type="button"
+      palette={token ? "success" : "danger"}
+      kind="outlined"
       onClick={clickHandler}
     >
       {token && (

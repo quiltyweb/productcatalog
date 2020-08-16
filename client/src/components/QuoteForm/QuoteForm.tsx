@@ -2,6 +2,7 @@ import React from "react";
 import { graphql } from "babel-plugin-relay/macro";
 import { fetchQuery } from "react-relay";
 import environment from "../../environment";
+import { ReCaptcha } from "../ReCaptcha/ReCaptcha";
 import {
   InputField,
   Button,
@@ -55,39 +56,21 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
   const formik = useFormik({
     initialValues: {
       nombreCompleto: "",
-      empresa: "",
       email: "",
-      mensaje: "",
       telefono: "",
-      ciudad: "",
-      codigoArea: "",
+      mensaje: "",
+      recaptcha: "",
     },
-    validate: ({
-      nombreCompleto,
-      empresa,
-      email,
-      ciudad,
-      codigoArea,
-      telefono,
-    }) => {
+    validate: ({ nombreCompleto, email, recaptcha }) => {
       const errors: any = {};
       if (!nombreCompleto) {
-        errors["nombreCompleto"] = "Nombre o Razon social es requerido";
-      }
-      if (!empresa) {
-        errors["empresa"] = "Empresa es requerido";
+        errors["nombreCompleto"] = "Nombre o empresa es requerido";
       }
       if (!email) {
         errors["email"] = "Email es requerido";
       }
-      if (!ciudad) {
-        errors["ciudad"] = "Ciudad es requerido";
-      }
-      if (!codigoArea) {
-        errors["codigoArea"] = "codigo de Area es requerido";
-      }
-      if (!telefono) {
-        errors["telefono"] = "Telefono es requerido";
+      if (!recaptcha) {
+        errors["recaptcha"] = "Debe hacer click en el validador antispam!";
       }
 
       return errors;
@@ -101,12 +84,10 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
       const inputArgs = {
         personalDetails: {
           personalIdNumber: values.nombreCompleto,
-          emailAddress: values.email,
-          message: values.mensaje,
           name: values.nombreCompleto,
-          companyName: values.empresa,
+          emailAddress: values.email,
           phoneNumber: values.telefono,
-          city: values.ciudad,
+          message: values.mensaje,
         },
         productsToQuote: newCartItems,
       };
@@ -127,7 +108,6 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
             message:
               "Su Cotización ha sido enviada con exito a Comercial Gattoni. Responderemos su pedido a la brevedad, Gracias.",
           });
-          // TODO: clean react context or session storage after sending quote....
         }
       );
     },
@@ -136,42 +116,31 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
   return (
     <Page.Content isFluid breakpoint="desktop">
       <Paragraph>
-        Si está de acuerdo con el pedido, complete el formulario de cotización:
+        Campos marcados con{" "}
+        <span style={{ color: "#da291c", fontWeight: "bolder" }}>
+          asterisco (*)
+        </span>{" "}
+        son obligatorios.
       </Paragraph>
       <form onSubmit={formik.handleSubmit}>
         <InputField
           padding="major-2"
           id="nombreCompleto"
           name="nombreCompleto"
-          isRequired
           type="text"
-          label="Nombre Completo"
+          label="Nombre o Empresa"
           placeholder="ingrese su nombre completo"
           value={formik.values.nombreCompleto}
           onChange={formik.handleChange}
           validationText={formik.errors.nombreCompleto}
           state={formik.errors.nombreCompleto ? "danger" : ""}
           size="default"
-        />
-        <InputField
-          padding="major-2"
-          id="empresa"
-          name="empresa"
           isRequired
-          type="text"
-          label="Empresa"
-          placeholder="Empresa"
-          value={formik.values.empresa}
-          onChange={formik.handleChange}
-          validationText={formik.errors.empresa}
-          state={formik.errors.empresa ? "danger" : ""}
-          size="default"
         />
         <InputField
           padding="major-2"
           id="email"
           name="email"
-          isRequired
           type="email"
           label="E-mail"
           placeholder="example@email.com"
@@ -180,11 +149,11 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           validationText={formik.errors.email}
           state={formik.errors.email ? "danger" : ""}
           size="default"
+          isRequired
         />
         <InputField
           padding="major-2"
           id="telefono"
-          isRequired
           name="telefono"
           type="text"
           label="Telefono"
@@ -193,34 +162,6 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           onChange={formik.handleChange}
           validationText={formik.errors.telefono}
           state={formik.errors.telefono ? "danger" : ""}
-          size="default"
-        />
-        <InputField
-          padding="major-2"
-          id="ciudad"
-          name="ciudad"
-          type="text"
-          isRequired
-          label="Ciudad"
-          placeholder="ingrese su ciudad"
-          value={formik.values.ciudad}
-          onChange={formik.handleChange}
-          validationText={formik.errors.ciudad}
-          state={formik.errors.ciudad ? "danger" : ""}
-          size="medium"
-        />
-        <InputField
-          padding="major-2"
-          id="codigoArea"
-          name="codigoArea"
-          isRequired
-          width="30%"
-          type="text"
-          label="codigo de Area"
-          value={formik.values.codigoArea}
-          onChange={formik.handleChange}
-          validationText={formik.errors.codigoArea}
-          state={formik.errors.codigoArea ? "danger" : ""}
           size="default"
         />
         <TextareaField
@@ -232,6 +173,20 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           validationText={formik.errors.mensaje}
           state={formik.errors.mensaje ? "danger" : ""}
         />
+        <div>
+          Click en el botón para verificar antispam:
+          <span style={{ color: "#da291c", fontWeight: "bolder" }}>*</span>
+          <ReCaptcha
+            onVerifyCaptcha={(response) => {
+              formik.setFieldValue("recaptcha", response);
+            }}
+          />
+          {formik.errors.recaptcha && formik.touched.recaptcha && (
+            <Alert display="inline-block" hasTint type={"danger"}>
+              {formik.errors.recaptcha}
+            </Alert>
+          )}
+        </div>
         <Button
           alignSelf="flex-end"
           margin="major-2"
@@ -239,7 +194,7 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           type="submit"
           disabled={formik.isSubmitting}
         >
-          Enviar
+          Enviar Cotización
         </Button>
         {formik.isSubmitting && !formik.status && (
           <Alert display="inline-block" hasTint type="warning">

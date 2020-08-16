@@ -7,7 +7,7 @@ import {
   Heading,
   Paragraph,
   Box,
-  Page
+  Page,
 } from "fannypack";
 import QuoteForm from "../../components/QuoteForm/QuoteForm";
 import { useHomePageContext } from "../HomePage/HomePageContext";
@@ -26,11 +26,8 @@ export const QuotePage = () => {
   const { cart } = useHomePageContext();
   if (!cart.length) {
     return (
-      <Page.Content
-      isFluid
-      breakpoint="desktop"
-    >
-          <Heading>Mi Cotización:</Heading>
+      <Page.Content isFluid breakpoint="desktop">
+        <Heading>Mi Cotización:</Heading>
         <Paragraph>No hay Productos en la Cotización.</Paragraph>
         <Paragraph>
           Agregue articulos a su cotización navegando a través del menú de
@@ -41,28 +38,15 @@ export const QuotePage = () => {
   }
 
   return (
-    <Page.Content
-    isFluid
-    breakpoint="desktop"
-  >
-      <Heading>Ingrese datos de su cotización:</Heading>
-      <Columns padding="major-2">
-        <Column
-          spread={6}
-          spreadDesktop={12}
-          spreadTablet={12}
-          spreadMobile={12}
-        >
+    <Page.Content isFluid breakpoint="desktop">
+      <Heading>Ingrese datos de su cotización</Heading>
+      <Columns>
+        <Column>
           <QuoteSummaryBox>
             <CartList isEditable={false} />
           </QuoteSummaryBox>
         </Column>
-        <Column
-          spread={6}
-          spreadDesktop={12}
-          spreadTablet={12}
-          spreadMobile={12}
-        >
+        <Column>
           <FormBox>
             <QuoteForm cartItems={cart} />
           </FormBox>

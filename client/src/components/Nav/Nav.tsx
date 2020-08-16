@@ -6,7 +6,7 @@ import { Input, Button } from "fannypack";
 import hillsSVg from "./hills.svg";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faListUl, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faListUl } from "@fortawesome/free-solid-svg-icons";
 
 const NavContainer = styled.nav`
   display: flex;
@@ -181,13 +181,7 @@ const Nav = () => {
             <Link to="/categoria/Q2F0ZWdvcnk6Nw==">Productos</Link>
           </li>
           <li>
-            <FontAwesomeIcon
-              style={{ marginRight: "0.2rem" }}
-              size="lg"
-              color="#777777"
-              icon={faPhone}
-            />
-            <a href="tel:52-2-218056">(52) 2 218056</a>
+            <Link to="/contacto">Contacto</Link>
           </li>
           <li>
             <FontAwesomeIcon

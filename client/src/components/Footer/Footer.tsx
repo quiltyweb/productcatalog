@@ -74,14 +74,14 @@ const FooterComponent = () => {
               Contáctenos
             </Heading>
             <Box>
+              <Paragraph>Dirección: Rodriguez 757-A, Copiapó, Chile.</Paragraph>
               <Paragraph>
-                Rodriguez 757-A, Copiapó, Chile{" "}
                 <a
                   href="https://goo.gl/maps/T8kEzuyJijXt6iy66"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  ver mapa
+                  Ver dirección en el mapa
                 </a>
               </Paragraph>
               <Paragraph>
@@ -101,7 +101,7 @@ const FooterComponent = () => {
                 />
               </Paragraph>
             </Box>
-            <Heading marginTop="1rem" fontSize="1.3rem" use="h3">
+            <Heading marginTop="3rem" fontSize="1.3rem" use="h3">
               Horario de atención
             </Heading>
             <Paragraph>
@@ -115,13 +115,13 @@ const FooterComponent = () => {
                   <Link to="/categoria/Q2F0ZWdvcnk6Nw==">Productos</Link>
                 </li>
                 <li>
+                  <Link to="/contacto">Contacto</Link>
+                </li>
+                <li>
                   <Link to="/cotizacion">Mi Cotización</Link>
                 </li>
                 <li>
                   <Link to="/certificaciones">Certificaciones</Link>
-                </li>
-                <li>
-                  <Link to="/contacto">Contacto</Link>
                 </li>
               </FooterList>
             </FooterLinks>

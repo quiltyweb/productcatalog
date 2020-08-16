@@ -36,7 +36,7 @@ const MainWrapper = styled.main`
   flex-direction: column;
   background-color: ${palette("white")};
   max-width: 1200px;
-  padding-top: 75px;
+  padding-top: 95px;
   margin: 0 auto;
   @media (min-width: 760px) {
     flex-direction: row;
@@ -60,6 +60,7 @@ const HomePage: React.FunctionComponent = () => {
   const [cart, setCart] = useState<CartItemProps[]>([]);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  const isQuotePage = location.pathname === "/enviar-cotizacion";
 
   useEffect(() => {
     const stringifyCart = sessionStorage.getItem("cart");
@@ -186,12 +187,12 @@ const HomePage: React.FunctionComponent = () => {
                     <Nav />
                   </Header>
                   <MainWrapper>
-                    {!isHomePage && (
+                    {!isHomePage && !isQuotePage && (
                       <MainSidebar>
                         <CategoryList categories={props.fetchCategories} />
                       </MainSidebar>
                     )}
-                    <MainContent column flexBasis={isHomePage ? "100%" : "80%"}>
+                    <MainContent column flexBasis="100%">
                       <Switch>
                         <Route path="/contacto">
                           <ContactForm />
