@@ -60,12 +60,15 @@ const NavInput = styled(Input)`
 const NavLogo = styled(Link)`
   display: flex;
   align-items: center;
-  justify-self: start
+  justify-self: center
   flex-direction: column;
   padding: 0;
   color: black;
   font-weight: bold;
   line-height: 1;
+  @media (min-width: 768px) {
+    justify-self: start
+  }
 `;
 
 const NavLogoHeading = styled.span`
