@@ -115,6 +115,13 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
 
   return (
     <Page.Content isFluid breakpoint="desktop">
+      <Paragraph>
+        Campos marcados con{" "}
+        <span style={{ color: "#da291c", fontWeight: "bolder" }}>
+          asterisco (*)
+        </span>{" "}
+        son obligatorios.
+      </Paragraph>
       <form onSubmit={formik.handleSubmit}>
         <InputField
           padding="major-2"
@@ -167,7 +174,8 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           state={formik.errors.mensaje ? "danger" : ""}
         />
         <div>
-          Click boton para verificar antispam:
+          Click en el botón para verificar antispam:
+          <span style={{ color: "#da291c", fontWeight: "bolder" }}>*</span>
           <ReCaptcha
             onVerifyCaptcha={(response) => {
               formik.setFieldValue("recaptcha", response);

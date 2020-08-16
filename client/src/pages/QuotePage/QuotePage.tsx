@@ -39,7 +39,7 @@ export const QuotePage = () => {
 
   return (
     <Page.Content isFluid breakpoint="desktop">
-      <Heading>Ingrese datos de su cotización:</Heading>
+      <Heading>Ingrese datos de su cotización</Heading>
       <Columns>
         <Column>
           <QuoteSummaryBox>
