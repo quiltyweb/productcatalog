@@ -186,7 +186,7 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           type="submit"
           disabled={formik.isSubmitting}
         >
-          Enviar
+          Enviar Cotización
         </Button>
         {formik.isSubmitting && !formik.status && (
           <Alert display="inline-block" hasTint type="warning">
