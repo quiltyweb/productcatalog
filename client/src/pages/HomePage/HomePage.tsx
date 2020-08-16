@@ -36,7 +36,7 @@ const MainWrapper = styled.main`
   flex-direction: column;
   background-color: ${palette("white")};
   max-width: 1200px;
-  padding-top: 75px;
+  padding-top: 95px;
   margin: 0 auto;
   @media (min-width: 760px) {
     flex-direction: row;
