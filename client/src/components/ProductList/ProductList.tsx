@@ -29,6 +29,7 @@ const ProductList: React.FunctionComponent<ProductListProps> = ({
                   productId={product.node.id}
                   name={product.node.name}
                   linkImage={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/${product.node.imagePath}`}
+                  attachmentPath={product.node.attachmentPath}
                 />
               </Column>
             );
@@ -51,6 +52,7 @@ export default createFragmentContainer(ProductList, {
           id
           name
           imagePath
+          attachmentPath
         }
       }
     }
