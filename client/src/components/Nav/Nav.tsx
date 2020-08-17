@@ -106,9 +106,8 @@ const Quantity = styled.div`
 
 const NavBarList = styled.ul`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   margin: 0;
   padding: 0;
   font-weight: 500;
@@ -119,8 +118,9 @@ const NavBarList = styled.ul`
     margin: 0 0.9rem;
   }
 
-  @media (min-width: 425px) {
+  @media (min-width: 375px) {
     flex-direction: row;
+    justify-content: flex-end;
   }
 `;
 

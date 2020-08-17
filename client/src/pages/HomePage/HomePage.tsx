@@ -22,24 +22,28 @@ import ScrollToTop from "../ScrollToTop";
 import Loader from "../../components/Loader/Loader";
 
 const Header = styled.header`
-  position: fixed;
-  top: 0;
-  box-shadow: 0 0.6px 3px 0 rgba(0, 0, 0, 0.2);
-  opacity: 1;
-  width: 100%;
-  background-color: #fff;
-  z-index: 2;
+  @media (min-width: 776px) {
+    position: fixed;
+    top: 0;
+    box-shadow: 0 0.6px 3px 0 rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    width: 100%;
+    background-color: #fff;
+    z-index: 2;
+  }
 `;
 
 const MainWrapper = styled.main`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   background-color: ${palette("white")};
   max-width: 1200px;
-  padding-top: 95px;
+  padding-top: 0;
   margin: 0 auto;
   @media (min-width: 760px) {
     flex-direction: row;
+    padding-top: 95px;
+    padding-bottom: 95px;
   }
 `;
 

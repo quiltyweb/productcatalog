@@ -47,7 +47,33 @@ const CardCta = styled(Button)`
     transform: translateY(3px);
   }
 `;
+
 const CardLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.5rem;
+  margin: 0 0.5rem;
+  border: 1px solid;
+  border-radius: 0.25rem;
+  text-align: center;
+  width: 80%;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #041e42;
+  border-width: 0;
+
+  &:hover {
+    color: #041e42;
+    background-color: #ffcc00;
+  }
+  &:active {
+    color: #041e42;
+    background-color: #ffcc00;
+    transform: translateY(3px);
+  }
+`;
+const CardAnchor = styled.a`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,6 +151,9 @@ const Card: React.FunctionComponent<CardProps> = ({
   isSinglePage,
 }): JSX.Element => {
   const { addCartItem } = useHomePageContext();
+  console.log("attachmentPath >>>>>", attachmentPath);
+  console.log("isSinglePage >>>", isSinglePage);
+
   return (
     <CardItem a11yDescriptionId="description" a11yTitleId="title">
       <FPCard.Header>
@@ -159,14 +188,15 @@ const Card: React.FunctionComponent<CardProps> = ({
         {isSinglePage ? (
           <>
             <CardLink to={`/certificaciones`}>Certificado</CardLink>
-            <CardCta
-              onClick={() => {
-                console.log("descargar ficha tecnica");
-              }}
-              aria-label="ficha tecnica"
-            >
-              Ficha técnica
-            </CardCta>
+            {attachmentPath && (
+              <CardAnchor
+                href={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/adjuntos/${attachmentPath}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Descargar ficha técnica
+              </CardAnchor>
+            )}
           </>
         ) : (
           <CardLink to={`/producto/${productId}`}>ver producto</CardLink>
