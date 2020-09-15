@@ -44,7 +44,7 @@ const ProductsListLink = styled(Link)`
   position: relative;
   padding: 1rem;
   display: block;
-  color: black;
+  color: #000;
   font-size: 1rem;
   font-weight: 500;
   white-space: nowrap;

@@ -1,13 +1,13 @@
 import React from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
-import environment from "../../environment";
+// import environment from "../../environment";
 import { useParams } from "react-router-dom";
-import ProductList from "../../components/ProductList/ProductList";
+// import ProductList from "../../components/ProductList/ProductList";
 import { Heading, Page } from "fannypack";
 import Loader from "../../components/Loader/Loader";
 
-export const ProductsPage = () => {
+export const ProductsPage = (environment: any) => {
   const { categoryId } = useParams();
 
   return (
@@ -37,7 +37,7 @@ export const ProductsPage = () => {
         return (
           <Page.Content isFluid>
             <Heading use="h1">{props.fetchCategory.name}</Heading>
-            <ProductList products={props.fetchCategory.products} />
+            {/* <ProductList products={props.fetchCategory.products} /> */}
           </Page.Content>
         );
       }}

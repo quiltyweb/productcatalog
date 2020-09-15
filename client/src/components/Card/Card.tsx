@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { styled, Card as FPCard, Image, Button, Paragraph } from "fannypack";
+import { styled, Card as FPCard, Image, Paragraph } from "fannypack";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
 
@@ -25,7 +25,7 @@ const SingleImageStyled = styled(Image)`
   margin-right: 0.5rem;
 `;
 
-const CardCta = styled(Button)`
+const CardCta = styled.button`
   padding: 0 0.5rem;
   margin: 0 0.5rem;
   border: 1px solid;
@@ -106,8 +106,8 @@ const ParagraphStyled = styled(Paragraph)`
 interface CardProps {
   productId: string;
   name: string;
-  description?: string;
   linkImage: string;
+  description?: string;
   attachmentPath?: string;
   hasPrintCTA?: boolean;
   isSinglePage?: boolean;
@@ -151,8 +151,6 @@ const Card: React.FunctionComponent<CardProps> = ({
   isSinglePage,
 }): JSX.Element => {
   const { addCartItem } = useHomePageContext();
-  console.log("attachmentPath >>>>>", attachmentPath);
-  console.log("isSinglePage >>>", isSinglePage);
 
   return (
     <CardItem a11yDescriptionId="description" a11yTitleId="title">
@@ -210,7 +208,6 @@ const Card: React.FunctionComponent<CardProps> = ({
               quantity: 1,
             })
           }
-          aria-label={`Cotizar ${name}`}
         >
           Añadir a cotización
         </CardCta>

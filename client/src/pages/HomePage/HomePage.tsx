@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
-import { ThemeProvider, styled, palette, Flex } from "fannypack";
+import { ThemeProvider, styled, Flex } from "fannypack";
 import { Switch, Route, useLocation } from "react-router-dom";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import Nav from "../../components/Nav/Nav";
@@ -36,7 +36,7 @@ const Header = styled.header`
 const MainWrapper = styled.main`
   display: flex;
   flex-direction: column-reverse;
-  background-color: ${palette("white")};
+  background-color: #fff;
   max-width: 1200px;
   padding-top: 0;
   margin: 0 auto;
@@ -211,7 +211,7 @@ const HomePage: React.FunctionComponent = () => {
                           <QuotePage />
                         </Route>
                         <Route path="/categoria/:categoryId">
-                          <ProductsPage />
+                          <ProductsPage environment={environment} />
                         </Route>
                         <Route path="/resultados/:searchTerm">
                           <SearchResultsPage />

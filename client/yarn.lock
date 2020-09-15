@@ -2051,6 +2051,14 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-relay@*":
+  version "7.0.9"
+  resolved "https://registry.yarnpkg.com/@types/react-relay/-/react-relay-7.0.9.tgz#aae453888d5383dc13d7c5b55beb6b5933939ae8"
+  integrity sha512-5wxvzTIA2XatkEvAIBkMtUBlqnhn7kia8sPMYB9YPRTWw/GA4CQ/YFavSfcv5lXc5PH0oQhdRzCMALpa+2yjKw==
+  dependencies:
+    "@types/react" "*"
+    "@types/relay-runtime" "*"
+
 "@types/react-relay@^7.0.8":
   version "7.0.8"
   resolved "https://registry.yarnpkg.com/@types/react-relay/-/react-relay-7.0.8.tgz#928e91d7c7b58844738d6a7b18aa224ab564c98c"
@@ -2088,6 +2096,15 @@
   version "8.0.11"
   resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-8.0.11.tgz#7b186ee9fd3b0fa1ee787bf66164d0154f7e8c0a"
   integrity sha512-m2j4UD1BB6nNS5QBbvjulHT+pxNV15wHCy0yG40CYbavwYfNxte63uN/elOCI0p/+2qRUc3ymtuneth0iNgNmA==
+
+"@types/relay-test-utils@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@types/relay-test-utils/-/relay-test-utils-6.0.2.tgz#d27e095ef211be964d861afa20f421693e4fcb7f"
+  integrity sha512-tAPZ9h4iyuyigbcLysVhk0S7hyCGLlyFMyHIN3Lv3ivHGEM1WSpPDBUMV5Bl1pGhQT5+0OADHNB0NCC85IMGpA==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-relay" "*"
+    "@types/relay-runtime" "*"
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
@@ -10152,6 +10169,14 @@ relay-config@^9.1.0:
   dependencies:
     cosmiconfig "^5.0.5"
 
+relay-runtime@10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-10.0.1.tgz#c83bd7e6e37234ece2a62a254e37dd199a4f74f9"
+  integrity sha512-sPYiuosq+5gQ7zXs2EKg2O8qRSsF8vmMYo6SIHEi4juBLg1HrdTEvqcaNztc2ZFmUc4vYZpTbbS4j/TZCtHuyA==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    fbjs "^1.0.0"
+
 relay-runtime@9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-9.1.0.tgz#d0534007d5c43e7b9653c6f5cc112ffac09c5020"
@@ -10159,6 +10184,15 @@ relay-runtime@9.1.0:
   dependencies:
     "@babel/runtime" "^7.0.0"
     fbjs "^1.0.0"
+
+relay-test-utils@^10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/relay-test-utils/-/relay-test-utils-10.0.1.tgz#3864c262153bcd09e21930c4d371ca16c421aeb9"
+  integrity sha512-lcXdvfk6cp/LRChodk4/LW4WyZTltnnzaKeIw+8M4Ht8/1a0R9XI22iyHNpH3jdYdmksyK5xZ1l2pkm7ipXmEA==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    fbjs "^1.0.0"
+    relay-runtime "10.0.1"
 
 remarkable@^1.x:
   version "1.7.4"

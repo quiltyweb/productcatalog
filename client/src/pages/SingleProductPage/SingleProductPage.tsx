@@ -10,7 +10,7 @@ import Loader from "../../components/Loader/Loader";
 const GoBackButton = styled(Button)`
   display: block;
   text-align: right;
-  color: black;
+  color: #000;
   font-weight: 600;
   font-size: 1.2rem;
   white-space: nowrap;
