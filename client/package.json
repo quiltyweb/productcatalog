@@ -19,7 +19,7 @@
     "@types/relay-test-utils": "^6.0.2",
     "@types/styled-components": "^5.1.1",
     "fannypack": "^4.21.36",
-    "formik": "^2.1.4",
+    "formik": "^2.1.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-google-recaptcha-v3": "^1.5.2",
