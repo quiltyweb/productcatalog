@@ -39,7 +39,7 @@ const CaptchaButton: React.FunctionComponent<IGoogleRecaptchaProps> = ({
         <FontAwesomeIcon
           style={{ marginRight: "0.2rem" }}
           size="lg"
-          color="green"
+          color="#0fe20f"
           icon={faCheck}
         />
       )}{" "}

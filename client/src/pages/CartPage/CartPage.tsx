@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const SendQuoteLink = styled(Link)`
   display: block;
   text-align: right;
-  color: black;
+  color: #000;
   font-weight: 600;
   font-size: 1.2rem;
   white-space: nowrap;

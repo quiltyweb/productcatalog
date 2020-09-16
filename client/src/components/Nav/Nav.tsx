@@ -63,7 +63,7 @@ const NavLogo = styled(Link)`
   justify-self: center
   flex-direction: column;
   padding: 0;
-  color: black;
+  color: #000;
   font-weight: bold;
   line-height: 1;
   @media (min-width: 768px) {
@@ -77,7 +77,7 @@ const NavLogoHeading = styled.span`
   background: -webkit-linear-gradient(#ffb300, #c71c00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: #c71c00; // fallback color
+  color: #c71c00;
   @media (min-width: 768px) {
     font-size: 2.2rem;
   }

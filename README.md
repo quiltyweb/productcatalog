@@ -15,9 +15,11 @@
 - `docker-compose up --build`
 
 Optional:
+
 - Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) (only necessary for deploying or dumping the prod DB)
 
 ### Database
+
 - To set up or restore your local database using the production DB, run `./scripts/set_local_db_to_prod.sh [DUMP FILENAME]`
   - The dump filename is an optional arg that will use a local `*.sql` or `*.dump` file instead of downloading a new one from Heroku.
   - **WARNING:** This will erase any data you currently have on your local DB.
@@ -28,6 +30,7 @@ Optional:
 - Open the browser to `localhost:3000`
 
 ### GraphQL Playground
+
 - Navigate to `localhost:3333/graphql`
 - To make make authorized requests to the GraphQL API, you have to add `{"Authorization": "supersecretspicysauce"}` to the HTTP Headers section in the bottom left corner of the page.
 
@@ -36,6 +39,7 @@ Optional:
 We host the app on Heroku.
 
 We deploy automatically to Heroku with every merged PR that passes CI via a GitHub integration. If you want to deploy manually do the following:
+
 - While on `main`, run `git push heroku main:master`
 
 ## Testing
@@ -48,6 +52,7 @@ We deploy automatically to Heroku with every merged PR that passes CI via a GitH
 
 - To get code editor linters and other functionality working correctly, you have to install linting/testing/type packages locally as well as on your Docker container. This mostly works, but sometimes creates weird conflicts that require a reset per below.
 - Sometimes you'll install packages, then get errors that say your new package is missing :expressionless:. The only thing that seems to fix it is to remove the `node_modules` volume and rebuild the image:
-  - `docker container rm productcatalog_app_1`
-  - `docker volume rm productcatalog_node_modules`
+  - `docker container rm <container name>`
+  - `docker volume rm <node_modules volume name>`
+  - `docker volume create <node_modules volume name>`
   - `docker-compose build --no-cache`

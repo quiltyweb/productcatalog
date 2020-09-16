@@ -1,23 +1,22 @@
 import React from "react";
+import { Router } from "react-router-dom";
+import { createMemoryHistory } from "history";
 import { render, screen } from "@testing-library/react";
 import Footer from "./Footer";
-import { AssertionError } from "assert";
 
-describe('Footer Component', () => {
-  it("should render address with semantic itemProps", () => {
-    render(<Footer />);
-    const address = screen.getByText('Rodriguez 757-A');
-    const city = screen.getByText('Copiapó,');
-    const region = screen.getByText('Región de Atacama, Chile.');
-    // work in progress
-    // const telephoneM = screen.getByRole('link', { } );
-    // const faxNumber = screen.getByText('52-2-216257');
+describe("Footer Component", () => {
+  it("should render", () => {
+    const history = createMemoryHistory();
+    render(
+      <Router history={history}>
+        <Footer />
+      </Router>
+    );
 
-    expect.assertions(3);
-    expect(address).toHaveAttribute('itemProp', 'streetAddress');
-    expect(city).toHaveAttribute('itemProp', 'addressLocality');
-    expect(region).toHaveAttribute('itemProp', 'addressRegion');
-    // expect(telephoneM).toHaveAttribute('itemProp', 'telephone');
-    // expect(faxNumber).toHaveAttribute('itemProp', 'faxNumber');
+    screen.getByText("Somos seguridad industrial en Atacama.");
+    screen.getByText("(52) 2 218056");
+    screen.getByText(
+      "Lunes a Viernes de 9:30 AM a 13:30 PM y 15:30PM a 18:30PM"
+    );
   });
-})
+});

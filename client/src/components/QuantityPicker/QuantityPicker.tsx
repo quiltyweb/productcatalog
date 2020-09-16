@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Button, Group } from "fannypack";
+import { Input, Group } from "fannypack";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 
 type QuantityPickerProps = {
@@ -19,7 +19,7 @@ const QuantityPicker: React.FunctionComponent<QuantityPickerProps> = ({
 
   return (
     <Group>
-      <Button onClick={() => decrementCartItem({ productId })}>-</Button>
+      <button onClick={() => decrementCartItem({ productId })}>-</button>
       <Input
         onChange={(e: any) =>
           updateCartItem({
@@ -27,12 +27,12 @@ const QuantityPicker: React.FunctionComponent<QuantityPickerProps> = ({
             quantity: e.target.value,
           })
         }
-        value={quantity}
+        value={String(quantity)}
         name="quantityPickerInput"
         width="3rem"
         readOnly // TOOD: readOnly for now
       />
-      <Button onClick={() => incrementCartItem({ productId })}>+</Button>
+      <button onClick={() => incrementCartItem({ productId })}>+</button>
     </Group>
   );
 };

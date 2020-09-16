@@ -2,7 +2,6 @@ import React from "react";
 import {
   Column,
   Columns,
-  palette,
   styled,
   Heading,
   Paragraph,
@@ -14,11 +13,11 @@ import { useHomePageContext } from "../HomePage/HomePageContext";
 import CartList from "../../components/CartList/CartList";
 
 const QuoteSummaryBox = styled(Box)`
-  background-color: ${palette("white")};
+  background-color: #fff;
 `;
 
 const FormBox = styled(Box)`
-  background-color: ${palette("white800")};
+  background-color: #ccc;
   border-radius: 5px;
 `;
 
