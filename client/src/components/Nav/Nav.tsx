@@ -2,7 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import { styled } from "fannypack";
 import { Link, useHistory } from "react-router-dom";
-import { Input, Button } from "fannypack";
+import { Input, Button } from "bumbag";
 import hillsSVg from "./hills.svg";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -63,7 +63,7 @@ const NavLogo = styled(Link)`
   justify-self: center
   flex-direction: column;
   padding: 0;
-  color: #000;
+  color: #000000;
   font-weight: bold;
   line-height: 1;
   @media (min-width: 768px) {
@@ -157,7 +157,7 @@ const Nav = () => {
           style={{ alignItems: "center" }}
         >
           <NavInput
-            a11yLabel="Buscador"
+            // a11yLabel="Buscador"
             id="searchTerm"
             name="searchTerm"
             type="text"

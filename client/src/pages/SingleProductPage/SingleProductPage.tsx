@@ -3,14 +3,15 @@ import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
 import { useParams, useHistory } from "react-router-dom";
-import { Columns, Column, Button, styled, Page } from "fannypack";
+import { Columns, Column, styled, Page } from "fannypack";
+import { Button } from "bumbag";
 import Card from "../../components/Card/Card";
 import Loader from "../../components/Loader/Loader";
 
 const GoBackButton = styled(Button)`
   display: block;
   text-align: right;
-  color: #000;
+  color: #000000;
   font-weight: 600;
   font-size: 1.2rem;
   white-space: nowrap;
@@ -60,7 +61,7 @@ export const SingleProductPage: React.FunctionComponent = () => {
               <Column key={props.node.id} spread={9}>
                 <GoBackButton
                   palette="primary"
-                  kind="link"
+                  variant="link"
                   onClick={() => {
                     goBack();
                   }}

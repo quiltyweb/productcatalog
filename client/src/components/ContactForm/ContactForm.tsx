@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import {
   InputField,
-  Button,
   Box,
   TextareaField,
   Heading,
@@ -18,6 +17,7 @@ import {
   Page,
   Paragraph,
 } from "fannypack";
+import { Button } from "bumbag";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import { ReCaptcha } from "../ReCaptcha/ReCaptcha";

@@ -3,7 +3,7 @@ import {
   GoogleReCaptchaProvider,
   useGoogleReCaptcha,
 } from "react-google-recaptcha-v3";
-import { Button } from "fannypack";
+import { Button } from "bumbag";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -32,7 +32,6 @@ const CaptchaButton: React.FunctionComponent<IGoogleRecaptchaProps> = ({
       padding="major-1"
       type="button"
       palette={token ? "success" : "danger"}
-      kind="outlined"
       onClick={clickHandler}
     >
       {token && (

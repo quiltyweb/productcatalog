@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
-import { ThemeProvider, styled, Flex } from "fannypack";
+import { Provider as BumbagProvider } from "bumbag";
+import { styled, Flex } from "fannypack";
 import { Switch, Route, useLocation } from "react-router-dom";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
-import theme from "../../theme";
+import { newTheme } from "../../theme";
 import ContactForm from "../../components/ContactForm/ContactForm";
 import CertificationsList from "../../components/CertificationsList/CertificationsList";
 import { ProductsPage } from "../ProductsPage/ProductsPage";
@@ -28,7 +29,7 @@ const Header = styled.header`
     box-shadow: 0 0.6px 3px 0 rgba(0, 0, 0, 0.2);
     opacity: 1;
     width: 100%;
-    background-color: #fff;
+    background-color: #ffffff;
     z-index: 2;
   }
 `;
@@ -36,7 +37,7 @@ const Header = styled.header`
 const MainWrapper = styled.main`
   display: flex;
   flex-direction: column-reverse;
-  background-color: #fff;
+  background-color: #ffffff;
   max-width: 1200px;
   padding-top: 0;
   margin: 0 auto;
@@ -152,7 +153,7 @@ const HomePage: React.FunctionComponent = () => {
 
   return (
     <ScrollToTop>
-      <ThemeProvider theme={theme}>
+      <BumbagProvider theme={newTheme}>
         <QueryRenderer
           environment={environment}
           query={graphql`
@@ -231,7 +232,7 @@ const HomePage: React.FunctionComponent = () => {
             );
           }}
         />
-      </ThemeProvider>
+      </BumbagProvider>
     </ScrollToTop>
   );
 };

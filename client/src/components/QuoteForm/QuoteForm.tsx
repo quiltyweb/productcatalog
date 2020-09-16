@@ -5,7 +5,6 @@ import environment from "../../environment";
 import { ReCaptcha } from "../ReCaptcha/ReCaptcha";
 import {
   InputField,
-  Button,
   TextareaField,
   Paragraph,
   Alert,
@@ -13,6 +12,7 @@ import {
   styled,
   Page,
 } from "fannypack";
+import { Button } from "bumbag";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
