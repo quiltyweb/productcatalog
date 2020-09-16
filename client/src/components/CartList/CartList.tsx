@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Table, styled, Image } from "fannypack";
-// import QuantityPicker from "../QuantityPicker/QuantityPicker";
+import QuantityPicker from "../QuantityPicker/QuantityPicker";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 
 const ImageStyled = styled(Image)`
@@ -35,12 +35,12 @@ const CartList: React.FunctionComponent<CardProps> = ({
         <Table.Body hasBorders>
           {cart.map((item) => {
             return (
-              <Table.Row>
+              <Table.Row key={item.productName}>
                 <Table.Cell>
                   <ImageStyled fit="cover" src={item.productImage} />
                 </Table.Cell>
                 <Table.Cell>{item.productName}</Table.Cell>
-                {/* <Table.Cell>
+                <Table.Cell>
                   {isEditable ? (
                     <QuantityPicker
                       productId={item.productId}
@@ -49,7 +49,7 @@ const CartList: React.FunctionComponent<CardProps> = ({
                   ) : (
                     <span>{item.quantity}</span>
                   )}
-                </Table.Cell> */}
+                </Table.Cell>
                 {isEditable && (
                   <Table.Cell>
                     <button

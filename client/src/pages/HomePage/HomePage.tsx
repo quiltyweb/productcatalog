@@ -10,7 +10,7 @@ import Footer from "../../components/Footer/Footer";
 import theme from "../../theme";
 import ContactForm from "../../components/ContactForm/ContactForm";
 import CertificationsList from "../../components/CertificationsList/CertificationsList";
-import ProductsPage from "../ProductsPage/ProductsPage";
+import { ProductsPage } from "../ProductsPage/ProductsPage";
 import SingleProductPage from "../SingleProductPage/SingleProductPage";
 import SearchResultsPage from "../SearchResultsPage/SearchResultsPage";
 import CartPage from "../CartPage/CartPage";
@@ -211,7 +211,7 @@ const HomePage: React.FunctionComponent = () => {
                           <QuotePage />
                         </Route>
                         <Route path="/categoria/:categoryId">
-                          <ProductsPage environment={environment} />
+                          <ProductsPage />
                         </Route>
                         <Route path="/resultados/:searchTerm">
                           <SearchResultsPage />

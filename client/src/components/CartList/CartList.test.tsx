@@ -5,8 +5,6 @@ import HomePageContext from "../../pages/HomePage/HomePageContext";
 
 describe("CartList Component", () => {
   it("should render correct headers", () => {
-    // mock const { cart, removeCartItem } = useHomePageContext();
-
     render(
       <HomePageContext.Provider
         value={{
