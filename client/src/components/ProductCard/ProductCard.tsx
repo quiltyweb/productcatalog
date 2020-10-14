@@ -4,14 +4,6 @@ import styled from "styled-components";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
 
-// const CardItem = styled(Card)`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   height: 100%;
-//   padding: 0.7rem;
-// `;
-
 const ImageStyled = styled(Image)`
   max-width: 100%;
   max-height: 160px;

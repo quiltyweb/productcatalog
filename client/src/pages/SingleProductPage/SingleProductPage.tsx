@@ -3,27 +3,9 @@ import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
 import { useParams, useHistory } from "react-router-dom";
-import { Columns, Column, styled, Page } from "fannypack";
-import { Button } from "bumbag";
+import { Button, Columns, Column, PageContent } from "bumbag";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
 import Loader from "../../components/Loader/Loader";
-
-const GoBackButton = styled(Button)`
-  display: block;
-  text-align: right;
-  color: #000000;
-  font-weight: 600;
-  font-size: 1.2rem;
-  white-space: nowrap;
-  padding: 1rem;
-  transition: color 0.2s;
-  border-radius: 4px;
-  color: #d32f2f;
-  &:hover {
-    color: #ff0000;
-    text-decoration: underline;
-  }
-`;
 
 export const SingleProductPage: React.FunctionComponent = () => {
   const { productId } = useParams();
@@ -56,18 +38,18 @@ export const SingleProductPage: React.FunctionComponent = () => {
         }
 
         return (
-          <Page.Content isFluid>
+          <PageContent breakpoint="desktop">
             <Columns style={{ justifyContent: "center" }}>
               <Column key={props.node.id} spread={9}>
-                <GoBackButton
+                <Button
                   palette="primary"
-                  variant="link"
+                  variant="outlined"
                   onClick={() => {
                     goBack();
                   }}
                 >
                   &#8592; volver a resultados
-                </GoBackButton>
+                </Button>
                 <ProductCard
                   productId={props.node.id}
                   name={props.node.name}
@@ -77,10 +59,9 @@ export const SingleProductPage: React.FunctionComponent = () => {
                   hasPrintCTA
                   isSinglePage
                 />
-                <div>dssdsd</div>
               </Column>
             </Columns>
-          </Page.Content>
+          </PageContent>
         );
       }}
     />
