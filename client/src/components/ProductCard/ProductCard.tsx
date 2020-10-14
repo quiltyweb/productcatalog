@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Image, Paragraph } from "bumbag";
+import { Card, Image, Paragraph, Button } from "bumbag";
 import styled from "styled-components";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
@@ -24,84 +24,6 @@ const SingleImageStyled = styled(Image)`
   max-width: 100%;
   max-height: 400px;
   margin-right: 0.5rem;
-`;
-
-const CardCta = styled.button`
-  padding: 0 0.5rem;
-  margin: 0 0.5rem;
-  border: 1px solid;
-  border-radius: 0.25rem;
-  text-align: center;
-  width: 80%;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: #041e42;
-  background-color: #ffcc00;
-  border-width: 0;
-  white-space: nowrap;
-
-  &:hover {
-    background-color: #ffcc00;
-  }
-  &:active {
-    background-color: #ffcc00;
-    transform: translateY(3px);
-  }
-`;
-
-const CardLink = styled(Link)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 0.5rem;
-  margin: 0 0.5rem;
-  border: 1px solid;
-  border-radius: 0.25rem;
-  text-align: center;
-  width: 80%;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: #041e42;
-  border-width: 0;
-
-  &:hover {
-    color: #041e42;
-    background-color: #ffcc00;
-  }
-  &:active {
-    color: #041e42;
-    background-color: #ffcc00;
-    transform: translateY(3px);
-  }
-`;
-const CardAnchor = styled.a`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 0.5rem;
-  margin: 0 0.5rem;
-  border: 1px solid;
-  border-radius: 0.25rem;
-  text-align: center;
-  width: 80%;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: #041e42;
-  border-width: 0;
-
-  &:hover {
-    color: #041e42;
-    background-color: #ffcc00;
-  }
-  &:active {
-    color: #041e42;
-    background-color: #ffcc00;
-    transform: translateY(3px);
-  }
-`;
-
-const ParagraphStyled = styled(Paragraph)`
-  white-space: pre-line;
 `;
 
 interface ProductCardProps {
@@ -180,27 +102,33 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
           alt={`ver producto: ${name}`}
           isSinglePage={isSinglePage}
         />
-        {description && <ParagraphStyled>{description}</ParagraphStyled>}
+        {description && (
+          <Paragraph whiteSpace="pre-line">{description}</Paragraph>
+        )}
       </Card.Content>
 
-      <Card.Footer justifyContent="center">
+      <Card.Footer
+        display="flex"
+        justifyContent="space-evenly"
+        alignItems="center"
+      >
         {isSinglePage ? (
           <>
-            <CardLink to={`/certificaciones`}>Certificado</CardLink>
+            <Link to={`/certificaciones`}>Certificado</Link>
             {attachmentPath && (
-              <CardAnchor
+              <a
                 href={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/adjuntos/${attachmentPath}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Descargar ficha técnica
-              </CardAnchor>
+              </a>
             )}
           </>
         ) : (
-          <CardLink to={`/producto/${productId}`}>ver producto</CardLink>
+          <Link to={`/producto/${productId}`}>ver producto</Link>
         )}
-        <CardCta
+        <Button
           onClick={() =>
             addCartItem({
               productId,
@@ -211,7 +139,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
           }
         >
           Añadir a cotización
-        </CardCta>
+        </Button>
       </Card.Footer>
     </Card>
   );
