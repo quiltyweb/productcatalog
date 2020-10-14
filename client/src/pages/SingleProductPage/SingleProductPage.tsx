@@ -5,7 +5,7 @@ import environment from "../../environment";
 import { useParams, useHistory } from "react-router-dom";
 import { Columns, Column, styled, Page } from "fannypack";
 import { Button } from "bumbag";
-import Card from "../../components/Card/Card";
+import { ProductCard } from "../../components/ProductCard/ProductCard";
 import Loader from "../../components/Loader/Loader";
 
 const GoBackButton = styled(Button)`
@@ -68,7 +68,7 @@ export const SingleProductPage: React.FunctionComponent = () => {
                 >
                   &#8592; volver a resultados
                 </GoBackButton>
-                <Card
+                <ProductCard
                   productId={props.node.id}
                   name={props.node.name}
                   description={props.node.description}
@@ -77,6 +77,7 @@ export const SingleProductPage: React.FunctionComponent = () => {
                   hasPrintCTA
                   isSinglePage
                 />
+                <div>dssdsd</div>
               </Column>
             </Columns>
           </Page.Content>

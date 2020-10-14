@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { styled, Card as FPCard, Image, Paragraph } from "fannypack";
+import { Card, Image, Paragraph } from "bumbag";
+import styled from "styled-components";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
 
-const CardItem = styled(FPCard.Card)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: 0.7rem;
-`;
+// const CardItem = styled(Card)`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   height: 100%;
+//   padding: 0.7rem;
+// `;
 
 const ImageStyled = styled(Image)`
   max-width: 100%;
@@ -103,7 +104,7 @@ const ParagraphStyled = styled(Paragraph)`
   white-space: pre-line;
 `;
 
-interface CardProps {
+interface ProductCardProps {
   productId: string;
   name: string;
   linkImage: string;
@@ -141,7 +142,7 @@ const ImgWithFallback: React.FunctionComponent<{
   );
 };
 
-const Card: React.FunctionComponent<CardProps> = ({
+export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
   productId,
   name,
   description,
@@ -153,9 +154,9 @@ const Card: React.FunctionComponent<CardProps> = ({
   const { addCartItem } = useHomePageContext();
 
   return (
-    <CardItem a11yDescriptionId="description" a11yTitleId="title">
-      <FPCard.Header>
-        <FPCard.Title
+    <Card standalone>
+      <Card.Header>
+        <Card.Title
           id="title"
           use="h3"
           fontSize="1.1rem"
@@ -163,9 +164,9 @@ const Card: React.FunctionComponent<CardProps> = ({
           textTransform="capitalize"
         >
           {name}
-        </FPCard.Title>
-      </FPCard.Header>
-      <FPCard.Content
+        </Card.Title>
+      </Card.Header>
+      <Card.Content
         id="description"
         style={{
           display: "flex",
@@ -180,9 +181,9 @@ const Card: React.FunctionComponent<CardProps> = ({
           isSinglePage={isSinglePage}
         />
         {description && <ParagraphStyled>{description}</ParagraphStyled>}
-      </FPCard.Content>
+      </Card.Content>
 
-      <FPCard.Footer justifyContent="center">
+      <Card.Footer justifyContent="center">
         {isSinglePage ? (
           <>
             <CardLink to={`/certificaciones`}>Certificado</CardLink>
@@ -211,9 +212,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         >
           Añadir a cotización
         </CardCta>
-      </FPCard.Footer>
-    </CardItem>
+      </Card.Footer>
+    </Card>
   );
 };
-
-export default Card;

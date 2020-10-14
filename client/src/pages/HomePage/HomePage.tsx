@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Switch, Route, useLocation } from "react-router-dom";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
-import { Provider as BumbagProvider } from "bumbag";
-import { styled, Flex } from "fannypack";
-import { Switch, Route, useLocation } from "react-router-dom";
+import { PageContent, Provider as BumbagProvider } from "bumbag";
 import CategoryList from "../../components/CategoryList/CategoryList";
-import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
 import { newTheme } from "../../theme";
 import ContactForm from "../../components/ContactForm/ContactForm";
@@ -17,55 +15,51 @@ import SearchResultsPage from "../SearchResultsPage/SearchResultsPage";
 import CartPage from "../CartPage/CartPage";
 import QuotePage from "../QuotePage/QuotePage";
 import Main from "../../components/Main/Main";
+import Nav from "../../components/Nav/Nav";
 import HomePageContext from "./HomePageContext";
 import { CartItemProps } from "./HomePageContext";
 import ScrollToTop from "../ScrollToTop";
 import Loader from "../../components/Loader/Loader";
+import { PageWithHeader, PageWithSidebar } from "bumbag";
+import styled from "styled-components";
 
-const Header = styled.header`
-  @media (min-width: 776px) {
-    position: fixed;
-    top: 0;
-    box-shadow: 0 0.6px 3px 0 rgba(0, 0, 0, 0.2);
-    opacity: 1;
-    width: 100%;
-    background-color: #ffffff;
-    z-index: 2;
-  }
-`;
+// const MainWrapper = styled.main`
+//   display: flex;
+//   flex-direction: column-reverse;
+//   background-color: #ffffff;
+//   max-width: 1200px;
+//   padding-top: 0;
+//   margin: 0 auto;
+//   @media (min-width: 760px) {
+//     flex-direction: row;
+//     padding-top: 95px;
+//     padding-bottom: 95px;
+//   }
+// `;
 
-const MainWrapper = styled.main`
-  display: flex;
-  flex-direction: column-reverse;
-  background-color: #ffffff;
-  max-width: 1200px;
-  padding-top: 0;
-  margin: 0 auto;
-  @media (min-width: 760px) {
-    flex-direction: row;
-    padding-top: 95px;
-    padding-bottom: 95px;
-  }
-`;
+// const ItemLink = styled(Link)`
+//   text-decoration: none;
+//   color: #212121;
+// `;
+// const MainContent = styled(Flex)`
+//   align-content: center;
+// `;
 
-const MainContent = styled(Flex)`
-  align-content: center;
-`;
-
-const MainSidebar = styled.aside`
-  margin-top: 3rem;
-  flex-basis: 20%;
-  @media (min-width: 425px) {
-    margin-top: 0;
-    padding: 4rem 0;
-  }
-`;
+// const MainSidebar = styled.aside`
+//   margin-top: 3rem;
+//   flex-basis: 20%;
+//   @media (min-width: 425px) {
+//     margin-top: 0;
+//     padding: 4rem 0;
+//   }
+// `;
 
 const HomePage: React.FunctionComponent = () => {
   const [cart, setCart] = useState<CartItemProps[]>([]);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isQuotePage = location.pathname === "/enviar-cotizacion";
+  const isContactoPage = location.pathname === "/contacto";
 
   useEffect(() => {
     const stringifyCart = sessionStorage.getItem("cart");
@@ -77,9 +71,6 @@ const HomePage: React.FunctionComponent = () => {
     sessionStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  // TODO: I'm organising these functions here for now. I'll refactor later.remove console logs later.
-
-  // TODO: consider if we should remove the update input or be readOnly...
   type ProductItemUpdateProps = {
     productId: string;
     quantity: number;
@@ -187,17 +178,14 @@ const HomePage: React.FunctionComponent = () => {
                   removeCartItem,
                 }}
               >
-                <>
-                  <Header>
-                    <Nav />
-                  </Header>
-                  <MainWrapper>
-                    {!isHomePage && !isQuotePage && (
-                      <MainSidebar>
+                <PageWithHeader sticky header={<Nav />} border="default">
+                  <div style={{ display: "flex" }}>
+                    {!isHomePage && (
+                      <aside style={{ flexBasis: "20%" }}>
                         <CategoryList categories={props.fetchCategories} />
-                      </MainSidebar>
+                      </aside>
                     )}
-                    <MainContent column flexBasis="100%">
+                    <main style={{ flexBasis: "80%", margin: "0 auto" }}>
                       <Switch>
                         <Route path="/contacto">
                           <ContactForm />
@@ -224,10 +212,10 @@ const HomePage: React.FunctionComponent = () => {
                           <Main categories={props.fetchCategories} />
                         </Route>
                       </Switch>
-                    </MainContent>
-                  </MainWrapper>
-                  <Footer />
-                </>
+                    </main>
+                  </div>
+                </PageWithHeader>
+                <Footer />
               </HomePageContext.Provider>
             );
           }}

@@ -1,11 +1,12 @@
 import React from "react";
 import { graphql } from "babel-plugin-relay/macro";
 import { createFragmentContainer } from "react-relay";
-import { Card, Heading, Image, styled } from "fannypack";
-import { CategoryGrid_categoryGridItems } from "./__generated__/CategoryGrid_categoryGridItems.graphql";
+import { palette, Card, List, Image } from "bumbag";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { CategoryGrid_categoryGridItems } from "./__generated__/CategoryGrid_categoryGridItems.graphql";
 
-const GridList = styled.ul`
+const GridList = styled(List)`
   display: flex;
   flex-wrap: wrap;
   @supports (display: grid) {
@@ -17,6 +18,8 @@ const GridList = styled.ul`
 
 const GridItemLink = styled(Link)`
   display: block;
+  text-decoration: none;
+  color: ${palette("primary")};
   &:hover {
     transform: translateY(3px);
     transition: all 0.5s;
@@ -41,28 +44,24 @@ const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
       categoryGridItems.edges.length > 0 ? (
         categoryGridItems.edges.map((item: any) => {
           return (
-            <li>
+            <List.Item>
               <GridItemLink to={`/categoria/${item.node.id}`}>
-                <Card.Card>
-                  <Card.Content>
+                <Card standalone>
+                  <Card.Content alignX="center">
                     <Image
                       fit="contain"
-                      fitPosition="top"
-                      width={350}
-                      height={150}
+                      height="150px"
                       src={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/categories/${item.node.name.toLowerCase()}.jpg`}
-                      alt="Bean"
+                      alt={item.node.name}
                       backgroundColor="white"
                     />
                   </Card.Content>
-                  <Card.Footer justifyContent="center">
-                    <Heading use="h2" style={{ whiteSpace: "nowrap" }}>
-                      {item.node.name}
-                    </Heading>
-                  </Card.Footer>
-                </Card.Card>
+                  <Card.Header use="h2" alignX="center">
+                    <Card.Title>{item.node.name}</Card.Title>
+                  </Card.Header>
+                </Card>
               </GridItemLink>
-            </li>
+            </List.Item>
           );
         })
       ) : (
