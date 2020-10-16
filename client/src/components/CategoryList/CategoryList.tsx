@@ -1,7 +1,7 @@
 import React from "react";
 import { graphql } from "babel-plugin-relay/macro";
 import { createFragmentContainer } from "react-relay";
-import { styled } from "fannypack";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { CategoryList_categories } from "./__generated__/CategoryList_categories.graphql";
 

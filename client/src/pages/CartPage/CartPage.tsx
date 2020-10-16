@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading, Paragraph, styled, Page } from "fannypack";
+import { Heading, Paragraph, styled, PageContent } from "bumbag";
 import CartList from "../../components/CartList/CartList";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
@@ -27,8 +27,10 @@ export const CartPage = () => {
 
   if (!cart.length) {
     return (
-      <Page.Content isFluid breakpoint="desktop">
-        <Heading>Mi Cotización:</Heading>
+      <PageContent>
+        <Heading use="h2" fontSize="400" paddingBottom="1rem">
+          Mi Cotización:
+        </Heading>
         <Paragraph>No hay Productos en la Cotización.</Paragraph>
         <Paragraph>
           <Link
@@ -38,13 +40,15 @@ export const CartPage = () => {
             Click aqui para empezar a agregar productos a su cotización.
           </Link>
         </Paragraph>
-      </Page.Content>
+      </PageContent>
     );
   }
 
   return (
-    <Page.Content isFluid breakpoint="desktop">
-      <Heading>Mi Cotización</Heading>
+    <PageContent breakpoint="desktop">
+      <Heading use="h2" fontSize="400" paddingBottom="1rem">
+        Mi Cotizacion:
+      </Heading>
       {cart.length > 5 && (
         <SendQuoteLink to="/enviar-cotizacion">
           Siguiente paso: Ingrese sus datos
@@ -54,7 +58,7 @@ export const CartPage = () => {
       <SendQuoteLink to="/enviar-cotizacion">
         Siguiente paso: Ingrese sus datos
       </SendQuoteLink>
-    </Page.Content>
+    </PageContent>
   );
 };
 export default CartPage;

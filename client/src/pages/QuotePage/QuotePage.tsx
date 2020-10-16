@@ -6,8 +6,8 @@ import {
   Heading,
   Paragraph,
   Box,
-  Page,
-} from "fannypack";
+  PageContent,
+} from "bumbag";
 import QuoteForm from "../../components/QuoteForm/QuoteForm";
 import { useHomePageContext } from "../HomePage/HomePageContext";
 import CartList from "../../components/CartList/CartList";
@@ -17,7 +17,7 @@ const QuoteSummaryBox = styled(Box)`
 `;
 
 const FormBox = styled(Box)`
-  background-color: #ccc;
+  background-color: #eeeeee;
   border-radius: 5px;
 `;
 
@@ -25,20 +25,22 @@ export const QuotePage = () => {
   const { cart } = useHomePageContext();
   if (!cart.length) {
     return (
-      <Page.Content isFluid breakpoint="desktop">
+      <PageContent breakpoint="desktop">
         <Heading>Mi Cotización:</Heading>
         <Paragraph>No hay Productos en la Cotización.</Paragraph>
         <Paragraph>
           Agregue articulos a su cotización navegando a través del menú de
           categorias
         </Paragraph>
-      </Page.Content>
+      </PageContent>
     );
   }
 
   return (
-    <Page.Content isFluid breakpoint="desktop">
-      <Heading>Ingrese datos de su cotización</Heading>
+    <PageContent breakpoint="desktop">
+      <Heading use="h2" fontSize="400" paddingBottom="1rem">
+        Ingrese datos de su cotización
+      </Heading>
       <Columns>
         <Column>
           <QuoteSummaryBox>
@@ -51,7 +53,7 @@ export const QuotePage = () => {
           </FormBox>
         </Column>
       </Columns>
-    </Page.Content>
+    </PageContent>
   );
 };
 export default QuotePage;

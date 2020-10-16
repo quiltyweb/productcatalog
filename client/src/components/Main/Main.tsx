@@ -14,6 +14,7 @@ const Main: React.FunctionComponent<MainProps> = ({
       <Heading
         use="h2"
         fontSize="400"
+        paddingTop="3rem"
         paddingBottom="3rem"
         variant="decorative-heading"
       >

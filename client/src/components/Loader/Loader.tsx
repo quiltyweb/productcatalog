@@ -1,5 +1,5 @@
 import React from "react";
-import { Spinner } from "fannypack";
+import { Spinner } from "bumbag";
 
 const Loader: React.FunctionComponent = (): JSX.Element => {
   return (
