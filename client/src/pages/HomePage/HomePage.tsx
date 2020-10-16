@@ -145,10 +145,10 @@ const HomePage: React.FunctionComponent = () => {
                   removeCartItem,
                 }}
               >
-                <PageWithHeader sticky header={<Nav />} border="default">
+                <PageWithHeader header={<Nav />} border="default">
                   <div style={{ display: "flex" }}>
                     {!isHomePage && (
-                      <aside style={{ flexBasis: "20%" }}>
+                      <aside style={{ flexBasis: "20%", paddingTop: "2rem" }}>
                         <CategoryList categories={props.fetchCategories} />
                       </aside>
                     )}

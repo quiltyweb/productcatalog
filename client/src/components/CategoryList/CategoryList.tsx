@@ -31,6 +31,7 @@ const ProductItem = styled.li`
   margin: 0.5rem;
   padding: 0.5rem;
   border: 1px solid grey;
+  width: 70%;
   @media (min-width: 760px) {
     display: block;
     padding: 0;
@@ -52,9 +53,9 @@ const ProductsListLink = styled(Link)`
     font-size: 1.2rem;
     &:hover {
       color: #000;
-      background-color: rgba(255, 138, 0, 0.5);
+      background-color: rgba(255, 204, 0, 0.3);
       transition: background-color 0.2s;
-      border-radius: 30px;
+      border-radius: 1px;
     }
   }
 `;
@@ -67,23 +68,21 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = ({
   categories,
 }): JSX.Element => {
   return (
-    <>
-      <ProductsList>
-        {categories && categories.edges && categories.edges.length > 0 ? (
-          categories.edges.map((item: any) => {
-            return (
-              <ProductItem key={item.node.id}>
-                <ProductsListLink to={`/categoria/${item.node.id}`}>
-                  {item.node.name}
-                </ProductsListLink>
-              </ProductItem>
-            );
-          })
-        ) : (
-          <ProductItem>No hay cateogrias</ProductItem>
-        )}
-      </ProductsList>
-    </>
+    <ProductsList>
+      {categories && categories.edges && categories.edges.length > 0 ? (
+        categories.edges.map((item: any) => {
+          return (
+            <ProductItem key={item.node.id}>
+              <ProductsListLink to={`/categoria/${item.node.id}`}>
+                {item.node.name}
+              </ProductsListLink>
+            </ProductItem>
+          );
+        })
+      ) : (
+        <ProductItem>No hay cateogrias</ProductItem>
+      )}
+    </ProductsList>
   );
 };
 

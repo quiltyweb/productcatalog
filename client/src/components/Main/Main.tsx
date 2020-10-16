@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading } from "bumbag";
+import { Box, Heading } from "bumbag";
 import CategoryGrid from "../CategoryGrid/CategoryGrid";
 
 type MainProps = {
@@ -15,12 +15,14 @@ const Main: React.FunctionComponent<MainProps> = ({
         use="h2"
         fontSize="400"
         paddingTop="3rem"
-        paddingBottom="3rem"
+        paddingBottom="2rem"
         variant="decorative-heading"
       >
         Nuestros Productos
       </Heading>
-      <CategoryGrid categoryGridItems={categories} />
+      <Box paddingBottom="2rem">
+        <CategoryGrid categoryGridItems={categories} />
+      </Box>
     </>
   );
 };
