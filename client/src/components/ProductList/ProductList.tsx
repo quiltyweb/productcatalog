@@ -1,8 +1,8 @@
 import React from "react";
 import { graphql } from "babel-plugin-relay/macro";
 import { createFragmentContainer } from "react-relay";
-import { Box, Columns, Column } from "fannypack";
-import Card from "../../components/Card/Card";
+import { Box, Columns, Column } from "bumbag";
+import { ProductCard } from "../../components/ProductCard/ProductCard";
 import { ProductList_products } from "./__generated__/ProductList_products.graphql";
 
 type ProductListProps = {
@@ -25,7 +25,7 @@ const ProductList: React.FunctionComponent<ProductListProps> = ({
                 spreadDesktop={6}
                 spreadMobile={12}
               >
-                <Card
+                <ProductCard
                   productId={product.node.id}
                   name={product.node.name}
                   linkImage={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/${product.node.imagePath}`}

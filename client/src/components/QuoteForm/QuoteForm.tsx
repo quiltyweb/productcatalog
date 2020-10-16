@@ -5,14 +5,14 @@ import environment from "../../environment";
 import { ReCaptcha } from "../ReCaptcha/ReCaptcha";
 import {
   InputField,
-  Button,
   TextareaField,
   Paragraph,
   Alert,
   Spinner,
   styled,
-  Page,
-} from "fannypack";
+  PageContent,
+} from "bumbag";
+import { Button } from "bumbag";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
@@ -114,7 +114,7 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
   });
 
   return (
-    <Page.Content isFluid breakpoint="desktop">
+    <PageContent breakpoint="desktop">
       <Paragraph>
         Campos marcados con{" "}
         <span style={{ color: "#da291c", fontWeight: "bolder" }}>
@@ -133,7 +133,7 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           value={formik.values.nombreCompleto}
           onChange={formik.handleChange}
           validationText={formik.errors.nombreCompleto}
-          state={formik.errors.nombreCompleto ? "danger" : ""}
+          state={formik.errors.nombreCompleto ? "danger" : "success"}
           size="default"
           isRequired
         />
@@ -147,7 +147,7 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           value={formik.values.email}
           onChange={formik.handleChange}
           validationText={formik.errors.email}
-          state={formik.errors.email ? "danger" : ""}
+          state={formik.errors.email ? "danger" : "success"}
           size="default"
           isRequired
         />
@@ -161,7 +161,7 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           value={formik.values.telefono}
           onChange={formik.handleChange}
           validationText={formik.errors.telefono}
-          state={formik.errors.telefono ? "danger" : ""}
+          state={formik.errors.telefono ? "danger" : "success"}
           size="default"
         />
         <TextareaField
@@ -171,7 +171,7 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           value={formik.values.mensaje}
           onChange={formik.handleChange}
           validationText={formik.errors.mensaje}
-          state={formik.errors.mensaje ? "danger" : ""}
+          state={formik.errors.mensaje ? "danger" : "success"}
         />
         <div>
           Click en el botón para verificar antispam:
@@ -182,7 +182,7 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
             }}
           />
           {formik.errors.recaptcha && formik.touched.recaptcha && (
-            <Alert display="inline-block" hasTint type={"danger"}>
+            <Alert display="inline-block" type="danger">
               {formik.errors.recaptcha}
             </Alert>
           )}
@@ -197,14 +197,13 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           Enviar Cotización
         </Button>
         {formik.isSubmitting && !formik.status && (
-          <Alert display="inline-block" hasTint type="warning">
+          <Alert display="inline-block" type="warning">
             <Spinner size="small" /> Enviando...
           </Alert>
         )}
         {formik.status && formik.status.message && (
           <Alert
             display="inline-block"
-            hasTint
             type={formik.status.error ? "danger" : "success"}
           >
             {formik.status.message}
@@ -212,7 +211,7 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
           </Alert>
         )}
       </form>
-    </Page.Content>
+    </PageContent>
   );
 };
 

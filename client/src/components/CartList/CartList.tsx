@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Table, styled, Image } from "fannypack";
+import { Button, Table, styled, Image } from "bumbag";
 import QuantityPicker from "../QuantityPicker/QuantityPicker";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 
@@ -23,49 +23,48 @@ const CartList: React.FunctionComponent<CardProps> = ({
   const { cart, removeCartItem } = useHomePageContext();
 
   return (
-    <Box>
-      <Table hasBorder isResponsive>
-        <Table.Head>
-          <Table.Row>
-            <Table.HeadCell>Imagen:</Table.HeadCell>
-            <Table.HeadCell>Producto:</Table.HeadCell>
-            <Table.HeadCell>Cantidad:</Table.HeadCell>
-          </Table.Row>
-        </Table.Head>
-        <Table.Body hasBorders>
-          {cart.map((item) => {
-            return (
-              <Table.Row key={item.productName}>
-                <Table.Cell>
-                  <ImageStyled fit="cover" src={item.productImage} />
-                </Table.Cell>
-                <Table.Cell>{item.productName}</Table.Cell>
-                <Table.Cell>
-                  {isEditable ? (
-                    <QuantityPicker
-                      productId={item.productId}
-                      quantity={item.quantity}
-                    />
-                  ) : (
-                    <span>{item.quantity}</span>
-                  )}
-                </Table.Cell>
-                {isEditable && (
-                  <Table.Cell>
-                    <button
-                      onClick={() => removeCartItem(item.productId)}
-                      style={{ whiteSpace: "nowrap" }}
-                    >
-                      Borrar
-                    </button>
-                  </Table.Cell>
+    <Table>
+      <Table.Head>
+        <Table.Row>
+          <Table.HeadCell>Imagen:</Table.HeadCell>
+          <Table.HeadCell>Producto:</Table.HeadCell>
+          <Table.HeadCell>Cantidad:</Table.HeadCell>
+          {isEditable && <Table.HeadCell>Acción:</Table.HeadCell>}
+        </Table.Row>
+      </Table.Head>
+      <Table.Body>
+        {cart.map((item) => {
+          return (
+            <Table.Row key={item.productName}>
+              <Table.Cell>
+                <ImageStyled fit="cover" src={item.productImage} />
+              </Table.Cell>
+              <Table.Cell>{item.productName}</Table.Cell>
+              <Table.Cell>
+                {isEditable ? (
+                  <QuantityPicker
+                    productId={item.productId}
+                    quantity={item.quantity}
+                  />
+                ) : (
+                  <span>{item.quantity}</span>
                 )}
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table>
-    </Box>
+              </Table.Cell>
+              {isEditable && (
+                <Table.Cell>
+                  <Button
+                    onClick={() => removeCartItem(item.productId)}
+                    style={{ whiteSpace: "nowrap" }}
+                  >
+                    Borrar
+                  </Button>
+                </Table.Cell>
+              )}
+            </Table.Row>
+          );
+        })}
+      </Table.Body>
+    </Table>
   );
 };
 

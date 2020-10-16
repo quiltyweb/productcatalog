@@ -1,63 +1,45 @@
 import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 import {
-  styled,
+  List,
+  PageContent,
   Columns,
   Column,
-  space,
   Heading,
   Paragraph,
-  Box,
-} from "fannypack";
-import { Link } from "react-router-dom";
+  Stack,
+} from "bumbag";
 
-const FooterContainer = styled.footer`
-  margin-top: ${space(2, "major")}rem;
+const Footer = styled.footer`
   background-color: #212121;
-  color: #fff;
+  color: #ffffff;
   a {
-    color: #fff;
+    color: #ffffff;
     text-decoration: underline;
     &:hover {
       color: #ffcc00;
     }
     &:focus {
-      outline: 2px solid #fff;
+      outline: 2px solid #ffffff;
       outline-offset: 2px;
     }
   }
 `;
 
-const FooterLinks = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin: 0.5rem 0;
-  padding: 0;
-`;
-
-const FooterList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  margin: 0;
-  padding: 0;
-  line-height: 1;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}`;
-
-// maxWidth: "1200px",  margin: "0 auto"
 const FooterComponent = () => {
   const currDate = new Date();
   return (
-    <FooterContainer>
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        <Columns padding="major-6">
+    <Footer>
+      <PageContent padding="3rem 0" breakpoint="widescreen">
+        <Columns>
           <Column spread={5}>
-            <Heading use="h3" fontSize="1.3rem">
+            <Heading
+              use="h3"
+              fontSize="300"
+              paddingBottom="1rem"
+              variant="light-heading"
+            >
               Somos seguridad industrial en Atacama.
             </Heading>
             <Paragraph paddingLeft="0" paddingRight="2rem">
@@ -70,10 +52,15 @@ const FooterComponent = () => {
             </Paragraph>
           </Column>
           <Column spread={5}>
-            <Heading fontSize="1.3rem" use="h3">
+            <Heading
+              use="h3"
+              fontSize="300"
+              paddingBottom="1rem"
+              variant="light-heading"
+            >
               Contáctenos
             </Heading>
-            <Box>
+            <Stack spacing="major-4">
               <Paragraph>Dirección: Rodriguez 757-A, Copiapó, Chile.</Paragraph>
               <Paragraph>
                 <a
@@ -100,8 +87,14 @@ const FooterComponent = () => {
                   alt="comercialgattoni arroba gattoni punto cl"
                 />
               </Paragraph>
-            </Box>
-            <Heading marginTop="3rem" fontSize="1.3rem" use="h3">
+            </Stack>
+            <Heading
+              use="h3"
+              fontSize="300"
+              paddingBottom="1rem"
+              marginTop="3rem"
+              variant="light-heading"
+            >
               Horario de atención
             </Heading>
             <Paragraph>
@@ -109,32 +102,33 @@ const FooterComponent = () => {
             </Paragraph>
           </Column>
           <Column>
-            <FooterLinks>
-              <FooterList aria-label="Menu pie de pagina">
-                <li>
-                  <Link to="/categoria/Q2F0ZWdvcnk6Nw==">Productos</Link>
-                </li>
-                <li>
-                  <Link to="/contacto">Contacto</Link>
-                </li>
-                <li>
-                  <Link to="/cotizacion">Mi Cotización</Link>
-                </li>
-                <li>
-                  <Link to="/certificaciones">Certificaciones</Link>
-                </li>
-              </FooterList>
-            </FooterLinks>
+            <List aria-label="Menu pie de pagina">
+              <List.Item>
+                <Link to="/categoria/Q2F0ZWdvcnk6Nw==">Productos</Link>
+              </List.Item>
+              <List.Item>
+                <Link to="/contacto">Contacto</Link>
+              </List.Item>
+              <List.Item>
+                <Link to="/cotizacion">Mi Cotización</Link>
+              </List.Item>
+              <List.Item>
+                <Link to="/certificaciones">Certificaciones</Link>
+              </List.Item>
+            </List>
           </Column>
         </Columns>
-      </div>
-      <Columns padding="major-2" backgroundColor="#e16204" color="#FFF">
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          &copy; Todos los derechos reservados {currDate.getFullYear()}{" "}
-          Comercial Gattoni.
-        </div>
-      </Columns>
-    </FooterContainer>
+      </PageContent>
+      <PageContent
+        breakpoint="widescreen"
+        textAlign="center"
+        padding="major-2"
+        wrapperProps={{ backgroundColor: "#e16204" }}
+      >
+        &copy; Todos los derechos reservados {currDate.getFullYear()} Comercial
+        Gattoni.
+      </PageContent>
+    </Footer>
   );
 };
 

@@ -4,7 +4,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
 import { useParams } from "react-router-dom";
 import ProductList from "../../components/ProductList/ProductList";
-import { Heading, Page } from "fannypack";
+import { Heading, PageContent } from "bumbag";
 import Loader from "../../components/Loader/Loader";
 
 export const SearchResultsPage = () => {
@@ -13,6 +13,7 @@ export const SearchResultsPage = () => {
   // TODO: backend needs to update fetchCategories query. https://trello.com/c/GoBJE1mZ
   // FOR NOW, using the searchProducts query to render list of products.
   // this: searchProducts(searchTerm: "categoryName") will be updated with: fetchCategories(categoryID: <theIDFromRouterParams>)
+  console.log("searchTerm >>>", searchTerm);
 
   return (
     <QueryRenderer
@@ -33,11 +34,14 @@ export const SearchResultsPage = () => {
         if (!props) {
           return <Loader />;
         }
+
         return (
-          <Page.Content isFluid>
-            <Heading use="h1">Resultados para: "{searchTerm}"</Heading>
+          <PageContent breakpoint="desktop">
+            <Heading use="h2" fontSize="400" paddingBottom="1rem">
+              Resultados para: "{searchTerm}"
+            </Heading>
             <ProductList products={props.searchProducts} />
-          </Page.Content>
+          </PageContent>
         );
       }}
     />

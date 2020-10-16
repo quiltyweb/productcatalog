@@ -18,7 +18,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/relay-test-utils": "^6.0.2",
     "@types/styled-components": "^5.1.1",
-    "fannypack": "^4.21.36",
+    "bumbag": "^1.3.1",
     "formik": "^2.1.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

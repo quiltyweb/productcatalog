@@ -6,18 +6,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import {
   InputField,
-  Button,
   Box,
   TextareaField,
   Heading,
   Alert,
   Spinner,
-  styled,
   Columns,
   Column,
-  Page,
+  PageContent,
   Paragraph,
-} from "fannypack";
+  ActionButtons,
+} from "bumbag";
+import styled from "styled-components";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import { ReCaptcha } from "../ReCaptcha/ReCaptcha";
@@ -119,9 +119,11 @@ const ContactForm: React.FunctionComponent = () => {
   });
 
   return (
-    <Page.Content isFluid breakpoint="desktop">
-      <Heading>Ingrese su consulta</Heading>
-      <Paragraph>
+    <PageContent breakpoint="desktop">
+      <Heading use="h2" fontSize="400" paddingBottom="1rem">
+        Ingrese su consulta
+      </Heading>
+      <Paragraph paddingBottom="2rem">
         También puede contactarnos vía nuestro fono ventas llamando al:{" "}
         <FontAwesomeIcon
           style={{ margin: "0 0.5rem" }}
@@ -153,7 +155,7 @@ const ContactForm: React.FunctionComponent = () => {
                 value={formik.values.nombre}
                 onChange={formik.handleChange}
                 validationText={formik.errors.nombre}
-                state={formik.errors.nombre ? "danger" : ""}
+                state={formik.errors.nombre ? "danger" : "success"}
                 size="medium"
               />
               <InputField
@@ -167,7 +169,7 @@ const ContactForm: React.FunctionComponent = () => {
                 value={formik.values.empresa}
                 onChange={formik.handleChange}
                 validationText={formik.errors.empresa}
-                state={formik.errors.empresa ? "danger" : ""}
+                state={formik.errors.empresa ? "danger" : "success"}
                 size="medium"
               />
               <InputField
@@ -181,7 +183,7 @@ const ContactForm: React.FunctionComponent = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 validationText={formik.errors.email}
-                state={formik.errors.email ? "danger" : ""}
+                state={formik.errors.email ? "danger" : "success"}
                 size="medium"
               />
               <InputField
@@ -194,7 +196,7 @@ const ContactForm: React.FunctionComponent = () => {
                 value={formik.values.telefono}
                 onChange={formik.handleChange}
                 validationText={formik.errors.telefono}
-                state={formik.errors.telefono ? "danger" : ""}
+                state={formik.errors.telefono ? "danger" : "success"}
                 size="medium"
               />
               <TextareaField
@@ -205,7 +207,7 @@ const ContactForm: React.FunctionComponent = () => {
                 value={formik.values.mensaje}
                 onChange={formik.handleChange}
                 validationText={formik.errors.mensaje}
-                state={formik.errors.mensaje ? "danger" : ""}
+                state={formik.errors.mensaje ? "danger" : "success"}
               />
               <div>
                 Click en el botón para verificar antispam:
@@ -218,25 +220,29 @@ const ContactForm: React.FunctionComponent = () => {
                   }}
                 />
                 {formik.errors.recaptcha && formik.touched.recaptcha && (
-                  <Alert display="inline-block" hasTint type={"danger"}>
+                  <Alert display="inline-block" variant="tint" type={"danger"}>
                     {formik.errors.recaptcha}
                   </Alert>
                 )}
               </div>
 
-              <Button margin="major-2" padding="major-1" type="submit">
+              <ActionButtons
+                onClickCancel={() => formik.resetForm()}
+                palette="secondary"
+                type="submit"
+              >
                 Enviar
-              </Button>
+              </ActionButtons>
 
               {formik.isSubmitting && !formik.status && (
-                <Alert display="inline-block" hasTint type="warning">
+                <Alert display="inline-block" variant="tint" type="warning">
                   <Spinner size="small" /> Enviando...
                 </Alert>
               )}
               {formik.status && formik.status.message && (
                 <Alert
                   display="inline-block"
-                  hasTint
+                  variant="tint"
                   type={formik.status.error ? "danger" : "success"}
                 >
                   {formik.status.message}
@@ -247,7 +253,7 @@ const ContactForm: React.FunctionComponent = () => {
           </Box>
         </Column>
       </Columns>
-    </Page.Content>
+    </PageContent>
   );
 };
 
