@@ -37,6 +37,17 @@ const NavLogoSubHeading = styled.span`
   color: #000000;
 `;
 
+const Quantity = styled.div`
+  border-radius: 50px;
+  background-color: rgb(255, 204, 0);
+  color: #212121;
+  min-width: 38px;
+  text-align: center;
+  display: inline-block;
+  padding: 0 0.3rem;
+  margin: 0.2rem;
+`;
+
 const Nav = () => {
   const { cartCount } = useHomePageContext();
 
@@ -108,7 +119,9 @@ const Nav = () => {
             color="#777777"
             icon={faListUl}
           />
-          <ItemLink to="/cotizacion">Mi Cotización</ItemLink>
+          <ItemLink to="/cotizacion">
+            Mi Cotización {cartCount > 0 && <Quantity> {cartCount}</Quantity>}
+          </ItemLink>
         </TopNav.Item>
       </TopNav.Section>
     </TopNav>

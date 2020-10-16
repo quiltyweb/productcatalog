@@ -3,7 +3,7 @@ import { Switch, Route, useLocation } from "react-router-dom";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
-import { PageContent, Provider as BumbagProvider } from "bumbag";
+import { Provider as BumbagProvider, PageWithHeader } from "bumbag";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import Footer from "../../components/Footer/Footer";
 import { newTheme } from "../../theme";
@@ -20,39 +20,6 @@ import HomePageContext from "./HomePageContext";
 import { CartItemProps } from "./HomePageContext";
 import ScrollToTop from "../ScrollToTop";
 import Loader from "../../components/Loader/Loader";
-import { PageWithHeader, PageWithSidebar } from "bumbag";
-import styled from "styled-components";
-
-// const MainWrapper = styled.main`
-//   display: flex;
-//   flex-direction: column-reverse;
-//   background-color: #ffffff;
-//   max-width: 1200px;
-//   padding-top: 0;
-//   margin: 0 auto;
-//   @media (min-width: 760px) {
-//     flex-direction: row;
-//     padding-top: 95px;
-//     padding-bottom: 95px;
-//   }
-// `;
-
-// const ItemLink = styled(Link)`
-//   text-decoration: none;
-//   color: #212121;
-// `;
-// const MainContent = styled(Flex)`
-//   align-content: center;
-// `;
-
-// const MainSidebar = styled.aside`
-//   margin-top: 3rem;
-//   flex-basis: 20%;
-//   @media (min-width: 425px) {
-//     margin-top: 0;
-//     padding: 4rem 0;
-//   }
-// `;
 
 const HomePage: React.FunctionComponent = () => {
   const [cart, setCart] = useState<CartItemProps[]>([]);

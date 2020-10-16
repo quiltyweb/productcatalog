@@ -47,6 +47,7 @@ export const SingleProductPage: React.FunctionComponent = () => {
                   onClick={() => {
                     goBack();
                   }}
+                  marginBottom="1rem"
                 >
                   &#8592; volver a resultados
                 </Button>
