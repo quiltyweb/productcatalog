@@ -23,7 +23,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-google-recaptcha-v3": "^1.5.2",
-    "react-relay": "^9.1.0",
+    "react-relay": "^10.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.0",
     "relay-test-utils": "^10.0.1",
