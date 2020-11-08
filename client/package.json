@@ -64,7 +64,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-relay": "^7.0.8",
     "babel-plugin-relay": "^10.0.1",
-    "graphql": "^15.1.0",
+    "graphql": "^15.4.0",
     "relay-compiler": "^9.1.0",
     "relay-compiler-language-typescript": "^12.0.3",
     "relay-config": "^9.1.0",
