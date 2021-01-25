@@ -10,7 +10,7 @@ import {
 } from "bumbag";
 import QuoteForm from "../../components/QuoteForm/QuoteForm";
 import { useHomePageContext } from "../HomePage/HomePageContext";
-import CartList from "../../components/CartList/CartList";
+import { CartTable } from "../../components/CartTable/CartTable";
 
 const QuoteSummaryBox = styled(Box)`
   background-color: #fff;
@@ -44,7 +44,7 @@ export const QuotePage = () => {
       <Columns>
         <Column>
           <QuoteSummaryBox>
-            <CartList isEditable={false} />
+            <CartTable isEditable={false} />
           </QuoteSummaryBox>
         </Column>
         <Column>
