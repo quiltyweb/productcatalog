@@ -134,6 +134,12 @@ describe("CartTable Component", () => {
                 productImage: "blank",
                 quantity: 1,
               },
+              {
+                productId: "456",
+                productName: "zapato soldador 2",
+                productImage: "blank",
+                quantity: 1,
+              },
             ],
             cartCount: 1,
             updateCartItem: () => null,
@@ -148,9 +154,9 @@ describe("CartTable Component", () => {
         </HomePageContext.Provider>
       );
 
-      expect(screen.getAllByRole("row")).toHaveLength(2);
-      expect(screen.queryAllByRole("button", { name: "+" })).toHaveLength(1);
-      expect(screen.queryAllByRole("button", { name: "-" })).toHaveLength(1);
+      expect(screen.getAllByRole("row")).toHaveLength(3);
+      expect(screen.queryAllByRole("button", { name: "+" })).toHaveLength(2);
+      expect(screen.queryAllByRole("button", { name: "-" })).toHaveLength(2);
     });
 
     it("should render action button to delete item", () => {
