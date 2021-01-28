@@ -1,6 +1,6 @@
 import React from "react";
 import { Heading, Paragraph, styled, PageContent } from "bumbag";
-import CartList from "../../components/CartList/CartList";
+import { CartTable } from "../../components/CartTable/CartTable";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
 
@@ -54,7 +54,7 @@ export const CartPage = () => {
           Siguiente paso: Ingrese sus datos
         </SendQuoteLink>
       )}
-      <CartList />
+      <CartTable />
       <SendQuoteLink to="/enviar-cotizacion">
         Siguiente paso: Ingrese sus datos
       </SendQuoteLink>
