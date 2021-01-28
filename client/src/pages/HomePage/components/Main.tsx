@@ -1,13 +1,12 @@
 import React from "react";
 import { Box, Heading } from "bumbag";
-import CategoryGrid from "../CategoryGrid/CategoryGrid";
 
 type MainProps = {
-  categories: any;
+  children: JSX.Element;
 };
 
 const Main: React.FunctionComponent<MainProps> = ({
-  categories,
+  children,
 }): JSX.Element => {
   return (
     <>
@@ -20,9 +19,7 @@ const Main: React.FunctionComponent<MainProps> = ({
       >
         Nuestros Productos
       </Heading>
-      <Box paddingBottom="2rem">
-        <CategoryGrid categoryGridItems={categories} />
-      </Box>
+      <Box paddingBottom="2rem">{children}</Box>
     </>
   );
 };

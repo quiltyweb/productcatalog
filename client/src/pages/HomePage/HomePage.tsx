@@ -5,7 +5,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import environment from "../../environment";
 import { Provider as BumbagProvider, PageWithHeader } from "bumbag";
 import CategoryList from "../../components/CategoryList/CategoryList";
-import Footer from "../../components/Footer/Footer";
+import Footer from "./components/Footer";
 import { newTheme } from "../../theme";
 import ContactForm from "../../components/ContactForm/ContactForm";
 import { ContentList } from "../../components/ContentList/ContentList";
@@ -14,13 +14,14 @@ import SingleProductPage from "../SingleProductPage/SingleProductPage";
 import SearchResultsPage from "../SearchResultsPage/SearchResultsPage";
 import CartPage from "../CartPage/CartPage";
 import QuotePage from "../QuotePage/QuotePage";
-import Main from "../../components/Main/Main";
+import Main from "./components/Main";
 import Nav from "../../components/Nav/Nav";
 import HomePageContext from "./HomePageContext";
 import { CartItemProps } from "./HomePageContext";
 import ScrollToTop from "../ScrollToTop";
 import Loader from "../../components/Loader/Loader";
 import { certificationLinks } from "./certificationLinks";
+import CategoryGrid from "../../components/CategoryGrid/CategoryGrid";
 
 const HomePage: React.FunctionComponent = () => {
   const [cart, setCart] = useState<CartItemProps[]>([]);
@@ -181,7 +182,11 @@ const HomePage: React.FunctionComponent = () => {
                           <SingleProductPage />
                         </Route>
                         <Route path="/">
-                          <Main categories={props.fetchCategories} />
+                          <Main>
+                            <CategoryGrid
+                              categoryGridItems={props.fetchCategories}
+                            />
+                          </Main>
                         </Route>
                       </Switch>
                     </main>

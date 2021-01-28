@@ -20,7 +20,7 @@ export const ContentList: React.FunctionComponent<ContentListProps> = ({
       <Paragraph paddingBottom="2rem">{description}</Paragraph>
       <List style={{ listStyle: "disc" }}>
         {links.map(({ href, label }) => (
-          <List.Item paddingBottom="1rem">
+          <List.Item paddingBottom="1rem" key={label}>
             <a target="_blank" rel="noopener noreferrer" href={href}>
               {label}
             </a>
