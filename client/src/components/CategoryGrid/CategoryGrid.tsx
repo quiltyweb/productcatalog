@@ -44,7 +44,7 @@ const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
       categoryGridItems.edges.length > 0 ? (
         categoryGridItems.edges.map((item: any) => {
           return (
-            <List.Item>
+            <List.Item key={item.node.id}>
               <GridItemLink to={`/categoria/${item.node.id}`}>
                 <Card standalone>
                   <Card.Content alignX="center">
@@ -52,7 +52,7 @@ const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
                       fit="contain"
                       height="150px"
                       src={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/categories/${item.node.name.toLowerCase()}.jpg`}
-                      alt={item.node.name}
+                      alt={"foto de producto: " + item.node.name}
                       backgroundColor="white"
                     />
                   </Card.Content>
@@ -65,7 +65,7 @@ const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
           );
         })
       ) : (
-        <p>No hay categorias</p>
+        <List.Item>No hay categorias</List.Item>
       )}
     </GridList>
   );
