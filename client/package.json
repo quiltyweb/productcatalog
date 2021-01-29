@@ -25,7 +25,7 @@
     "react-google-recaptcha-v3": "^1.5.2",
     "react-relay": "^9.1.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.0",
+    "react-scripts": "4.0.1",
     "relay-test-utils": "^10.0.1",
     "styled-components": "^5.1.1",
     "typescript": "^3.8.3"
