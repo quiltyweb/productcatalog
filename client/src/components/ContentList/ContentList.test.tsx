@@ -5,13 +5,11 @@ import { ContentList } from "./ContentList";
 const Certificationlinks = [
   {
     label: "Certificación Comercial Gattoni",
-    href:
-      "https://product-catalog.sfo2.cdn.digitaloceanspaces.com/certificaciones/certification-comercial-gattoni.rar",
+    href: "#",
   },
   {
     label: "Certificación Comercial Gattoni anteojos policarbonato",
-    href:
-      "https://product-catalog.sfo2.cdn.digitaloceanspaces.com/certificaciones/certification-comercial-gattoni-anteojos-policarbonato.rar",
+    href: "#",
   },
 ];
 
