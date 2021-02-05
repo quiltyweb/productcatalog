@@ -23,7 +23,7 @@ const FormBox = styled(Box)`
 
 export const QuotePage = (): JSX.Element => {
   const { cart } = useHomePageContext();
-  if (!cart.length) {
+  if (cart && !cart.length) {
     return (
       <PageContent breakpoint="desktop">
         <Heading>Mi Cotización:</Heading>

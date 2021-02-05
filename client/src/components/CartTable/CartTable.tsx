@@ -32,7 +32,8 @@ export const CartTable: React.FunctionComponent<CartProps> = ({
         </Table.Row>
       </Table.Head>
       <Table.Body>
-        {cart.length > 0 &&
+        {cart &&
+          cart.length > 0 &&
           cart.map((item) => {
             return (
               <Table.Row key={item.productName}>

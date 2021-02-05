@@ -30,9 +30,9 @@ interface HomePageContextProps {
   removeCartItem: (productId: string) => void;
 }
 
-// const HomePageContext = createContext<Partial<HomePageContextProps>>({});
 const HomePageContext = createContext({} as HomePageContextProps);
 
-export const useHomePageContext = () => useContext(HomePageContext);
+export const useHomePageContext = (): HomePageContextProps =>
+  useContext(HomePageContext);
 
 export default HomePageContext;

@@ -25,7 +25,7 @@ const SendQuoteLink = styled(Link)`
 export const CartPage = (): JSX.Element => {
   const { cart } = useHomePageContext();
 
-  if (!cart.length) {
+  if (cart && !cart.length) {
     return (
       <PageContent>
         <Heading use="h2" fontSize="400" paddingBottom="1rem">
@@ -49,7 +49,7 @@ export const CartPage = (): JSX.Element => {
       <Heading use="h2" fontSize="400" paddingBottom="1rem">
         Mi Cotizacion:
       </Heading>
-      {cart.length > 5 && (
+      {cart && cart.length > 5 && (
         <SendQuoteLink to="/enviar-cotizacion">
           Siguiente paso: Ingrese sus datos
         </SendQuoteLink>
