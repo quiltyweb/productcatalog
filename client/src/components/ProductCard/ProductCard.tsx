@@ -35,7 +35,7 @@ const ImgWithFallback: React.FunctionComponent<{
 }> = ({ src, alt, isSinglePage }) => {
   const [isUndefined, updateIsUndefined] = useState(false);
 
-  const onError = () => {
+  const onError = (): void => {
     updateIsUndefined(true);
   };
 

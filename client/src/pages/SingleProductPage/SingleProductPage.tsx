@@ -7,8 +7,8 @@ import { Button, Columns, Column, PageContent } from "bumbag";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
 import Loader from "../../components/Loader/Loader";
 
-export const SingleProductPage: React.FunctionComponent = () => {
-  const { productId } = useParams();
+export const SingleProductPage: React.FunctionComponent = (): JSX.Element => {
+  const { productId } = useParams<{ productId: string }>();
   const { goBack } = useHistory();
 
   return (
@@ -30,7 +30,7 @@ export const SingleProductPage: React.FunctionComponent = () => {
       variables={{ id: productId }}
       render={({ error, props }: { error: any; props: any }) => {
         if (error) {
-          console.log("error: ", error);
+          console.error("error: ", error);
           return <div>Error!</div>;
         }
         if (!props) {

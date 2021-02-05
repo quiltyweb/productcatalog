@@ -7,13 +7,12 @@ import ProductList from "../../components/ProductList/ProductList";
 import { Heading, PageContent } from "bumbag";
 import Loader from "../../components/Loader/Loader";
 
-export const SearchResultsPage = () => {
-  const { searchTerm } = useParams();
+export const SearchResultsPage = (): JSX.Element => {
+  const { searchTerm } = useParams<{ searchTerm: string }>();
 
   // TODO: backend needs to update fetchCategories query. https://trello.com/c/GoBJE1mZ
   // FOR NOW, using the searchProducts query to render list of products.
   // this: searchProducts(searchTerm: "categoryName") will be updated with: fetchCategories(categoryID: <theIDFromRouterParams>)
-  console.log("searchTerm >>>", searchTerm);
 
   return (
     <QueryRenderer
@@ -28,7 +27,7 @@ export const SearchResultsPage = () => {
       variables={{ searchTerm: searchTerm }}
       render={({ error, props }: { error: any; props: any }) => {
         if (error) {
-          console.log("error: ", error);
+          console.error("error: ", error);
           return <div>Error!</div>;
         }
         if (!props) {

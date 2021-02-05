@@ -16,29 +16,10 @@ import {
   PageContent,
   Paragraph,
   ActionButtons,
+  Flex,
 } from "bumbag";
-import styled from "styled-components";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
 import { ReCaptcha } from "../ReCaptcha/ReCaptcha";
-
-const SendQuoteLink = styled(Link)`
-  display: block;
-  text-align: right;
-  color: #000;
-  font-weight: 600;
-  font-size: 1.2rem;
-  white-space: nowrap;
-  padding: 1rem;
-  transition: color 0.2s;
-  text-decoration: underline;
-  border-radius: 4px;
-  color: #000000;
-  &:hover {
-    color: #ff0000;
-    text-decoration: underline;
-  }
-`;
 
 const query = graphql`
   query ContactFormQuery(
@@ -61,18 +42,21 @@ const query = graphql`
   }
 `;
 
-const ContactForm: React.FunctionComponent = () => {
+const ContactForm: React.FunctionComponent<{
+  initialValues: {
+    nombre: string;
+    empresa: string;
+    email: string;
+    mensaje: string;
+    telefono: string;
+    recaptcha: string;
+  };
+}> = ({ initialValues }): JSX.Element => {
   const formik = useFormik({
-    initialValues: {
-      nombre: "",
-      empresa: "",
-      email: "",
-      mensaje: "",
-      telefono: "",
-      recaptcha: "",
-    },
+    initialValues: initialValues,
     validate: ({ nombre, empresa, email, mensaje, recaptcha }) => {
       const errors: any = {};
+
       if (!nombre) {
         errors["nombre"] = "Nombre es requerido";
       }
@@ -88,7 +72,6 @@ const ContactForm: React.FunctionComponent = () => {
       if (!recaptcha) {
         errors["recaptcha"] = "Debe hacer click en el validador antispam!";
       }
-
       return errors;
     },
     onSubmit: (values, actions) => {
@@ -100,8 +83,8 @@ const ContactForm: React.FunctionComponent = () => {
         phoneNumber: values.telefono,
       };
 
-      fetchQuery(environment, query, variables).then(
-        ({ sendContactMessage }: any) => {
+      fetchQuery(environment, query, variables)
+        .then(({ sendContactMessage }: any) => {
           if (sendContactMessage.status === "FAILURE") {
             actions.setStatus({
               message: "Se ha producido un error, intente nuevamente.",
@@ -113,8 +96,13 @@ const ContactForm: React.FunctionComponent = () => {
             message:
               "Su consulta ha sido enviada con exito a Comercial Gattoni. Responderemos a la brevedad, Gracias.",
           });
-        }
-      );
+        })
+        .catch((e: any) => {
+          actions.setStatus({
+            message: "Se ha producido un error, intente nuevamente.",
+            error: true,
+          });
+        });
     },
   });
 
@@ -154,8 +142,17 @@ const ContactForm: React.FunctionComponent = () => {
                 placeholder="nombre"
                 value={formik.values.nombre}
                 onChange={formik.handleChange}
-                validationText={formik.errors.nombre}
-                state={formik.errors.nombre ? "danger" : "success"}
+                onBlur={formik.handleBlur}
+                validationText={
+                  formik.errors.nombre && formik.touched.nombre
+                    ? "campo requerido"
+                    : undefined
+                }
+                state={
+                  formik.errors.nombre && formik.touched.nombre
+                    ? "danger"
+                    : undefined
+                }
                 size="medium"
               />
               <InputField
@@ -168,8 +165,17 @@ const ContactForm: React.FunctionComponent = () => {
                 placeholder="Empresa"
                 value={formik.values.empresa}
                 onChange={formik.handleChange}
-                validationText={formik.errors.empresa}
-                state={formik.errors.empresa ? "danger" : "success"}
+                onBlur={formik.handleBlur}
+                validationText={
+                  formik.errors.empresa && formik.touched.empresa
+                    ? "campo requerido"
+                    : undefined
+                }
+                state={
+                  formik.errors.empresa && formik.touched.empresa
+                    ? "danger"
+                    : undefined
+                }
                 size="medium"
               />
               <InputField
@@ -182,8 +188,17 @@ const ContactForm: React.FunctionComponent = () => {
                 placeholder="example@email.com"
                 value={formik.values.email}
                 onChange={formik.handleChange}
-                validationText={formik.errors.email}
-                state={formik.errors.email ? "danger" : "success"}
+                onBlur={formik.handleBlur}
+                validationText={
+                  formik.errors.email && formik.touched.email
+                    ? "campo requerido"
+                    : undefined
+                }
+                state={
+                  formik.errors.email && formik.touched.email
+                    ? "danger"
+                    : undefined
+                }
                 size="medium"
               />
               <InputField
@@ -195,8 +210,17 @@ const ContactForm: React.FunctionComponent = () => {
                 placeholder="Telefono"
                 value={formik.values.telefono}
                 onChange={formik.handleChange}
-                validationText={formik.errors.telefono}
-                state={formik.errors.telefono ? "danger" : "success"}
+                onBlur={formik.handleBlur}
+                validationText={
+                  formik.errors.telefono && formik.touched.telefono
+                    ? "campo requerido"
+                    : undefined
+                }
+                state={
+                  formik.errors.telefono && formik.touched.telefono
+                    ? "danger"
+                    : undefined
+                }
                 size="medium"
               />
               <TextareaField
@@ -206,15 +230,27 @@ const ContactForm: React.FunctionComponent = () => {
                 isRequired
                 value={formik.values.mensaje}
                 onChange={formik.handleChange}
-                validationText={formik.errors.mensaje}
-                state={formik.errors.mensaje ? "danger" : "success"}
+                onBlur={formik.handleBlur}
+                validationText={
+                  formik.errors.mensaje && formik.touched.mensaje
+                    ? "campo requerido"
+                    : undefined
+                }
+                state={
+                  formik.errors.mensaje && formik.touched.mensaje
+                    ? "danger"
+                    : undefined
+                }
               />
-              <div>
-                Click en el botón para verificar antispam:
-                <span style={{ color: "#da291c", fontWeight: "bolder" }}>
-                  *
-                </span>
+              <Flex alignItems="center">
+                <label htmlFor="ReCaptcha-contact-form">
+                  Click en el botón para verificar antispam:
+                  <span style={{ color: "#da291c", fontWeight: "bolder" }}>
+                    *
+                  </span>
+                </label>
                 <ReCaptcha
+                  id="ReCaptcha-contact-form"
                   onVerifyCaptcha={(response) => {
                     formik.setFieldValue("recaptcha", response);
                   }}
@@ -224,31 +260,30 @@ const ContactForm: React.FunctionComponent = () => {
                     {formik.errors.recaptcha}
                   </Alert>
                 )}
-              </div>
+              </Flex>
 
-              <ActionButtons
-                onClickCancel={() => formik.resetForm()}
-                palette="secondary"
-                type="submit"
-              >
-                Enviar
-              </ActionButtons>
+              <Flex justifyContent="space-between">
+                <ActionButtons
+                  onClickCancel={() => formik.resetForm()}
+                  palette="secondary"
+                  type="submit"
+                />
 
-              {formik.isSubmitting && !formik.status && (
-                <Alert display="inline-block" variant="tint" type="warning">
-                  <Spinner size="small" /> Enviando...
-                </Alert>
-              )}
-              {formik.status && formik.status.message && (
-                <Alert
-                  display="inline-block"
-                  variant="tint"
-                  type={formik.status.error ? "danger" : "success"}
-                >
-                  {formik.status.message}
-                  <SendQuoteLink to="/">Volver al inicio</SendQuoteLink>
-                </Alert>
-              )}
+                {formik.isSubmitting && !formik.status && (
+                  <Alert display="inline-block" variant="tint" type="warning">
+                    <Spinner size="small" /> Enviando...
+                  </Alert>
+                )}
+                {formik.status && formik.status.message && (
+                  <Alert
+                    display="inline-block"
+                    variant="tint"
+                    type={formik.status.error ? "danger" : "success"}
+                  >
+                    {formik.status.message}
+                  </Alert>
+                )}
+              </Flex>
             </form>
           </Box>
         </Column>

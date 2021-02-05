@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 export interface IGoogleRecaptchaProps {
+  id?: string;
   onVerifyCaptcha: (token: string) => void | Promise<void>;
 }
 
@@ -48,6 +49,7 @@ const CaptchaButton: React.FunctionComponent<IGoogleRecaptchaProps> = ({
 };
 
 export const ReCaptcha: React.FunctionComponent<IGoogleRecaptchaProps> = ({
+  id,
   onVerifyCaptcha,
 }) => (
   <GoogleReCaptchaProvider reCaptchaKey="6LcBE78ZAAAAADIHm2nfA1P8S0Kr36OJiMhVcRDq">
