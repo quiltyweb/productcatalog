@@ -1,13 +1,11 @@
 import React from "react";
 import { useFormik } from "formik";
 import { Link, useHistory } from "react-router-dom";
-import { Button, TopNav, InputField, Heading } from "bumbag";
+import { Label, Button, TopNav, InputField, Heading } from "bumbag";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListUl, faSearch } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-
-// import hillsSVg from "./hills.svg";
 
 const ItemLink = styled(Link)`
   text-decoration: none;
@@ -32,7 +30,7 @@ const NavLogoHeading = styled.span`
 `;
 
 const NavLogoSubHeading = styled.span`
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
   color: #000000;
 `;
@@ -81,26 +79,29 @@ const Nav = (): JSX.Element => {
       <TopNav.Section>
         <TopNav.Item>
           <form onSubmit={formik.handleSubmit}>
-            <InputField
-              id="searchTerm"
-              name="searchTerm"
-              type="text"
-              placeholder="Buscar en catalogo"
-              value={formik.values.searchTerm}
-              onChange={formik.handleChange}
-              aria-label="Buscar"
-              size="small"
-              addonAfter={
-                <Button type="submit" size="small">
-                  <FontAwesomeIcon
-                    style={{ marginRight: "0.2rem" }}
-                    size="sm"
-                    color="#777777"
-                    icon={faSearch}
-                  />
-                </Button>
-              }
-            />
+            <Label htmlFor="searchTerm" display="flex" alignItems="center">
+              Buscar en catálogo:
+              <InputField
+                id="searchTerm"
+                name="searchTerm"
+                type="text"
+                value={formik.values.searchTerm}
+                onChange={formik.handleChange}
+                aria-label="Buscar"
+                size="small"
+                addonAfter={
+                  <Button type="submit" size="small">
+                    <FontAwesomeIcon
+                      style={{ marginRight: "0.2rem" }}
+                      size="sm"
+                      color="#777777"
+                      icon={faSearch}
+                    />
+                    Buscar
+                  </Button>
+                }
+              />
+            </Label>
           </form>
         </TopNav.Item>
       </TopNav.Section>

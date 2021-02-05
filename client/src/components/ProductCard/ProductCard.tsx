@@ -33,10 +33,10 @@ const ImgWithFallback: React.FunctionComponent<{
   alt: string;
   isSinglePage?: boolean;
 }> = ({ src, alt, isSinglePage }) => {
-  const [isUndefined, updateIsUndefined] = useState(false);
+  const [isUndefined, setIsUndefined] = useState(false);
 
   const onError = (): void => {
-    updateIsUndefined(true);
+    setIsUndefined(true);
   };
 
   if (isUndefined) {
@@ -49,18 +49,19 @@ const ImgWithFallback: React.FunctionComponent<{
     );
   }
 
-  return isSinglePage ? (
-    <SingleImageStyled src={src} alt={alt} title={alt} onError={onError} />
-  ) : (
-    <ImageStyled src={src} alt={alt} title={alt} onError={onError} />
-  );
+  if (isSinglePage)
+    return (
+      <SingleImageStyled src={src} alt={alt} title={alt} onError={onError} />
+    );
+
+  return <ImageStyled src={src} alt={alt} title={alt} onError={onError} />;
 };
 
 export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
   productId,
   name,
-  description,
   linkImage,
+  description,
   attachmentPath,
   hasPrintCTA,
   isSinglePage,
@@ -91,7 +92,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
       >
         <ImgWithFallback
           src={linkImage}
-          alt={`ver producto: ${name}`}
+          alt={name}
           isSinglePage={isSinglePage}
         />
         {description && (
