@@ -23,7 +23,7 @@ import Loader from "../../components/Loader/Loader";
 import { certificationLinks } from "./certificationLinks";
 import CategoryGrid from "../../components/CategoryGrid/CategoryGrid";
 
-const HomePage: React.FunctionComponent = () => {
+const HomePage: React.FunctionComponent = (): JSX.Element => {
   const [cart, setCart] = useState<CartItemProps[]>([]);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
@@ -127,7 +127,7 @@ const HomePage: React.FunctionComponent = () => {
           variables={{}}
           render={({ error, props }: { error: any; props: any }) => {
             if (error) {
-              console.log("error: ", error);
+              console.error("error: ", error);
               return <div>Error!</div>;
             }
             if (!props) {
@@ -157,7 +157,16 @@ const HomePage: React.FunctionComponent = () => {
                     <main style={{ flexBasis: "80%", margin: "0 auto" }}>
                       <Switch>
                         <Route path="/contacto">
-                          <ContactForm />
+                          <ContactForm
+                            initialValues={{
+                              nombre: "",
+                              empresa: "",
+                              email: "",
+                              mensaje: "",
+                              telefono: "",
+                              recaptcha: "",
+                            }}
+                          />
                         </Route>
                         <Route path="/certificaciones">
                           <ContentList

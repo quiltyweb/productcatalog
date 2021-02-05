@@ -27,7 +27,7 @@ const Footer = styled.footer`
   }
 `;
 
-const FooterComponent = () => {
+const FooterComponent = (): JSX.Element => {
   const currDate = new Date();
   return (
     <Footer>

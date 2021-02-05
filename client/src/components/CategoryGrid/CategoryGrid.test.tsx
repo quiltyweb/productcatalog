@@ -6,8 +6,6 @@ import { render, screen } from "@testing-library/react";
 import CategoryGrid from "./CategoryGrid";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import { axe, toHaveNoViolations } from "jest-axe";
-expect.extend(toHaveNoViolations);
 
 const environment = createMockEnvironment();
 const history = createMemoryHistory();

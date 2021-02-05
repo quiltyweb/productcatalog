@@ -21,7 +21,7 @@ const FormBox = styled(Box)`
   border-radius: 5px;
 `;
 
-export const QuotePage = () => {
+export const QuotePage = (): JSX.Element => {
   const { cart } = useHomePageContext();
   if (!cart.length) {
     return (

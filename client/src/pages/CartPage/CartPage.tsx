@@ -22,7 +22,7 @@ const SendQuoteLink = styled(Link)`
   }
 `;
 
-export const CartPage = () => {
+export const CartPage = (): JSX.Element => {
   const { cart } = useHomePageContext();
 
   if (!cart.length) {

@@ -48,10 +48,10 @@ const Quantity = styled.div`
   margin: 0.2rem;
 `;
 
-const Nav = () => {
+const Nav = (): JSX.Element => {
   const { cartCount } = useHomePageContext();
 
-  var history = useHistory();
+  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {

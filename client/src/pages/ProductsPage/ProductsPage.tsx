@@ -7,8 +7,8 @@ import ProductList from "../../components/ProductList/ProductList";
 import { Heading, PageContent } from "bumbag";
 import Loader from "../../components/Loader/Loader";
 
-export const ProductsPage = () => {
-  const { categoryId } = useParams();
+export const ProductsPage = (): JSX.Element => {
+  const { categoryId } = useParams<{ categoryId: string }>();
 
   return (
     <QueryRenderer
@@ -27,7 +27,7 @@ export const ProductsPage = () => {
       variables={{ categoryId: categoryId }}
       render={({ error, props }: { error: any; props: any }) => {
         if (error) {
-          console.log("error: ", error);
+          console.error("error: ", error);
           return <div>Error!</div>;
         }
         if (!props) {
