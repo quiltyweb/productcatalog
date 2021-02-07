@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -57,7 +58,8 @@ const node: ConcreteRequest = {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -115,38 +117,39 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
+    "cacheID": "5f84079cc9e51d660bbdd44c34c07d48",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "categoryGridItems": {
-          "type": "CategoryConnection",
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": false
+          "type": "CategoryConnection"
         },
         "categoryGridItems.edges": {
-          "type": "CategoryEdge",
           "enumValues": null,
+          "nullable": true,
           "plural": true,
-          "nullable": true
+          "type": "CategoryEdge"
         },
         "categoryGridItems.edges.node": {
-          "type": "Category",
           "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "nullable": true
+          "type": "Category"
         },
         "categoryGridItems.edges.node.id": {
-          "type": "ID",
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": false
+          "type": "ID"
         },
         "categoryGridItems.edges.node.name": {
-          "type": "String",
           "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "nullable": false
+          "type": "String"
         }
       }
     },

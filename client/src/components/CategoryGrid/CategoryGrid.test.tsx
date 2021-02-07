@@ -1,16 +1,17 @@
 import React from "react";
 import { QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
-import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils";
+import { createMockEnvironment, MockPayloadGenerator, RelayMockEnvironment } from "relay-test-utils";
 import { render, screen } from "@testing-library/react";
 import CategoryGrid from "./CategoryGrid";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 
-const environment = createMockEnvironment();
+let environment:RelayMockEnvironment;
 const history = createMemoryHistory();
 
 beforeEach(() => {
+  environment = createMockEnvironment();
   const TestRenderer = () => (
     <Router history={history}>
       <QueryRenderer
@@ -53,7 +54,7 @@ describe("CategoryGrid Fragment Container", () => {
       });
     });
 
-    screen.getByText("No hay categorias");
+   screen.getByText("No hay categorias");
   });
 
   test("should render categories", () => {
