@@ -23,6 +23,6 @@ jobs:
       - name: Run server unit tests
         run: docker-compose -f docker-compose.ci.yml run server yarn run test:unit
       - name: Run client unit tests
-        run: docker-compose -f docker-compose.ci.yml run client yarn run test
+        run: docker-compose -f docker-compose.ci.yml run client yarn run test --watchAll=false
       - name: Run server integration tests
         run: ./scripts/integration_tests.sh docker-compose.ci.yml
