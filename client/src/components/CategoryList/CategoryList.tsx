@@ -41,7 +41,7 @@ const ProductItem = styled.li`
   }
 `;
 
-const ProductsListLink = styled(Link)`
+const ProductsListLink = styled((props) => <Link {...props} />)`
   position: relative;
   padding: 1rem;
   display: block;
