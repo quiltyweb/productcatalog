@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
-import { QueryRenderer } from "react-relay";
+import { Environment, QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
-import environment from "../../environment";
 import { Provider as BumbagProvider, PageWithHeader } from "bumbag";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import Footer from "./components/Footer";
@@ -23,12 +22,16 @@ import Loader from "../../components/Loader/Loader";
 import { certificationLinks } from "./certificationLinks";
 import CategoryGrid from "../../components/CategoryGrid/CategoryGrid";
 
-const HomePage: React.FunctionComponent = (): JSX.Element => {
+type HomePageProps = {
+  environment: Environment;
+};
+const HomePage: React.FunctionComponent<HomePageProps> = ({
+  environment,
+}): JSX.Element => {
   const [cart, setCart] = useState<CartItemProps[]>([]);
   const location = useLocation();
+
   const isHomePage = location.pathname === "/";
-  const isQuotePage = location.pathname === "/enviar-cotizacion";
-  const isContactoPage = location.pathname === "/contacto";
 
   useEffect(() => {
     const stringifyCart = sessionStorage.getItem("cart");
@@ -127,8 +130,7 @@ const HomePage: React.FunctionComponent = (): JSX.Element => {
           variables={{}}
           render={({ error, props }: { error: any; props: any }) => {
             if (error) {
-              console.error("error: ", error);
-              return <div>Error!</div>;
+              return <div>Se ha producido un Error, intente nuevamente.</div>;
             }
             if (!props) {
               return <Loader />;

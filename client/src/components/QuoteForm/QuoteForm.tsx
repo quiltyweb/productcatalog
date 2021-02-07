@@ -12,11 +12,12 @@ import {
   styled,
   PageContent,
 } from "bumbag";
+
 import { Button } from "bumbag";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
-const SendQuoteLink = styled(Link)`
+const SendQuoteLink = styled((props) => <Link {...props} />)`
   display: block;
   text-align: right;
   color: #000;

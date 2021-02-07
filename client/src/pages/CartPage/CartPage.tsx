@@ -4,7 +4,7 @@ import { CartTable } from "../../components/CartTable/CartTable";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
 
-const SendQuoteLink = styled(Link)`
+const SendQuoteLink = styled((props) => <Link {...props} />)`
   display: block;
   text-align: right;
   color: #000;

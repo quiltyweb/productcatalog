@@ -7,12 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListUl, faSearch } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
-const ItemLink = styled(Link)`
+const ItemLink = styled((props) => <Link {...props} />)`
   text-decoration: none;
   color: #212121;
 `;
 
-const HeadingLogo = styled(Heading)`
+const HeadingLogo = styled((props) => <Heading {...props} />)`
   display: flex;
   align-items: center;
   justify-self: center;
