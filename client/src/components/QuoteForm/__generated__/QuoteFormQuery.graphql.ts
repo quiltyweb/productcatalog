@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type MessageStatus = "FAILURE" | "SUCCESS" | "%future added value";
@@ -52,8 +53,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "QuoteRequestInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -96,7 +96,8 @@ return {
     "metadata": null,
     "name": "QuoteFormQuery",
     "selections": (v1/*: any*/),
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -106,6 +107,7 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
+    "cacheID": "b8a6d7c62cb8d0f0f7900abf40444c89",
     "id": null,
     "metadata": {},
     "name": "QuoteFormQuery",

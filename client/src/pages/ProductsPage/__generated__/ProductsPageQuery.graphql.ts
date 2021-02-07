@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -52,8 +53,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "categoryId",
-    "type": "ID!"
+    "name": "categoryId"
   }
 ],
 v1 = [
@@ -114,7 +114,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -187,6 +188,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8de511e251cfa95b1f565ace97e0aac6",
     "id": null,
     "metadata": {},
     "name": "ProductsPageQuery",

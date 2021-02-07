@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type SingleProductPageQueryVariables = {
@@ -44,8 +45,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id",
-    "type": "ID!"
+    "name": "id"
   }
 ],
 v1 = [
@@ -114,13 +114,15 @@ return {
               (v5/*: any*/),
               (v6/*: any*/)
             ],
-            "type": "Product"
+            "type": "Product",
+            "abstractKey": null
           }
         ],
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -152,7 +154,8 @@ return {
               (v5/*: any*/),
               (v6/*: any*/)
             ],
-            "type": "Product"
+            "type": "Product",
+            "abstractKey": null
           }
         ],
         "storageKey": null
@@ -160,6 +163,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b3e78476a11a966630b74ad757482f6b",
     "id": null,
     "metadata": {},
     "name": "SingleProductPageQuery",

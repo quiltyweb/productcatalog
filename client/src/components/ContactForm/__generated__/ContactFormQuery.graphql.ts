@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type MessageStatus = "FAILURE" | "SUCCESS" | "%future added value";
@@ -39,39 +40,32 @@ query ContactFormQuery(
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "personalIdNumber",
-    "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "emailAddress",
-    "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "message",
-    "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "name",
-    "type": "String"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "phoneNumber",
-    "type": "String"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "emailAddress"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "message"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "name"
+},
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "personalIdNumber"
+},
+v4 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "phoneNumber"
+},
+v5 = [
   {
     "alias": null,
     "args": [
@@ -126,21 +120,35 @@ v1 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/),
+      (v3/*: any*/),
+      (v4/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "ContactFormQuery",
-    "selections": (v1/*: any*/),
-    "type": "Query"
+    "selections": (v5/*: any*/),
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v3/*: any*/),
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/),
+      (v4/*: any*/)
+    ],
     "kind": "Operation",
     "name": "ContactFormQuery",
-    "selections": (v1/*: any*/)
+    "selections": (v5/*: any*/)
   },
   "params": {
+    "cacheID": "c49e91fb37870e5fc8ddf3057a075dc1",
     "id": null,
     "metadata": {},
     "name": "ContactFormQuery",
