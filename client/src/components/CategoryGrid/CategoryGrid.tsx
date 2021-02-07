@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { CategoryGrid_categoryGridItems } from "./__generated__/CategoryGrid_categoryGridItems.graphql";
 
-const GridList = styled(List)`
+const GridList = styled((props) => <List {...props} />)`
   display: flex;
   flex-wrap: wrap;
   @supports (display: grid) {
@@ -16,7 +16,7 @@ const GridList = styled(List)`
   }
 `;
 
-const GridItemLink = styled(Link)`
+const GridItemLink = styled((props) => <Link {...props} />)`
   display: block;
   text-decoration: none;
   color: ${palette("primary")};
@@ -52,7 +52,7 @@ const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
                       fit="contain"
                       height="150px"
                       src={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/categories/${item.node.name.toLowerCase()}.jpg`}
-                      alt={"foto de producto: " + item.node.name}
+                      alt={"categoria " + item.node.name}
                       backgroundColor="white"
                     />
                   </Card.Content>

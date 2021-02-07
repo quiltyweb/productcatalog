@@ -4,11 +4,12 @@ import "./index.css";
 import HomePage from "./pages/HomePage/HomePage";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
+import environment from "./environment";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <HomePage />
+      <HomePage environment={environment} />
     </Router>
   </React.StrictMode>,
   document.getElementById("root")
