@@ -187,10 +187,10 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({
                           <ProductsPage environment={environment} />
                         </Route>
                         <Route path="/resultados/:searchTerm">
-                          <SearchResultsPage />
+                          <SearchResultsPage environment={environment} />
                         </Route>
                         <Route path="/producto/:productId">
-                          <SingleProductPage />
+                          <SingleProductPage environment={environment} />
                         </Route>
                         <Route path="/">
                           <Main>
