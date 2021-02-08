@@ -1,13 +1,18 @@
 import React from "react";
-import { QueryRenderer } from "react-relay";
+import { Environment, QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
-import environment from "../../environment";
 import { useParams, useHistory } from "react-router-dom";
 import { Button, Columns, Column, PageContent } from "bumbag";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
 import Loader from "../../components/Loader/Loader";
 
-export const SingleProductPage: React.FunctionComponent = (): JSX.Element => {
+type SingleProductPageProps = {
+  environment: Environment;
+};
+
+export const SingleProductPage: React.FunctionComponent<SingleProductPageProps> = ({
+  environment,
+}): JSX.Element => {
   const { productId } = useParams<{ productId: string }>();
   const { goBack } = useHistory();
 
@@ -30,8 +35,7 @@ export const SingleProductPage: React.FunctionComponent = (): JSX.Element => {
       variables={{ id: productId }}
       render={({ error, props }: { error: any; props: any }) => {
         if (error) {
-          console.error("error: ", error);
-          return <div>Error!</div>;
+          return <div>Se ha producido un Error, intente nuevamente.</div>;
         }
         if (!props) {
           return <Loader />;
