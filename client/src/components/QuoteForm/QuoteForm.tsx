@@ -51,17 +51,21 @@ type ProductItemProps = {
 
 interface QuoteFormProps {
   cartItems: ProductItemProps[];
+  initialValues: {
+    nombreCompleto: string;
+    email: string;
+    mensaje: string;
+    telefono: string;
+    recaptcha: string;
+  };
 }
 
-const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
+const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({
+  cartItems,
+  initialValues,
+}) => {
   const formik = useFormik({
-    initialValues: {
-      nombreCompleto: "",
-      email: "",
-      telefono: "",
-      mensaje: "",
-      recaptcha: "",
-    },
+    initialValues: initialValues,
     validate: ({ nombreCompleto, email, recaptcha }) => {
       const errors: any = {};
       if (!nombreCompleto) {
@@ -95,8 +99,8 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
 
       const variables = { input: inputArgs };
 
-      fetchQuery(environment, query, variables).then(
-        ({ sendQuoteRequest }: any) => {
+      fetchQuery(environment, query, variables)
+        .then(({ sendQuoteRequest }: any) => {
           if (sendQuoteRequest.status === "FAILURE") {
             actions.setStatus({
               message: "Se ha producido un error, intente nuevamente.",
@@ -109,8 +113,13 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({ cartItems }) => {
             message:
               "Su Cotización ha sido enviada con exito a Comercial Gattoni. Responderemos su pedido a la brevedad, Gracias.",
           });
-        }
-      );
+        })
+        .catch((e: any) => {
+          actions.setStatus({
+            message: "Se ha producido un error, intente nuevamente.",
+            error: true,
+          });
+        });
     },
   });
 
