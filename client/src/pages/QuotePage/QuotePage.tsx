@@ -49,7 +49,16 @@ export const QuotePage = (): JSX.Element => {
         </Column>
         <Column>
           <FormBox>
-            <QuoteForm cartItems={cart} />
+            <QuoteForm
+              cartItems={cart}
+              initialValues={{
+                nombreCompleto: "",
+                email: "",
+                mensaje: "",
+                telefono: "",
+                recaptcha: "",
+              }}
+            />
           </FormBox>
         </Column>
       </Columns>
