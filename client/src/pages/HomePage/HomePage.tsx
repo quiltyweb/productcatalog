@@ -17,7 +17,7 @@ import Main from "./components/Main";
 import Nav from "../../components/Nav/Nav";
 import HomePageContext from "./HomePageContext";
 import { CartItemProps } from "./HomePageContext";
-import ScrollToTop from "../ScrollToTop";
+import ScrollToTop from "./components/ScrollToTop";
 import Loader from "../../components/Loader/Loader";
 import { certificationLinks } from "./certificationLinks";
 import CategoryGrid from "../../components/CategoryGrid/CategoryGrid";
