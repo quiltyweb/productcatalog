@@ -184,7 +184,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({
                           <QuotePage />
                         </Route>
                         <Route path="/categoria/:categoryId">
-                          <ProductsPage />
+                          <ProductsPage environment={environment} />
                         </Route>
                         <Route path="/resultados/:searchTerm">
                           <SearchResultsPage />
