@@ -31,6 +31,7 @@ describe("QuotePage Component", () => {
         <QuotePage />
       </HomePageContext.Provider>
     );
+
     screen.getByText("Imagen:");
     screen.getByText("Producto:");
     screen.getByText("Cantidad:");
