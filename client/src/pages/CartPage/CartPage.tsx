@@ -47,7 +47,7 @@ export const CartPage = (): JSX.Element => {
   return (
     <PageContent breakpoint="desktop">
       <Heading use="h2" fontSize="400" paddingBottom="1rem">
-        Mi Cotizacion:
+        Mi Cotización:
       </Heading>
       {cart && cart.length > 5 && (
         <SendQuoteLink to="/enviar-cotizacion">

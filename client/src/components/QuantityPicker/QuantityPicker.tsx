@@ -21,6 +21,7 @@ const QuantityPicker: React.FunctionComponent<QuantityPickerProps> = ({
     <Group>
       <Button onClick={() => decrementCartItem({ productId })}>-</Button>
       <Input
+        aria-label="selector de cantidad"
         onChange={(e: any) =>
           updateCartItem({
             productId,

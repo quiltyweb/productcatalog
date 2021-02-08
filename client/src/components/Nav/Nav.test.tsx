@@ -9,7 +9,7 @@ import HomePageContext from "./../../pages/HomePage/HomePageContext";
 expect.extend(toHaveNoViolations);
 const history = createMemoryHistory();
 
-describe("Loader Component", () => {
+describe("Nav Component", () => {
   it("should render", () => {
     render(
       <Router history={history}>
