@@ -38,7 +38,11 @@ export const CartTable: React.FunctionComponent<CartProps> = ({
             return (
               <Table.Row key={item.productName}>
                 <Table.Cell>
-                  <ImageStyled fit="cover" src={item.productImage} />
+                  <ImageStyled
+                    fit="cover"
+                    src={item.productImage}
+                    alt={item.productName}
+                  />
                 </Table.Cell>
                 <Table.Cell>{item.productName}</Table.Cell>
                 <Table.Cell>
