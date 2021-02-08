@@ -22,16 +22,16 @@ const QuantityPicker: React.FunctionComponent<QuantityPickerProps> = ({
       <Button onClick={() => decrementCartItem({ productId })}>-</Button>
       <Input
         aria-label="selector de cantidad"
-        onChange={(e: any) =>
+        onChange={(e: any) => {
           updateCartItem({
             productId,
             quantity: e.target.value,
-          })
-        }
+          });
+        }}
         value={String(quantity)}
         name="quantityPickerInput"
         width="3rem"
-        readOnly // TOOD: readOnly for now
+        readOnly={true}
       />
       <Button onClick={() => incrementCartItem({ productId })}>+</Button>
     </Group>
