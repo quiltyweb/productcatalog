@@ -48,6 +48,16 @@ services:
     ports:
       - "3030:3030"
     command: yarn run storybook -h 0.0.0.0 -p 3030 --quiet
+  browser_test:
+    build: ./browser_test
+    depends_on:
+      - client
+    volumes:
+      - ./browser_test:/app
+      - /app/node_modules
+    # Need to use 'host' network mode to avoid cross-host errors
+    # from Webpack server
+    network_mode: "host"
 volumes:
   productcatalog_server_node_modules:
     external: true
