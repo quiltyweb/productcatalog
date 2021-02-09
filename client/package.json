@@ -35,7 +35,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "relay": "yarn run relay-compiler --schema data/schema.graphql --language typescript --src ./src/ --watchman false $@",
-    "schema": "npx apollo client:download-schema --endpoint=http://server:3333/graphql ./data/schema.graphql"
+    "schema": "npx apollo client:download-schema --endpoint=http://server:3333/graphql ./data/schema.graphql",
+    "storybook": "start-storybook"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,6 +55,8 @@
   },
   "proxy": "http://server:3333",
   "devDependencies": {
+    "@storybook/preset-create-react-app": "^3.1.5",
+    "@storybook/react": "^6.1.17",
     "@testing-library/jest-dom": "^5.11.2",
     "@testing-library/react": "^10.4.7",
     "@testing-library/user-event": "^12.6.2",

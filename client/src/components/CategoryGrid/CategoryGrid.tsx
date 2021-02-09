@@ -34,7 +34,7 @@ type CategoryGridProps = {
   categoryGridItems: CategoryGrid_categoryGridItems;
 };
 
-const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
+export const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
   categoryGridItems,
 }): JSX.Element => {
   return (
