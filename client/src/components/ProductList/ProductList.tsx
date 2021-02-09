@@ -9,7 +9,7 @@ type ProductListProps = {
   products: ProductList_products;
 };
 
-const ProductList: React.FunctionComponent<ProductListProps> = ({
+export const ProductList: React.FunctionComponent<ProductListProps> = ({
   products,
 }) => {
   return (

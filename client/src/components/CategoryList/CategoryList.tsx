@@ -64,7 +64,7 @@ type CategoryListProps = {
   categories: CategoryList_categories;
 };
 
-const CategoryList: React.FunctionComponent<CategoryListProps> = ({
+export const CategoryList: React.FunctionComponent<CategoryListProps> = ({
   categories,
 }): JSX.Element => {
   return (
