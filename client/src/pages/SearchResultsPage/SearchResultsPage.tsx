@@ -3,8 +3,9 @@ import { Environment, QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import { useParams } from "react-router-dom";
 import ProductList from "../../components/ProductList/ProductList";
-import { Heading, PageContent } from "bumbag";
+import { Heading } from "bumbag";
 import Loader from "../../components/Loader/Loader";
+import PageWrapper from "../../components/PageWrapper/PageWrapper";
 
 type SearchResultsPageProps = {
   environment: Environment;
@@ -39,12 +40,14 @@ export const SearchResultsPage: React.FunctionComponent<SearchResultsPageProps> 
         }
 
         return (
-          <PageContent breakpoint="desktop">
-            <Heading use="h2" fontSize="400" paddingBottom="1rem">
-              Resultados para: "{searchTerm}"
-            </Heading>
-            <ProductList products={props.searchProducts} />
-          </PageContent>
+          <PageWrapper title="Comercial Gattoni seguridad industrial - Resultados de busqueda">
+            <>
+              <Heading use="h2" fontSize="400" paddingBottom="1rem">
+                Resultados para: "{searchTerm}"
+              </Heading>
+              <ProductList products={props.searchProducts} />
+            </>
+          </PageWrapper>
         );
       }}
     />

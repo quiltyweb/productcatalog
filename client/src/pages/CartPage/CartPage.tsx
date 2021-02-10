@@ -1,8 +1,9 @@
 import React from "react";
-import { Heading, Paragraph, styled, PageContent } from "bumbag";
+import { Heading, Paragraph, styled } from "bumbag";
 import { CartTable } from "../../components/CartTable/CartTable";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { Link } from "react-router-dom";
+import PageWrapper from "../../components/PageWrapper/PageWrapper";
 
 const SendQuoteLink = styled((props) => <Link {...props} />)`
   display: block;
@@ -27,38 +28,42 @@ export const CartPage = (): JSX.Element => {
 
   if (cart && !cart.length) {
     return (
-      <PageContent>
-        <Heading use="h2" fontSize="400" paddingBottom="1rem">
-          Mi Cotización:
-        </Heading>
-        <Paragraph>No hay Productos en la Cotización.</Paragraph>
-        <Paragraph>
-          <Link
-            style={{ textDecoration: "underline" }}
-            to="/categoria/Q2F0ZWdvcnk6Nw=="
-          >
-            Click aqui para empezar a agregar productos a su cotización.
-          </Link>
-        </Paragraph>
-      </PageContent>
+      <PageWrapper title="Comercial Gattoni seguridad industrial - Mi Cotización">
+        <>
+          <Heading use="h2" fontSize="400" paddingBottom="1rem">
+            Mi Cotización:
+          </Heading>
+          <Paragraph>No hay Productos en la Cotización.</Paragraph>
+          <Paragraph>
+            <Link
+              style={{ textDecoration: "underline" }}
+              to="/categoria/Q2F0ZWdvcnk6Nw=="
+            >
+              Click aqui para empezar a agregar productos a su cotización.
+            </Link>
+          </Paragraph>
+        </>
+      </PageWrapper>
     );
   }
 
   return (
-    <PageContent breakpoint="desktop">
-      <Heading use="h2" fontSize="400" paddingBottom="1rem">
-        Mi Cotización:
-      </Heading>
-      {cart && cart.length > 5 && (
+    <PageWrapper title="Comercial Gattoni seguridad industrial - Mi Cotización">
+      <>
+        <Heading use="h2" fontSize="400" paddingBottom="1rem">
+          Mi Cotización:
+        </Heading>
+        {cart && cart.length > 5 && (
+          <SendQuoteLink to="/enviar-cotizacion">
+            Siguiente paso: Ingrese sus datos
+          </SendQuoteLink>
+        )}
+        <CartTable />
         <SendQuoteLink to="/enviar-cotizacion">
           Siguiente paso: Ingrese sus datos
         </SendQuoteLink>
-      )}
-      <CartTable />
-      <SendQuoteLink to="/enviar-cotizacion">
-        Siguiente paso: Ingrese sus datos
-      </SendQuoteLink>
-    </PageContent>
+      </>
+    </PageWrapper>
   );
 };
 export default CartPage;
