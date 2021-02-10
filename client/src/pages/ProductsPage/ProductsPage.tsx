@@ -1,11 +1,11 @@
 import React from "react";
 import { Environment, QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
-
 import { useParams } from "react-router-dom";
 import ProductList from "../../components/ProductList/ProductList";
-import { Heading, PageContent } from "bumbag";
+import { Heading } from "bumbag";
 import Loader from "../../components/Loader/Loader";
+import PageWrapper from "../../components/PageWrapper/PageWrapper";
 
 type ProductsPageProps = {
   environment: Environment;
@@ -40,12 +40,16 @@ export const ProductsPage: React.FunctionComponent<ProductsPageProps> = ({
         }
 
         return (
-          <PageContent isFluid>
-            <Heading use="h2" fontSize="400" paddingBottom="1rem">
-              {props.fetchCategory.name}
-            </Heading>
-            <ProductList products={props.fetchCategory.products} />
-          </PageContent>
+          <PageWrapper
+            title={`Comercial Gattoni seguridad industrial - Categoria: ${props.fetchCategory.name}`}
+          >
+            <>
+              <Heading use="h2" fontSize="400" paddingBottom="1rem">
+                {props.fetchCategory.name}
+              </Heading>
+              <ProductList products={props.fetchCategory.products} />
+            </>
+          </PageWrapper>
         );
       }}
     />

@@ -21,6 +21,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Loader from "../../components/Loader/Loader";
 import { certificationLinks } from "./certificationLinks";
 import CategoryGrid from "../../components/CategoryGrid/CategoryGrid";
+import PageWrapper from "../../components/PageWrapper/PageWrapper";
 
 type HomePageProps = {
   environment: Environment;
@@ -150,58 +151,60 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({
                 }}
               >
                 <PageWithHeader header={<Nav />} border="default">
-                  <div style={{ display: "flex" }}>
-                    {!isHomePage && (
-                      <aside style={{ flexBasis: "20%", paddingTop: "2rem" }}>
-                        <CategoryList categories={props.fetchCategories} />
-                      </aside>
-                    )}
-                    <main style={{ flexBasis: "80%", margin: "0 auto" }}>
-                      <Switch>
-                        <Route path="/contacto">
-                          <ContactForm
-                            initialValues={{
-                              nombre: "",
-                              empresa: "",
-                              email: "",
-                              mensaje: "",
-                              telefono: "",
-                              recaptcha: "",
-                            }}
-                          />
-                        </Route>
-                        <Route path="/certificaciones">
-                          <ContentList
-                            title="Certificaciones"
-                            description="Descargue documentos que certifican la calidad de nuestos productos."
-                            links={certificationLinks}
-                          />
-                        </Route>
-                        <Route path="/cotizacion">
-                          <CartPage />
-                        </Route>
-                        <Route path="/enviar-cotizacion">
-                          <QuotePage />
-                        </Route>
-                        <Route path="/categoria/:categoryId">
-                          <ProductsPage environment={environment} />
-                        </Route>
-                        <Route path="/resultados/:searchTerm">
-                          <SearchResultsPage environment={environment} />
-                        </Route>
-                        <Route path="/producto/:productId">
-                          <SingleProductPage environment={environment} />
-                        </Route>
-                        <Route path="/">
-                          <Main>
-                            <CategoryGrid
-                              categoryGridItems={props.fetchCategories}
+                  <PageWrapper title="Comercial Gattoni seguridad industrial - Inicio">
+                    <div style={{ display: "flex" }}>
+                      {!isHomePage && (
+                        <aside style={{ flexBasis: "20%", paddingTop: "2rem" }}>
+                          <CategoryList categories={props.fetchCategories} />
+                        </aside>
+                      )}
+                      <main style={{ flexBasis: "80%", margin: "0 auto" }}>
+                        <Switch>
+                          <Route path="/contacto">
+                            <ContactForm
+                              initialValues={{
+                                nombre: "",
+                                empresa: "",
+                                email: "",
+                                mensaje: "",
+                                telefono: "",
+                                recaptcha: "",
+                              }}
                             />
-                          </Main>
-                        </Route>
-                      </Switch>
-                    </main>
-                  </div>
+                          </Route>
+                          <Route path="/certificaciones">
+                            <ContentList
+                              title="Certificaciones"
+                              description="Descargue documentos que certifican la calidad de nuestos productos."
+                              links={certificationLinks}
+                            />
+                          </Route>
+                          <Route path="/cotizacion">
+                            <CartPage />
+                          </Route>
+                          <Route path="/enviar-cotizacion">
+                            <QuotePage />
+                          </Route>
+                          <Route path="/categoria/:categoryId">
+                            <ProductsPage environment={environment} />
+                          </Route>
+                          <Route path="/resultados/:searchTerm">
+                            <SearchResultsPage environment={environment} />
+                          </Route>
+                          <Route path="/producto/:productId">
+                            <SingleProductPage environment={environment} />
+                          </Route>
+                          <Route path="/">
+                            <Main>
+                              <CategoryGrid
+                                categoryGridItems={props.fetchCategories}
+                              />
+                            </Main>
+                          </Route>
+                        </Switch>
+                      </main>
+                    </div>
+                  </PageWrapper>
                 </PageWithHeader>
                 <Footer />
               </HomePageContext.Provider>
