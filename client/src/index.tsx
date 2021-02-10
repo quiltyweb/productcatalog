@@ -3,14 +3,17 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import HomePage from "./pages/HomePage/HomePage";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import environment from "./environment";
+import ReactGA from "react-ga";
+
+ReactGA.initialize("UA-46869013-1");
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <BrowserRouter>
       <HomePage environment={environment} />
-    </Router>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -5,6 +5,16 @@
 import "@testing-library/jest-dom/extend-expect";
 import "jest-axe/extend-expect";
 
+jest.mock("react-router-dom", () => ({
+  ...(jest.requireActual("react-router-dom") as any),
+  useLocation: () => ({
+    path: "123",
+    search: "456",
+  }),
+}));
+
+jest.mock("react-ga");
+
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
 
