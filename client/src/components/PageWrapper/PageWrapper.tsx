@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet";
 import { PageContent } from "bumbag";
 
 type PageContentProps = {
-  title: string;
   children: JSX.Element;
+  title?: string;
   breakpoint?: string;
   isFluid?: boolean;
 };
