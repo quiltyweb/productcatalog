@@ -1,9 +1,9 @@
 import { css } from "bumbag";
 import { ThemeConfig } from "bumbag/ts/types";
 
-export const newTheme: ThemeConfig = {
+export const darkTheme: ThemeConfig = {
   global: {
-    fontSize: 18,
+    fontSize: 28,
     styles: {
       base: css`
         html {
@@ -12,11 +12,11 @@ export const newTheme: ThemeConfig = {
           box-sizing: border-box;
         }
         body {
-          background-color: #ffffff;
-          color: #212121;
+          background-color: #000000;
+          color: #ffffff;
         }
         a {
-          color: #212121;
+          color: #ffffff;
           &:hover {
             color: #e16204;
           }
@@ -25,9 +25,9 @@ export const newTheme: ThemeConfig = {
     },
   },
   palette: {
-    primary: "#041e42",
-    secondary: "#f7941d",
-    text: "#3e4349",
+    primary: "red",
+    secondary: "blue",
+    text: "#ffffff",
     info: "#1e67d5",
     success: "#007933",
     danger: "#da291c",

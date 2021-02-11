@@ -57,6 +57,7 @@
   },
   "proxy": "http://server:3333",
   "devDependencies": {
+    "@react-theming/storybook-addon": "^1.0.3",
     "@storybook/addon-a11y": "^6.1.17",
     "@storybook/addon-viewport": "^6.1.17",
     "@storybook/preset-create-react-app": "^3.1.5",
