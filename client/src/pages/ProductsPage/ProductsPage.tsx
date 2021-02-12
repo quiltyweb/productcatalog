@@ -45,7 +45,7 @@ export const ProductsPage: React.FunctionComponent<ProductsPageProps> = ({
           >
             <>
               <Heading use="h2" fontSize="400" paddingBottom="1rem">
-                {props.fetchCategory.name}
+                Categoría: {props.fetchCategory.name}
               </Heading>
               <ProductList products={props.fetchCategory.products} />
             </>

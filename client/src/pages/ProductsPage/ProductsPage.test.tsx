@@ -37,7 +37,7 @@ describe("ProductsPage", () => {
         Category() {
           return {
             id: "1000",
-            name: "Category title Lorem ipsum",
+            name: "mocked_category_name",
           };
         },
         ProductConnection() {
@@ -64,7 +64,7 @@ describe("ProductsPage", () => {
         },
       })
     );
-    screen.getByRole("heading", { name: "Category title Lorem ipsum" });
+    screen.getByRole("heading", { name: "Categoría: mocked_category_name" });
     screen.getByRole("heading", { name: "Soldador" });
     screen.getByRole("heading", { name: "Zapatos" });
     screen.getAllByRole("link", { name: "ver producto" });

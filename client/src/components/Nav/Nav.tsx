@@ -76,35 +76,31 @@ const Nav = (): JSX.Element => {
         </HeadingLogo>
       </Link>
 
-      <TopNav.Section>
-        <TopNav.Item>
-          <form onSubmit={formik.handleSubmit}>
-            <Label htmlFor="searchTerm" display="flex" alignItems="center">
-              Buscar en catálogo:
-              <InputField
-                id="searchTerm"
-                name="searchTerm"
-                type="text"
-                value={formik.values.searchTerm}
-                onChange={formik.handleChange}
-                aria-label="Buscar"
-                size="small"
-                addonAfter={
-                  <Button type="submit" size="small">
-                    <FontAwesomeIcon
-                      style={{ marginRight: "0.2rem" }}
-                      size="sm"
-                      color="#777777"
-                      icon={faSearch}
-                    />
-                    Buscar
-                  </Button>
-                }
-              />
-            </Label>
-          </form>
-        </TopNav.Item>
-      </TopNav.Section>
+      <form onSubmit={formik.handleSubmit}>
+        <Label htmlFor="searchTerm" display="flex" alignItems="center">
+          Buscar en catálogo:
+          <InputField
+            id="searchTerm"
+            name="searchTerm"
+            type="search"
+            value={formik.values.searchTerm}
+            onChange={formik.handleChange}
+            aria-label="Buscar en catálogo"
+            size="small"
+            addonAfter={
+              <Button type="submit" size="small">
+                <FontAwesomeIcon
+                  style={{ marginRight: "0.2rem" }}
+                  size="sm"
+                  color="#777777"
+                  icon={faSearch}
+                />
+                Buscar
+              </Button>
+            }
+          />
+        </Label>
+      </form>
 
       <TopNav.Section>
         <TopNav.Item margin="0 1rem">
