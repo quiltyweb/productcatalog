@@ -1,6 +1,7 @@
 describe("HomePage", function(){
   beforeEach(() => {
     cy.visit("/", { headers: { Connection: "Keep-Alive" } });
+    cy.injectAxe()
     cy.wait(1000);
   });
 
