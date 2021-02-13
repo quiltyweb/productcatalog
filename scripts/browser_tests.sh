@@ -7,13 +7,6 @@ DEFAULT_NODE_ENV=${NODE_ENV}
 
 export NODE_ENV=test
 
-# There's probably a better way to do this, but we change the default DB name
-# to test_$DATABASE_NAME, which the app will then use as the default DB
-# for the browser tests. This follows Django's naming convention for test DBs.
-DEFAULT_DATABASE_NAME=${DB_NAME}
-
-export DB_NAME="test_${DEFAULT_DATABASE_NAME}"
-
 docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 
 ./scripts/wait-for-it.sh localhost:3333 -- echo "Server ready"
@@ -25,7 +18,7 @@ sleep 4
 
 # Need to create test DB separately because TypeORM won't do it for us
 docker exec -t -u postgres productcatalog_db_1 \
-  psql --command "CREATE DATABASE ${DB_NAME};"
+  psql --command "CREATE DATABASE test_${DB_NAME};"
 
 sleep 1
 
@@ -49,7 +42,7 @@ fi
 #### SEED TEST DB ####
 # TODO:
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
-   server ts-node server/tests/fixtures/seed_db.ts
+   server yarn run ts-node test/fixtures/seed_db.ts
 
 # We manually manage exit codes rather than using pipefail, because we want
 # to be sure to stop docker-compose before exiting.
@@ -76,11 +69,10 @@ EXIT_CODE=$?
 
 # TEST CLEANUP
 docker exec -t -u postgres productcatalog_db_1 \
-  psql --command "DROP DATABASE IF EXISTS ${DB_NAME};"
+  psql --command "DROP DATABASE IF EXISTS test_${DB_NAME};"
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 
 export NODE_ENV=${DEFAULT_NODE_ENV}
-export DB_NAME=${DEFAULT_DATABASE_NAME}
 
 docker-compose up -d

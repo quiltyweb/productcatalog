@@ -3,10 +3,8 @@ import { ProductFactory, CategoryFactory } from "./factories";
 import { Category } from "../../src/entity/Category";
 import { Product } from "../../src/entity/Product";
 
-const seedDB = async () => {
+ (async () => {
   const connection: Connection = await createConnection("test");
-  // const baseContext= { entityManager: connection.manager }; // TODO: when to use this?
-
     const recordCount = 5;
 
     const categories = CategoryFactory.buildMany(recordCount);
@@ -19,7 +17,5 @@ const seedDB = async () => {
 
     await connection.manager.save(Product, products);
 
-    // TODO: should I close the connection?
-}
-
-seedDB()
+    connection.close()
+})();
