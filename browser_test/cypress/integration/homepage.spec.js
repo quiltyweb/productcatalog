@@ -1,3 +1,5 @@
+import terminalLog from '../utils/terminalLog'
+
 describe("HomePage", function(){
   beforeEach(() => {
     cy.visit("/", { headers: { Connection: "Keep-Alive" } });
@@ -82,5 +84,9 @@ describe("HomePage", function(){
         cy.findByRole("heading",{name:"Mi Cotización:"})
       })
      })
+  })
+
+  it('Has no detectable a11y violations on load (custom configuration)', () => {
+    cy.checkA11y(null, null, terminalLog)
   })
 });
