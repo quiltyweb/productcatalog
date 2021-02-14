@@ -40,7 +40,6 @@ then
 fi
 
 #### SEED TEST DB ####
-# TODO:
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
    server yarn run ts-node test/fixtures/seed_db.ts
 
