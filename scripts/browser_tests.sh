@@ -3,8 +3,6 @@
 #### SETUP ####
 DOCKER_COMPOSE_FILE="${1:-docker-compose.yml}"
 
-TERM=dumb
-
 DEFAULT_NODE_ENV=${NODE_ENV}
 
 export NODE_ENV=test
