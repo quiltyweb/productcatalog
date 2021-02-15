@@ -41,3 +41,5 @@ services:
     network_mode: "host"
     environment:
       TERM: dumb
+      DB_NAME: product_catalog
+      HEROKU_APP: productcatalog
