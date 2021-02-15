@@ -28,3 +28,8 @@ jobs:
         run: ./scripts/integration_tests.sh docker-compose.ci.yml
       - name: Run browser end to end tests
         run: ./scripts/browser_tests.sh docker-compose.ci.yml
+      - uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: cypress-screenshots
+          path: ./browser_test/cypress/screenshots/
