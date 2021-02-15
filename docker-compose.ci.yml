@@ -39,3 +39,5 @@ services:
     # Need to use 'host' network mode to avoid cross-host errors
     # from Webpack server
     network_mode: "host"
+    environment:
+      TERM: dumb
