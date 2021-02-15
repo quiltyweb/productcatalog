@@ -1,15 +1,16 @@
-// import terminalLog from '../utils/terminalLog'
+import terminalLog from '../utils/terminalLog'
+
 describe("HomePage", function(){
   beforeEach(() => {
     cy.visit("/", { headers: { Connection: "Keep-Alive" } });
-    // cy.injectAxe()
+    cy.injectAxe()
     cy.wait(1000);
   });
 
   describe("When page loads", () => {
-    // it('Has no detectable a11y violations on load (custom configuration)', () => {
-    //   cy.checkA11y(null, null, terminalLog)
-    // })
+    it('Has no detectable a11y violations on load (custom configuration)', () => {
+      cy.checkA11y(null, null, terminalLog)
+    })
 
     it("loads navigation menu", () => {
       cy.findByRole("navigation").within(() => {
@@ -26,7 +27,7 @@ describe("HomePage", function(){
     it("loads a grid with categories", () => {
       cy.findByRole("main").within(()=>{
         cy.findByRole("heading", {name:"Nuestros Productos"}).should('exist');
-        cy.findAllByRole("listitem").should('have.length', 12);
+        cy.findByRole("list").should('exist');
       });
     });
 

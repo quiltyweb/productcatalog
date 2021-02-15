@@ -5,6 +5,7 @@ services:
     ports:
       - "3333:3333"
     environment:
+      PORT: 3333
       DB_HOST: db
       DB_NAME: ${DB_NAME}
       DB_PASSWORD: postgres
@@ -41,5 +42,3 @@ services:
     network_mode: "host"
     environment:
       TERM: dumb
-      DB_NAME: product_catalog
-      HEROKU_APP: productcatalog

@@ -11,6 +11,20 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 
 ./scripts/wait-for-it.sh localhost:3333 -- echo "Server ready"
 
+EXIT_CODE=$?
+
+if [ ${EXIT_CODE} != 0 ]
+then
+  # Need to stop before exiting to reset to non-test env vars
+  docker-compose -f ${DOCKER_COMPOSE_FILE} stop
+
+  export NODE_ENV=${DEFAULT_NODE_ENV}
+
+  docker-compose up -d
+
+  exit ${EXIT_CODE}
+fi
+
 # Tests have been flaky in CI, probably due to the DB not being ready
 # even if the server is running. In other projects, a 4-second sleep
 # safely give the DB time to get ready for input.
@@ -41,7 +55,7 @@ fi
 
 #### SEED TEST DB ####
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
-   server yarn run ts-node test/fixtures/seed_db.ts
+  server yarn run ts-node test/fixtures/seed_db.ts
 
 # We manually manage exit codes rather than using pipefail, because we want
 # to be sure to stop docker-compose before exiting.
