@@ -81,11 +81,8 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
 EXIT_CODE=$?
 
 # TEST CLEANUP
-if [ ${EXIT_CODE} != 1 ]
-then
-  docker exec -t -u postgres productcatalog_db_1 \
-    psql --command "DROP DATABASE IF EXISTS test_${DB_NAME};"
-fi
+docker exec -t -u postgres productcatalog_db_1 \
+  psql --command "DROP DATABASE IF EXISTS test_${DB_NAME};"
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 
