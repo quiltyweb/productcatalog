@@ -89,6 +89,6 @@ describe("ProductsPage", () => {
   test("Error State", () => {
     environment.mock.rejectMostRecentOperation(new Error("Uh-oh"));
 
-    screen.getByText("Se ha producido un Error, intente nuevamente.");
+    screen.getByText("Se ha producido un Error, intente nuevamente. Uh-oh");
   });
 });
