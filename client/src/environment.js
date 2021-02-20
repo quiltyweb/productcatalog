@@ -13,6 +13,7 @@ const getURI = () => {
 
 function fetchQuery(operation, variables) {
   const GRAPHQL_URI = getURI();
+  console.log("GRAPHQL_URI >>>>>>", GRAPHQL_URI);
   return fetch(GRAPHQL_URI, {
     method: "POST",
     headers: {
