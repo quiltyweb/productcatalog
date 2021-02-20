@@ -133,7 +133,8 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({
             if (error) {
               return (
                 <div>
-                  Se ha producido un Error, intente nuevamente. {error.message}
+                  Se ha producido un Error, intente nuevamente.{" "}
+                  {error.toString()}
                 </div>
               );
             }
