@@ -13,7 +13,6 @@ const getURI = () => {
 
 function fetchQuery(operation, variables) {
   const GRAPHQL_URI = getURI();
-  console.log("GRAPHQL_URI >>>>>>", GRAPHQL_URI);
   return fetch(GRAPHQL_URI, {
     method: "POST",
     headers: {
@@ -23,13 +22,12 @@ function fetchQuery(operation, variables) {
       query: operation.text,
       variables,
     }),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((error) => {
-      return error;
-    });
+  }).then((response) => {
+    return response.json();
+  });
+  // .catch((error) => {
+  //   return error;
+  // });
 }
 
 const environment = new Environment({
