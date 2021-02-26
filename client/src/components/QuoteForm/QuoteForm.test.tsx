@@ -4,7 +4,9 @@ import { createMemoryHistory } from "history";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import QuoteForm from "./QuoteForm";
-import nock from "nock";
+import { setQueryResponse } from "./../../utils/test/setQueryResponse";
+
+jest.mock("relay-runtime");
 
 const history = createMemoryHistory();
 
@@ -39,7 +41,7 @@ describe("QuoteForm Component", () => {
   });
 
   afterEach(() => {
-    nock.cleanAll();
+    jest.clearAllMocks();
   });
 
   it("renders without crashing", async () => {
@@ -56,16 +58,12 @@ describe("QuoteForm Component", () => {
   });
 
   it("should submit the form", async () => {
-    nock("http://localhost:3000/")
-      .post(`/graphql`)
-      .reply(200, {
-        data: {
-          sendQuoteRequest: {
-            status: "OK",
-            message: "passing",
-          },
-        },
-      });
+    setQueryResponse("resolve", {
+      sendQuoteRequest: {
+        status: "OK",
+        message: "passing",
+      },
+    });
 
     const nombre = screen.getByLabelText("Nombre o Empresa");
     const email = screen.getByLabelText("E-mail");
@@ -101,16 +99,12 @@ describe("QuoteForm Component", () => {
   });
 
   it("should display error message if response has FAILURE status", async () => {
-    nock("http://localhost:3000/")
-      .post(`/graphql`)
-      .reply(200, {
-        data: {
-          sendQuoteRequest: {
-            status: "FAILURE",
-            message: "error",
-          },
-        },
-      });
+    setQueryResponse("resolve", {
+      sendQuoteRequest: {
+        status: "FAILURE",
+        message: "error",
+      },
+    });
 
     const nombre = screen.getByLabelText("Nombre o Empresa");
     const email = screen.getByLabelText("E-mail");
@@ -137,16 +131,12 @@ describe("QuoteForm Component", () => {
   });
 
   it("should display error message if submit was not succesful", async () => {
-    nock("http://localhost:3000/")
-      .post(`/graphql`)
-      .replyWithError({
-        data: {
-          sendQuoteRequest: {
-            status: "FAILURE",
-            message: "error",
-          },
-        },
-      });
+    setQueryResponse("reject", {
+      sendQuoteRequest: {
+        status: "FAILURE",
+        message: "error",
+      },
+    });
 
     const nombre = screen.getByLabelText("Nombre o Empresa");
     const email = screen.getByLabelText("E-mail");
