@@ -98,7 +98,6 @@ const QuoteForm: React.FunctionComponent<QuoteFormProps> = ({
       };
 
       const variables = { input: inputArgs };
-
       fetchQuery(environment, query, variables)
         .then(({ sendQuoteRequest }: any) => {
           if (sendQuoteRequest.status === "FAILURE") {

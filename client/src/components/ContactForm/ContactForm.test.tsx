@@ -4,12 +4,15 @@ import { createMemoryHistory } from "history";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactForm from "./ContactForm";
-import nock from "nock";
+import { setQueryResponse } from "./../../utils/test/setQueryResponse";
+
+jest.mock("relay-runtime");
 
 const history = createMemoryHistory();
+
 describe("ContactForm Component", () => {
   afterEach(() => {
-    nock.cleanAll();
+    jest.clearAllMocks();
   });
 
   it("renders without crashing", async () => {
@@ -48,16 +51,12 @@ describe("ContactForm Component", () => {
   });
 
   it("should submit the form", async () => {
-    nock("http://localhost:3000/")
-      .post(`/graphql`)
-      .reply(200, {
-        data: {
-          sendContactMessage: {
-            status: "OK",
-            message: "passing",
-          },
-        },
-      });
+    setQueryResponse("resolve", {
+      sendContactMessage: {
+        status: "OK",
+        message: "passing",
+      },
+    });
 
     render(
       <Router history={history}>
@@ -110,16 +109,12 @@ describe("ContactForm Component", () => {
   });
 
   it("should display error message if response has FAILURE status", async () => {
-    nock("http://localhost:3000/")
-      .post(`/graphql`)
-      .reply(200, {
-        data: {
-          sendContactMessage: {
-            status: "FAILURE",
-            message: "error",
-          },
-        },
-      });
+    setQueryResponse("resolve", {
+      sendContactMessage: {
+        status: "FAILURE",
+        message: "error",
+      },
+    });
 
     render(
       <Router history={history}>
@@ -161,16 +156,12 @@ describe("ContactForm Component", () => {
   });
 
   it("should display error message if submit was not succesful", async () => {
-    nock("http://localhost:3000/")
-      .post(`/graphql`)
-      .replyWithError({
-        data: {
-          sendContactMessage: {
-            status: "FAILURE",
-            message: "error",
-          },
-        },
-      });
+    setQueryResponse("reject", {
+      sendContactMessage: {
+        status: "FAILURE",
+        message: "error",
+      },
+    });
 
     render(
       <Router history={history}>

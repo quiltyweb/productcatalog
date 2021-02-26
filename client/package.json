@@ -81,7 +81,6 @@
     "eslint-plugin-prettier": "^3.3.1",
     "graphql": "^15.1.0",
     "jest-axe": "^4.1.0",
-    "nock": "^13.0.7",
     "node-fetch": "^2.6.1",
     "prettier": "^2.2.1",
     "relay-compiler": "^10.1.3",
