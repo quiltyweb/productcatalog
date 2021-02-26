@@ -10,13 +10,17 @@ import styled from "styled-components";
 const ItemLink = styled((props) => <Link {...props} />)`
   text-decoration: none;
   color: #212121;
+  font-weight: 400;
 `;
 
-const HeadingLogo = styled((props) => <Heading {...props} />)`
-  display: flex;
-  align-items: center;
-  justify-self: center;
-  padding: 1rem;
+const HeadingLogo = styled.h1`
+  padding: 0;
+  margin: 0;
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
 `;
 
 const NavLogoHeading = styled.span`
@@ -31,7 +35,7 @@ const NavLogoHeading = styled.span`
 
 const NavLogoSubHeading = styled.span`
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400;
   color: #000000;
 `;
 
@@ -46,7 +50,16 @@ const Quantity = styled.div`
   margin: 0.2rem;
 `;
 
-const Nav = (): JSX.Element => {
+const SearchForm = styled.form`
+  display: flex;
+  align-items: stretch;
+`;
+
+const SearchInput = styled.input`
+  margin: 0 0.5rem;
+`;
+
+const Nav: React.FunctionComponent = (): JSX.Element => {
   const { cartCount } = useHomePageContext();
 
   const history = useHistory();
@@ -68,43 +81,34 @@ const Nav = (): JSX.Element => {
   });
 
   return (
-    <TopNav use="nav">
-      <Link to="/" title="Gattoni" style={{ textDecoration: "none" }}>
-        <HeadingLogo use="h1">
+    <TopNav use="nav" style={{ alignItems: "center" }}>
+      <HeadingLogo>
+        <Link to="/">
           <NavLogoHeading>GATTONI</NavLogoHeading>
           <NavLogoSubHeading>Seguridad Industrial</NavLogoSubHeading>
-        </HeadingLogo>
-      </Link>
+        </Link>
+      </HeadingLogo>
 
-      <TopNav.Section>
-        <TopNav.Item>
-          <form onSubmit={formik.handleSubmit}>
-            <Label htmlFor="searchTerm" display="flex" alignItems="center">
-              Buscar en catálogo:
-              <InputField
-                id="searchTerm"
-                name="searchTerm"
-                type="text"
-                value={formik.values.searchTerm}
-                onChange={formik.handleChange}
-                aria-label="Buscar"
-                size="small"
-                addonAfter={
-                  <Button type="submit" size="small">
-                    <FontAwesomeIcon
-                      style={{ marginRight: "0.2rem" }}
-                      size="sm"
-                      color="#777777"
-                      icon={faSearch}
-                    />
-                    Buscar
-                  </Button>
-                }
-              />
-            </Label>
-          </form>
-        </TopNav.Item>
-      </TopNav.Section>
+      <SearchForm onSubmit={formik.handleSubmit}>
+        <label htmlFor="searchTerm">Ingrese su búsqueda:</label>
+        <SearchInput
+          id="searchTerm"
+          name="searchTerm"
+          type="text"
+          value={formik.values.searchTerm}
+          onChange={formik.handleChange}
+        />
+        <Button type="submit" size="small">
+          <FontAwesomeIcon
+            aria-hidden={true}
+            style={{ marginRight: "0.2rem" }}
+            size="sm"
+            color="#777777"
+            icon={faSearch}
+          />
+          Buscar
+        </Button>
+      </SearchForm>
 
       <TopNav.Section>
         <TopNav.Item margin="0 1rem">
@@ -120,9 +124,10 @@ const Nav = (): JSX.Element => {
             color="#777777"
             icon={faListUl}
           />
-          <ItemLink to="/cotizacion">
-            Mi Cotización {cartCount > 0 && <Quantity> {cartCount}</Quantity>}
-          </ItemLink>
+          <ItemLink to="/cotizacion">Mi Cotización</ItemLink>
+          {cartCount > 0 && (
+            <Quantity aria-label="productos agregados">{cartCount}</Quantity>
+          )}
         </TopNav.Item>
       </TopNav.Section>
     </TopNav>

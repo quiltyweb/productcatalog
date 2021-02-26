@@ -20,7 +20,7 @@ describe("Nav Component", () => {
     screen.getByRole("link", { name: "Productos" });
     screen.getByRole("link", { name: "Productos" });
     screen.getByRole("link", { name: "Mi Cotización" });
-    screen.getByText("Buscar en catálogo:");
+    screen.getByText("Ingrese su búsqueda:");
     screen.getByRole("button", { name: "Buscar" });
   });
 
