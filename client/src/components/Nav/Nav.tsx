@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { Link, useHistory } from "react-router-dom";
-import { Label, Button, TopNav, InputField, Heading } from "bumbag";
+import { Button, TopNav } from "bumbag";
 import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListUl, faSearch } from "@fortawesome/free-solid-svg-icons";
