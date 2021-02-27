@@ -14,7 +14,7 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} up --no-start
 echo "Starting DB..."
 docker-compose -f ${DOCKER_COMPOSE_FILE} start db
 
-sleep 1
+sleep 4
 
 # Need to create test DB separately because TypeORM won't do it for us
 docker exec -t -u postgres productcatalog_db_1 \
@@ -26,12 +26,14 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm server \
   yarn run migration:run -c test
 
 #### SEED TEST DB ####
+echo "Seeding database..."
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
   server yarn run ts-node test/fixtures/seed_db.ts
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
-
 ./scripts/wait-for-it.sh localhost:3000 -- echo "App ready"
+
+sleep 1
 
 #### RUN TESTS ####
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
