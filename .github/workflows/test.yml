@@ -26,6 +26,8 @@ jobs:
         run: docker-compose -f docker-compose.ci.yml run client yarn run test --watchAll=false
       - name: Run server integration tests
         run: ./scripts/integration_tests.sh docker-compose.ci.yml
+      - name: Reset containers between test scripts
+        run: docker-compose -f docker-compose.ci.yml down
       - name: Run browser end to end tests
         run: ./scripts/browser_tests.sh docker-compose.ci.yml
       - uses: actions/upload-artifact@v2

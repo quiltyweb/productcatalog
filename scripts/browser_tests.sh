@@ -2,13 +2,11 @@
 
 #### SETUP ####
 DOCKER_COMPOSE_FILE="${1:-docker-compose.yml}"
-
 DEFAULT_NODE_ENV=${NODE_ENV:-""}
-
 export NODE_ENV=test
 
+docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 docker-compose -f ${DOCKER_COMPOSE_FILE} pull db
-
 echo "Creating Docker containers..."
 docker-compose -f ${DOCKER_COMPOSE_FILE} up --no-start
 echo "Starting DB..."
@@ -19,8 +17,6 @@ sleep 4
 # Need to create test DB separately because TypeORM won't do it for us
 docker exec -t -u postgres productcatalog_db_1 \
   psql --command "CREATE DATABASE test_${DB_NAME};"
-
-sleep 1
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm server \
   yarn run migration:run -c test
@@ -46,9 +42,7 @@ docker exec -t -u postgres productcatalog_db_1 \
   psql --command "DROP DATABASE IF EXISTS test_${DB_NAME};"
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} stop
-
 export NODE_ENV=${DEFAULT_NODE_ENV}
-
 docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 
 exit ${EXIT_CODE}
