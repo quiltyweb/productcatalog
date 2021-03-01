@@ -18,7 +18,7 @@ describe("Nav Component", () => {
     );
     screen.getByRole("heading", { name: "GATTONI Seguridad Industrial" });
     screen.getByRole("link", { name: "Productos" });
-    screen.getByRole("link", { name: "Productos" });
+    screen.getByRole("link", { name: "Contacto" });
     screen.getByRole("link", { name: "Mi Cotización" });
     screen.getByText("Buscar en catálogo:");
     screen.getByRole("button", { name: "Buscar" });

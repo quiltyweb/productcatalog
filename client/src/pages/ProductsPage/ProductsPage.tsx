@@ -33,7 +33,11 @@ export const ProductsPage: React.FunctionComponent<ProductsPageProps> = ({
       variables={{ categoryId: categoryId }}
       render={({ error, props }: { error: any; props: any }) => {
         if (error) {
-          return <div>Se ha producido un Error, intente nuevamente.</div>;
+          return (
+            <div>
+              Se ha producido un Error, intente nuevamente. {error.message}
+            </div>
+          );
         }
         if (!props) {
           return <Loader />;
@@ -45,7 +49,7 @@ export const ProductsPage: React.FunctionComponent<ProductsPageProps> = ({
           >
             <>
               <Heading use="h2" fontSize="400" paddingBottom="1rem">
-                {props.fetchCategory.name}
+                Categoría: {props.fetchCategory.name}
               </Heading>
               <ProductList products={props.fetchCategory.products} />
             </>

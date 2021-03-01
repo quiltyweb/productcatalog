@@ -33,7 +33,11 @@ export const SearchResultsPage: React.FunctionComponent<SearchResultsPageProps> 
       variables={{ searchTerm: searchTerm }}
       render={({ error, props }: { error: any; props: any }) => {
         if (error) {
-          return <div>Se ha producido un Error, intente nuevamente.</div>;
+          return (
+            <div>
+              Se ha producido un Error, intente nuevamente. {error.message}
+            </div>
+          );
         }
         if (!props) {
           return <Loader />;
