@@ -79,7 +79,7 @@ describe("CategoryGrid Fragment Container", () => {
       });
     });
 
-    screen.getByRole("heading", { name: "Soldador" });
-    screen.getByRole("heading", { name: "Zapatos" });
+    screen.getByRole("heading", { name: "categoría Soldador" });
+    screen.getByRole("heading", { name: "categoría Zapatos" });
   });
 });

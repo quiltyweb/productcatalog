@@ -49,15 +49,18 @@ export const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
                 <Card standalone>
                   <Card.Content alignX="center">
                     <Image
+                      aria-hidden={true}
                       fit="contain"
                       height="150px"
                       src={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/categories/${item.node.name.toLowerCase()}.jpg`}
-                      alt={"categoria " + item.node.name}
                       backgroundColor="white"
+                      alt=""
                     />
                   </Card.Content>
                   <Card.Header use="h2" alignX="center">
-                    <Card.Title>{item.node.name}</Card.Title>
+                    <Card.Title aria-label={"categoría " + item.node.name}>
+                      {item.node.name}
+                    </Card.Title>
                   </Card.Header>
                 </Card>
               </GridItemLink>
