@@ -1,16 +1,16 @@
-// import terminalLog from '../utils/terminalLog'
+import terminalLog from '../utils/terminalLog'
 
 describe("HomePage", function(){
   beforeEach(() => {
     cy.visit("/", { headers: { Connection: "Keep-Alive" } });
-    // cy.injectAxe()
+    cy.injectAxe()
     cy.wait(1000);
   });
 
   describe("When page loads", () => {
-    // it('Has no detectable a11y violations on load (custom configuration)', () => {
-    //   cy.checkA11y(null, null, terminalLog)
-    // })
+    it('Has no detectable a11y violations on load (custom configuration)', () => {
+      cy.checkA11y(null, null, terminalLog)
+    })
 
     it("loads navigation menu", () => {
       cy.findByRole("navigation");
@@ -48,16 +48,6 @@ describe("HomePage", function(){
       cy.findByRole("heading",{name:'Resultados para: "casco"'})
     })
   })
-
-  // describe("When user clicks on product menu item", () => {
-  //   it("loads products page", () => {
-  //     cy.findByRole("navigation").within(() => {
-  //       cy.findByRole("link", { name: "Productos" }).click();
-  //     })
-  //     cy.findByRole("heading",{name:"Categoría: Soldador"})
-  //   })
-  // })
-
   describe("When user clicks on contact menu item", () => {
     it("loads Contact page", () => {
       cy.findByRole("navigation").within(() => {
@@ -88,5 +78,15 @@ describe("HomePage", function(){
         cy.findByRole("heading",{name:"Mi Cotización:"})
       })
      })
+  })
+
+  describe("When user clicks on product menu item", () => {
+    it("loads products page", () => {
+      cy.findByRole("navigation").within(() => {
+        cy.findByRole("link", { name: "Productos" }).click();
+      })
+      cy.findByRole("complementary")
+      cy.findByRole("main")
+    })
   })
 });
