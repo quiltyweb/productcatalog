@@ -25,6 +25,9 @@ function fetchQuery(operation, variables) {
   }).then((response) => {
     return response.json();
   });
+  // .catch((error) => {
+  //   return error;
+  // });
 }
 
 const environment = new Environment({

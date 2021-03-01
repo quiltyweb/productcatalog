@@ -123,7 +123,10 @@ const FooterComponent = (): JSX.Element => {
         breakpoint="widescreen"
         textAlign="center"
         padding="major-2"
-        wrapperProps={{ backgroundColor: "#e16204" }}
+        wrapperProps={{
+          backgroundColor: "#212121",
+          borderTop: "1px solid orange",
+        }}
       >
         &copy; Todos los derechos reservados {currDate.getFullYear()} Comercial
         Gattoni.

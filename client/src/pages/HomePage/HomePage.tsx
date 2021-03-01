@@ -131,7 +131,12 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({
           variables={{}}
           render={({ error, props }: { error: any; props: any }) => {
             if (error) {
-              return <div>Se ha producido un Error, intente nuevamente.</div>;
+              return (
+                <div>
+                  Se ha producido un Error, intente nuevamente.{" "}
+                  {error.toString()}
+                </div>
+              );
             }
             if (!props) {
               return <Loader />;
