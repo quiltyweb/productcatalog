@@ -43,7 +43,7 @@ describe("HomePage", function(){
 
   describe("When user types a search term in searchbox", () => {
     it("loads search results page", () => {
-      cy.findByRole("searchbox").type("casco")
+      cy.findByLabelText("Ingrese su búsqueda:").type("casco")
       cy.findByRole("button", {name: "Buscar"}).click()
       cy.findByRole("heading",{name:'Resultados para: "casco"'})
     })
