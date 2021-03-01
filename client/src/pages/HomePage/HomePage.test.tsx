@@ -73,11 +73,11 @@ describe("HomePage", () => {
     const mainSection = screen.getByRole("main");
     within(mainSection).getByText("Nuestros Productos");
     const cat1 = within(mainSection).getByRole("link", {
-      name: "categoria Soldador Soldador",
+      name: "categoría Soldador",
     });
     expect(cat1).toHaveAttribute("href", "/categoria/1");
     const cat2 = within(mainSection).getByRole("link", {
-      name: "categoria Zapatos Zapatos",
+      name: "categoría Zapatos",
     });
     expect(cat2).toHaveAttribute("href", "/categoria/2");
     screen.getByRole("contentinfo");
