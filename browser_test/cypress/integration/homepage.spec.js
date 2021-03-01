@@ -8,12 +8,7 @@ describe("HomePage", function(){
   });
 
   describe("When page loads", () => {
-    it('Has no detectable a11y violations on load (custom configuration)', () => {
-      cy.checkA11y(null, null, terminalLog)
-    })
-
     it("loads navigation menu", () => {
-      cy.findByRole("navigation");
       cy.findByRole("navigation").within(() => {
           cy.findByRole("link", { name: "GATTONI Seguridad Industrial" });
           cy.findByRole("link", { name: "Productos" });
@@ -88,5 +83,9 @@ describe("HomePage", function(){
       cy.findByRole("complementary")
       cy.findByRole("main")
     })
+  })
+
+  it('Has no detectable a11y violations on load (custom configuration)', () => {
+    cy.checkA11y(null, null, terminalLog)
   })
 });
