@@ -15,12 +15,11 @@ describe("HomePage", function(){
     it("loads navigation menu", () => {
       cy.findByRole("navigation");
       cy.findByRole("navigation").within(() => {
-          cy.findByRole("heading", { name: "GATTONI Seguridad Industrial" });
-          // cy.findAllByRole("listitem").should('have.length', 3);
+          cy.findByRole("link", { name: "GATTONI Seguridad Industrial" });
           cy.findByRole("link", { name: "Productos" });
           cy.findByRole("link", { name: "Contacto" });
           cy.findByRole("link", { name: "Mi Cotización" });
-          cy.findByRole("searchbox").type("casco minero").should("have.value","casco minero" )
+          cy.findByLabelText("Ingrese su búsqueda:").type("casco minero").should("have.value","casco minero" )
           cy.findByRole("button", { name: "Buscar" });
       })
     });
@@ -50,14 +49,14 @@ describe("HomePage", function(){
     })
   })
 
-  describe("When user clicks on product menu item", () => {
-    it("loads products page", () => {
-      cy.findByRole("navigation").within(() => {
-        cy.findByRole("link", { name: "Productos" }).click();
-      })
-      cy.findByRole("heading",{name:"Categoría: Soldador"})
-    })
-  })
+  // describe("When user clicks on product menu item", () => {
+  //   it("loads products page", () => {
+  //     cy.findByRole("navigation").within(() => {
+  //       cy.findByRole("link", { name: "Productos" }).click();
+  //     })
+  //     cy.findByRole("heading",{name:"Categoría: Soldador"})
+  //   })
+  // })
 
   describe("When user clicks on contact menu item", () => {
     it("loads Contact page", () => {
