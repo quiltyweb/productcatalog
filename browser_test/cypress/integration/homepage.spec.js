@@ -1,28 +1,22 @@
-// import terminalLog from '../utils/terminalLog'
+import terminalLog from '../utils/terminalLog'
 
 describe("HomePage", function(){
   beforeEach(() => {
     cy.visit("/", { headers: { Connection: "Keep-Alive" } });
-    // cy.injectAxe()
+    cy.injectAxe()
     cy.wait(1000);
   });
 
   describe("When page loads", () => {
-    // it('Has no detectable a11y violations on load (custom configuration)', () => {
-    //   cy.checkA11y(null, null, terminalLog)
-    // })
-
-    it.only("loads navigation menu", () => {
-      cy.findByRole("navigation");
-      // cy.findByRole("navigation").within(() => {
-      //     cy.findByRole("heading", { name: "GATTONI Seguridad Industrial" });
-      //     cy.findAllByRole("listitem").should('have.length', 3);
-      //     cy.findByRole("link", { name: "Productos" });
-      //     cy.findByRole("link", { name: "Contacto" });
-      //     cy.findByRole("link", { name: "Mi Cotización" });
-      //     cy.findByRole("searchbox").type("casco minero").should("have.value","casco minero" )
-      //     cy.findByRole("button", { name: "Buscar" });
-      // })
+    it("loads navigation menu", () => {
+      cy.findByRole("navigation").within(() => {
+          cy.findByRole("link", { name: "GATTONI Seguridad Industrial" });
+          cy.findByRole("link", { name: "Productos" });
+          cy.findByRole("link", { name: "Contacto" });
+          cy.findByRole("link", { name: "Mi Cotización" });
+          cy.findByLabelText("Ingrese su búsqueda:").type("casco minero").should("have.value","casco minero" )
+          cy.findByRole("button", { name: "Buscar" });
+      })
     });
 
     it("loads a grid with categories", () => {
@@ -44,21 +38,11 @@ describe("HomePage", function(){
 
   describe("When user types a search term in searchbox", () => {
     it("loads search results page", () => {
-      cy.findByRole("searchbox").type("casco")
+      cy.findByLabelText("Ingrese su búsqueda:").type("casco")
       cy.findByRole("button", {name: "Buscar"}).click()
       cy.findByRole("heading",{name:'Resultados para: "casco"'})
     })
   })
-
-  describe("When user clicks on product menu item", () => {
-    it("loads products page", () => {
-      cy.findByRole("navigation").within(() => {
-        cy.findByRole("link", { name: "Productos" }).click();
-      })
-      cy.findByRole("heading",{name:"Categoría: Soldador"})
-    })
-  })
-
   describe("When user clicks on contact menu item", () => {
     it("loads Contact page", () => {
       cy.findByRole("navigation").within(() => {
@@ -89,5 +73,19 @@ describe("HomePage", function(){
         cy.findByRole("heading",{name:"Mi Cotización:"})
       })
      })
+  })
+
+  describe("When user clicks on product menu item", () => {
+    it("loads products page", () => {
+      cy.findByRole("navigation").within(() => {
+        cy.findByRole("link", { name: "Productos" }).click();
+      })
+      cy.findByRole("complementary")
+      cy.findByRole("main")
+    })
+  })
+
+  it('Has no detectable a11y violations on load (custom configuration)', () => {
+    cy.checkA11y(null, null, terminalLog)
   })
 });
