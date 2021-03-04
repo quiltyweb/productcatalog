@@ -96,6 +96,8 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
           justifyContent: "center",
           alignItems: "center",
           flex: "1",
+          maxWidth: "900px",
+          margin: "0 auto",
         }}
       >
         <ImgWithFallback
@@ -113,7 +115,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
         justifyContent="space-evenly"
         alignItems="center"
         flexWrap="wrap"
-        marginTop="1rem"
+        marginTop="3rem"
       >
         {isSinglePage ? (
           <>

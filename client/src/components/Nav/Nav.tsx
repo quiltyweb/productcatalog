@@ -103,7 +103,7 @@ const SearchForm = styled.form`
   margin: 0 1rem 1rem;
   border-bottom: 1px solid rgb(230, 230, 235);
   @media (min-width: 960px) {
-    margin: 0 0.5rem;
+    margin: 0 2rem 0 0;
     flex-direction: row;
     align-items: center;
     border-bottom: initial;
@@ -174,13 +174,13 @@ const NavList: React.FunctionComponent<{ cartCount: number }> = ({
 }): JSX.Element => {
   return (
     <TopNavigationSection>
-      <TopNav.Item margin="0 1rem">
+      <TopNav.Item margin="0 0.8rem">
         <ItemLink to="/categoria/Q2F0ZWdvcnk6Nw==">Productos</ItemLink>
       </TopNav.Item>
-      <TopNav.Item margin="0 1rem">
+      <TopNav.Item margin="0 0.8rem">
         <ItemLink to="/contacto">Contacto</ItemLink>
       </TopNav.Item>
-      <TopNav.Item margin="0 1rem">
+      <TopNav.Item margin="0 0.8rem" whiteSpace="nowrap">
         <FontAwesomeIcon
           style={{ marginRight: "0.2rem" }}
           size="sm"
