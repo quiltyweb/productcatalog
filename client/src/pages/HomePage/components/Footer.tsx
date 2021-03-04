@@ -31,7 +31,7 @@ const FooterComponent = (): JSX.Element => {
   const currDate = new Date();
   return (
     <Footer>
-      <PageContent padding="3rem 0" breakpoint="widescreen">
+      <PageContent padding="3rem 0.5rem" breakpoint="widescreen">
         <Columns>
           <Column spread={5}>
             <Heading
