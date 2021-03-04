@@ -163,7 +163,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({
                           <CategoryList categories={props.fetchCategories} />
                         </aside>
                       )}
-                      <main style={{ flexBasis: "80%", margin: "1rem auto" }}>
+                      <main style={{ flexBasis: "80%", margin: "0.5rem auto" }}>
                         <Switch>
                           <Route path="/contacto">
                             <ContactForm

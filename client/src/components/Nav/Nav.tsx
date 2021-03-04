@@ -63,7 +63,7 @@ const HeadingLogo = styled.h1`
 `;
 
 const NavLogoHeading = styled.span`
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 800;
   background: -webkit-linear-gradient(#ffb300, #c71c00);
   -webkit-background-clip: text;
@@ -73,7 +73,7 @@ const NavLogoHeading = styled.span`
 `;
 
 const NavLogoSubHeading = styled.span`
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 400;
   color: #000000;
 `;
@@ -115,6 +115,7 @@ const SearchInput = styled.input`
 
 const MobileButton = styled((props) => <Button {...props} />)`
   display: block;
+  margin: 0 0.5rem;
   @media (min-width: 960px) {
     display: none;
   }
@@ -139,7 +140,7 @@ const NavSearchForm: React.FunctionComponent<FormikProps<FormValues>> = ({
         value={values.searchTerm}
         onChange={handleChange}
       />
-      <Button type="submit" size="small">
+      <Button type="submit" size="small" style={{ whiteSpace: "nowrap" }}>
         <FontAwesomeIcon
           aria-hidden={true}
           style={{ marginRight: "0.2rem" }}

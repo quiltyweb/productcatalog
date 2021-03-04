@@ -11,8 +11,8 @@ const GridList = styled((props) => <List {...props} />)`
   flex-wrap: wrap;
   @supports (display: grid) {
     display: grid;
-    grid-gap: 0.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   }
 `;
 

@@ -69,7 +69,14 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
   const { addCartItem } = useHomePageContext();
 
   return (
-    <Card standalone>
+    <Card
+      standalone
+      flex="1"
+      display="flex"
+      flexDirection="column"
+      variant="bordered"
+      padding="major-1"
+    >
       <Card.Header>
         <Card.Title
           id="title"
@@ -88,6 +95,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          flex: "1",
         }}
       >
         <ImgWithFallback
@@ -105,22 +113,34 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
         justifyContent="space-evenly"
         alignItems="center"
         flexWrap="wrap"
+        marginTop="1rem"
       >
         {isSinglePage ? (
           <>
-            <Link to={`/certificaciones`}>Certificado</Link>
+            <Link
+              style={{ margin: "0 0.5rem 1rem", textAlign: "center" }}
+              to={`/certificaciones`}
+            >
+              Certificado
+            </Link>
             {attachmentPath && (
               <a
                 href={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/adjuntos/${attachmentPath}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                style={{ margin: "0 0.5rem 1rem", textAlign: "center" }}
               >
                 Descargar ficha técnica
               </a>
             )}
           </>
         ) : (
-          <Link to={`/producto/${productId}`}>ver producto</Link>
+          <Link
+            style={{ margin: "0 0.5rem 1rem", textAlign: "center" }}
+            to={`/producto/${productId}`}
+          >
+            ver producto
+          </Link>
         )}
         <Button
           onClick={() =>
