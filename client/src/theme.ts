@@ -3,7 +3,7 @@ import { ThemeConfig } from "bumbag/ts/types";
 
 export const newTheme: ThemeConfig = {
   global: {
-    fontSize: 18,
+    fontSize: 16,
     styles: {
       base: css`
         html {

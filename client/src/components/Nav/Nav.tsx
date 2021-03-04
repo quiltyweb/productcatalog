@@ -63,7 +63,7 @@ const HeadingLogo = styled.h1`
 `;
 
 const NavLogoHeading = styled.span`
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 800;
   background: -webkit-linear-gradient(#ffb300, #c71c00);
   -webkit-background-clip: text;
@@ -73,7 +73,7 @@ const NavLogoHeading = styled.span`
 `;
 
 const NavLogoSubHeading = styled.span`
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 400;
   color: #000000;
 `;
@@ -100,23 +100,39 @@ const SearchForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  margin: 0 0.5rem 1rem;
-  @media (min-width: 425px) {
+  margin: 0 1rem 1rem;
+  border-bottom: 1px solid rgb(230, 230, 235);
+  @media (min-width: 960px) {
     margin: 0 0.5rem;
     flex-direction: row;
     align-items: center;
+    border-bottom: initial;
   }
 `;
 
 const SearchInput = styled.input`
-  margin: 0 0.5rem;
-  height: 36px;
+  margin: 0.5rem 0;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid;
+  @media (min-width: 425px) {
+    margin: 0 0.5rem;
+  }
 `;
 
 const MobileButton = styled((props) => <Button {...props} />)`
   display: block;
+  margin: 0 0.5rem;
   @media (min-width: 960px) {
     display: none;
+  }
+`;
+
+const SearchButton = styled((props) => <Button {...props} />)`
+  margin: 0.5rem 0 2rem;
+  white-space: nowrap;
+  @media (min-width: 960px) {
+    margin: 0;
   }
 `;
 
@@ -139,7 +155,7 @@ const NavSearchForm: React.FunctionComponent<FormikProps<FormValues>> = ({
         value={values.searchTerm}
         onChange={handleChange}
       />
-      <Button type="submit" size="small">
+      <SearchButton type="submit" size="small">
         <FontAwesomeIcon
           aria-hidden={true}
           style={{ marginRight: "0.2rem" }}
@@ -148,7 +164,7 @@ const NavSearchForm: React.FunctionComponent<FormikProps<FormValues>> = ({
           icon={faSearch}
         />
         Buscar
-      </Button>
+      </SearchButton>
     </SearchForm>
   );
 };

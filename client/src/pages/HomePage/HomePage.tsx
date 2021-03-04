@@ -157,13 +157,13 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({
               >
                 <PageWithHeader header={<Nav />} border="default">
                   <PageWrapper title="Comercial Gattoni seguridad industrial - Inicio">
-                    <div style={{ display: "flex" }}>
+                    <div style={{ display: "flex", flexWrap: "wrap-reverse" }}>
                       {!isHomePage && (
                         <aside style={{ flexBasis: "20%", paddingTop: "2rem" }}>
                           <CategoryList categories={props.fetchCategories} />
                         </aside>
                       )}
-                      <main style={{ flexBasis: "80%", margin: "0 auto" }}>
+                      <main style={{ flexBasis: "80%", margin: "0.5rem auto" }}>
                         <Switch>
                           <Route path="/contacto">
                             <ContactForm

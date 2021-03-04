@@ -7,19 +7,25 @@ import PageWrapper from "../../components/PageWrapper/PageWrapper";
 
 const SendQuoteLink = styled((props) => <Link {...props} />)`
   display: block;
-  text-align: right;
   color: #000;
   font-weight: 600;
   font-size: 1.2rem;
-  white-space: nowrap;
-  padding: 1rem;
+  padding: 0;
   transition: color 0.2s;
   text-decoration: underline;
   border-radius: 4px;
   color: #d32f2f;
+  text-align: center;
+  white-space: normal;
+  padding: 1rem 0;
   &:hover {
     color: #ff0000;
     text-decoration: underline;
+  }
+  @media (min-width: 425px) {
+    padding: 1rem;
+    text-align: right;
+    white-space: nowrap;
   }
 `;
 

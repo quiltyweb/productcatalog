@@ -22,7 +22,7 @@ export const CartTable: React.FunctionComponent<CartProps> = ({
 }): JSX.Element => {
   const { cart, removeCartItem } = useHomePageContext();
   return (
-    <Table>
+    <Table isResponsive>
       <Table.Head>
         <Table.Row>
           <Table.HeadCell>Imagen:</Table.HeadCell>
