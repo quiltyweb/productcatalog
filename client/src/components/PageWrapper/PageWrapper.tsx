@@ -23,7 +23,11 @@ const PageWrapper: React.FunctionComponent<PageContentProps> = ({
   }, [location]);
 
   return (
-    <PageContent breakpoint={breakpoint} isFluid={isFluid}>
+    <PageContent
+      breakpoint={breakpoint}
+      isFluid={isFluid}
+      style={{ padding: "0" }}
+    >
       <Helmet>
         <title>{title}</title>
       </Helmet>

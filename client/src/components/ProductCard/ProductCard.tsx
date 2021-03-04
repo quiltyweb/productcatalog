@@ -104,6 +104,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
         display="flex"
         justifyContent="space-evenly"
         alignItems="center"
+        flexWrap="wrap"
       >
         {isSinglePage ? (
           <>
