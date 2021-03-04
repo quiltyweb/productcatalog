@@ -3904,18 +3904,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-relay@*":
+"@types/react-relay@*", "@types/react-relay@^7.0.8":
   version "7.0.9"
   resolved "https://registry.yarnpkg.com/@types/react-relay/-/react-relay-7.0.9.tgz#aae453888d5383dc13d7c5b55beb6b5933939ae8"
   integrity sha512-5wxvzTIA2XatkEvAIBkMtUBlqnhn7kia8sPMYB9YPRTWw/GA4CQ/YFavSfcv5lXc5PH0oQhdRzCMALpa+2yjKw==
-  dependencies:
-    "@types/react" "*"
-    "@types/relay-runtime" "*"
-
-"@types/react-relay@^7.0.8":
-  version "7.0.8"
-  resolved "https://registry.yarnpkg.com/@types/react-relay/-/react-relay-7.0.8.tgz#928e91d7c7b58844738d6a7b18aa224ab564c98c"
-  integrity sha512-cs1dqvSzlZI4Gxm4gUalL/f8uRozLCOAaoHmMWIRS7ggDCkF/gaua86sAbRr5/5GeBCDcLAZDUzmAxzS9exrlA==
   dependencies:
     "@types/react" "*"
     "@types/relay-runtime" "*"
@@ -3964,10 +3956,10 @@
   resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-8.0.11.tgz#7b186ee9fd3b0fa1ee787bf66164d0154f7e8c0a"
   integrity sha512-m2j4UD1BB6nNS5QBbvjulHT+pxNV15wHCy0yG40CYbavwYfNxte63uN/elOCI0p/+2qRUc3ymtuneth0iNgNmA==
 
-"@types/relay-test-utils@^6.0.2":
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/@types/relay-test-utils/-/relay-test-utils-6.0.2.tgz#d27e095ef211be964d861afa20f421693e4fcb7f"
-  integrity sha512-tAPZ9h4iyuyigbcLysVhk0S7hyCGLlyFMyHIN3Lv3ivHGEM1WSpPDBUMV5Bl1pGhQT5+0OADHNB0NCC85IMGpA==
+"@types/relay-test-utils@^6.0.3":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@types/relay-test-utils/-/relay-test-utils-6.0.3.tgz#aea2fa30e754c94f0d45b4abe78dfb2e35e2b45d"
+  integrity sha512-vVI8RcdnrP9pBaIN6Sg/ngni9Yh509WGbbX4tjPYlpNwsHGXs/O0e2Bjd4GZGQdInFvsrs/OOiGUG0dxoLscDQ==
   dependencies:
     "@types/react" "*"
     "@types/react-relay" "*"
@@ -14663,13 +14655,6 @@ sha.js@^2.4.0, sha.js@^2.4.8:
   dependencies:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
-
-shallow-clone@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/shallow-clone/-/shallow-clone-3.0.1.tgz#8f2981ad92531f55035b01fb230769a40e02efa3"
-  integrity sha512-/6KqX+GVUdqPuPPd2LxDDxzX6CAbjJehAAOKlNpqqUpAqPM6HeL8f+o3a+JsyGjn2lv0WY8UsTgUJjU9Ok55NA==
-  dependencies:
-    kind-of "^6.0.2"
 
 shallow-equal@^1.1.0:
   version "1.2.1"
