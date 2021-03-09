@@ -8,7 +8,6 @@ function databaseInfo() {
     username: "postgres",
     password: "postgres",
     database: process.env.DB_NAME || "",
-    ssl: true
   };
 }
 
@@ -43,6 +42,7 @@ module.exports = [
     ...baseOrmConfig,
     ...databaseInfo(),
     name: "production",
+    ssl: true,
     extra: {
       ssl: true,
     },
