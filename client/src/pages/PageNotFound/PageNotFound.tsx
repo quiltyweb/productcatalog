@@ -14,14 +14,18 @@ export const PageNotFound = (): JSX.Element => {
           La Página que intenta solicitar no esta disponible en el servidor.
         </Paragraph>
         <Paragraph>Pruebe mejor suerte en estos links:</Paragraph>
-        <Paragraph>
-          <Link style={{ textDecoration: "underline" }} to="/">
-            Inicio
-          </Link>
-          <Link style={{ textDecoration: "underline" }} to="/contacto">
-            Contacto
-          </Link>
-        </Paragraph>
+        <ul>
+          <li>
+            <Link style={{ textDecoration: "underline" }} to="/">
+              Inicio
+            </Link>
+          </li>
+          <li>
+            <Link style={{ textDecoration: "underline" }} to="/contacto">
+              Contacto
+            </Link>
+          </li>
+        </ul>
       </>
     </PageWrapper>
   );

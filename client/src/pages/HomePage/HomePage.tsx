@@ -200,7 +200,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({
                           <Route path="/producto/:productId">
                             <SingleProductPage environment={environment} />
                           </Route>
-                          <Route path="/">
+                          <Route exact path="/">
                             <Main>
                               <CategoryGrid
                                 categoryGridItems={props.fetchCategories}
