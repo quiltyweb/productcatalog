@@ -22,6 +22,7 @@ import Loader from "../../components/Loader/Loader";
 import { certificationLinks } from "./certificationLinks";
 import CategoryGrid from "../../components/CategoryGrid/CategoryGrid";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
+import PageNotFound from "../PageNotFound/PageNotFound";
 
 type HomePageProps = {
   environment: Environment;
@@ -199,12 +200,15 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({
                           <Route path="/producto/:productId">
                             <SingleProductPage environment={environment} />
                           </Route>
-                          <Route path="/">
+                          <Route exact path="/">
                             <Main>
                               <CategoryGrid
                                 categoryGridItems={props.fetchCategories}
                               />
                             </Main>
+                          </Route>
+                          <Route path="*">
+                            <PageNotFound />
                           </Route>
                         </Switch>
                       </main>
