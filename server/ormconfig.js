@@ -42,6 +42,7 @@ module.exports = [
     ...baseOrmConfig,
     ...databaseInfo(),
     name: "production",
+    ssl: true,
     extra: {
       ssl: true,
     },
