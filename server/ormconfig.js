@@ -8,6 +8,7 @@ function databaseInfo() {
     username: "postgres",
     password: "postgres",
     database: process.env.DB_NAME || "",
+    ssl: true
   };
 }
 
