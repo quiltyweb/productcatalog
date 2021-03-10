@@ -14,8 +14,12 @@ import type { Context as KoaContext } from "koa";
 const { NODE_ENV, APP_KEY, PORT } = process.env;
 
 const connectionName = NODE_ENV === "development" ? "default" : NODE_ENV;
+const connectionSSL = NODE_ENV === "production" ? true : false;
 
-createConnection(connectionName)
+createConnection({
+  name: connectionName,
+  ssl: connectionSSL,
+})
   .then(async (connection) => {
     const app = new Koa();
     const router = new Router();
