@@ -41,11 +41,10 @@ module.exports = [
   {
     ...baseOrmConfig,
     ...databaseInfo(),
-    name: "production",
-    ssl: true,
-    extra: {
-      ssl: true,
+    ssl: {
+      rejectUnauthorized: false,
     },
+    name: "production",
     entities: ["dist/entity/**/*.js"],
     migrations: ["dist/migration/**/*.js"],
     subscribers: ["dist/subscriber/**/*.js"],
