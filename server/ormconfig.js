@@ -42,7 +42,6 @@ module.exports = [
     ...baseOrmConfig,
     ...databaseInfo(),
     name: "production",
-    ssl: true,
     entities: ["dist/entity/**/*.js"],
     migrations: ["dist/migration/**/*.js"],
     subscribers: ["dist/subscriber/**/*.js"],
