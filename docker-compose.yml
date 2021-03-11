@@ -28,6 +28,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: ${DB_NAME}
+      PGSSLMODE: no-verify
   client:
     build: ./client
     ports:
