@@ -29,6 +29,12 @@ module.exports = [
   {
     ...baseOrmConfig,
     ...databaseInfo(),
+    ssl: true,
+    extra: {
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    },
     name: "default",
   },
   {
