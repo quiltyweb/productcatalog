@@ -32,30 +32,15 @@ createConnection(connectionName)
     });
 
     if (process.env.NODE_ENV === "production") {
-      router.get("*", async (ctx) => {
-        ctx.body =
-          `
-           <!DOCTYPE html>
-             <html lang="en">
-             <head>
-               <meta charset="UTF-8">
-               <title>React SSR</title>
-             </head>
-             <body>
-               <div id="root"></div>
-               <script type="text/javascript" src="` +
-          __dirname +
-          `/build/bundle.js"></script>
-             </body>
-           </html>
-         `;
-      });
-
       app.use(serve(__dirname + "/build"));
     } else {
       router.get("/", async (ctx) => {
         ctx.body = "Hello World!";
       });
+    }
+
+    if (process.env.NODE_ENV === "production") {
+      router.get("/*", serve(__dirname + "/build"));
     }
 
     app.use(helmet()).use(router.routes()).use(router.allowedMethods());
