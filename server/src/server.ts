@@ -39,7 +39,9 @@ createConnection(connectionName)
       });
     }
 
-    router.get("/*", serve(__dirname + "/build"));
+    if (process.env.NODE_ENV === "production") {
+      router.get("/*", serve(__dirname + "/build"));
+    }
 
     app.use(helmet()).use(router.routes()).use(router.allowedMethods());
 
