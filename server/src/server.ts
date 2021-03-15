@@ -5,6 +5,7 @@ import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-koa";
 import helmet from "koa-helmet";
 import serve from "koa-static";
+import send from "koa-send";
 
 import { schema } from "./graphql";
 import Email from "./email";
@@ -32,10 +33,17 @@ createConnection(connectionName)
     });
 
     if (process.env.NODE_ENV === "production") {
-      app.use(serve(__dirname + "/build"));
+      const buildPath = __dirname + "/build";
 
-      router.get("(.*)", (ctx) => {
-        app.use(serve(__dirname + "/build"));
+      app.use(serve(buildPath));
+
+      router.get("*", async (ctx, next) => {
+        try {
+          await send(ctx, buildPath);
+        } catch (err) {
+          ctx.body = "Something went wrong.";
+          return next();
+        }
       });
     } else {
       router.get("/", async (ctx) => {
