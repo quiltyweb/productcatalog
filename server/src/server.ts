@@ -39,7 +39,7 @@ createConnection(connectionName)
       });
     }
 
-    router.get('*', async (ctx) => {
+    router.get("*", async (ctx) => {
       ctx.body = `
          <!DOCTYPE html>
            <html lang="en">
