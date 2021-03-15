@@ -41,7 +41,7 @@ createConnection(connectionName)
         try {
           await send(ctx, buildPath);
         } catch (err) {
-          ctx.body = "Something went wrong.";
+          ctx.body = "Something went wrong. Please, try again later.";
           return next();
         }
       });
