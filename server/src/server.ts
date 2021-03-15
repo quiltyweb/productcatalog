@@ -33,14 +33,14 @@ createConnection(connectionName)
 
     if (process.env.NODE_ENV === "production") {
       app.use(serve(__dirname + "/build"));
+
+      router.get("(.*)", (ctx) => {
+        app.use(serve(__dirname + "/build"));
+      });
     } else {
       router.get("/", async (ctx) => {
         ctx.body = "Hello World!";
       });
-    }
-
-    if (process.env.NODE_ENV === "production") {
-      router.get("/*", serve(__dirname + "/build"));
     }
 
     app.use(helmet()).use(router.routes()).use(router.allowedMethods());
