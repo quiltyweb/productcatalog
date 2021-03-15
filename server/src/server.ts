@@ -33,7 +33,8 @@ createConnection(connectionName)
 
     if (process.env.NODE_ENV === "production") {
       router.get("*", async (ctx) => {
-        ctx.body = `
+        ctx.body =
+          `
            <!DOCTYPE html>
              <html lang="en">
              <head>
@@ -42,7 +43,9 @@ createConnection(connectionName)
              </head>
              <body>
                <div id="root"></div>
-               <script type="text/javascript" src="` + __dirname + `/build/bundle.js"></script>
+               <script type="text/javascript" src="` +
+          __dirname +
+          `/build/bundle.js"></script>
              </body>
            </html>
          `;
