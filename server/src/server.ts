@@ -41,7 +41,8 @@ createConnection(connectionName)
         try {
           await send(ctx, buildPath);
         } catch (err) {
-          ctx.body = "Ha ocurrido un error. Por favor, intente nuevamente. Comercial Gattoni.";
+          ctx.body =
+            "Ha ocurrido un error. Por favor, intente nuevamente. Comercial Gattoni.";
           return next();
         }
       });
