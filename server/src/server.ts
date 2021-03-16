@@ -39,11 +39,12 @@ createConnection(connectionName)
 
       router.get("(.*)", async (ctx, next) => {
         try {
-          await send(ctx, buildPath + "/index.html");
+          await send(ctx, "/app/dist/build/index.html");
         } catch (err) {
           ctx.body =
             "Ha ocurrido un error. Por favor, intente nuevamente. Comercial Gattoni." +
-            err;
+            err +
+            __dirname;
           return next();
         }
       });
