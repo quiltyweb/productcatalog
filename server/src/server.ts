@@ -37,7 +37,7 @@ createConnection(connectionName)
 
       app.use(serve(buildPath));
 
-      router.get("*", async (ctx, next) => {
+      router.get("(.*)", async (ctx, next) => {
         try {
           await send(ctx, buildPath);
         } catch (err) {
