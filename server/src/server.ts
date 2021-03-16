@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import path from "path";
 import Koa from "koa";
 import Router from "koa-router";
 import { createConnection } from "typeorm";
@@ -33,17 +34,19 @@ createConnection(connectionName)
     });
 
     if (process.env.NODE_ENV === "production") {
-      const buildPath = __dirname + "/build";
+      // Something prepends the workingdirectory '/app' to the static files path,
+      // even if we use absolute paths for everything, but this works, so filo
+      const buildPath = path.join("dist", "build");
 
       app.use(serveStatic(buildPath));
 
       router.get("(.*)", async (ctx, next) => {
         try {
-          await send(ctx, "index.html");
+          await send(ctx, path.join(buildPath, "index.html"));
         } catch (err) {
           ctx.body =
             "Ha ocurrido un error. Por favor, intente nuevamente. Comercial Gattoni.";
-          console.log(err + __dirname);
+          console.log(err);
           return next();
         }
       });
