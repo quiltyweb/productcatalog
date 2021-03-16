@@ -4,7 +4,7 @@ import Router from "koa-router";
 import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-koa";
 import helmet from "koa-helmet";
-import serve from "koa-static";
+import serveStatic from "koa-static";
 import send from "koa-send";
 
 import { schema } from "./graphql";
@@ -35,16 +35,15 @@ createConnection(connectionName)
     if (process.env.NODE_ENV === "production") {
       const buildPath = __dirname + "/build";
 
-      app.use(serve(buildPath));
+      app.use(serveStatic(buildPath));
 
       router.get("(.*)", async (ctx, next) => {
         try {
-          await send(ctx, "/app/dist/build/index.html");
+          await send(ctx, "index.html");
         } catch (err) {
           ctx.body =
-            "Ha ocurrido un error. Por favor, intente nuevamente. Comercial Gattoni." +
-            err +
-            __dirname;
+            "Ha ocurrido un error. Por favor, intente nuevamente. Comercial Gattoni.";
+          console.log(err + __dirname);
           return next();
         }
       });
