@@ -1,7 +1,7 @@
 import React from "react";
 import { Heading, Paragraph, styled } from "bumbag";
 import { CartTable } from "../../components/CartTable/CartTable";
-import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
+import { useHomePageContext } from "../../context/HomePageContext";
 import { Link } from "react-router-dom";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 

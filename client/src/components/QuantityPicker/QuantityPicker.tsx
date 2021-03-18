@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Input, Group } from "bumbag";
-import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
+import { useHomePageContext } from "../../context/HomePageContext";
 
 type QuantityPickerProps = {
   productId: string;

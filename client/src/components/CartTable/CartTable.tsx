@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Table, styled, Image } from "bumbag";
 import QuantityPicker from "../QuantityPicker/QuantityPicker";
-import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
+import { useHomePageContext } from "../../context/HomePageContext";
 
 const ImageStyled = styled(Image)`
   max-width: 100%;

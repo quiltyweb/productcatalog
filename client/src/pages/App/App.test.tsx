@@ -5,7 +5,7 @@ import {
   RelayMockEnvironment,
 } from "relay-test-utils";
 import { render, screen, within } from "@testing-library/react";
-import HomePage from "./HomePage";
+import App from "./App";
 import { MemoryRouter } from "react-router-dom";
 
 window.scrollTo = jest.fn();
@@ -34,12 +34,12 @@ afterAll(() => {
   jest.clearAllMocks();
 });
 
-describe.skip("HomePage", () => {
+describe.skip("App", () => {
   test("should render loading state", () => {
     const environment: RelayMockEnvironment = createMockEnvironment();
     render(
       <MemoryRouter initialEntries={["/"]}>
-        <HomePage environment={environment} />
+        <App environment={environment} />
       </MemoryRouter>
     );
     screen.getByText("Cargando...");
@@ -49,7 +49,7 @@ describe.skip("HomePage", () => {
     const environment: RelayMockEnvironment = createMockEnvironment();
     render(
       <MemoryRouter initialEntries={["/"]}>
-        <HomePage environment={environment} />
+        <App environment={environment} />
       </MemoryRouter>
     );
     environment.mock.resolveMostRecentOperation((operation) =>
@@ -87,7 +87,7 @@ describe.skip("HomePage", () => {
     const environment = createMockEnvironment();
     render(
       <MemoryRouter initialEntries={["/"]}>
-        <HomePage environment={environment} />
+        <App environment={environment} />
       </MemoryRouter>
     );
 

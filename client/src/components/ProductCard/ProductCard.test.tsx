@@ -4,7 +4,7 @@ import { ProductCard } from "./ProductCard";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import HomePageContext from "../../pages/HomePage/HomePageContext";
+import HomePageContext from "../../context/HomePageContext";
 import userEvent from "@testing-library/user-event";
 
 expect.extend(toHaveNoViolations);

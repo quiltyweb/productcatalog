@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { CartTable } from "./CartTable";
-import HomePageContext from "../../pages/HomePage/HomePageContext";
+import HomePageContext from "../../context/HomePageContext";
 
 describe("CartTable Component", () => {
   describe("When CartTable is not editable", () => {

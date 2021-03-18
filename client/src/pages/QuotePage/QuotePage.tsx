@@ -1,7 +1,7 @@
 import React from "react";
 import { Column, Columns, styled, Heading, Paragraph, Box } from "bumbag";
 import QuoteForm from "../../components/QuoteForm/QuoteForm";
-import { useHomePageContext } from "../HomePage/HomePageContext";
+import { useHomePageContext } from "../../context/HomePageContext";
 import { CartTable } from "../../components/CartTable/CartTable";
 
 import PageWrapper from "../../components/PageWrapper/PageWrapper";

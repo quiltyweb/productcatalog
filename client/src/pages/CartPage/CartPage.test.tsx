@@ -4,7 +4,7 @@ import CartPage from "./CartPage";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import HomePageContext from "../HomePage/HomePageContext";
+import HomePageContext from "../../context/HomePageContext";
 
 expect.extend(toHaveNoViolations);
 const history = createMemoryHistory();

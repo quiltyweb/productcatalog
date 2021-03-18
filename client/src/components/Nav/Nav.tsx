@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 import { Button, TopNav } from "bumbag";
-import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
+import { useHomePageContext } from "../../context/HomePageContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
