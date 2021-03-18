@@ -80,7 +80,7 @@ describe("HomePage", function(){
       cy.findByRole("navigation").within(() => {
         cy.findByRole("link", { name: "Productos" }).click();
       })
-      cy.findByRole("complementary")
+      // cy.findByRole("complementary")
       cy.findByRole("main")
     })
   })

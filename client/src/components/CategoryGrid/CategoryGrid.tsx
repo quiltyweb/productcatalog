@@ -5,13 +5,14 @@ import { palette, Card, List, Image } from "bumbag";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { CategoryGrid_categoryGridItems } from "./__generated__/CategoryGrid_categoryGridItems.graphql";
+import Skeleton from "react-loading-skeleton";
 
 const GridList = styled((props) => <List {...props} />)`
   display: flex;
   flex-wrap: wrap;
   @supports (display: grid) {
     display: grid;
-    grid-gap: 2rem;
+    grid-gap: 3rem;
     grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   }
 `;
@@ -31,12 +32,25 @@ const GridItemLink = styled((props) => <Link {...props} />)`
 `;
 
 type CategoryGridProps = {
-  categoryGridItems: CategoryGrid_categoryGridItems;
+  categoryGridItems?: CategoryGrid_categoryGridItems;
+  isLoading: boolean;
 };
 
 export const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
   categoryGridItems,
+  isLoading,
 }): JSX.Element => {
+  if (isLoading) {
+    return (
+      <GridList>
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+          <List.Item key={item}>
+            <Skeleton count={8} duration={5} delay={3} />
+          </List.Item>
+        ))}
+      </GridList>
+    );
+  }
   return (
     <GridList>
       {categoryGridItems &&

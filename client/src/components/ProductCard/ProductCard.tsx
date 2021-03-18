@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Image, Paragraph, Button } from "bumbag";
 import styled from "styled-components";
-import { useHomePageContext } from "../../pages/HomePage/HomePageContext";
+import { useHomePageContext } from "../../context/HomePageContext";
 import { Link } from "react-router-dom";
 
 const ImageStyled = styled(Image)`

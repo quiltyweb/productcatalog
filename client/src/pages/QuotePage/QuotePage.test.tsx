@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import QuotePage from "./QuotePage";
 import { axe, toHaveNoViolations } from "jest-axe";
-import HomePageContext from "../HomePage/HomePageContext";
+import HomePageContext from "../../context/HomePageContext";
 
 expect.extend(toHaveNoViolations);
 

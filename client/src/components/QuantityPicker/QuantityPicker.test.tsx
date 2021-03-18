@@ -2,7 +2,7 @@ import React from "react";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import QuantityPicker from "./QuantityPicker";
 import { axe, toHaveNoViolations } from "jest-axe";
-import HomePageContext from "../../pages/HomePage/HomePageContext";
+import HomePageContext from "../../context/HomePageContext";
 import userEvent from "@testing-library/user-event";
 expect.extend(toHaveNoViolations);
 
