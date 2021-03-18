@@ -156,7 +156,12 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({
                   removeCartItem,
                 }}
               >
-                <PageWithHeader header={<Nav />} border="default">
+                <PageWithHeader
+                  header={<Nav />}
+                  border="default"
+                  sticky
+                  headerHeight="80px"
+                >
                   <PageWrapper title="Comercial Gattoni seguridad industrial - Inicio">
                     <div style={{ display: "flex", flexWrap: "wrap-reverse" }}>
                       {!isHomePage && (
