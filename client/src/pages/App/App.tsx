@@ -15,12 +15,11 @@ import Nav from "../../components/Nav/Nav";
 import HomePageContext from "../../context/HomePageContext";
 import { CartItemProps } from "../../context/HomePageContext";
 import ScrollToTop from "./components/ScrollToTop";
-// import Loader from "../../components/Loader/Loader";
 import { certificationLinks } from "./certificationLinks";
-// import CategoryGrid from "../../components/CategoryGrid/CategoryGrid";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import HomePage from "../HomePage/HomePage";
+import CategorySideBar from "../../components/CategorySideBar/CategorySideBar";
 
 type AppProps = {
   environment: Environment;
@@ -29,9 +28,9 @@ const App: React.FunctionComponent<AppProps> = ({
   environment,
 }): JSX.Element => {
   const [cart, setCart] = useState<CartItemProps[]>([]);
-  const location = useLocation();
 
-  // const isHomePage = location.pathname === "/";
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const stringifyCart = sessionStorage.getItem("cart");
@@ -137,6 +136,7 @@ const App: React.FunctionComponent<AppProps> = ({
           >
             <PageWrapper title="Comercial Gattoni seguridad industrial - Inicio">
               <div style={{ display: "flex", flexWrap: "wrap-reverse" }}>
+                {!isHomePage && <CategorySideBar environment={environment} />}
                 <main style={{ flexBasis: "80%", margin: "0.5rem auto" }}>
                   <Switch>
                     <Route path="/contacto">
