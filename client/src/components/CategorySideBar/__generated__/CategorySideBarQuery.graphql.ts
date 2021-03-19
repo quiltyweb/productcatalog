@@ -4,33 +4,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomePageQueryVariables = {};
-export type HomePageQueryResponse = {
+export type CategorySideBarQueryVariables = {};
+export type CategorySideBarQueryResponse = {
     readonly fetchCategories: {
-        readonly " $fragmentRefs": FragmentRefs<"CategoryList_categories" | "CategoryGrid_categoryGridItems">;
+        readonly " $fragmentRefs": FragmentRefs<"CategoryList_categories">;
     };
 };
-export type HomePageQuery = {
-    readonly response: HomePageQueryResponse;
-    readonly variables: HomePageQueryVariables;
+export type CategorySideBarQuery = {
+    readonly response: CategorySideBarQueryResponse;
+    readonly variables: CategorySideBarQueryVariables;
 };
 
 
 
 /*
-query HomePageQuery {
+query CategorySideBarQuery {
   fetchCategories {
     ...CategoryList_categories
-    ...CategoryGrid_categoryGridItems
-  }
-}
-
-fragment CategoryGrid_categoryGridItems on CategoryConnection {
-  edges {
-    node {
-      id
-      name
-    }
   }
 }
 
@@ -49,7 +39,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HomePageQuery",
+    "name": "CategorySideBarQuery",
     "selections": [
       {
         "alias": null,
@@ -63,11 +53,6 @@ const node: ConcreteRequest = {
             "args": null,
             "kind": "FragmentSpread",
             "name": "CategoryList_categories"
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "CategoryGrid_categoryGridItems"
           }
         ],
         "storageKey": null
@@ -80,7 +65,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "HomePageQuery",
+    "name": "CategorySideBarQuery",
     "selections": [
       {
         "alias": null,
@@ -132,13 +117,13 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "4acfbce5a85656411940ddc5c1e19c1e",
+    "cacheID": "54e71d6624fb71a96251d3695eb021cb",
     "id": null,
     "metadata": {},
-    "name": "HomePageQuery",
+    "name": "CategorySideBarQuery",
     "operationKind": "query",
-    "text": "query HomePageQuery {\n  fetchCategories {\n    ...CategoryList_categories\n    ...CategoryGrid_categoryGridItems\n  }\n}\n\nfragment CategoryGrid_categoryGridItems on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n\nfragment CategoryList_categories on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n"
+    "text": "query CategorySideBarQuery {\n  fetchCategories {\n    ...CategoryList_categories\n  }\n}\n\nfragment CategoryList_categories on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n"
   }
 };
-(node as any).hash = '2f781d8db916d92285c8743fa5003227';
+(node as any).hash = 'c086aea8be81ef6d2214273bdfb0105c';
 export default node;

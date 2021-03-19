@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type HomePageQueryVariables = {};
 export type HomePageQueryResponse = {
     readonly fetchCategories: {
-        readonly " $fragmentRefs": FragmentRefs<"CategoryList_categories" | "CategoryGrid_categoryGridItems">;
+        readonly " $fragmentRefs": FragmentRefs<"CategoryGrid_categoryGridItems">;
     };
 };
 export type HomePageQuery = {
@@ -20,21 +20,11 @@ export type HomePageQuery = {
 /*
 query HomePageQuery {
   fetchCategories {
-    ...CategoryList_categories
     ...CategoryGrid_categoryGridItems
   }
 }
 
 fragment CategoryGrid_categoryGridItems on CategoryConnection {
-  edges {
-    node {
-      id
-      name
-    }
-  }
-}
-
-fragment CategoryList_categories on CategoryConnection {
   edges {
     node {
       id
@@ -59,11 +49,6 @@ const node: ConcreteRequest = {
         "name": "fetchCategories",
         "plural": false,
         "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "CategoryList_categories"
-          },
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -132,13 +117,13 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "4acfbce5a85656411940ddc5c1e19c1e",
+    "cacheID": "3d07d74e1cc28e583f43d6761ad39440",
     "id": null,
     "metadata": {},
     "name": "HomePageQuery",
     "operationKind": "query",
-    "text": "query HomePageQuery {\n  fetchCategories {\n    ...CategoryList_categories\n    ...CategoryGrid_categoryGridItems\n  }\n}\n\nfragment CategoryGrid_categoryGridItems on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n\nfragment CategoryList_categories on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n"
+    "text": "query HomePageQuery {\n  fetchCategories {\n    ...CategoryGrid_categoryGridItems\n  }\n}\n\nfragment CategoryGrid_categoryGridItems on CategoryConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n"
   }
 };
-(node as any).hash = '2f781d8db916d92285c8743fa5003227';
+(node as any).hash = 'c1744717bdad92fac6961eb66f0c6224';
 export default node;

@@ -29,7 +29,6 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({
       query={graphql`
         query HomePageQuery {
           fetchCategories {
-            ...CategoryList_categories
             ...CategoryGrid_categoryGridItems
           }
         }

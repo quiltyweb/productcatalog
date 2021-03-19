@@ -45,7 +45,7 @@ export const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
       <GridList>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
           <List.Item key={item}>
-            <Skeleton count={8} duration={5} delay={3} />
+            <Skeleton height={240} duration={1} delay={1} />
           </List.Item>
         ))}
       </GridList>
