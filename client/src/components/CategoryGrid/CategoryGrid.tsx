@@ -43,11 +43,13 @@ export const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
   if (isLoading) {
     return (
       <GridList>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
-          <List.Item key={item}>
-            <Skeleton height={240} duration={1} delay={1} />
-          </List.Item>
-        ))}
+        {Array(12)
+          .fill(0)
+          .map((item, index) => (
+            <List.Item key={index}>
+              <Skeleton height={240} duration={1} delay={1} />
+            </List.Item>
+          ))}
       </GridList>
     );
   }

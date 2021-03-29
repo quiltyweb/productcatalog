@@ -1,6 +1,5 @@
 import React from "react";
 import CategoryList from "../CategoryList/CategoryList";
-import Loader from "../Loader/Loader";
 import { graphql } from "babel-plugin-relay/macro";
 import { Environment, QueryRenderer } from "react-relay";
 import Skeleton from "react-loading-skeleton";

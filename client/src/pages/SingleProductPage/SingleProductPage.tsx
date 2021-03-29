@@ -36,43 +36,45 @@ export const SingleProductPage: React.FunctionComponent<SingleProductPageProps> 
       variables={{ id: productId }}
       render={({ error, props }: { error: any; props: any }) => {
         if (error) {
-          return (
-            <div>
-              Se ha producido un Error, intente nuevamente. {error.message}
-            </div>
-          );
+          return <div>Se ha producido un Error, intente nuevamente.</div>;
         }
         if (!props) {
           return <Loader />;
         }
+        if (!props.node) {
+          return (
+            <div>
+              Se ha producido un Error, intente nuevamente haciendo click en una
+              categoría y luego seleccione un producto.
+            </div>
+          );
+        }
 
         return (
           <PageWrapper title="Comercial Gattoni seguridad industrial - Detalle de producto">
-            <>
-              <Columns style={{ justifyContent: "center" }}>
-                <Column key={props.node.id} spread={9}>
-                  <Button
-                    palette="primary"
-                    variant="outlined"
-                    onClick={() => {
-                      goBack();
-                    }}
-                    marginBottom="1rem"
-                  >
-                    &#8592; volver a resultados
-                  </Button>
-                  <ProductCard
-                    productId={props.node.id}
-                    name={props.node.name}
-                    description={props.node.description}
-                    attachmentPath={props.node.attachmentPath}
-                    linkImage={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/${props.node.imagePath}`}
-                    hasPrintCTA
-                    isSinglePage
-                  />
-                </Column>
-              </Columns>
-            </>
+            <Columns style={{ justifyContent: "center" }}>
+              <Column key={props.node.id} spread={9}>
+                <Button
+                  palette="primary"
+                  variant="outlined"
+                  onClick={() => {
+                    goBack();
+                  }}
+                  marginBottom="1rem"
+                >
+                  &#8592; volver a resultados
+                </Button>
+                <ProductCard
+                  productId={props.node.id}
+                  name={props.node.name}
+                  description={props.node.description}
+                  attachmentPath={props.node.attachmentPath}
+                  linkImage={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/${props.node.imagePath}`}
+                  hasPrintCTA
+                  isSinglePage
+                />
+              </Column>
+            </Columns>
           </PageWrapper>
         );
       }}
