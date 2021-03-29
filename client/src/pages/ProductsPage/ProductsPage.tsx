@@ -35,7 +35,8 @@ export const ProductsPage: React.FunctionComponent<ProductsPageProps> = ({
         if (error) {
           return (
             <div>
-              Se ha producido un Error, intente nuevamente. {error.message}
+              Se ha producido un Error, intente nuevamente haciendo click en una
+              categoría.
             </div>
           );
         }

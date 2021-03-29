@@ -34,18 +34,24 @@ afterAll(() => {
   jest.clearAllMocks();
 });
 
-describe.skip("App", () => {
-  test("should render loading state", () => {
+describe("App", () => {
+  test("should render Nav bar and Footer", () => {
     const environment: RelayMockEnvironment = createMockEnvironment();
     render(
       <MemoryRouter initialEntries={["/"]}>
         <App environment={environment} />
       </MemoryRouter>
     );
-    screen.getByText("Cargando...");
+    screen.getByRole("heading", { name: "GATTONI Seguridad Industrial" });
+    screen.getByLabelText("Ingrese su búsqueda:");
+    screen.getByText("Buscar");
+    screen.getAllByText("Productos");
+    screen.getAllByText("Contacto");
+    screen.getAllByText("Mi Cotización");
+    screen.getAllByText("Certificaciones");
   });
 
-  test("should render data", async () => {
+  test("should render categories", async () => {
     const environment: RelayMockEnvironment = createMockEnvironment();
     render(
       <MemoryRouter initialEntries={["/"]}>

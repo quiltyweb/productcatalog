@@ -34,7 +34,7 @@ afterAll(() => {
   jest.clearAllMocks();
 });
 
-describe.skip("HomePage", () => {
+describe("HomePage", () => {
   test("should render loading state", () => {
     const environment: RelayMockEnvironment = createMockEnvironment();
     render(
@@ -42,10 +42,11 @@ describe.skip("HomePage", () => {
         <HomePage environment={environment} />
       </MemoryRouter>
     );
-    screen.getByText("Cargando...");
+    screen.getByRole("heading", { name: "Nuestros Productos" });
+    expect(screen.getAllByRole("listitem")).toHaveLength(12);
   });
 
-  test("should render data", async () => {
+  test("should render category names", async () => {
     const environment: RelayMockEnvironment = createMockEnvironment();
     render(
       <MemoryRouter initialEntries={["/"]}>
@@ -69,18 +70,15 @@ describe.skip("HomePage", () => {
       })
     );
 
-    screen.getByRole("navigation");
-    const mainSection = screen.getByRole("main");
-    within(mainSection).getByText("Nuestros Productos");
-    const cat1 = within(mainSection).getByRole("link", {
+    screen.getByRole("heading", { name: "Nuestros Productos" });
+    const cat1 = screen.getByRole("link", {
       name: "categoría Soldador",
     });
     expect(cat1).toHaveAttribute("href", "/categoria/1");
-    const cat2 = within(mainSection).getByRole("link", {
+    const cat2 = screen.getByRole("link", {
       name: "categoría Zapatos",
     });
     expect(cat2).toHaveAttribute("href", "/categoria/2");
-    screen.getByRole("contentinfo");
   });
 
   test("Error State", () => {
