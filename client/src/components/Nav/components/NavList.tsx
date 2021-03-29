@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { TopNav } from "bumbag";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faListUl } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 
 const TopNavigationSection = styled((props) => <TopNav.Section {...props} />)`
   flex-direction: column;
@@ -60,7 +60,7 @@ export const NavList: React.FunctionComponent<{ cartCount: number }> = ({
           style={{ marginRight: "0.2rem" }}
           size="sm"
           color="#777777"
-          icon={faListUl}
+          icon={faCartPlus}
         />
       ),
       component: (): JSX.Element => (

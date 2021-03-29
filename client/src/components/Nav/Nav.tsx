@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useFormik } from "formik";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button, TopNav } from "bumbag";
 import { useHomePageContext } from "../../context/HomePageContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faCartPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { createPortal } from "react-dom";
 import { NavSearchForm } from "./components/NavSeachForm";
@@ -15,6 +15,10 @@ import FocusTrap from "focus-trap-react";
 const TopNavigation = styled((props) => <TopNav {...props} />)`
   display: flex;
   align-items: center;
+  justify-content: space-around;
+  @media (min-width: 960px) {
+    justify-content: space-between;
+  }
 `;
 
 const MenuContainer = styled.div`
@@ -46,11 +50,31 @@ const MobileButton = styled.button`
   }
 `;
 
+const Quantity = styled.div`
+  border-radius: 50px;
+  background-color: rgb(255, 204, 0);
+  color: #212121;
+  min-width: 38px;
+  text-align: center;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+`;
+
+const MobileQuoteLink = styled((props) => <Link {...props} />)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  @media (min-width: 960px) {
+    display: none;
+  }
+`;
+
 interface FormValues {
   searchTerm: string;
 }
 
-const Modal: React.FunctionComponent<{
+const MobileModal: React.FunctionComponent<{
   children: JSX.Element;
   setToggleMenu: React.Dispatch<React.SetStateAction<boolean>>;
   toggleMenu: boolean;
@@ -147,17 +171,32 @@ const Nav: React.FunctionComponent = (): JSX.Element => {
         <NavList cartCount={cartCount} />
       </MenuContainer>
 
-      <MobileButton
-        type="button"
-        aria-label="menu"
-        onClick={() => {
-          setToggleMenu(!toggleMenu);
-        }}
-        ref={hamburgerMenuButtonRef}
-      >
-        <FontAwesomeIcon size="sm" color="#777777" icon={faBars} />
-      </MobileButton>
-      <Modal
+      <div style={{ display: "flex" }}>
+        <MobileQuoteLink to="/cotizacion">
+          <FontAwesomeIcon
+            style={{ marginRight: "0.2rem" }}
+            size="sm"
+            color="#777777"
+            icon={faCartPlus}
+          />
+
+          {cartCount > 0 && (
+            <Quantity aria-label="productos agregados">{cartCount}</Quantity>
+          )}
+        </MobileQuoteLink>
+
+        <MobileButton
+          type="button"
+          aria-label="menu"
+          onClick={() => {
+            setToggleMenu(!toggleMenu);
+          }}
+          ref={hamburgerMenuButtonRef}
+        >
+          <FontAwesomeIcon size="sm" color="#777777" icon={faBars} />
+        </MobileButton>
+      </div>
+      <MobileModal
         setToggleMenu={setToggleMenu}
         toggleMenu={toggleMenu}
         setFocusToMenuButton={setFocusToMenuButton}
@@ -166,7 +205,7 @@ const Nav: React.FunctionComponent = (): JSX.Element => {
           <NavSearchForm {...formik} ref={searchInputRef} />
           <NavList cartCount={cartCount} />
         </>
-      </Modal>
+      </MobileModal>
     </TopNavigation>
   );
 };
