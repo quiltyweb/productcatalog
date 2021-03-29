@@ -30,10 +30,12 @@
     -->
     <title>Comercial Gattoni, Seguridad Industrial y Ropa de trabajo en Copiapó, Chile</title>
     <script>
+      var nodeEnv = "%NODE_ENV%";
       var _rollbarConfig = {
           accessToken: "aa6628bfbcaf431691e3f1bf72e2b5a9",
           captureUncaught: true,
           captureUnhandledRejections: true,
+          enabled: (nodeEnv === "production"),
           payload: {
               environment: "production"
           }
