@@ -42,11 +42,11 @@ describe("ProductCard Component", () => {
     });
     screen.getByRole("heading", { name: "test_name" });
     screen.getByRole("link", { name: "ver producto" });
-    screen.getByRole("button", { name: "Añadir a cotización" });
+    screen.getByRole("button", { name: "Agregar a cotización" });
     screen.getByText("test_description");
   });
 
-  it("when click on `Añadir a cotización` should call addCartItem callback", async () => {
+  it("when click on `Agregar a cotización` should call addCartItem callback", async () => {
     const mockedAddCartItem = jest.fn();
     render(
       <HomePageContext.Provider
@@ -72,7 +72,7 @@ describe("ProductCard Component", () => {
     );
 
     const addToCartButton = screen.getByRole("button", {
-      name: "Añadir a cotización",
+      name: "Agregar a cotización",
     });
 
     act(() => {

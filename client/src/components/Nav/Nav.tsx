@@ -15,10 +15,7 @@ import FocusTrap from "focus-trap-react";
 const TopNavigation = styled((props) => <TopNav {...props} />)`
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  @media (min-width: 960px) {
-    justify-content: space-between;
-  }
+  justify-content: space-between;
 `;
 
 const MenuContainer = styled.div`
@@ -45,6 +42,20 @@ const StyledModal = styled.div`
 const MobileButton = styled.button`
   display: block;
   margin: 0 0.5rem;
+  font-size: 0.75em;
+  min-height: 2rem;
+  padding: 0 0.75rem;
+  border-radius: 6px;
+  background-color: #fcfcfd;
+  border: 1px solid #d9d9e1;
+  box-shadow: 0 1px 3px 0px rgb(0 0 0 / 5%);
+  @media (min-width: 960px) {
+    display: none;
+  }
+`;
+
+const MobileContainer = styled.div`
+  display: flex;
   @media (min-width: 960px) {
     display: none;
   }
@@ -171,7 +182,7 @@ const Nav: React.FunctionComponent = (): JSX.Element => {
         <NavList cartCount={cartCount} />
       </MenuContainer>
 
-      <div style={{ display: "flex" }}>
+      <MobileContainer>
         <MobileQuoteLink to="/cotizacion">
           <FontAwesomeIcon
             style={{ marginRight: "0.2rem" }}
@@ -195,7 +206,7 @@ const Nav: React.FunctionComponent = (): JSX.Element => {
         >
           <FontAwesomeIcon size="sm" color="#777777" icon={faBars} />
         </MobileButton>
-      </div>
+      </MobileContainer>
       <MobileModal
         setToggleMenu={setToggleMenu}
         toggleMenu={toggleMenu}

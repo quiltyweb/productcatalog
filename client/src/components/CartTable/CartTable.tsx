@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Table, styled, Image } from "bumbag";
 import QuantityPicker from "../QuantityPicker/QuantityPicker";
 import { useHomePageContext } from "../../context/HomePageContext";
+import { useAlert } from "react-alert";
 
 const ImageStyled = styled(Image)`
   max-width: 100%;
@@ -20,6 +21,7 @@ interface CartProps {
 export const CartTable: React.FunctionComponent<CartProps> = ({
   isEditable = true,
 }): JSX.Element => {
+  const alert = useAlert();
   const { cart, removeCartItem } = useHomePageContext();
   return (
     <Table isResponsive>
@@ -58,7 +60,12 @@ export const CartTable: React.FunctionComponent<CartProps> = ({
                 {isEditable && (
                   <Table.Cell>
                     <Button
-                      onClick={() => removeCartItem(item.productId)}
+                      onClick={() => {
+                        removeCartItem(item.productId);
+                        alert.show("Producto eliminado!", {
+                          type: "info",
+                        });
+                      }}
                       style={{ whiteSpace: "nowrap" }}
                     >
                       Borrar

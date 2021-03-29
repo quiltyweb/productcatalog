@@ -59,7 +59,7 @@ describe("SingleProductPage", () => {
     screen.getByAltText("Soldador");
     screen.getByText("description lorem ipsum");
     screen.getByRole("link", { name: "Descargar ficha técnica" });
-    screen.getByRole("button", { name: "Añadir a cotización" });
+    screen.getByRole("button", { name: "Agregar a cotización" });
   });
 
   test("Error State", () => {

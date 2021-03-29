@@ -76,7 +76,7 @@ describe("SearchResultsPage", () => {
     screen.getByRole("heading", { name: "Soldador" });
     screen.getByRole("heading", { name: "Zapatos" });
     screen.getAllByRole("link", { name: "ver producto" });
-    screen.getAllByRole("button", { name: "Añadir a cotización" });
+    screen.getAllByRole("button", { name: "Agregar a cotización" });
   });
 
   test("should render empty state", async () => {
