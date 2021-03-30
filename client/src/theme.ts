@@ -65,4 +65,11 @@ export const newTheme: ThemeConfig = {
       },
     },
   },
+  Alert: {
+    styles: {
+      base: {
+        background: "#ffe3a4",
+      },
+    },
+  },
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
 import { Environment } from "react-relay";
-import { Provider as BumbagProvider, PageWithHeader } from "bumbag";
+import { Provider as BumbagProvider, PageWithHeader, Alert } from "bumbag";
 import Footer from "./components/Footer";
 import { newTheme } from "../../theme";
 import ContactForm from "../../components/ContactForm/ContactForm";
@@ -21,17 +21,41 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import HomePage from "../HomePage/HomePage";
 import CategorySideBar from "../../components/CategorySideBar/CategorySideBar";
 import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
-import { transitions, positions, Provider as AlertProvider } from "react-alert";
-import AlertTemplate from "react-alert-template-basic";
+import {
+  transitions,
+  positions,
+  Provider as AlertProvider,
+  AlertComponentPropsWithStyle,
+} from "react-alert";
 
 const alertProviderOptions = {
-  position: positions.TOP_RIGHT,
-  timeout: 2000,
-  offset: "10px",
+  position: positions.BOTTOM_RIGHT,
+  timeout: 3000,
+  offset: "20px",
   transition: transitions.FADE,
   containerStyle: {
     zIndex: 1000,
   },
+};
+
+const AlertTemplate: React.FunctionComponent<AlertComponentPropsWithStyle> = ({
+  style,
+  options,
+  message,
+  close,
+}) => {
+  return (
+    <Alert
+      style={style}
+      role="alert"
+      variant="bordered"
+      type="success"
+      showCloseButton
+      onClickClose={close}
+    >
+      {message}
+    </Alert>
+  );
 };
 
 type AppProps = {
@@ -129,8 +153,8 @@ const App: React.FunctionComponent<AppProps> = ({
   return (
     <ErrorBoundary>
       <ScrollToTop>
-        <AlertProvider template={AlertTemplate} {...alertProviderOptions}>
-          <BumbagProvider theme={newTheme}>
+        <BumbagProvider theme={newTheme}>
+          <AlertProvider template={AlertTemplate} {...alertProviderOptions}>
             <HomePageContext.Provider
               value={{
                 cart,
@@ -203,8 +227,8 @@ const App: React.FunctionComponent<AppProps> = ({
               </PageWithHeader>
               <Footer />
             </HomePageContext.Provider>
-          </BumbagProvider>
-        </AlertProvider>
+          </AlertProvider>
+        </BumbagProvider>
       </ScrollToTop>
     </ErrorBoundary>
   );
