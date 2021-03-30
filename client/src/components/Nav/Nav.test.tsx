@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import Nav from "./Nav";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { Router } from "react-router-dom";
@@ -24,7 +24,7 @@ describe("Nav Component", () => {
     screen.getByText("Mi Cotización");
   });
 
-  it("should render a cart counter", () => {
+  it("should render a cart counter in the mobile container", () => {
     render(
       <HomePageContext.Provider
         value={{
@@ -43,8 +43,31 @@ describe("Nav Component", () => {
         </Router>
       </HomePageContext.Provider>
     );
+    const navList = screen.getByTestId("mobile-container");
+    within(navList).getByText("66");
+  });
 
-    screen.getByText("66");
+  it("should render a cart counter in the nav list", () => {
+    render(
+      <HomePageContext.Provider
+        value={{
+          cart: [],
+          cartCount: 66,
+          updateCartItem: () => null,
+          addCartItem: () => null,
+          handleCart: () => null,
+          incrementCartItem: () => null,
+          decrementCartItem: () => null,
+          removeCartItem: () => null,
+        }}
+      >
+        <Router history={history}>
+          <Nav />
+        </Router>
+      </HomePageContext.Provider>
+    );
+    const navList = screen.getByTestId("top-navigation-section");
+    within(navList).getByText("66");
   });
 
   it("should be accessible", async () => {

@@ -22,6 +22,7 @@ export const CartTable: React.FunctionComponent<CartProps> = ({
   isEditable = true,
 }): JSX.Element => {
   const alert = useAlert();
+
   const { cart, removeCartItem } = useHomePageContext();
   return (
     <Table isResponsive>

@@ -7,6 +7,9 @@ import {
 import { render, screen } from "@testing-library/react";
 import SearchResultsPage from "./SearchResultsPage";
 import { MemoryRouter } from "react-router-dom";
+import { Provider as AlertProvider } from "react-alert";
+
+const AlertTemplate = () => <div>template</div>;
 
 // TODO: check what type can be used for this module instead of `any`
 jest.mock("react-router-dom", () => ({
@@ -20,9 +23,11 @@ let environment: RelayMockEnvironment;
 beforeEach(() => {
   environment = createMockEnvironment();
   render(
-    <MemoryRouter initialEntries={["/categoria/:categoryId"]}>
-      <SearchResultsPage environment={environment} />
-    </MemoryRouter>
+    <AlertProvider template={AlertTemplate}>
+      <MemoryRouter initialEntries={["/categoria/:categoryId"]}>
+        <SearchResultsPage environment={environment} />
+      </MemoryRouter>
+    </AlertProvider>
   );
 });
 

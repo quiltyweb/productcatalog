@@ -182,8 +182,8 @@ const Nav: React.FunctionComponent = (): JSX.Element => {
         <NavList cartCount={cartCount} />
       </MenuContainer>
 
-      <MobileContainer>
-        <MobileQuoteLink to="/cotizacion">
+      <MobileContainer data-testid="mobile-container">
+        <MobileQuoteLink aria-label="mi cotizacion" to="/cotizacion">
           <FontAwesomeIcon
             style={{ marginRight: "0.2rem" }}
             size="sm"

@@ -7,14 +7,19 @@ import {
 import { render, screen } from "@testing-library/react";
 import { ProductsPage } from "./ProductsPage";
 import { MemoryRouter } from "react-router-dom";
+import { Provider as AlertProvider } from "react-alert";
+
+const AlertTemplate = () => <div>template</div>;
 
 let environment: RelayMockEnvironment;
 beforeEach(() => {
   environment = createMockEnvironment();
   render(
-    <MemoryRouter initialEntries={["/categoria/:categoryId"]}>
-      <ProductsPage environment={environment} />
-    </MemoryRouter>
+    <AlertProvider template={AlertTemplate}>
+      <MemoryRouter initialEntries={["/categoria/:categoryId"]}>
+        <ProductsPage environment={environment} />
+      </MemoryRouter>
+    </AlertProvider>
   );
 });
 
