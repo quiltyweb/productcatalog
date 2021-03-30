@@ -2,25 +2,30 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { CartTable } from "./CartTable";
 import HomePageContext from "../../context/HomePageContext";
+import { Provider as AlertProvider } from "react-alert";
+
+const AlertTemplate = () => <div>template</div>;
 
 describe("CartTable Component", () => {
   describe("When CartTable is not editable", () => {
     it("should render correct table headers", () => {
       render(
-        <HomePageContext.Provider
-          value={{
-            cart: [],
-            cartCount: 2,
-            updateCartItem: () => null,
-            addCartItem: () => null,
-            handleCart: () => null,
-            incrementCartItem: () => null,
-            decrementCartItem: () => null,
-            removeCartItem: () => null,
-          }}
-        >
-          <CartTable isEditable={false} />
-        </HomePageContext.Provider>
+        <AlertProvider template={AlertTemplate}>
+          <HomePageContext.Provider
+            value={{
+              cart: [],
+              cartCount: 2,
+              updateCartItem: () => null,
+              addCartItem: () => null,
+              handleCart: () => null,
+              incrementCartItem: () => null,
+              decrementCartItem: () => null,
+              removeCartItem: () => null,
+            }}
+          >
+            <CartTable isEditable={false} />
+          </HomePageContext.Provider>
+        </AlertProvider>
       );
 
       screen.getByText("Imagen:");
@@ -31,33 +36,35 @@ describe("CartTable Component", () => {
 
     it("should render product details", () => {
       render(
-        <HomePageContext.Provider
-          value={{
-            cart: [
-              {
-                productId: "123",
-                productName: "zapato soldador",
-                productImage: "blank",
-                quantity: 1,
-              },
-              {
-                productId: "456",
-                productName: "casco minero",
-                productImage: "blank",
-                quantity: 2,
-              },
-            ],
-            cartCount: 3,
-            updateCartItem: () => null,
-            addCartItem: () => null,
-            handleCart: () => null,
-            incrementCartItem: () => null,
-            decrementCartItem: () => null,
-            removeCartItem: () => null,
-          }}
-        >
-          <CartTable isEditable={false} />
-        </HomePageContext.Provider>
+        <AlertProvider template={AlertTemplate}>
+          <HomePageContext.Provider
+            value={{
+              cart: [
+                {
+                  productId: "123",
+                  productName: "zapato soldador",
+                  productImage: "blank",
+                  quantity: 1,
+                },
+                {
+                  productId: "456",
+                  productName: "casco minero",
+                  productImage: "blank",
+                  quantity: 2,
+                },
+              ],
+              cartCount: 3,
+              updateCartItem: () => null,
+              addCartItem: () => null,
+              handleCart: () => null,
+              incrementCartItem: () => null,
+              decrementCartItem: () => null,
+              removeCartItem: () => null,
+            }}
+          >
+            <CartTable isEditable={false} />
+          </HomePageContext.Provider>
+        </AlertProvider>
       );
 
       expect(screen.getAllByRole("row")).toHaveLength(3);
@@ -72,27 +79,29 @@ describe("CartTable Component", () => {
 
     it("should not render action button to delete item", () => {
       render(
-        <HomePageContext.Provider
-          value={{
-            cart: [
-              {
-                productId: "123",
-                productName: "zapato soldador",
-                productImage: "blank",
-                quantity: 1,
-              },
-            ],
-            cartCount: 1,
-            updateCartItem: () => null,
-            addCartItem: () => null,
-            handleCart: () => null,
-            incrementCartItem: () => null,
-            decrementCartItem: () => null,
-            removeCartItem: () => null,
-          }}
-        >
-          <CartTable isEditable={false} />
-        </HomePageContext.Provider>
+        <AlertProvider template={AlertTemplate}>
+          <HomePageContext.Provider
+            value={{
+              cart: [
+                {
+                  productId: "123",
+                  productName: "zapato soldador",
+                  productImage: "blank",
+                  quantity: 1,
+                },
+              ],
+              cartCount: 1,
+              updateCartItem: () => null,
+              addCartItem: () => null,
+              handleCart: () => null,
+              incrementCartItem: () => null,
+              decrementCartItem: () => null,
+              removeCartItem: () => null,
+            }}
+          >
+            <CartTable isEditable={false} />
+          </HomePageContext.Provider>
+        </AlertProvider>
       );
 
       expect(screen.getAllByRole("columnheader")).toHaveLength(3);
@@ -105,53 +114,57 @@ describe("CartTable Component", () => {
   describe("When CartTable is editable", () => {
     it("should render Accion table header", () => {
       render(
-        <HomePageContext.Provider
-          value={{
-            cart: [],
-            cartCount: 2,
-            updateCartItem: () => null,
-            addCartItem: () => null,
-            handleCart: () => null,
-            incrementCartItem: () => null,
-            decrementCartItem: () => null,
-            removeCartItem: () => null,
-          }}
-        >
-          <CartTable isEditable={true} />
-        </HomePageContext.Provider>
+        <AlertProvider template={AlertTemplate}>
+          <HomePageContext.Provider
+            value={{
+              cart: [],
+              cartCount: 2,
+              updateCartItem: () => null,
+              addCartItem: () => null,
+              handleCart: () => null,
+              incrementCartItem: () => null,
+              decrementCartItem: () => null,
+              removeCartItem: () => null,
+            }}
+          >
+            <CartTable isEditable={true} />
+          </HomePageContext.Provider>
+        </AlertProvider>
       );
       screen.getByText("Acción:");
     });
 
     it("should render a QuantityPicker for each product item", () => {
       render(
-        <HomePageContext.Provider
-          value={{
-            cart: [
-              {
-                productId: "123",
-                productName: "zapato soldador",
-                productImage: "blank",
-                quantity: 1,
-              },
-              {
-                productId: "456",
-                productName: "zapato soldador 2",
-                productImage: "blank",
-                quantity: 1,
-              },
-            ],
-            cartCount: 1,
-            updateCartItem: () => null,
-            addCartItem: () => null,
-            handleCart: () => null,
-            incrementCartItem: () => null,
-            decrementCartItem: () => null,
-            removeCartItem: () => null,
-          }}
-        >
-          <CartTable isEditable={true} />
-        </HomePageContext.Provider>
+        <AlertProvider template={AlertTemplate}>
+          <HomePageContext.Provider
+            value={{
+              cart: [
+                {
+                  productId: "123",
+                  productName: "zapato soldador",
+                  productImage: "blank",
+                  quantity: 1,
+                },
+                {
+                  productId: "456",
+                  productName: "zapato soldador 2",
+                  productImage: "blank",
+                  quantity: 1,
+                },
+              ],
+              cartCount: 1,
+              updateCartItem: () => null,
+              addCartItem: () => null,
+              handleCart: () => null,
+              incrementCartItem: () => null,
+              decrementCartItem: () => null,
+              removeCartItem: () => null,
+            }}
+          >
+            <CartTable isEditable={true} />
+          </HomePageContext.Provider>
+        </AlertProvider>
       );
 
       expect(screen.getAllByRole("row")).toHaveLength(3);
@@ -161,27 +174,29 @@ describe("CartTable Component", () => {
 
     it("should render action button to delete item", () => {
       render(
-        <HomePageContext.Provider
-          value={{
-            cart: [
-              {
-                productId: "123",
-                productName: "zapato soldador",
-                productImage: "blank",
-                quantity: 1,
-              },
-            ],
-            cartCount: 1,
-            updateCartItem: () => null,
-            addCartItem: () => null,
-            handleCart: () => null,
-            incrementCartItem: () => null,
-            decrementCartItem: () => null,
-            removeCartItem: () => null,
-          }}
-        >
-          <CartTable isEditable={true} />
-        </HomePageContext.Provider>
+        <AlertProvider template={AlertTemplate}>
+          <HomePageContext.Provider
+            value={{
+              cart: [
+                {
+                  productId: "123",
+                  productName: "zapato soldador",
+                  productImage: "blank",
+                  quantity: 1,
+                },
+              ],
+              cartCount: 1,
+              updateCartItem: () => null,
+              addCartItem: () => null,
+              handleCart: () => null,
+              incrementCartItem: () => null,
+              decrementCartItem: () => null,
+              removeCartItem: () => null,
+            }}
+          >
+            <CartTable isEditable={true} />
+          </HomePageContext.Provider>
+        </AlertProvider>
       );
 
       expect(screen.getAllByRole("columnheader")).toHaveLength(4);

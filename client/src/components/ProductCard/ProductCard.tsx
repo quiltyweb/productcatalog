@@ -3,6 +3,7 @@ import { Card, Image, Paragraph, Button } from "bumbag";
 import styled from "styled-components";
 import { useHomePageContext } from "../../context/HomePageContext";
 import { Link } from "react-router-dom";
+import { useAlert } from "react-alert";
 
 const ImageStyled = styled(Image)`
   max-width: 100%;
@@ -67,7 +68,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
   isSinglePage,
 }): JSX.Element => {
   const { addCartItem } = useHomePageContext();
-
+  const alert = useAlert();
   return (
     <Card
       standalone
@@ -145,16 +146,19 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
           </Link>
         )}
         <Button
-          onClick={() =>
+          onClick={() => {
             addCartItem({
               productId,
               productName: name,
               productImage: linkImage,
               quantity: 1,
-            })
-          }
+            });
+            alert.show("Producto Agregado!", {
+              type: "success",
+            });
+          }}
         >
-          Añadir a cotización
+          Agregar a cotización
         </Button>
       </Card.Footer>
     </Card>

@@ -6,6 +6,9 @@ import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import HomePageContext from "../../context/HomePageContext";
 import userEvent from "@testing-library/user-event";
+import { Provider as AlertProvider } from "react-alert";
+
+const AlertTemplate = () => <div>template</div>;
 
 expect.extend(toHaveNoViolations);
 const history = createMemoryHistory();
@@ -13,27 +16,29 @@ const history = createMemoryHistory();
 describe("ProductCard Component", () => {
   it("should render", () => {
     render(
-      <HomePageContext.Provider
-        value={{
-          cart: [],
-          cartCount: 66,
-          updateCartItem: () => null,
-          addCartItem: () => null,
-          handleCart: () => null,
-          incrementCartItem: () => null,
-          decrementCartItem: () => null,
-          removeCartItem: () => null,
-        }}
-      >
-        <Router history={history}>
-          <ProductCard
-            productId="test_productId"
-            name="test_name"
-            linkImage="test_linkImage"
-            description="test_description"
-          />
-        </Router>
-      </HomePageContext.Provider>
+      <AlertProvider template={AlertTemplate}>
+        <HomePageContext.Provider
+          value={{
+            cart: [],
+            cartCount: 66,
+            updateCartItem: () => null,
+            addCartItem: () => null,
+            handleCart: () => null,
+            incrementCartItem: () => null,
+            decrementCartItem: () => null,
+            removeCartItem: () => null,
+          }}
+        >
+          <Router history={history}>
+            <ProductCard
+              productId="test_productId"
+              name="test_name"
+              linkImage="test_linkImage"
+              description="test_description"
+            />
+          </Router>
+        </HomePageContext.Provider>
+      </AlertProvider>
     );
     const image = screen.getByAltText("test_name");
     expect(image).toHaveStyle({
@@ -42,37 +47,39 @@ describe("ProductCard Component", () => {
     });
     screen.getByRole("heading", { name: "test_name" });
     screen.getByRole("link", { name: "ver producto" });
-    screen.getByRole("button", { name: "Añadir a cotización" });
+    screen.getByRole("button", { name: "Agregar a cotización" });
     screen.getByText("test_description");
   });
 
-  it("when click on `Añadir a cotización` should call addCartItem callback", async () => {
+  it("when click on `Agregar a cotización` should call addCartItem callback", async () => {
     const mockedAddCartItem = jest.fn();
     render(
-      <HomePageContext.Provider
-        value={{
-          cart: [],
-          cartCount: 66,
-          updateCartItem: () => null,
-          addCartItem: mockedAddCartItem,
-          handleCart: () => null,
-          incrementCartItem: () => null,
-          decrementCartItem: () => null,
-          removeCartItem: () => null,
-        }}
-      >
-        <Router history={history}>
-          <ProductCard
-            productId="test_productId"
-            name="test_name"
-            linkImage="test_linkImage"
-          />
-        </Router>
-      </HomePageContext.Provider>
+      <AlertProvider template={AlertTemplate}>
+        <HomePageContext.Provider
+          value={{
+            cart: [],
+            cartCount: 66,
+            updateCartItem: () => null,
+            addCartItem: mockedAddCartItem,
+            handleCart: () => null,
+            incrementCartItem: () => null,
+            decrementCartItem: () => null,
+            removeCartItem: () => null,
+          }}
+        >
+          <Router history={history}>
+            <ProductCard
+              productId="test_productId"
+              name="test_name"
+              linkImage="test_linkImage"
+            />
+          </Router>
+        </HomePageContext.Provider>
+      </AlertProvider>
     );
 
     const addToCartButton = screen.getByRole("button", {
-      name: "Añadir a cotización",
+      name: "Agregar a cotización",
     });
 
     act(() => {
@@ -92,11 +99,13 @@ describe("ProductCard Component", () => {
   it("should be accessible", async () => {
     const { container } = render(
       <Router history={history}>
-        <ProductCard
-          productId="test_productId"
-          name="test_name"
-          linkImage="test_linkImage"
-        />
+        <AlertProvider template={AlertTemplate}>
+          <ProductCard
+            productId="test_productId"
+            name="test_name"
+            linkImage="test_linkImage"
+          />
+        </AlertProvider>
       </Router>
     );
     const results = await axe(container);
@@ -106,28 +115,30 @@ describe("ProductCard Component", () => {
   describe("isSinglePage", () => {
     it("should render correct links", () => {
       render(
-        <HomePageContext.Provider
-          value={{
-            cart: [],
-            cartCount: 66,
-            updateCartItem: () => null,
-            addCartItem: () => null,
-            handleCart: () => null,
-            incrementCartItem: () => null,
-            decrementCartItem: () => null,
-            removeCartItem: () => null,
-          }}
-        >
-          <Router history={history}>
-            <ProductCard
-              productId="test_productId"
-              name="test_name"
-              linkImage="test_linkImage"
-              isSinglePage={true}
-              attachmentPath="test_attachmentPath"
-            />
-          </Router>
-        </HomePageContext.Provider>
+        <AlertProvider template={AlertTemplate}>
+          <HomePageContext.Provider
+            value={{
+              cart: [],
+              cartCount: 66,
+              updateCartItem: () => null,
+              addCartItem: () => null,
+              handleCart: () => null,
+              incrementCartItem: () => null,
+              decrementCartItem: () => null,
+              removeCartItem: () => null,
+            }}
+          >
+            <Router history={history}>
+              <ProductCard
+                productId="test_productId"
+                name="test_name"
+                linkImage="test_linkImage"
+                isSinglePage={true}
+                attachmentPath="test_attachmentPath"
+              />
+            </Router>
+          </HomePageContext.Provider>
+        </AlertProvider>
       );
       screen.getByRole("link", { name: "Certificado" });
       screen.getByRole("link", { name: "Descargar ficha técnica" });
@@ -138,28 +149,30 @@ describe("ProductCard Component", () => {
 
     it("should render correct image styles", () => {
       render(
-        <HomePageContext.Provider
-          value={{
-            cart: [],
-            cartCount: 66,
-            updateCartItem: () => null,
-            addCartItem: () => null,
-            handleCart: () => null,
-            incrementCartItem: () => null,
-            decrementCartItem: () => null,
-            removeCartItem: () => null,
-          }}
-        >
-          <Router history={history}>
-            <ProductCard
-              productId="test_productId"
-              name="test_name"
-              linkImage="test_linkImage"
-              isSinglePage={true}
-              attachmentPath="test_attachmentPath"
-            />
-          </Router>
-        </HomePageContext.Provider>
+        <AlertProvider template={AlertTemplate}>
+          <HomePageContext.Provider
+            value={{
+              cart: [],
+              cartCount: 66,
+              updateCartItem: () => null,
+              addCartItem: () => null,
+              handleCart: () => null,
+              incrementCartItem: () => null,
+              decrementCartItem: () => null,
+              removeCartItem: () => null,
+            }}
+          >
+            <Router history={history}>
+              <ProductCard
+                productId="test_productId"
+                name="test_name"
+                linkImage="test_linkImage"
+                isSinglePage={true}
+                attachmentPath="test_attachmentPath"
+              />
+            </Router>
+          </HomePageContext.Provider>
+        </AlertProvider>
       );
       const image = screen.getByAltText("test_name");
       expect(image).toHaveStyle({

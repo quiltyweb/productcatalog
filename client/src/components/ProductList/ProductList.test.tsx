@@ -10,6 +10,9 @@ import { render, screen } from "@testing-library/react";
 import ProductList from "./ProductList";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
+import { Provider as AlertProvider } from "react-alert";
+
+const AlertTemplate = () => <div>template</div>;
 
 let environment: RelayMockEnvironment;
 const history = createMemoryHistory();
@@ -17,30 +20,32 @@ const history = createMemoryHistory();
 beforeEach(() => {
   environment = createMockEnvironment();
   const TestRenderer = () => (
-    <Router history={history}>
-      <QueryRenderer
-        environment={environment}
-        query={graphql`
-          query ProductListTestQuery($categoryId: ID!) @relay_test_operation {
-            fetchCategory: fetchCategory(categoryId: $categoryId) {
-              id
-              name
-              products {
-                ...ProductList_products
+    <AlertProvider template={AlertTemplate}>
+      <Router history={history}>
+        <QueryRenderer
+          environment={environment}
+          query={graphql`
+            query ProductListTestQuery($categoryId: ID!) @relay_test_operation {
+              fetchCategory: fetchCategory(categoryId: $categoryId) {
+                id
+                name
+                products {
+                  ...ProductList_products
+                }
               }
             }
-          }
-        `}
-        variables={{ categoryId: "id123" }}
-        render={({ error, props }: { error: any; props: any }) => {
-          if (props) {
-            return <ProductList products={props.fetchCategory.products} />;
-          } else if (error) {
-            return error.message;
-          }
-        }}
-      />
-    </Router>
+          `}
+          variables={{ categoryId: "id123" }}
+          render={({ error, props }: { error: any; props: any }) => {
+            if (props) {
+              return <ProductList products={props.fetchCategory.products} />;
+            } else if (error) {
+              return error.message;
+            }
+          }}
+        />
+      </Router>
+    </AlertProvider>
   );
 
   render(<TestRenderer />);

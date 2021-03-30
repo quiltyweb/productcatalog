@@ -21,6 +21,18 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import HomePage from "../HomePage/HomePage";
 import CategorySideBar from "../../components/CategorySideBar/CategorySideBar";
 import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
+import { transitions, positions, Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+
+const alertProviderOptions = {
+  position: positions.TOP_RIGHT,
+  timeout: 2000,
+  offset: "10px",
+  transition: transitions.FADE,
+  containerStyle: {
+    zIndex: 1000,
+  },
+};
 
 type AppProps = {
   environment: Environment;
@@ -117,78 +129,82 @@ const App: React.FunctionComponent<AppProps> = ({
   return (
     <ErrorBoundary>
       <ScrollToTop>
-        <BumbagProvider theme={newTheme}>
-          <HomePageContext.Provider
-            value={{
-              cart,
-              cartCount: sumCartItems(cart),
-              updateCartItem,
-              addCartItem,
-              handleCart: setCart,
-              incrementCartItem,
-              decrementCartItem,
-              removeCartItem,
-            }}
-          >
-            <PageWithHeader
-              header={<Nav />}
-              border="default"
-              sticky
-              headerHeight="80px"
+        <AlertProvider template={AlertTemplate} {...alertProviderOptions}>
+          <BumbagProvider theme={newTheme}>
+            <HomePageContext.Provider
+              value={{
+                cart,
+                cartCount: sumCartItems(cart),
+                updateCartItem,
+                addCartItem,
+                handleCart: setCart,
+                incrementCartItem,
+                decrementCartItem,
+                removeCartItem,
+              }}
             >
-              <PageWrapper title="Comercial Gattoni seguridad industrial - Inicio">
-                <div style={{ display: "flex", flexWrap: "wrap-reverse" }}>
-                  {!isHomePage && <CategorySideBar environment={environment} />}
-                  <main style={{ flexBasis: "80%", margin: "0.5rem auto" }}>
-                    <Switch>
-                      <Route path="/contacto">
-                        <ContactForm
-                          initialValues={{
-                            nombre: "",
-                            empresa: "",
-                            email: "",
-                            mensaje: "",
-                            telefono: "",
-                            recaptcha: "",
-                          }}
-                        />
-                      </Route>
-                      <Route path="/certificaciones">
-                        <ContentList
-                          title="Certificaciones"
-                          description="Descargue documentos que certifican la calidad de nuestos productos."
-                          links={certificationLinks}
-                        />
-                      </Route>
-                      <Route path="/cotizacion">
-                        <CartPage />
-                      </Route>
-                      <Route path="/enviar-cotizacion">
-                        <QuotePage />
-                      </Route>
-                      <Route path="/categoria/:categoryId">
-                        <ProductsPage environment={environment} />
-                      </Route>
-                      <Route path="/resultados/:searchTerm">
-                        <SearchResultsPage environment={environment} />
-                      </Route>
-                      <Route path="/producto/:productId">
-                        <SingleProductPage environment={environment} />
-                      </Route>
-                      <Route exact path="/">
-                        <HomePage environment={environment} />
-                      </Route>
-                      <Route path="*">
-                        <PageNotFound />
-                      </Route>
-                    </Switch>
-                  </main>
-                </div>
-              </PageWrapper>
-            </PageWithHeader>
-            <Footer />
-          </HomePageContext.Provider>
-        </BumbagProvider>
+              <PageWithHeader
+                header={<Nav />}
+                border="default"
+                sticky
+                headerHeight="80px"
+              >
+                <PageWrapper title="Comercial Gattoni seguridad industrial - Inicio">
+                  <div style={{ display: "flex", flexWrap: "wrap-reverse" }}>
+                    {!isHomePage && (
+                      <CategorySideBar environment={environment} />
+                    )}
+                    <main style={{ flexBasis: "80%", margin: "0.5rem auto" }}>
+                      <Switch>
+                        <Route path="/contacto">
+                          <ContactForm
+                            initialValues={{
+                              nombre: "",
+                              empresa: "",
+                              email: "",
+                              mensaje: "",
+                              telefono: "",
+                              recaptcha: "",
+                            }}
+                          />
+                        </Route>
+                        <Route path="/certificaciones">
+                          <ContentList
+                            title="Certificaciones"
+                            description="Descargue documentos que certifican la calidad de nuestos productos."
+                            links={certificationLinks}
+                          />
+                        </Route>
+                        <Route path="/cotizacion">
+                          <CartPage />
+                        </Route>
+                        <Route path="/enviar-cotizacion">
+                          <QuotePage />
+                        </Route>
+                        <Route path="/categoria/:categoryId">
+                          <ProductsPage environment={environment} />
+                        </Route>
+                        <Route path="/resultados/:searchTerm">
+                          <SearchResultsPage environment={environment} />
+                        </Route>
+                        <Route path="/producto/:productId">
+                          <SingleProductPage environment={environment} />
+                        </Route>
+                        <Route exact path="/">
+                          <HomePage environment={environment} />
+                        </Route>
+                        <Route path="*">
+                          <PageNotFound />
+                        </Route>
+                      </Switch>
+                    </main>
+                  </div>
+                </PageWrapper>
+              </PageWithHeader>
+              <Footer />
+            </HomePageContext.Provider>
+          </BumbagProvider>
+        </AlertProvider>
       </ScrollToTop>
     </ErrorBoundary>
   );

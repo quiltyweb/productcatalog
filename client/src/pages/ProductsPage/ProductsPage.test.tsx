@@ -7,14 +7,19 @@ import {
 import { render, screen } from "@testing-library/react";
 import { ProductsPage } from "./ProductsPage";
 import { MemoryRouter } from "react-router-dom";
+import { Provider as AlertProvider } from "react-alert";
+
+const AlertTemplate = () => <div>template</div>;
 
 let environment: RelayMockEnvironment;
 beforeEach(() => {
   environment = createMockEnvironment();
   render(
-    <MemoryRouter initialEntries={["/categoria/:categoryId"]}>
-      <ProductsPage environment={environment} />
-    </MemoryRouter>
+    <AlertProvider template={AlertTemplate}>
+      <MemoryRouter initialEntries={["/categoria/:categoryId"]}>
+        <ProductsPage environment={environment} />
+      </MemoryRouter>
+    </AlertProvider>
   );
 });
 
@@ -68,7 +73,7 @@ describe("ProductsPage", () => {
     screen.getByRole("heading", { name: "Soldador" });
     screen.getByRole("heading", { name: "Zapatos" });
     screen.getAllByRole("link", { name: "ver producto" });
-    screen.getAllByRole("button", { name: "Añadir a cotización" });
+    screen.getAllByRole("button", { name: "Agregar a cotización" });
   });
 
   test("should render empty state when there are no products", async () => {
