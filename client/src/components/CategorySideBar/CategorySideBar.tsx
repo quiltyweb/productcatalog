@@ -12,7 +12,9 @@ const CategorySideBar: React.FunctionComponent<CategorySideBarProps> = ({
   environment,
 }): JSX.Element => {
   return (
-    <aside style={{ flexBasis: "20%", paddingTop: "2rem" }}>
+    <aside
+      style={{ flexBasis: "20%", paddingTop: "1rem", position: "relative" }}
+    >
       <QueryRenderer
         environment={environment}
         query={graphql`
@@ -28,7 +30,15 @@ const CategorySideBar: React.FunctionComponent<CategorySideBarProps> = ({
             return <div>Se ha producido un Error, intente nuevamente.</div>;
           }
           if (!props) {
-            return <Skeleton count={12} duration={1} delay={1} />;
+            return (
+              <Skeleton
+                count={12}
+                duration={1}
+                delay={1}
+                width="184px"
+                height="45px"
+              />
+            );
           }
 
           return <CategoryList categories={props.fetchCategories} />;
