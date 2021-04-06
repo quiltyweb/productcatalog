@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { CategoryList_categories } from "./__generated__/CategoryList_categories.graphql";
 import { SelectField } from "bumbag";
 
-const ProductsList = styled.ul`
+const StyledCategoryList = styled.ul`
   display: none;
   @media (min-width: 760px) {
     display: flex;
@@ -40,7 +40,7 @@ const ProductItem = styled.li`
   }
 `;
 
-const ProductsListLink = styled((props) => <Link {...props} />)`
+const CategoryListLink = styled((props) => <Link {...props} />)`
   position: relative;
   padding: 1rem;
   display: block;
@@ -107,14 +107,14 @@ export const CategoryList: React.FunctionComponent<CategoryListProps> = ({
 
   return (
     <>
-      <ProductsList>
+      <StyledCategoryList data-testid="categoryList-list">
         {categoryArray &&
           categoryArray.map((item) => (
             <ProductItem key={item.id}>
-              <ProductsListLink to={item.value}>{item.label}</ProductsListLink>
+              <CategoryListLink to={item.value}>{item.label}</CategoryListLink>
             </ProductItem>
           ))}
-      </ProductsList>
+      </StyledCategoryList>
       <MobileSelect
         label="Categoría"
         options={categoryArray}

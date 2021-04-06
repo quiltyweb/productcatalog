@@ -36,7 +36,7 @@ describe("ProductsPage", () => {
     screen.getByText("Cargando...");
   });
 
-  test("should render data", async () => {
+  test.only("should render category name and product cards", async () => {
     environment.mock.resolveMostRecentOperation((operation) =>
       MockPayloadGenerator.generate(operation, {
         Category() {
@@ -69,7 +69,9 @@ describe("ProductsPage", () => {
         },
       })
     );
-    screen.getByRole("heading", { name: "Categoría: mocked_category_name" });
+    screen.getByRole("heading", {
+      name: "Categoría seleccionada: mocked_category_name",
+    });
     screen.getByRole("heading", { name: "Soldador" });
     screen.getByRole("heading", { name: "Zapatos" });
     screen.getAllByRole("link", { name: "ver producto" });

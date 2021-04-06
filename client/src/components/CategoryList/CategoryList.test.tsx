@@ -6,7 +6,7 @@ import {
   MockPayloadGenerator,
   RelayMockEnvironment,
 } from "relay-test-utils";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import CategoryList from "./CategoryList";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
@@ -61,7 +61,7 @@ describe("CategoryList Fragment Container", () => {
     screen.getByText("No hay categorias");
   });
 
-  test("should render categories", () => {
+  test("should render categories for mobile and desktop view", () => {
     environment.mock.resolveMostRecentOperation((operation) => {
       return MockPayloadGenerator.generate(operation, {
         CategoryConnection() {
@@ -78,8 +78,14 @@ describe("CategoryList Fragment Container", () => {
         },
       });
     });
+    // list rendered for desktop
+    const list = screen.getByTestId("categoryList-list");
+    within(list).getByText("Soldador");
+    within(list).getByText("Zapatos");
 
-    screen.getByRole("link", { name: "Soldador" });
-    screen.getByRole("link", { name: "Zapatos" });
+    // select rendered for mobile
+    screen.getByLabelText("Categoría");
+    screen.getByRole("option", { name: "Soldador" });
+    screen.getByRole("option", { name: "Zapatos" });
   });
 });
