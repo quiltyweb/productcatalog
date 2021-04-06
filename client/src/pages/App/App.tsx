@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { Switch, Route, useLocation } from "react-router-dom";
 import { Environment } from "react-relay";
 import { Provider as BumbagProvider, PageWithHeader, Alert } from "bumbag";
@@ -27,6 +28,14 @@ import {
   Provider as AlertProvider,
   AlertComponentPropsWithStyle,
 } from "react-alert";
+
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 760px) {
+    flex-direction: row;
+  }
+`;
 
 const alertProviderOptions = {
   position: positions.BOTTOM_RIGHT,
@@ -174,7 +183,7 @@ const App: React.FunctionComponent<AppProps> = ({
                 headerHeight="80px"
               >
                 <PageWrapper title="Comercial Gattoni seguridad industrial - Inicio">
-                  <div style={{ display: "flex", flexWrap: "wrap-reverse" }}>
+                  <AppContainer>
                     {!isHomePage && (
                       <CategorySideBar environment={environment} />
                     )}
@@ -222,7 +231,7 @@ const App: React.FunctionComponent<AppProps> = ({
                         </Route>
                       </Switch>
                     </main>
-                  </div>
+                  </AppContainer>
                 </PageWrapper>
               </PageWithHeader>
               <Footer />

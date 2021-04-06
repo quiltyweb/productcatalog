@@ -2,21 +2,20 @@ import React from "react";
 import { graphql } from "babel-plugin-relay/macro";
 import { createFragmentContainer } from "react-relay";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { CategoryList_categories } from "./__generated__/CategoryList_categories.graphql";
+import { SelectField } from "bumbag";
 
 const ProductsList = styled.ul`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin: 0;
-  padding: 0 2rem;
-  line-height: 1;
-  list-style: none;
-
+  display: none;
   @media (min-width: 760px) {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    line-height: 1;
+    list-style: none;
     margin: 0;
     padding: 0;
     flex-direction: column;
@@ -60,6 +59,29 @@ const ProductsListLink = styled((props) => <Link {...props} />)`
   }
 `;
 
+const MobileSelect = styled((props) => <SelectField {...props} />)`
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  background-color: white;
+  top: 80px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e6e6eb;
+  .bb-FieldWrapper {
+    display: flex;
+    align-items: center;
+    label {
+      margin-right: 0.5rem;
+    }
+  }
+  @media (min-width: 760px) {
+    display: none;
+  }
+`;
+
 type CategoryListProps = {
   categories: CategoryList_categories;
 };
@@ -67,22 +89,40 @@ type CategoryListProps = {
 export const CategoryList: React.FunctionComponent<CategoryListProps> = ({
   categories,
 }): JSX.Element => {
+  const history = useHistory();
+
+  const categoryArray =
+    categories &&
+    categories.edges &&
+    categories.edges.length > 0 &&
+    categories.edges.map((item: any) => ({
+      id: item.node.id,
+      label: item.node.name,
+      value: `/categoria/${item.node.id}`,
+    }));
+
+  if (categories && categories.edges && categories.edges.length === 0) {
+    return <ProductItem>No hay categorias</ProductItem>;
+  }
+
   return (
-    <ProductsList>
-      {categories && categories.edges && categories.edges.length > 0 ? (
-        categories.edges.map((item: any) => {
-          return (
-            <ProductItem key={item.node.id}>
-              <ProductsListLink to={`/categoria/${item.node.id}`}>
-                {item.node.name}
-              </ProductsListLink>
+    <>
+      <ProductsList>
+        {categoryArray &&
+          categoryArray.map((item) => (
+            <ProductItem key={item.id}>
+              <ProductsListLink to={item.value}>{item.label}</ProductsListLink>
             </ProductItem>
-          );
-        })
-      ) : (
-        <ProductItem>No hay categorias</ProductItem>
-      )}
-    </ProductsList>
+          ))}
+      </ProductsList>
+      <MobileSelect
+        label="Categoría"
+        options={categoryArray}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          return history.push(e.target.value);
+        }}
+      />
+    </>
   );
 };
 
