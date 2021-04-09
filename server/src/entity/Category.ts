@@ -12,7 +12,7 @@ import { Product } from "./Product";
 @Entity()
 export class Category extends BaseEntity {
   constructor(name: string) {
-    super()
+    super();
     this.name = name;
   }
 
