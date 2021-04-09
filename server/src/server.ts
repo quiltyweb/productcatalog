@@ -110,7 +110,7 @@ createConnection(connectionName)
         },
       },
       dashboard: {
-        handler: async (): Promise<{some:string}> => {
+        handler: async (): Promise<{ some: string }> => {
           return { some: "output" };
         },
         component: AdminBro.bundle("./admin/Dashboard"),
