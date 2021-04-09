@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Entity,
   PrimaryGeneratedColumn,
   Column,
@@ -9,8 +10,9 @@ import {
 import { Product } from "./Product";
 
 @Entity()
-export class Category {
+export class Category extends BaseEntity {
   constructor(name: string) {
+    super()
     this.name = name;
   }
 
