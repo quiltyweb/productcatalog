@@ -29,7 +29,6 @@ createConnection(connectionName)
     Category.useConnection(connection);
 
     const adminBroOptions: AdminBroOptions = {
-      databases: [connection],
       resources: [
         {
           resource: Product,
