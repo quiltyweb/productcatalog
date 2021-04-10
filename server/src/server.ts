@@ -25,9 +25,8 @@ createConnection(connectionName)
   .then(async (connection) => {
     const app = new Koa();
 
-     // Applying connection to each model
-     Product.useConnection(connection);
-     Category.useConnection(connection);
+    Product.useConnection(connection);
+    Category.useConnection(connection);
 
     const adminBroOptions: AdminBroOptions = {
       databases: [connection],
