@@ -20,7 +20,6 @@ import { Product } from "./entity/Product";
 import { Category } from "./entity/Category";
 import { User } from "./entity/User";
 import bcrypt from "bcrypt";
-import util from "util";
 
 const { NODE_ENV, APP_KEY, PORT } = process.env;
 
@@ -124,26 +123,27 @@ createConnection(connectionName)
         language: "es",
         translations: {
           buttons: {
-            save: 'Guardar',
-            addNewItem: 'Agregar nuevo Item',
+            save: "Guardar",
+            addNewItem: "Agregar nuevo Item",
             filter: "Filtrar",
-            applyChanges: 'Aplicar cambios',
-            resetFilter: 'Cancelar',
-            confirmRemovalMany: 'Confirma la eliminación de {{count}} registro',
-            confirmRemovalMany_plural: 'Confirma la eliminación de {{count}} registros',
-            logout: 'Salir',
-            seeTheDocumentation: 'Ver: <1>La documentacion</1>',
-            createFirstRecord: 'Crear Primer Registro',
+            applyChanges: "Aplicar cambios",
+            resetFilter: "Cancelar",
+            confirmRemovalMany: "Confirma la eliminación de {{count}} registro",
+            confirmRemovalMany_plural:
+              "Confirma la eliminación de {{count}} registros",
+            logout: "Salir",
+            seeTheDocumentation: "Ver: <1>La documentacion</1>",
+            createFirstRecord: "Crear Primer Registro",
           },
           labels: {
-            navigation: 'Navegación',
-            pages: 'Páginas',
+            navigation: "Navegación",
+            pages: "Páginas",
             Product: "Productos",
             Category: "Categorías",
             User: "Usuarios",
-            loginWelcome: 'Comercial Gattoni',
-            filters: 'Filtros',
-            selectedRecords: '({{selected}}) Seleccionados',
+            loginWelcome: "Comercial Gattoni",
+            filters: "Filtros",
+            selectedRecords: "({{selected}}) Seleccionados",
           },
           resources: {
             Product: {
@@ -179,11 +179,10 @@ createConnection(connectionName)
             },
           },
           messages: {
-            loginWelcome: '',
-            confirmDelete: 'Realmente desea eliminar este ítem?',
-            invalidCredentials: 'Email y/o contraseña incorrectos',
+            loginWelcome: "",
+            confirmDelete: "Realmente desea eliminar este ítem?",
+            invalidCredentials: "Email y/o contraseña incorrectos",
           },
-
         },
       },
       dashboard: {
@@ -195,13 +194,17 @@ createConnection(connectionName)
             request: any,
             response: any,
             context: PageContext
-          ): Promise<{ content: string, categoryCounter: number, productCounter: number }> => {
+          ): Promise<{
+            content: string;
+            categoryCounter: number;
+            productCounter: number;
+          }> => {
             const categoryCounter = await connection.manager.count(Category);
             const productCounter = await connection.manager.count(Product);
             return {
               content: "Panel de Estadisticas de Gattoni.cl",
               categoryCounter: categoryCounter,
-              productCounter: productCounter
+              productCounter: productCounter,
             };
           },
           component: AdminBro.bundle("./admin/Stats"),
