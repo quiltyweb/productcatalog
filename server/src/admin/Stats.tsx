@@ -8,7 +8,7 @@ const Stats:React.FunctionComponent = ():JSX.Element => {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    apiClient.getDashboard().then((response) => {
+    apiClient.getPage({pageName: "Estadisticas"}).then((response) => {
       setData(response.data);
     });
   }, []);
@@ -16,7 +16,9 @@ const Stats:React.FunctionComponent = ():JSX.Element => {
   return (
     <Box variant="grey">
       <Section mb="xl">
-        <Text>Estadisticas de Gattoni.cl</Text>
+        <Text>{data.content}</Text>
+        <Text>Cantidad de Categorias creadas: {data.categoryCounter}</Text>
+        <Text>Cantidad de Productos creados: {data.productCounter}</Text>
       </Section>
 
 
