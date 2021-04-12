@@ -7,13 +7,19 @@ import helmet from "koa-helmet";
 import serveStatic from "koa-static";
 import send from "koa-send";
 import { Database, Resource } from "@admin-bro/typeorm";
-import AdminBro, { AdminBroOptions } from "admin-bro";
-import { buildRouter } from "@admin-bro/koa";
+import AdminBro, {
+  AdminBroOptions,
+  ActionRequest,
+  PageContext,
+} from "admin-bro";
+import { buildAuthenticatedRouter } from "@admin-bro/koa";
 import { schema } from "./graphql";
 import Email from "./email";
 import type { Context as KoaContext } from "koa";
 import { Product } from "./entity/Product";
 import { Category } from "./entity/Category";
+import { User } from "./entity/User";
+import bcrypt from "bcrypt";
 
 const { NODE_ENV, APP_KEY, PORT } = process.env;
 
@@ -24,9 +30,11 @@ const connectionName = NODE_ENV === "development" ? "default" : NODE_ENV;
 createConnection(connectionName)
   .then(async (connection) => {
     const app = new Koa();
+    app.keys = ["super-secret1"];
 
     Product.useConnection(connection);
     Category.useConnection(connection);
+    User.useConnection(connection);
 
     const adminBroOptions: AdminBroOptions = {
       resources: [
@@ -60,6 +68,47 @@ createConnection(connectionName)
               delete: { isVisible: false },
               show: { isVisible: false },
               bulkDelete: { isVisible: false },
+            },
+          },
+        },
+        {
+          resource: User,
+          options: {
+            navigation: {
+              name: "Usuarios",
+            },
+            properties: {
+              encryptedPassword: {
+                isVisible: false,
+              },
+              password: {
+                type: "string",
+                isVisible: {
+                  list: false,
+                  edit: true,
+                  filter: false,
+                  show: false,
+                },
+              },
+            },
+            actions: {
+              new: {
+                before: async (
+                  request: ActionRequest
+                ): Promise<ActionRequest> => {
+                  if (request.payload.password) {
+                    request.payload = {
+                      ...request.payload,
+                      encryptedPassword: await bcrypt.hash(
+                        request.payload.password,
+                        10
+                      ),
+                      password: undefined,
+                    };
+                  }
+                  return request;
+                },
+              },
             },
           },
         },
@@ -119,7 +168,11 @@ createConnection(connectionName)
       },
       pages: {
         Estadisticas: {
-          handler: async (request, response, context) => {
+          handler: async (
+            request: any,
+            response: any,
+            context: PageContext
+          ): Promise<{ text: string }> => {
             return {
               text: "Panel de Estadisticas de Gattoni.cl",
             };
@@ -131,7 +184,23 @@ createConnection(connectionName)
     };
     const adminBro = new AdminBro(adminBroOptions);
 
-    const router = buildRouter(adminBro, app);
+    const router = buildAuthenticatedRouter(adminBro, app, {
+      authenticate: async (email: string, password: string) => {
+        const user: any = await connection.manager.findOne(User, {
+          email: email,
+        });
+        if (user) {
+          const matched = await bcrypt.compare(
+            password,
+            user.encryptedPassword
+          );
+          if (matched) {
+            return user;
+          }
+        }
+        return null;
+      },
+    });
 
     app.keys = [APP_KEY];
 
