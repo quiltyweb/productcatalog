@@ -8,11 +8,10 @@ import serveStatic from "koa-static";
 import send from "koa-send";
 import { Database, Resource } from "@admin-bro/typeorm";
 import AdminBro, {
-  AdminBroOptions,
   ActionRequest,
   PageContext,
 } from "admin-bro";
-import { buildAuthenticatedRouter } from "@admin-bro/koa";
+import { buildRouter } from "@admin-bro/koa";
 import { schema } from "./graphql";
 import Email from "./email";
 import type { Context as KoaContext } from "koa";
@@ -20,8 +19,15 @@ import { Product } from "./entity/Product";
 import { Category } from "./entity/Category";
 import { User } from "./entity/User";
 import bcrypt from "bcrypt";
-
+import session from "koa-generic-session";
+import RedisStore from "koa-redis";
+import Router from "@koa/router";
+import { ParameterizedContext } from "koa";
+import bodyParser from "koa-bodyparser";
 const { NODE_ENV, APP_KEY, PORT } = process.env;
+
+const DEFAULT_ROOT_PATH = '/admin';
+const INVALID_CREDENTIALS_ERROR_MESSAGE = 'invalidCredentials'
 
 AdminBro.registerAdapter({ Database, Resource });
 
@@ -30,13 +36,14 @@ const connectionName = NODE_ENV === "development" ? "default" : NODE_ENV;
 createConnection(connectionName)
   .then(async (connection) => {
     const app = new Koa();
-    app.keys = ["super-secret1"];
+    app.use(bodyParser());
+    app.keys = [APP_KEY];
 
     Product.useConnection(connection);
     Category.useConnection(connection);
     User.useConnection(connection);
 
-    const adminBroOptions: AdminBroOptions = {
+    const adminBroOptions = {
       resources: [
         {
           resource: Product,
@@ -212,27 +219,97 @@ createConnection(connectionName)
       },
       rootPath: "/admin",
     };
+
     const adminBro = new AdminBro(adminBroOptions);
 
-    const router = buildAuthenticatedRouter(adminBro, app, {
-      authenticate: async (email: string, password: string) => {
-        const user: any = await connection.manager.findOne(User, {
-          email: email,
-        });
-        if (user) {
-          const matched = await bcrypt.compare(
-            password,
-            user.encryptedPassword
-          );
-          if (matched) {
-            return user;
-          }
-        }
-        return null;
-      },
-    });
+    const redisRouter = () => {
+      const router =  new Router({
+        prefix: adminBro.options.rootPath
+      })
 
-    app.keys = [APP_KEY];
+      const store = new RedisStore({
+        host: 'redis',
+      });
+
+      router.use(session({
+        key: 'gattoni:sess',
+        prefix: 'gattoni:sess',
+        store:store
+      }));
+
+      const { rootPath } = adminBro.options;
+      let { loginPath, logoutPath } = adminBro.options;
+      loginPath = loginPath.replace(DEFAULT_ROOT_PATH, '');
+      logoutPath = logoutPath.replace(DEFAULT_ROOT_PATH, '');
+
+      // source: https://github.com/SoftwareBrothers/admin-bro-koa/blob/master/src/utils.ts#L81
+      router.get(loginPath, async (ctx) => {
+        ctx.body = await adminBro.renderLogin({
+          action: rootPath + loginPath,
+          errorMessage: null,
+        })
+      });
+
+      const auth = {
+          authenticate: async (email: string, password: string) => {
+            const user: any = await connection.manager.findOne(User, {
+              email: email,
+            });
+            if (user) {
+              const matched = await bcrypt.compare(
+                password,
+                user.encryptedPassword
+              );
+              if (matched) {
+                return user;
+              }
+            }
+            return null;
+          },
+        };
+
+      // source: https://github.com/SoftwareBrothers/admin-bro-koa/blob/master/src/utils.ts#L88
+      router.post(loginPath, async (ctx: ParameterizedContext) => {
+        const { email, password } = ctx.request.body
+        const adminUser = await auth.authenticate(email, password);
+        if (adminUser) {
+          ctx.session.adminUser = adminUser;
+          if (ctx.session.redirectTo) {
+            await ctx.redirect(ctx.session.redirectTo);
+          } else {
+            await ctx.redirect(rootPath);
+          }
+        } else {
+          ctx.body = await adminBro.renderLogin({
+            action: adminBro.options.loginPath,
+            errorMessage: INVALID_CREDENTIALS_ERROR_MESSAGE,
+          });
+        }
+      });
+
+      // source: https://github.com/SoftwareBrothers/admin-bro-koa/blob/master/src/utils.ts#L107
+      router.use(async (ctx: ParameterizedContext, next) => {
+        if (ctx.session.adminUser) {
+          await next();
+        } else {
+          const [redirectTo] = ctx.request.originalUrl.split('/actions');
+          ctx.session.redirectTo = redirectTo.includes(`${rootPath}/api`) ? rootPath : redirectTo;
+          ctx.redirect(rootPath + loginPath);
+        }
+      })
+
+      // source: https://github.com/SoftwareBrothers/admin-bro-koa/blob/master/src/utils.ts#L119
+      router.get(logoutPath, async (ctx: ParameterizedContext) => {
+        const cookie = await ctx.cookies.get('gattoni:sess', { signed: true })
+        await store.destroy(cookie);
+        ctx.session = null;
+        ctx.redirect(rootPath + loginPath);
+      });
+
+      return buildRouter(adminBro, app, router);
+    }
+
+    const finalRouter = redisRouter();
 
     const server = new ApolloServer({
       schema,
@@ -250,7 +327,7 @@ createConnection(connectionName)
 
       app.use(serveStatic(buildPath));
 
-      router.get("(.*)", async (ctx, next) => {
+      finalRouter.get("(.*)", async (ctx, next) => {
         try {
           await send(ctx, path.join(buildPath, "index.html"));
         } catch (err) {
@@ -261,12 +338,12 @@ createConnection(connectionName)
         }
       });
     } else {
-      router.get("/", async (ctx) => {
+      finalRouter.get("/", async (ctx) => {
         ctx.body = "Hello World!";
       });
     }
 
-    app.use(helmet()).use(router.routes()).use(router.allowedMethods());
+    app.use(helmet()).use(finalRouter.routes()).use(finalRouter.allowedMethods());
 
     server.applyMiddleware({ app, cors: false });
 
