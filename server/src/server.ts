@@ -21,6 +21,7 @@ import RedisStore from "koa-redis";
 import Router from "@koa/router";
 import { ParameterizedContext } from "koa";
 import bodyParser from "koa-bodyparser";
+import redis from "redis";
 const { NODE_ENV, APP_KEY, PORT } = process.env;
 
 const DEFAULT_ROOT_PATH = "/admin";
@@ -224,9 +225,21 @@ createConnection(connectionName)
         prefix: adminBro.options.rootPath,
       });
 
-      const store = new RedisStore({
-        host: "redis",
-      });
+      let store;
+      if (process.env.REDISTOGO_URL) {
+        // prod
+        const redisClient = redis.createClient({
+          url: process.env.REDISTOGO_URL,
+        });
+        store = new RedisStore({
+          client: redisClient,
+        });
+      } else {
+        // dev
+        store = new RedisStore({
+          host: "redis",
+        });
+      }
 
       router.use(
         session({
