@@ -7,10 +7,7 @@ import helmet from "koa-helmet";
 import serveStatic from "koa-static";
 import send from "koa-send";
 import { Database, Resource } from "@admin-bro/typeorm";
-import AdminBro, {
-  ActionRequest,
-  PageContext,
-} from "admin-bro";
+import AdminBro, { ActionRequest, PageContext } from "admin-bro";
 import { buildRouter } from "@admin-bro/koa";
 import { schema } from "./graphql";
 import Email from "./email";
@@ -26,8 +23,8 @@ import { ParameterizedContext } from "koa";
 import bodyParser from "koa-bodyparser";
 const { NODE_ENV, APP_KEY, PORT } = process.env;
 
-const DEFAULT_ROOT_PATH = '/admin';
-const INVALID_CREDENTIALS_ERROR_MESSAGE = 'invalidCredentials'
+const DEFAULT_ROOT_PATH = "/admin";
+const INVALID_CREDENTIALS_ERROR_MESSAGE = "invalidCredentials";
 
 AdminBro.registerAdapter({ Database, Resource });
 
@@ -223,54 +220,56 @@ createConnection(connectionName)
     const adminBro = new AdminBro(adminBroOptions);
 
     const redisRouter = () => {
-      const router =  new Router({
-        prefix: adminBro.options.rootPath
-      })
-
-      const store = new RedisStore({
-        host: 'redis',
+      const router = new Router({
+        prefix: adminBro.options.rootPath,
       });
 
-      router.use(session({
-        key: 'gattoni:sess',
-        prefix: 'gattoni:sess',
-        store:store
-      }));
+      const store = new RedisStore({
+        host: "redis",
+      });
+
+      router.use(
+        session({
+          key: "gattoni:sess",
+          prefix: "gattoni:sess",
+          store: store,
+        })
+      );
 
       const { rootPath } = adminBro.options;
       let { loginPath, logoutPath } = adminBro.options;
-      loginPath = loginPath.replace(DEFAULT_ROOT_PATH, '');
-      logoutPath = logoutPath.replace(DEFAULT_ROOT_PATH, '');
+      loginPath = loginPath.replace(DEFAULT_ROOT_PATH, "");
+      logoutPath = logoutPath.replace(DEFAULT_ROOT_PATH, "");
 
       // source: https://github.com/SoftwareBrothers/admin-bro-koa/blob/master/src/utils.ts#L81
       router.get(loginPath, async (ctx) => {
         ctx.body = await adminBro.renderLogin({
           action: rootPath + loginPath,
           errorMessage: null,
-        })
+        });
       });
 
       const auth = {
-          authenticate: async (email: string, password: string) => {
-            const user: any = await connection.manager.findOne(User, {
-              email: email,
-            });
-            if (user) {
-              const matched = await bcrypt.compare(
-                password,
-                user.encryptedPassword
-              );
-              if (matched) {
-                return user;
-              }
+        authenticate: async (email: string, password: string) => {
+          const user: any = await connection.manager.findOne(User, {
+            email: email,
+          });
+          if (user) {
+            const matched = await bcrypt.compare(
+              password,
+              user.encryptedPassword
+            );
+            if (matched) {
+              return user;
             }
-            return null;
-          },
-        };
+          }
+          return null;
+        },
+      };
 
       // source: https://github.com/SoftwareBrothers/admin-bro-koa/blob/master/src/utils.ts#L88
       router.post(loginPath, async (ctx: ParameterizedContext) => {
-        const { email, password } = ctx.request.body
+        const { email, password } = ctx.request.body;
         const adminUser = await auth.authenticate(email, password);
         if (adminUser) {
           ctx.session.adminUser = adminUser;
@@ -292,22 +291,24 @@ createConnection(connectionName)
         if (ctx.session.adminUser) {
           await next();
         } else {
-          const [redirectTo] = ctx.request.originalUrl.split('/actions');
-          ctx.session.redirectTo = redirectTo.includes(`${rootPath}/api`) ? rootPath : redirectTo;
+          const [redirectTo] = ctx.request.originalUrl.split("/actions");
+          ctx.session.redirectTo = redirectTo.includes(`${rootPath}/api`)
+            ? rootPath
+            : redirectTo;
           ctx.redirect(rootPath + loginPath);
         }
-      })
+      });
 
       // source: https://github.com/SoftwareBrothers/admin-bro-koa/blob/master/src/utils.ts#L119
       router.get(logoutPath, async (ctx: ParameterizedContext) => {
-        const cookie = await ctx.cookies.get('gattoni:sess', { signed: true })
+        const cookie = await ctx.cookies.get("gattoni:sess", { signed: true });
         await store.destroy(cookie);
         ctx.session = null;
         ctx.redirect(rootPath + loginPath);
       });
 
       return buildRouter(adminBro, app, router);
-    }
+    };
 
     const finalRouter = redisRouter();
 
@@ -343,7 +344,10 @@ createConnection(connectionName)
       });
     }
 
-    app.use(helmet()).use(finalRouter.routes()).use(finalRouter.allowedMethods());
+    app
+      .use(helmet())
+      .use(finalRouter.routes())
+      .use(finalRouter.allowedMethods());
 
     server.applyMiddleware({ app, cors: false });
 
