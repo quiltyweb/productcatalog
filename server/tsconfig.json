@@ -21,8 +21,9 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "paths": {
-      "react": ["node_modules/@types/react"],
-      "admin-bro": ["node_modules/admin-bro"],
-    }
-  }
+      "react": ["./node_modules/@types/react"],
+      "admin-bro": ["./node_modules/admin-bro"],
+    },
+    "types": ["node"]
+  },
 }
