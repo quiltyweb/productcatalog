@@ -16,7 +16,7 @@ import { Category } from "./entity/Category";
 import { User } from "./entity/User";
 import bodyParser from "koa-bodyparser";
 import { buildCustomAuthRouter } from "./buildCustomAuthRouter";
-import { getAdminBroOptions } from './getAdminBroOptions';
+import { getAdminBroOptions } from "./getAdminBroOptions";
 import { buildRouter } from "@admin-bro/koa";
 
 const { NODE_ENV, APP_KEY, PORT } = process.env;
@@ -39,7 +39,7 @@ createConnection(connectionName)
     const adminBro = new AdminBro(adminBroOptions);
 
     // const router = buildCustomAuthRouter(adminBro, app, connection);
-    const router = buildRouter(adminBro,app );
+    const router = buildRouter(adminBro, app);
 
     const server = new ApolloServer({
       schema,
@@ -73,10 +73,7 @@ createConnection(connectionName)
       });
     }
 
-    app
-      .use(helmet())
-      .use(router.routes())
-      .use(router.allowedMethods());
+    app.use(helmet()).use(router.routes()).use(router.allowedMethods());
 
     server.applyMiddleware({ app, cors: false });
 

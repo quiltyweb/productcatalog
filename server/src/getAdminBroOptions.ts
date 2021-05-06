@@ -6,7 +6,6 @@ import bcrypt from "bcrypt";
 import { Connection } from "typeorm";
 
 export const getAdminBroOptions = (connection: Connection) => {
-
   const adminBroOptions = {
     resources: [
       {
@@ -185,4 +184,4 @@ export const getAdminBroOptions = (connection: Connection) => {
   };
 
   return adminBroOptions;
-}
+};

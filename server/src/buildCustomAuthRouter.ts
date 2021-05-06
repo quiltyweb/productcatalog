@@ -58,10 +58,7 @@ export const buildCustomAuthRouter = (adminBro, app, connection) => {
         email: email,
       });
       if (user) {
-        const matched = await bcrypt.compare(
-          password,
-          user.encryptedPassword
-        );
+        const matched = await bcrypt.compare(password, user.encryptedPassword);
         if (matched) {
           return user;
         }
