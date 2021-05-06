@@ -24,6 +24,6 @@
       "react": ["./node_modules/@types/react"],
       "admin-bro": ["./node_modules/admin-bro"],
     },
-    "types": ["node"]
+    "types": ["node", "jest"]
   },
 }
