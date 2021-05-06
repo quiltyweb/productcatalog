@@ -6,6 +6,7 @@
     "src/scripts/**/*"
   ],
   "compilerOptions": {
+    "jsx": "react",
     "outDir": "dist",
     "lib": [
       "es5",
@@ -18,6 +19,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "sourceMap": true
-  }
+    "sourceMap": true,
+    "paths": {
+      "react": ["./node_modules/@types/react"],
+      "admin-bro": ["./node_modules/admin-bro"],
+    },
+    "types": ["node", "jest"]
+  },
 }

@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Entity,
   PrimaryGeneratedColumn,
   Column,
@@ -20,8 +21,9 @@ type ProductOptions = {
 };
 
 @Entity()
-export class Product {
+export class Product extends BaseEntity {
   constructor(productOptions: ProductOptions) {
+    super();
     if (productOptions) {
       this.category = Promise.resolve(productOptions.category);
       this.name = productOptions.name;

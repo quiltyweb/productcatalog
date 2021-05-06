@@ -28,6 +28,12 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:6.2.2
+    ports:
+      - "6379:6379"
   client:
     build: ./client
     ports:
