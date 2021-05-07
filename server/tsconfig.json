@@ -4,7 +4,7 @@
   ],
   "exclude": [
     "src/scripts/**/*",
-    "node_modules"
+    "./node_modules/*"
   ],
   "compilerOptions": {
     "jsx": "react",
@@ -21,11 +21,6 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "paths": {
-      "react": ["node_modules/@types/react"],
-      "admin-bro": ["node_modules/admin-bro"],
-    },
-    "baseUrl": "./server",
     "types": ["node", "jest"]
   },
 }

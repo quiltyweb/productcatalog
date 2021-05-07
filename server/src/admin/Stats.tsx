@@ -5,7 +5,7 @@ import { Box, Text , Section} from "@admin-bro/design-system";
 const apiClient = new ApiClient();
 
 const Stats:React.FunctionComponent = ():JSX.Element => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState<{content: string, categoryCounter: number, productCounter: number} | undefined>();
 
   useEffect(() => {
     apiClient.getPage({pageName: "Estadisticas"}).then((response) => {
