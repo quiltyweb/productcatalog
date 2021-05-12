@@ -15,9 +15,9 @@ import { Product } from "./entity/Product";
 import { Category } from "./entity/Category";
 import { User } from "./entity/User";
 import bodyParser from "koa-bodyparser";
-import { buildCustomAuthRouter } from "./buildCustomAuthRouter";
 import { getAdminBroOptions } from "./getAdminBroOptions";
 import { buildRouter } from "@admin-bro/koa";
+// import { buildCustomAuthRouter } from "./buildCustomAuthRouter";
 
 const { NODE_ENV, APP_KEY, PORT } = process.env;
 const connectionName = NODE_ENV === "development" ? "default" : NODE_ENV;

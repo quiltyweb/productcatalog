@@ -10,7 +10,7 @@ import { buildRouter } from "@admin-bro/koa";
 const DEFAULT_ROOT_PATH = "/admin";
 const INVALID_CREDENTIALS_ERROR_MESSAGE = "invalidCredentials";
 
-export const buildCustomAuthRouter = (adminBro, app, connection) => {
+export const buildCustomAuthRouter = (adminBro, app, connection): Router => {
   const router = new Router({
     prefix: adminBro.options.rootPath,
   });
@@ -53,7 +53,10 @@ export const buildCustomAuthRouter = (adminBro, app, connection) => {
   });
 
   const auth = {
-    authenticate: async (email: string, password: string) => {
+    authenticate: async (
+      email: string,
+      password: string
+    ): Promise<typeof User> | null => {
       const user = await connection.manager.findOne(User, {
         email: email,
       });

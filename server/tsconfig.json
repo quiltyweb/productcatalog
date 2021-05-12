@@ -1,6 +1,7 @@
 {
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test"
   ],
   "exclude": [
     "src/scripts/**/*",
@@ -23,6 +24,6 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "types": []
+    "types": ["@types/jest","node"]
   },
 }
