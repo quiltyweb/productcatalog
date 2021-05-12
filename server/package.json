@@ -14,7 +14,7 @@
     "migration:generate": "yarn run ts-node ./node_modules/typeorm/cli.js migration:generate"
   },
   "devDependencies": {
-    "@sendgrid/helpers": "^7.2.0",
+    "@sendgrid/helpers": "^7.4.3",
     "@shopify/jest-koa-mocks": "^2.2.4",
     "@types/bcrypt": "^3.0.1",
     "@types/faker": "^5.1.4",
