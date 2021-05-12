@@ -4,7 +4,7 @@ import RedisStore from "koa-redis";
 import Router from "@koa/router";
 import redis from "redis";
 import { User } from "./entity/User";
-import { ParameterizedContext } from "koa";
+import type { ParameterizedContext } from "koa";
 import { buildRouter } from "@admin-bro/koa";
 
 const DEFAULT_ROOT_PATH = "/admin";
@@ -54,7 +54,7 @@ export const buildCustomAuthRouter = (adminBro, app, connection) => {
 
   const auth = {
     authenticate: async (email: string, password: string) => {
-      const user: any = await connection.manager.findOne(User, {
+      const user = await connection.manager.findOne(User, {
         email: email,
       });
       if (user) {

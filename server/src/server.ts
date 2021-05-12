@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import path from "path";
 import Koa from "koa";
-import { createConnection, Connection } from "typeorm";
+import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-koa";
 import helmet from "koa-helmet";
 import serveStatic from "koa-static";
@@ -25,7 +25,7 @@ const connectionName = NODE_ENV === "development" ? "default" : NODE_ENV;
 AdminBro.registerAdapter({ Database, Resource });
 
 createConnection(connectionName)
-  .then(async (connection: Connection) => {
+  .then(async (connection) => {
     const app = new Koa();
     app.use(bodyParser());
     app.keys = [APP_KEY];
