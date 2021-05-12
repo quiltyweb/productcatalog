@@ -1,18 +1,21 @@
 {
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test"
   ],
   "exclude": [
     "src/scripts/**/*",
-    "node_modules"
+    "node_modules",
+    "dist"
   ],
   "compilerOptions": {
-    "jsx": "react",
+    "jsx": "preserve",
     "outDir": "dist",
     "lib": [
       "es5",
       "es6",
-      "ES2019.Array"
+      "ES2019.Array",
+      "dom"
     ],
     "target": "ES2017",
     "module": "CommonJS",
@@ -21,11 +24,6 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "paths": {
-      "react": ["node_modules/@types/react"],
-      "admin-bro": ["node_modules/admin-bro"],
-    },
-    "baseUrl": "./server",
-    "types": ["node", "jest"]
+    "types": ["@types/jest","node"]
   },
 }

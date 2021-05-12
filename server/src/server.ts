@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import path from "path";
 import Koa from "koa";
-import { createConnection, Connection } from "typeorm";
+import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-koa";
 import helmet from "koa-helmet";
 import serveStatic from "koa-static";
@@ -15,9 +15,9 @@ import { Product } from "./entity/Product";
 import { Category } from "./entity/Category";
 import { User } from "./entity/User";
 import bodyParser from "koa-bodyparser";
-import { buildCustomAuthRouter } from "./buildCustomAuthRouter";
 import { getAdminBroOptions } from "./getAdminBroOptions";
 import { buildRouter } from "@admin-bro/koa";
+// import { buildCustomAuthRouter } from "./buildCustomAuthRouter";
 
 const { NODE_ENV, APP_KEY, PORT } = process.env;
 const connectionName = NODE_ENV === "development" ? "default" : NODE_ENV;
@@ -25,7 +25,7 @@ const connectionName = NODE_ENV === "development" ? "default" : NODE_ENV;
 AdminBro.registerAdapter({ Database, Resource });
 
 createConnection(connectionName)
-  .then(async (connection: Connection) => {
+  .then(async (connection) => {
     const app = new Koa();
     app.use(bodyParser());
     app.keys = [APP_KEY];

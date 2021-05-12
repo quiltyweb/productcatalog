@@ -1,11 +1,11 @@
 import { Product } from "./entity/Product";
 import { Category } from "./entity/Category";
 import { User } from "./entity/User";
-import AdminBro, { ActionRequest, PageContext } from "admin-bro";
+import AdminBro, { ActionRequest, AdminBroOptions } from "admin-bro";
 import bcrypt from "bcrypt";
 import { Connection } from "typeorm";
 
-export const getAdminBroOptions = (connection: Connection) => {
+export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
   const adminBroOptions = {
     resources: [
       {
@@ -160,11 +160,7 @@ export const getAdminBroOptions = (connection: Connection) => {
     },
     pages: {
       Estadisticas: {
-        handler: async (
-          request: any,
-          response: any,
-          context: PageContext
-        ): Promise<{
+        handler: async (): Promise<{
           content: string;
           categoryCounter: number;
           productCounter: number;

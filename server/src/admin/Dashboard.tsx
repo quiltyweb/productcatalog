@@ -1,9 +1,8 @@
-import  React from "react";
 import { useCurrentAdmin } from "admin-bro";
 import { Box, Text , Section} from "@admin-bro/design-system";
 
 const Dashboard:React.FunctionComponent = ():JSX.Element => {
-  const [currentAdmin, setCurrentAdmin] = useCurrentAdmin()
+  const [currentAdmin] = useCurrentAdmin()
 
   const dashBoardLinks = [{
     url: "https://www.gattoni.cl",
