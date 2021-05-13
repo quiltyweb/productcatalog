@@ -8,7 +8,7 @@ import serveStatic from "koa-static";
 import send from "koa-send";
 import { Database, Resource } from "@admin-bro/typeorm";
 import AdminBro from "admin-bro";
-import { schema } from "./graphql";
+import { schema } from "./graphql/index";
 import Email from "./email";
 import type { Context as KoaContext } from "koa";
 import { Product } from "./entity/Product";
