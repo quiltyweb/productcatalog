@@ -6,7 +6,6 @@
   "exclude": [
     "src/scripts/**/*",
     "node_modules",
-    "dist"
   ],
   "compilerOptions": {
     "jsx": "preserve",
