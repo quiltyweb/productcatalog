@@ -13,7 +13,9 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
 
   const { NODE_ENV } = process.env;
   const componentPath =
-    (NODE_ENV === "development" || NODE_ENV === "test") ? "./admin/" : "../../src/admin/";
+    NODE_ENV === "development" || NODE_ENV === "test"
+      ? "./admin/"
+      : "../../src/admin/";
   const dashboardPath = path.join(componentPath, "Dashboard");
   const statsPath = path.join(componentPath, "Stats");
 
