@@ -1,3 +1,4 @@
+import path from "path";
 import { Product } from "./entity/Product";
 import { Category } from "./entity/Category";
 import { User } from "./entity/User";
@@ -6,6 +7,18 @@ import bcrypt from "bcrypt";
 import { Connection } from "typeorm";
 
 export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
+  Product.useConnection(connection);
+  Category.useConnection(connection);
+  User.useConnection(connection);
+
+  const { NODE_ENV } = process.env;
+  const componentPath =
+    NODE_ENV === "development" || NODE_ENV === "test"
+      ? "./admin/"
+      : "../../src/admin/";
+  const dashboardPath = path.join(componentPath, "Dashboard");
+  const statsPath = path.join(componentPath, "Stats");
+
   const adminBroOptions = {
     resources: [
       {
@@ -156,7 +169,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
       },
     },
     dashboard: {
-      component: AdminBro.bundle("./admin/Dashboard"),
+      component: AdminBro.bundle(dashboardPath),
     },
     pages: {
       Estadisticas: {
@@ -173,7 +186,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
             productCounter: productCounter,
           };
         },
-        component: AdminBro.bundle("./admin/Stats"),
+        component: AdminBro.bundle(statsPath),
       },
     },
     rootPath: "/admin",

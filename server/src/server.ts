@@ -11,9 +11,6 @@ import AdminBro from "admin-bro";
 import { schema } from "./graphql/index";
 import Email from "./email";
 import type { Context as KoaContext } from "koa";
-import { Product } from "./entity/Product";
-import { Category } from "./entity/Category";
-import { User } from "./entity/User";
 import bodyParser from "koa-bodyparser";
 import { getAdminBroOptions } from "./getAdminBroOptions";
 import { buildRouter } from "@admin-bro/koa";
@@ -29,10 +26,6 @@ createConnection(connectionName)
     const app = new Koa();
     app.use(bodyParser());
     app.keys = [APP_KEY];
-
-    Product.useConnection(connection);
-    Category.useConnection(connection);
-    User.useConnection(connection);
 
     const adminBroOptions = getAdminBroOptions(connection);
 
