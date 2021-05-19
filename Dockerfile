@@ -37,10 +37,6 @@ RUN yarn
 COPY ./server .
 RUN yarn build
 
-RUN apk add --no-cache make gcc g++ python \
-  && npm_config_build_from_source=true yarn rebuild bcrypt \
-  && apk del make gcc g++ python
-
 COPY --from=client /app/build /app/dist/build
 
 # PORT value needs to be based on previous env var to work with how Heroku
