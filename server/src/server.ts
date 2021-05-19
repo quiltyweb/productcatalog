@@ -13,8 +13,7 @@ import Email from "./email";
 import type { Context as KoaContext } from "koa";
 import bodyParser from "koa-bodyparser";
 import { getAdminBroOptions } from "./getAdminBroOptions";
-import { buildRouter } from "@admin-bro/koa";
-// import { buildCustomAuthRouter } from "./buildCustomAuthRouter";
+import { buildCustomAuthRouter } from "./buildCustomAuthRouter";
 
 const { NODE_ENV, APP_KEY, PORT } = process.env;
 const connectionName = NODE_ENV === "development" ? "default" : NODE_ENV;
@@ -31,8 +30,7 @@ createConnection(connectionName)
 
     const adminBro = new AdminBro(adminBroOptions);
 
-    // const router = buildCustomAuthRouter(adminBro, app, connection);
-    const router = buildRouter(adminBro, app);
+    const router = buildCustomAuthRouter(adminBro, app, connection);
 
     const server = new ApolloServer({
       schema,
