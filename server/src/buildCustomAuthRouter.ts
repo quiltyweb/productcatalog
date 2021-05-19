@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import session from "koa-generic-session";
 import RedisStore from "koa-redis";
 import Router from "@koa/router";
-import redis from "redis";
+import Redis from "ioredis";
 import { User } from "./entity/User";
 import type { ParameterizedContext } from "koa";
 import { buildRouter } from "@admin-bro/koa";
@@ -18,11 +18,8 @@ export const buildCustomAuthRouter = (adminBro, app, connection): Router => {
   let store;
   if (process.env.REDISTOGO_URL) {
     // prod
-    const redisClient = redis.createClient({
-      url: process.env.REDISTOGO_URL,
-    });
     store = new RedisStore({
-      client: redisClient,
+      client: new Redis(process.env.REDISTOGO_URL),
     });
   } else {
     // dev
