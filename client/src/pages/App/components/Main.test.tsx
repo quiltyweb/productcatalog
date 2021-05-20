@@ -9,10 +9,6 @@ describe("Main Component", () => {
         <div>item</div>
       </Main>
     );
-
-    screen.getByRole("heading", {
-      name: "Nuestros Productos",
-    });
     screen.getByText("item");
   });
 });
