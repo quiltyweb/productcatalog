@@ -1,26 +1,26 @@
 import React from "react";
-import { Box, Heading } from "bumbag";
+import styled from "styled-components";
+import { Box } from "bumbag";
 
 type MainProps = {
   children: JSX.Element;
 };
 
+const MainContainer = styled.main`
+  margin: 3rem auto;
+  @media (min-width: 768px) {
+    flex-basis: 80%;
+    margin: 0.5rem auto;
+  }
+`;
+
 const Main: React.FunctionComponent<MainProps> = ({
   children,
 }): JSX.Element => {
   return (
-    <>
-      <Heading
-        use="h2"
-        fontSize="400"
-        paddingTop="3rem"
-        paddingBottom="2rem"
-        variant="decorative-heading"
-      >
-        Nuestros Productos
-      </Heading>
-      <Box paddingBottom="2rem">{children}</Box>
-    </>
+    <MainContainer>
+      <Box>{children}</Box>
+    </MainContainer>
   );
 };
 

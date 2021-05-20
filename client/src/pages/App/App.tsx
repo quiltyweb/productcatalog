@@ -16,6 +16,7 @@ import Nav from "../../components/Nav/Nav";
 import HomePageContext from "../../context/HomePageContext";
 import { CartItemProps } from "../../context/HomePageContext";
 import ScrollToTop from "./components/ScrollToTop";
+import Main from "./components/Main";
 import { certificationLinks } from "./certificationLinks";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import PageNotFound from "../PageNotFound/PageNotFound";
@@ -187,7 +188,7 @@ const App: React.FunctionComponent<AppProps> = ({
                     {!isHomePage && (
                       <CategorySideBar environment={environment} />
                     )}
-                    <main style={{ flexBasis: "80%", margin: "0.5rem auto" }}>
+                    <Main>
                       <Switch>
                         <Route path="/contacto">
                           <ContactForm
@@ -230,7 +231,7 @@ const App: React.FunctionComponent<AppProps> = ({
                           <PageNotFound />
                         </Route>
                       </Switch>
-                    </main>
+                    </Main>
                   </AppContainer>
                 </PageWrapper>
               </PageWithHeader>
