@@ -54,13 +54,13 @@ export const CategoryGrid: React.FunctionComponent<CategoryGridProps> = ({
     );
   }
   return (
-    <GridList>
+    <GridList data-testid="category-grid">
       {categoryGridItems &&
       categoryGridItems.edges &&
       categoryGridItems.edges.length > 0 ? (
         categoryGridItems.edges.map((item: any) => {
           return (
-            <List.Item key={item.node.id}>
+            <List.Item key={item.node.id} data-testid="category-grid-item">
               <GridItemLink to={`/categoria/${item.node.id}`}>
                 <Card standalone>
                   <Card.Content alignX="center">
