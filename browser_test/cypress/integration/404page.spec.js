@@ -4,6 +4,7 @@ describe("404 page", function(){
   beforeEach(() => {
     cy.visit("/something-not-found", { headers: { Connection: "Keep-Alive" }, responseTimeout: 31000 });
     cy.injectAxe()
+    cy.wait(1000);
   });
 
   describe("When page loads", () => {
