@@ -6,9 +6,6 @@ import Redis from "ioredis";
 import { User } from "./entity/User";
 import type { ParameterizedContext } from "koa";
 import { buildRouter } from "@admin-bro/koa";
-import path from "path";
-import serveStatic from "koa-static";
-import send from "koa-send";
 
 const DEFAULT_ROOT_PATH = "/admin";
 const INVALID_CREDENTIALS_ERROR_MESSAGE = "invalidCredentials";
@@ -109,30 +106,6 @@ export const buildCustomAuthRouter = (adminBro, app, connection): Router => {
     ctx.session = null;
     ctx.redirect(rootPath + loginPath);
   });
-
-  // WILDCARD ROUTER:
-  if (process.env.NODE_ENV === "production") {
-    // Something prepends the workingdirectory '/app' to the static files path,
-    // even if we use absolute paths for everything, but this works, so filo
-    const buildPath = path.join("dist", "build");
-
-    router.use(serveStatic(buildPath));
-
-    router.get("(.*)", async (ctx, next) => {
-      try {
-        await send(ctx, path.join(buildPath, "index.html"));
-      } catch (err) {
-        ctx.body =
-          "Ha ocurrido un error. Por favor, intente nuevamente. Comercial Gattoni.";
-        console.log(err);
-        return next();
-      }
-    });
-  } else {
-    router.get("/", async (ctx) => {
-      ctx.body = "Hello World!";
-    });
-  }
 
   return buildRouter(adminBro, app, router);
 };
