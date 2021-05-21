@@ -3,7 +3,7 @@ import terminalLog from '../utils/terminalLog'
 describe("HomePage", function(){
   beforeEach(() => {
     cy.visit("/", { headers: { Connection: "Keep-Alive" }, responseTimeout: 31000 });
-    cy.injectAxe()
+    cy.injectAxe();
   });
 
   describe("When page loads", () => {
@@ -79,12 +79,12 @@ describe("HomePage", function(){
       cy.findByRole("navigation").within(() => {
         cy.findByRole("link", { name: "Productos" }).click();
       })
-      // cy.findByRole("complementary")
-      cy.findByRole("main")
+      cy.findByRole("complementary");
+      cy.findByRole("main");
     })
   })
 
   it('Has no detectable a11y violations on load (custom configuration)', () => {
-    cy.checkA11y(null, null, terminalLog)
+    cy.checkA11y(null, null, terminalLog);
   })
 });
