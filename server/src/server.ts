@@ -67,8 +67,14 @@ createConnection(connectionName)
       });
     }
 
-    app.use(helmet()).use(adminBroRouter.routes()).use(adminBroRouter.allowedMethods());
-    app.use(helmet()).use(clientRouter.routes()).use(clientRouter.allowedMethods());
+    app
+      .use(helmet())
+      .use(adminBroRouter.routes())
+      .use(adminBroRouter.allowedMethods());
+    app
+      .use(helmet())
+      .use(clientRouter.routes())
+      .use(clientRouter.allowedMethods());
 
     server.applyMiddleware({ app, cors: false });
 
