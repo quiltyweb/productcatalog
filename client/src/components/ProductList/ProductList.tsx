@@ -13,7 +13,7 @@ export const ProductList: React.FunctionComponent<ProductListProps> = ({
   products,
 }) => {
   return (
-    <Columns aria-labelledby="heading-destacados">
+    <Columns>
       {products && products.edges && products.edges.length > 0 ? (
         products.edges.map((product: any) => {
           return (
