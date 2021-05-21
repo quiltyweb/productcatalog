@@ -1,5 +1,9 @@
 import "reflect-metadata";
+import path from "path";
+import serveStatic from "koa-static";
+import send from "koa-send";
 import Koa from "koa";
+import Router from "@koa/router";
 import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-koa";
 import helmet from "koa-helmet";
@@ -27,7 +31,9 @@ createConnection(connectionName)
 
     const adminBro = new AdminBro(adminBroOptions);
 
-    const router = buildCustomAuthRouter(adminBro, app, connection);
+    const adminBroRouter = buildCustomAuthRouter(adminBro, app, connection);
+
+    const clientRouter = new Router();
 
     const server = new ApolloServer({
       schema,
@@ -38,7 +44,37 @@ createConnection(connectionName)
       }),
     });
 
-    app.use(helmet()).use(router.routes()).use(router.allowedMethods());
+    if (process.env.NODE_ENV === "production") {
+      // Something prepends the workingdirectory '/app' to the static files path,
+      // even if we use absolute paths for everything, but this works, so filo
+      const buildPath = path.join("dist", "build");
+
+      app.use(serveStatic(buildPath));
+
+      clientRouter.get("(.*)", async (ctx, next) => {
+        try {
+          await send(ctx, path.join(buildPath, "index.html"));
+        } catch (err) {
+          ctx.body =
+            "Ha ocurrido un error. Por favor, intente nuevamente. Comercial Gattoni.";
+          console.log(err);
+          return next();
+        }
+      });
+    } else {
+      clientRouter.get("/", async (ctx) => {
+        ctx.body = "Hello World!";
+      });
+    }
+
+    app
+      .use(helmet())
+      .use(adminBroRouter.routes())
+      .use(adminBroRouter.allowedMethods());
+    app
+      .use(helmet())
+      .use(clientRouter.routes())
+      .use(clientRouter.allowedMethods());
 
     server.applyMiddleware({ app, cors: false });
 
