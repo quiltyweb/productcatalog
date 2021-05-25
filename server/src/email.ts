@@ -1,4 +1,4 @@
-import sgMail from "@sendgrid/mail";
+import Mailgun from "mailgun-js";
 
 type SendOptions = {
   to: string;
@@ -23,16 +23,14 @@ declare interface Email {
 
 const Email: Email = {
   send: async (sendOptions: SendOptions): Promise<SendEmailResponse> => {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const mailgunClient = new Mailgun({
+      apiKey: process.env.MAILGUN_API_KEY,
+      domain: process.env.MAILGUN_DOMAIN,
+    });
 
     try {
-      await sgMail.send({
+      await mailgunClient.messages().send({
         ...sendOptions,
-        mailSettings: {
-          sandboxMode: {
-            enable: process.env.NODE_ENV !== "production",
-          },
-        },
       });
     } catch (error) {
       console.error(JSON.stringify(error));
@@ -42,7 +40,6 @@ const Email: Email = {
 
       return { status: "failure", message: errorMessages };
     }
-
     return { status: "success", message: "Email was sent" };
   },
 };
