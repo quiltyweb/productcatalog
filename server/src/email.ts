@@ -23,13 +23,13 @@ declare interface Email {
 
 const Email: Email = {
   send: async (sendOptions: SendOptions): Promise<SendEmailResponse> => {
-    const mailgunClient = new Mailgun({
+    const mailgun = new Mailgun({
       apiKey: process.env.MAILGUN_API_KEY,
       domain: process.env.MAILGUN_DOMAIN,
     });
 
     try {
-      await mailgunClient.messages().send({
+      await mailgun.messages().send({
         ...sendOptions,
       });
     } catch (error) {
