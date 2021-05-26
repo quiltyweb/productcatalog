@@ -2,7 +2,7 @@ import mailgunJS from "mailgun-js";
 import faker from "faker";
 import Email from "../../src/email";
 
-jest.mock('mailgun-js', () => {
+jest.mock("mailgun-js", () => {
   const mMailgun = {
     messages: jest.fn().mockReturnThis(),
     send: jest.fn(),
@@ -20,7 +20,9 @@ describe("Email", () => {
     };
 
     const mailgun = mailgunJS({} as any);
-    (mailgun.messages().send as jest.MockedFunction<any>).mockReturnValue(Promise.resolve());
+    (mailgun.messages().send as jest.MockedFunction<any>).mockReturnValue(
+      Promise.resolve()
+    );
 
     it("calls Mailgun's send function", async () => {
       await Email.send(sendOptions);
