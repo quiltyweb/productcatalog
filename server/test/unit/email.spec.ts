@@ -1,11 +1,14 @@
-import sgMail from "@sendgrid/mail";
-import Response from "@sendgrid/helpers/classes/response";
+import mailgunJS from "mailgun-js";
 import faker from "faker";
-
 import Email from "../../src/email";
 
-jest.mock("@sendgrid/mail");
-const mockedSgMail = sgMail as jest.Mocked<typeof sgMail>;
+jest.mock("mailgun-js", () => {
+  const mMailgun = {
+    messages: jest.fn().mockReturnThis(),
+    send: jest.fn(),
+  };
+  return jest.fn(() => mMailgun);
+});
 
 describe("Email", () => {
   describe("send", () => {
@@ -16,14 +19,16 @@ describe("Email", () => {
       text: faker.lorem.paragraph(),
     };
 
-    mockedSgMail.send.mockReturnValue(
-      Promise.resolve([new Response(200, {}), {}])
+    const mailgun = mailgunJS({} as any);
+    (mailgun.messages().send as jest.MockedFunction<any>).mockReturnValue(
+      Promise.resolve()
     );
 
-    it("calls sendgrid's send function", async () => {
+    it("calls Mailgun's send function", async () => {
       await Email.send(sendOptions);
 
-      expect(mockedSgMail.send.mock.calls.length).toEqual(1);
+      expect(mailgun.messages().send.mock.calls.length).toEqual(1);
+      expect(mailgun.messages().send).toBeCalledWith(sendOptions);
     });
 
     it("returns a result object", async () => {
