@@ -164,7 +164,7 @@ class Queries {
         const emailOptions = {
           to: emailTo,
           from: `contacto@${host}`,
-          subject: "Mensaje de Contacto",
+          subject: "Mensaje de Contacto - GATTONI.CL",
           text: emailMessage,
         };
 
@@ -259,11 +259,10 @@ class Queries {
         const emailOptions = {
           to: emailTo,
           from: `cotizacion@${host}`,
-          subject: "Pedida de Cotización",
+          subject: "Pedido de Cotización - GATTONI.CL",
           text: emailMessage,
           html: emailMessage,
         };
-        console.log(emailOptions);
 
         const response = await ctx.sendEmail(emailOptions);
 
