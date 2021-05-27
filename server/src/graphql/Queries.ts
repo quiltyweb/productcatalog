@@ -154,17 +154,17 @@ class Queries {
           throw Error("Missing ADMIN_EMAIL env var to send emails to.");
 
         const emailMessage = `
-            Nombre: ${name}
-            RUT: ${personalIdNumber}
-            Email: ${emailAddress}
-            Número de Teléfono: ${phoneNumber}
+            Nombre: ${name},
+            RUT: ${personalIdNumber},
+            Email: ${emailAddress},
+            Número de Teléfono: ${phoneNumber},
             Mensaje: ${message}
           `;
 
         const emailOptions = {
           to: emailTo,
           from: `contacto@${host}`,
-          subject: "Mensaje de Contacto - GATTONI.CL",
+          subject: "GATTONI.CL: MENSAJE DE CONTACTO",
           text: emailMessage,
         };
 
@@ -236,14 +236,45 @@ class Queries {
           .join("\n");
 
         const emailMessage = `
-            Nombre: ${name}
-            RUT: ${personalIdNumber}
-            Email: ${emailAddress}
-            Número de Teléfono: ${phoneNumber}
-            Nombre de Empresa: ${companyName}
-            Ciudad: ${city}
-            Mensaje: ${message}
-
+          <table>
+            <tbody>
+              <tr>
+              <td>
+              Nombre: ${name}
+              </td>
+              </tr>
+              <tr>
+              <td>
+              RUT: ${personalIdNumber}
+              </td>
+              </tr>
+              <tr>
+              <td>
+              Email: ${emailAddress}
+              </td>
+              </tr>
+              <tr>
+              <td>
+              Número de Teléfono: ${phoneNumber}
+              </td>
+              </tr>
+              <tr>
+              <td>
+              Nombre de Empresa: ${companyName}
+              </td>
+              </tr>
+              <tr>
+              <td>
+              Ciudad: ${city}
+              </td>
+              </tr>
+              <tr>
+              <td>
+              Mensaje: ${message}
+              </td>
+              </tr>
+            </tbody>
+          </table>
             <table>
               <thead>
                 <th>Producto</th>
@@ -259,7 +290,7 @@ class Queries {
         const emailOptions = {
           to: emailTo,
           from: `cotizacion@${host}`,
-          subject: "Pedido de Cotización - GATTONI.CL",
+          subject: "GATTONI.CL: PEDIDO DE COTIZACIÓN",
           text: emailMessage,
           html: emailMessage,
         };
