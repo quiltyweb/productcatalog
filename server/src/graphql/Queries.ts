@@ -211,7 +211,7 @@ class Queries {
 
         const products = await Promise.all(
           productsToQuote.map(async ({ productId, quantity }) => {
-            const { id, name, salePrice } = await entityManager.findOneOrFail(
+            const { name, salePrice } = await entityManager.findOneOrFail(
               Product,
               {
                 select: ["name", "salePrice"],
@@ -219,18 +219,18 @@ class Queries {
               }
             );
 
-            return { id, name, salePrice, quantity };
+            return { productId, name, salePrice, quantity };
           })
         );
 
         const productRows = products
           .map(
-            ({ id, name, quantity, salePrice }) => `
+            ({ productId, name, quantity, salePrice }) => `
               <tr>
                 <td>${name}</td>
                 <td>${quantity}</td>
                 <td>${salePrice}</td>
-                <td><a href="${`https://${requestHost}/producto/${id}`}">Ver producto</a></td>
+                <td><a href="${`https://${requestHost}/producto/${productId}`}">Ver producto</a></td>
               </tr>
             `
           )
