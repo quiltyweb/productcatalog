@@ -144,14 +144,16 @@ class Queries {
         } = args;
 
         const { request } = ctx;
-        const { ADMIN_EMAIL: emailTo } = process.env;
+        const { ADMIN_EMAIL: emailTo, HQ_ADMIN_EMAIL: hqEmailTo } = process.env;
         const requestHost = request && request.host;
         const isInvalidEmailHost =
           !requestHost || requestHost.includes("localhost");
         const host = isInvalidEmailHost ? "productcatalog.com" : requestHost;
 
-        if (!emailTo)
-          throw Error("Missing ADMIN_EMAIL env var to send emails to.");
+        if (!emailTo && !hqEmailTo)
+          throw Error(
+            "Missing ADMIN_EMAIL and HQ_ADMIN_EMAIL env var to send emails to."
+          );
 
         const emailMessage = `
             Nombre: ${name},
@@ -162,7 +164,7 @@ class Queries {
           `;
 
         const emailOptions = {
-          to: emailTo,
+          to: `${emailTo}, ${hqEmailTo}`,
           from: `contacto@${host}`,
           subject: "GATTONI.CL: MENSAJE DE CONTACTO",
           text: emailMessage,
@@ -198,7 +200,7 @@ class Queries {
         } = args.input;
 
         const { request, entityManager } = ctx;
-        const { ADMIN_EMAIL: emailTo } = process.env;
+        const { ADMIN_EMAIL: emailTo, HQ_ADMIN_EMAIL: hqEmailTo } = process.env;
         const requestHost = request && request.host;
         const isInvalidEmailHost =
           !requestHost ||
@@ -206,8 +208,10 @@ class Queries {
           requestHost.includes("server");
         const host = isInvalidEmailHost ? "productcatalog.com" : requestHost;
 
-        if (!emailTo)
-          throw Error("Missing ADMIN_EMAIL env var to send emails to.");
+        if (!emailTo && !hqEmailTo)
+          throw Error(
+            "Missing ADMIN_EMAIL and HQ_ADMIN_EMAIL env var to send emails to."
+          );
 
         const products = await Promise.all(
           productsToQuote.map(async ({ productId, quantity }) => {
@@ -289,7 +293,7 @@ class Queries {
           `;
 
         const emailOptions = {
-          to: emailTo,
+          to: `${emailTo}, ${hqEmailTo}`,
           from: `cotizacion@${host}`,
           subject: "GATTONI.CL: PEDIDO DE COTIZACIÓN",
           text: emailMessage,
