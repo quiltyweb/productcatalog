@@ -151,7 +151,9 @@ class Queries {
         const host = isInvalidEmailHost ? "productcatalog.com" : requestHost;
 
         if (!emailTo && !hqEmailTo)
-          throw Error("Missing ADMIN_EMAIL and HQ_ADMIN_EMAIL env var to send emails to.");
+          throw Error(
+            "Missing ADMIN_EMAIL and HQ_ADMIN_EMAIL env var to send emails to."
+          );
 
         const emailMessage = `
             Nombre: ${name},
@@ -207,7 +209,9 @@ class Queries {
         const host = isInvalidEmailHost ? "productcatalog.com" : requestHost;
 
         if (!emailTo && !hqEmailTo)
-          throw Error("Missing ADMIN_EMAIL and HQ_ADMIN_EMAIL env var to send emails to.");
+          throw Error(
+            "Missing ADMIN_EMAIL and HQ_ADMIN_EMAIL env var to send emails to."
+          );
 
         const products = await Promise.all(
           productsToQuote.map(async ({ productId, quantity }) => {
