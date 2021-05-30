@@ -5,13 +5,15 @@ import { User } from "./entity/User";
 import AdminBro, { ActionRequest, AdminBroOptions } from "admin-bro";
 import bcrypt from "bcrypt";
 import { Connection } from "typeorm";
+import uploadFeature from "@admin-bro/upload";
+import { DigitalOceanProvider } from "./DigitalOceanProvider";
 
 export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
   Product.useConnection(connection);
   Category.useConnection(connection);
   User.useConnection(connection);
 
-  const { NODE_ENV } = process.env;
+  const { NODE_ENV, SPACES_ACCESS_KEY } = process.env;
   const componentPath =
     NODE_ENV === "development" || NODE_ENV === "test"
       ? "./admin/"
@@ -19,22 +21,53 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
   const dashboardPath = path.join(componentPath, "Dashboard");
   const statsPath = path.join(componentPath, "Stats");
 
+  const digitalOceanOptions = {
+    endpoint: process.env.SPACES_ENDPOINT,
+    accessKeyId: process.env.SPACES_ACCESS_KEY_ID,
+    secretAccessKey: process.env.SPACES_SECRET_ACCESS_KEY,
+    region: process.env.SPACES_REGION,
+    bucket: process.env.SPACES_BUCKET,
+  };
+
   const adminBroOptions = {
     resources: [
       {
         resource: Product,
         options: {
+          listProperties: [
+            "name",
+            "description",
+            "createdAt",
+            "updatedAt",
+            "imagePath",
+            "attachmentPath",
+          ],
           navigation: {
             name: "Contenido",
           },
           properties: {
             id: { isVisible: false },
+            imagePath: { isVisible: false },
+            attachmentPath: { isVisible: false },
           },
           actions: {
             show: { icon: "View" },
             bulkDelete: { isVisible: false },
           },
         },
+        features: [
+          uploadFeature({
+            provider: new DigitalOceanProvider(digitalOceanOptions),
+            properties: {
+              file: "imageFile",
+              filePath: "imageFilePath",
+              key: "imagePath",
+            },
+            validation: {
+              mimeTypes: ["image/jpeg", "image/jpeg"],
+            },
+          }),
+        ],
       },
       {
         resource: Category,
