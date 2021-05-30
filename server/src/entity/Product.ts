@@ -49,19 +49,29 @@ export class Product extends BaseEntity {
   public name: string;
   @Column()
   public description: string;
-  @Column()
+  @Column({
+    default: "",
+  })
   public imagePath: string;
-  @Column()
+  @Column({
+    default: "",
+  })
   public attachmentPath: string;
-  @Column()
+  @Column({
+    default: 0,
+  })
   public purchasePrice: number;
-  @Column()
+  @Column({
+    default: 0,
+  })
   public salePrice: number;
   // NOTE: The name 'supplierName' is based on the fact that almost all
   // existing data refer to a supplier's name, but some of them use
   // the supplier's business ID. It's unclear whether this will eventually
   // need to be made consistent.
-  @Column()
+  @Column({
+    default: "",
+  })
   public supplierName: string;
 
   @ManyToOne(
