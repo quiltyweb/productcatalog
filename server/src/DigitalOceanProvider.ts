@@ -90,18 +90,18 @@ export class DigitalOceanProvider extends BaseProvider {
 
     // key is image and does not contain asset path /products in it
     if (isImage && !key.includes(PRODUCTS_FOLDER)) {
-      const path =  `https://${bucket}.${this.region}.cdn.digitaloceanspaces.com/products/${key}`;
+      const path = `https://${bucket}.${this.region}.cdn.digitaloceanspaces.com/products/${key}`;
       return path;
     }
 
     // key is pdf and does not contain asset path /adjuntos in it
     if (isPDF && !key.includes(ATTACHMENT_FOLDER)) {
-      const path =`https://${bucket}.${this.region}.cdn.digitaloceanspaces.com/adjuntos/${key}`;
+      const path = `https://${bucket}.${this.region}.cdn.digitaloceanspaces.com/adjuntos/${key}`;
       return path;
     }
     // key contains full asset url path cdn endpoint plus folder in it
     if (key.includes("https")) {
-      const path =`${key}`;
+      const path = `${key}`;
       return path;
     }
     // key contains folder path /products or /adjuntos

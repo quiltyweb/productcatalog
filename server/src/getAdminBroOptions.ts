@@ -76,7 +76,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
             },
             uploadPath: (record, filename) => {
               return `products/${filename}`;
-              },
+            },
           }),
           uploadFeature({
             provider: new DigitalOceanProvider(digitalOceanOptions),
@@ -91,7 +91,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
             },
             uploadPath: (record, filename) => {
               return `adjuntos/${filename}`;
-              },
+            },
           }),
         ],
       },
