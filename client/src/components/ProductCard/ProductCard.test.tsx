@@ -90,7 +90,8 @@ describe("ProductCard Component", () => {
       expect(mockedAddCartItem).toHaveBeenCalledWith({
         productId: "test_productId",
         productName: "test_name",
-        productImage: "test_linkImage",
+        productImage:
+          "https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/test_linkImage",
         quantity: 1,
       })
     );
