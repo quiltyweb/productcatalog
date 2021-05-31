@@ -13,7 +13,14 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
   Category.useConnection(connection);
   User.useConnection(connection);
 
-  const { NODE_ENV, SPACES_ACCESS_KEY } = process.env;
+  const {
+    NODE_ENV,
+    SPACES_ENDPOINT,
+    SPACES_ACCESS_KEY_ID,
+    SPACES_SECRET_ACCESS_KEY,
+    SPACES_REGION,
+    SPACES_BUCKET,
+  } = process.env;
   const componentPath =
     NODE_ENV === "development" || NODE_ENV === "test"
       ? "./admin/"
@@ -22,11 +29,11 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
   const statsPath = path.join(componentPath, "Stats");
 
   const digitalOceanOptions = {
-    endpoint: process.env.SPACES_ENDPOINT,
-    accessKeyId: process.env.SPACES_ACCESS_KEY_ID,
-    secretAccessKey: process.env.SPACES_SECRET_ACCESS_KEY,
-    region: process.env.SPACES_REGION,
-    bucket: process.env.SPACES_BUCKET,
+    endpoint: SPACES_ENDPOINT,
+    accessKeyId: SPACES_ACCESS_KEY_ID,
+    secretAccessKey: SPACES_SECRET_ACCESS_KEY,
+    region: SPACES_REGION,
+    bucket: SPACES_BUCKET,
   };
 
   const adminBroOptions = {
@@ -61,11 +68,30 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
             properties: {
               file: "imageFile",
               filePath: "imageFilePath",
+              filesToDelete: `imageFilesToDelete`,
               key: "imagePath",
             },
             validation: {
               mimeTypes: ["image/jpeg", "image/jpeg"],
             },
+            uploadPath: (record, filename) => {
+              return `products/${filename}`;
+              },
+          }),
+          uploadFeature({
+            provider: new DigitalOceanProvider(digitalOceanOptions),
+            properties: {
+              file: "attachmentFile",
+              filePath: "attachmentFilePath",
+              filesToDelete: `attachmentFilesToDelete`,
+              key: "attachmentPath",
+            },
+            validation: {
+              mimeTypes: ["application/pdf"],
+            },
+            uploadPath: (record, filename) => {
+              return `adjuntos/${filename}`;
+              },
           }),
         ],
       },
@@ -109,6 +135,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
           },
           actions: {
             new: {
+              isVisible: false,
               before: async (
                 request: ActionRequest
               ): Promise<ActionRequest> => {
@@ -125,6 +152,10 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
                 return request;
               },
             },
+            edit: { isVisible: false },
+            delete: { isVisible: false },
+            show: { isVisible: false },
+            bulkDelete: { isVisible: false },
           },
         },
       },

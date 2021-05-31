@@ -27,7 +27,7 @@ export const ProductList: React.FunctionComponent<ProductListProps> = ({
               <ProductCard
                 productId={product.node.id}
                 name={product.node.name}
-                linkImage={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/${product.node.imagePath}`}
+                linkImage={product.node.imagePath}
                 attachmentPath={product.node.attachmentPath}
               />
             </Column>

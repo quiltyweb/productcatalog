@@ -66,11 +66,12 @@ export class DigitalOceanProvider extends BaseProvider {
     const tmpFile = fs.createReadStream(file.path);
     const params: S3.PutObjectRequest = {
       Bucket: this.bucket,
-      Key: `products/${key}`,
+      Key: key,
       Body: tmpFile,
       ACL: "public-read",
     };
-    return this.s3.upload(params, uploadOptions).promise();
+    const value = await this.s3.upload(params, uploadOptions).promise();
+    return value;
   }
 
   public async delete(
@@ -81,6 +82,29 @@ export class DigitalOceanProvider extends BaseProvider {
   }
 
   public async path(key: string, bucket: string): Promise<string> {
+    const isImage = !key.includes("pdf");
+    const isPDF = key.includes("pdf");
+
+    const PRODUCTS_FOLDER = "products";
+    const ATTACHMENT_FOLDER = "adjuntos";
+
+    // key is image and does not contain asset path /products in it
+    if (isImage && !key.includes(PRODUCTS_FOLDER)) {
+      const path =  `https://${bucket}.${this.region}.cdn.digitaloceanspaces.com/products/${key}`;
+      return path;
+    }
+
+    // key is pdf and does not contain asset path /adjuntos in it
+    if (isPDF && !key.includes(ATTACHMENT_FOLDER)) {
+      const path =`https://${bucket}.${this.region}.cdn.digitaloceanspaces.com/adjuntos/${key}`;
+      return path;
+    }
+    // key contains full asset url path cdn endpoint plus folder in it
+    if (key.includes("https")) {
+      const path =`${key}`;
+      return path;
+    }
+    // key contains folder path /products or /adjuntos
     const path = `https://${bucket}.${this.region}.cdn.digitaloceanspaces.com/${key}`;
     return path;
   }
