@@ -16,6 +16,11 @@ services:
       ADMIN_EMAIL: test@test.com
       APP_KEY: supersecretsauce
       API_TOKEN: supersecretspicysauce
+      SPACES_ACCESS_KEY_ID: spaces_access_key
+      SPACES_SECRET_ACCESS_KEY: spaces_secret_key
+      SPACES_REGION: spaces_region
+      SPACES_BUCKET: spaces_bucket
+      SPACES_ENDPOINT: spaces_endpoint
     command: yarn run dev
   db:
     image: postgres:12.2
