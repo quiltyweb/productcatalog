@@ -98,7 +98,6 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
     >
       <Card.Header>
         <Card.Title
-          id="title"
           use="h3"
           fontSize="1.1rem"
           fontWeight="500"
@@ -108,7 +107,6 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
         </Card.Title>
       </Card.Header>
       <Card.Content
-        id="description"
         style={{
           display: "flex",
           flexDirection: "column",
@@ -124,9 +122,9 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
           alt={name}
           isSinglePage={isSinglePage}
         />
-        {description && (
-          <Paragraph whiteSpace="pre-line">{description}</Paragraph>
-        )}
+        {
+          description && { description } // <Paragraph whiteSpace="pre-line">{description}</Paragraph>
+        }
       </Card.Content>
 
       <Card.Footer
