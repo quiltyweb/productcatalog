@@ -122,9 +122,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
           alt={name}
           isSinglePage={isSinglePage}
         />
-        {
-          description && { description } // <Paragraph whiteSpace="pre-line">{description}</Paragraph>
-        }
+        {description && description}
       </Card.Content>
 
       <Card.Footer
