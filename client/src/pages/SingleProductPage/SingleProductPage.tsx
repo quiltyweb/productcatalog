@@ -69,7 +69,7 @@ export const SingleProductPage: React.FunctionComponent<SingleProductPageProps> 
                   name={props.node.name}
                   description={props.node.description}
                   attachmentPath={props.node.attachmentPath}
-                  linkImage={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/products/${props.node.imagePath}`}
+                  linkImage={props.node.imagePath}
                   hasPrintCTA
                   isSinglePage
                 />

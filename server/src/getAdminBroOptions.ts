@@ -5,13 +5,22 @@ import { User } from "./entity/User";
 import AdminBro, { ActionRequest, AdminBroOptions } from "admin-bro";
 import bcrypt from "bcrypt";
 import { Connection } from "typeorm";
+import uploadFeature from "@admin-bro/upload";
+import { DigitalOceanProvider } from "./DigitalOceanProvider";
 
 export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
   Product.useConnection(connection);
   Category.useConnection(connection);
   User.useConnection(connection);
 
-  const { NODE_ENV } = process.env;
+  const {
+    NODE_ENV,
+    SPACES_ENDPOINT,
+    SPACES_ACCESS_KEY_ID,
+    SPACES_SECRET_ACCESS_KEY,
+    SPACES_REGION,
+    SPACES_BUCKET,
+  } = process.env;
   const componentPath =
     NODE_ENV === "development" || NODE_ENV === "test"
       ? "./admin/"
@@ -19,22 +28,72 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
   const dashboardPath = path.join(componentPath, "Dashboard");
   const statsPath = path.join(componentPath, "Stats");
 
+  const digitalOceanOptions = {
+    endpoint: SPACES_ENDPOINT,
+    accessKeyId: SPACES_ACCESS_KEY_ID,
+    secretAccessKey: SPACES_SECRET_ACCESS_KEY,
+    region: SPACES_REGION,
+    bucket: SPACES_BUCKET,
+  };
+
   const adminBroOptions = {
     resources: [
       {
         resource: Product,
         options: {
+          listProperties: [
+            "name",
+            "description",
+            "createdAt",
+            "updatedAt",
+            "imagePath",
+            "attachmentPath",
+          ],
           navigation: {
             name: "Contenido",
           },
           properties: {
             id: { isVisible: false },
+            imagePath: { isVisible: false },
+            attachmentPath: { isVisible: false },
           },
           actions: {
             show: { icon: "View" },
             bulkDelete: { isVisible: false },
           },
         },
+        features: [
+          uploadFeature({
+            provider: new DigitalOceanProvider(digitalOceanOptions),
+            properties: {
+              file: "imageFile",
+              filePath: "imageFilePath",
+              filesToDelete: `imageFilesToDelete`,
+              key: "imagePath",
+            },
+            validation: {
+              mimeTypes: ["image/jpeg", "image/jpeg"],
+            },
+            uploadPath: (record, filename) => {
+              return `products/${filename}`;
+            },
+          }),
+          uploadFeature({
+            provider: new DigitalOceanProvider(digitalOceanOptions),
+            properties: {
+              file: "attachmentFile",
+              filePath: "attachmentFilePath",
+              filesToDelete: `attachmentFilesToDelete`,
+              key: "attachmentPath",
+            },
+            validation: {
+              mimeTypes: ["application/pdf"],
+            },
+            uploadPath: (record, filename) => {
+              return `adjuntos/${filename}`;
+            },
+          }),
+        ],
       },
       {
         resource: Category,
@@ -76,6 +135,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
           },
           actions: {
             new: {
+              isVisible: false,
               before: async (
                 request: ActionRequest
               ): Promise<ActionRequest> => {
@@ -92,6 +152,10 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
                 return request;
               },
             },
+            edit: { isVisible: false },
+            delete: { isVisible: false },
+            show: { isVisible: false },
+            bulkDelete: { isVisible: false },
           },
         },
       },

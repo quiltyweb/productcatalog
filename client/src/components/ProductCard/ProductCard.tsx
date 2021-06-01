@@ -28,6 +28,18 @@ interface ProductCardProps {
   hasPrintCTA?: boolean;
   isSinglePage?: boolean;
 }
+const buildURL = (assetPath: string, folderName: string): string => {
+  const END_POINT = "https://product-catalog.sfo2.cdn.digitaloceanspaces.com";
+
+  if (assetPath.includes("https") && assetPath.includes(folderName)) {
+    return assetPath;
+  }
+  if (!assetPath.includes("https") && assetPath.includes(folderName)) {
+    return `${END_POINT}/${assetPath}`;
+  }
+
+  return `${END_POINT}/${folderName}/${assetPath}`;
+};
 
 const ImgWithFallback: React.FunctionComponent<{
   src: string;
@@ -69,6 +81,12 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
 }): JSX.Element => {
   const { addCartItem } = useHomePageContext();
   const alert = useAlert();
+
+  const linkImagePath = buildURL(linkImage, "products");
+
+  const linkAttachmentPath =
+    attachmentPath && buildURL(attachmentPath, "adjuntos");
+
   return (
     <Card
       standalone
@@ -80,7 +98,6 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
     >
       <Card.Header>
         <Card.Title
-          id="title"
           use="h3"
           fontSize="1.1rem"
           fontWeight="500"
@@ -90,7 +107,6 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
         </Card.Title>
       </Card.Header>
       <Card.Content
-        id="description"
         style={{
           display: "flex",
           flexDirection: "column",
@@ -102,13 +118,11 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
         }}
       >
         <ImgWithFallback
-          src={linkImage}
+          src={linkImagePath}
           alt={name}
           isSinglePage={isSinglePage}
         />
-        {description && (
-          <Paragraph whiteSpace="pre-line">{description}</Paragraph>
-        )}
+        {description && description}
       </Card.Content>
 
       <Card.Footer
@@ -128,7 +142,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
             </Link>
             {attachmentPath && (
               <a
-                href={`https://product-catalog.sfo2.cdn.digitaloceanspaces.com/adjuntos/${attachmentPath}`}
+                href={linkAttachmentPath}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ margin: "0 0.5rem 1rem", textAlign: "center" }}
@@ -150,7 +164,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = ({
             addCartItem({
               productId,
               productName: name,
-              productImage: linkImage,
+              productImage: linkImagePath,
               quantity: 1,
             });
             alert.show("Producto Agregado!", {

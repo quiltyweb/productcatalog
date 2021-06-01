@@ -16,5 +16,6 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/camelcase': ["warn"],
+    '@typescript-eslint/class-name-casing': ["warn"],
   }
 };
