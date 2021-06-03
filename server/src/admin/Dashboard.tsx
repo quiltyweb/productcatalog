@@ -1,7 +1,7 @@
 import { useCurrentAdmin } from "admin-bro";
 import { Box, Text , Section} from "@admin-bro/design-system";
 
-const Dashboard:React.FunctionComponent = ():JSX.Element => {
+const Dashboard= () => {
   const [currentAdmin] = useCurrentAdmin()
 
   const dashBoardLinks = [{
