@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@shopify/jest-koa-mocks": "^2.2.4",
-    "@types/bcrypt": "^3.0.1",
+    "@types/bcrypt": "^5.0.0",
     "@types/faker": "^5.1.4",
     "@types/graphql-relay": "^0.6.0",
     "@types/jest": "^26.0.23",
