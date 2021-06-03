@@ -1,24 +1,11 @@
-import  React, { useState, useEffect } from "react";
 import { ApiClient } from "admin-bro";
 import { Box, Text , Section} from "@admin-bro/design-system";
 
-const apiClient = new ApiClient();
-
-const Stats:React.FunctionComponent = ():JSX.Element => {
-  const [data, setData] = useState<{content: string, categoryCounter: number, productCounter: number} | undefined>();
-
-  useEffect(() => {
-    apiClient.getPage({pageName: "Estadisticas"}).then((response) => {
-      setData(response.data);
-    });
-  }, []);
-
+const Stats = () => {
   return (
     <Box variant="grey">
       <Section mb="xl">
-        <Text>{data.content}</Text>
-        <Text>Cantidad de Categorias creadas: {data.categoryCounter}</Text>
-        <Text>Cantidad de Productos creados: {data.productCounter}</Text>
+        <Text>Estadisticas Proximamente...</Text>
       </Section>
 
 
