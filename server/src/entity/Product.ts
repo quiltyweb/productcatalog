@@ -20,7 +20,7 @@ type ProductOptions = {
   supplierName?: string;
 };
 
-@Entity({name: "products"})
+@Entity({ name: "products" })
 export class Product extends BaseEntity {
   constructor(productOptions: ProductOptions) {
     super();

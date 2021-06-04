@@ -11,7 +11,7 @@ type UserOptions = {
   email: string;
   encryptedPassword: string;
 };
-@Entity({name: "user"})
+@Entity({ name: "user" })
 export class User extends BaseEntity {
   constructor(UserOptions: UserOptions) {
     super();

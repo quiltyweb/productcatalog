@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import { Product } from "./Product";
 
-@Entity({name: "categories"})
+@Entity({ name: "categories" })
 export class Category extends BaseEntity {
   constructor(name: string) {
     super();
