@@ -1,8 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class MakeTablesSingularName1622896246697 implements MigrationInterface {
-  name = "MakeTablesSingularName1622896246697";
-
+export class AddDefaultValuesToProductTable1623029366169
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `ALTER TABLE "product" ALTER COLUMN "imagePath" SET DEFAULT ''`
