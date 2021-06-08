@@ -11,7 +11,8 @@
     "test:unit": "yarn run jest ./test/unit",
     "migration:run": "yarn run ts-node ./node_modules/typeorm/cli.js migration:run",
     "migration:revert": "yarn run ts-node ./node_modules/typeorm/cli.js migration:revert",
-    "migration:generate": "yarn run ts-node ./node_modules/typeorm/cli.js migration:generate"
+    "migration:generate": "yarn run ts-node ./node_modules/typeorm/cli.js migration:generate",
+    "migration:create": "yarn run ts-node ./node_modules/typeorm/cli.js migration:create"
   },
   "devDependencies": {
     "@shopify/jest-koa-mocks": "^2.2.4",
