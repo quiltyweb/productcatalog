@@ -55,7 +55,7 @@ describe("GraphQL schema", () => {
       }
     `;
 
-    it("returns category fields", async () => {
+    it.only("returns category fields", async () => {
       expect.assertions(2);
 
       const context = { ...baseContext };
@@ -64,6 +64,8 @@ describe("GraphQL schema", () => {
       const categories = results.data.fetchCategories.edges.map(
         (catEdge) => catEdge.node
       );
+
+      console.log('categories >>>>>',categories);
 
       expect(categories).toContainEqual(
         expect.objectContaining({ name: expect.any(String) })
