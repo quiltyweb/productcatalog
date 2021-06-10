@@ -3,7 +3,10 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 export class InsertDataFromPluralToSingularTables1623124819402
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    if(process.env.NODE_ENV === "test" || process.env.NODE_ENV === "production"){
+    if (
+      process.env.NODE_ENV === "test" ||
+      process.env.NODE_ENV === "production"
+    ) {
       await queryRunner.query(
         `insert into "category"("id", "createdAt", "updatedAt", "name") select "id", "createdAt", "updatedAt", "name" from "categories"`
       );
@@ -14,7 +17,10 @@ export class InsertDataFromPluralToSingularTables1623124819402
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    if(process.env.NODE_ENV === "test" || process.env.NODE_ENV === "production"){
+    if (
+      process.env.NODE_ENV === "test" ||
+      process.env.NODE_ENV === "production"
+    ) {
       await queryRunner.query(`DELETE FROM category`);
       await queryRunner.query(`DELETE FROM product`);
     }

@@ -7,14 +7,20 @@ import {
 
 export class DropPluralTables1623125085320 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    if(process.env.NODE_ENV === "test" || process.env.NODE_ENV === "production"){
+    if (
+      process.env.NODE_ENV === "test" ||
+      process.env.NODE_ENV === "production"
+    ) {
       await queryRunner.query(`DROP TABLE IF EXISTS "products"`);
       await queryRunner.query(`DROP TABLE IF EXISTS "categories"`);
     }
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    if(process.env.NODE_ENV === "test" || process.env.NODE_ENV === "production"){
+    if (
+      process.env.NODE_ENV === "test" ||
+      process.env.NODE_ENV === "production"
+    ) {
       await queryRunner.createTable(
         new Table({
           name: "categories",

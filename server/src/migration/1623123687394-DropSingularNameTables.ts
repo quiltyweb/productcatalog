@@ -7,14 +7,14 @@ import {
 
 export class DropSingularNameTables1623123687394 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    if(process.env.NODE_ENV === "production"){
+    if (process.env.NODE_ENV === "production") {
       await queryRunner.query(`DROP TABLE IF EXISTS "product"`);
       await queryRunner.query(`DROP TABLE IF EXISTS "category"`);
     }
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    if(process.env.NODE_ENV === "production"){
+    if (process.env.NODE_ENV === "production") {
       await queryRunner.createTable(
         new Table({
           name: "category",

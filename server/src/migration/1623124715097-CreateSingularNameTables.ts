@@ -5,7 +5,10 @@ export class CreateSingularNameTables1623124715097
   name = "CreateSingularNameTables1623124715097";
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    if(process.env.NODE_ENV === "test" || process.env.NODE_ENV === "production"){
+    if (
+      process.env.NODE_ENV === "test" ||
+      process.env.NODE_ENV === "production"
+    ) {
       await queryRunner.query(
         `CREATE TABLE "product" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, "description" character varying NOT NULL, "imagePath" character varying NOT NULL DEFAULT '', "attachmentPath" character varying NOT NULL DEFAULT '', "purchasePrice" integer NOT NULL DEFAULT '0', "salePrice" integer NOT NULL DEFAULT '0', "supplierName" character varying NOT NULL DEFAULT '', "categoryId" integer, CONSTRAINT "PK_bebc9158e480b949565b4dc7a82" PRIMARY KEY ("id"))`
       );
@@ -19,7 +22,10 @@ export class CreateSingularNameTables1623124715097
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    if(process.env.NODE_ENV === "test" || process.env.NODE_ENV === "production"){
+    if (
+      process.env.NODE_ENV === "test" ||
+      process.env.NODE_ENV === "production"
+    ) {
       await queryRunner.query(
         `ALTER TABLE "product" DROP CONSTRAINT "FK_ff0c0301a95e517153df97f6812"`
       );
