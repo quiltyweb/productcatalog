@@ -55,7 +55,7 @@ describe("GraphQL schema", () => {
       }
     `;
 
-    it.only("returns category fields", async () => {
+    it("returns category fields", async () => {
       expect.assertions(2);
 
       const context = { ...baseContext };
