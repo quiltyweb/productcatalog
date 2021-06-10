@@ -1638,10 +1638,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@shopify/jest-koa-mocks@^2.2.4":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@shopify/jest-koa-mocks/-/jest-koa-mocks-2.3.4.tgz#7cecba38bffe62c47b7cf521761500324b9e9a8c"
-  integrity sha512-g8leHwuzKTsv1qb09lwEE01paVDJ2PL0rvzE6gq+K/CQIovLk0enEjFTf8HH+GswczNREf3NFBAJAlEIGd65Qw==
+"@shopify/jest-koa-mocks@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@shopify/jest-koa-mocks/-/jest-koa-mocks-3.0.1.tgz#486852388062bdee983aa6d37d5f1c161fa40307"
+  integrity sha512-ywM+BEqMPSDNNdvIrROm2EE7x2iBBOt0KGQomJH9h5JoSzo67wQHKTtN4KKZ7mMnWOtOpQ4NFFkfZVcY4y/a+w==
   dependencies:
     koa "^2.5.0"
     node-mocks-http "^1.5.8"
