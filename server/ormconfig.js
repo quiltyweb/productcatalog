@@ -35,7 +35,7 @@ module.exports = [
     ...baseOrmConfig,
     ...databaseInfo(),
     name: "test",
-    synchronize: true,
+    synchronize: false,
     database: "test_" + (process.env.DB_NAME || ""),
   },
   {
