@@ -8,10 +8,10 @@ export class InsertDataFromPluralToSingularTables1623124819402
       process.env.NODE_ENV === "production"
     ) {
       await queryRunner.query(
-        `insert into "category"("id", "createdAt", "updatedAt", "name") select "id", "createdAt", "updatedAt", "name" from "categories"`
+        `insert into "category"("createdAt", "updatedAt", "name") select "createdAt", "updatedAt", "name" from "categories"`
       );
       await queryRunner.query(
-        `insert into "product"("id", "createdAt", "updatedAt", "name", "description", "imagePath", "attachmentPath", "purchasePrice", "salePrice", "supplierName", "categoryId") select "id", "createdAt", "updatedAt", "name", "description", "imagePath", "attachmentPath", "purchasePrice", "salePrice", "supplierName", "categoryId" from "products"`
+        `insert into "product"("createdAt", "updatedAt", "name", "description", "imagePath", "attachmentPath", "purchasePrice", "salePrice", "supplierName", "categoryId") select "createdAt", "updatedAt", "name", "description", "imagePath", "attachmentPath", "purchasePrice", "salePrice", "supplierName", "categoryId" from "products"`
       );
     }
   }
