@@ -99,12 +99,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
       {
         resource: Category,
         options: {
-          listProperties: [
-            "id",
-            "name",
-            "createdAt",
-            "updatedAt",
-          ],
+          listProperties: ["id", "name", "createdAt", "updatedAt"],
           navigation: {
             name: "Contenido",
           },
