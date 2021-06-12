@@ -2,6 +2,7 @@ import faker from "faker";
 
 import { Category } from "../../src/entity/Category";
 import { Product } from "../../src/entity/Product";
+import { User } from "../../src/entity/Product";
 
 type ProductFactoryOptions = {
   category?: Category;
@@ -17,6 +18,25 @@ type ProductFactoryOptions = {
 type CategoryFactoryOptions = {
   name?: string;
   products?: Array<Product>;
+};
+
+type UserFactoryOptions = {
+  email: string;
+  encryptedPassword: string;
+};
+
+const newUser = (userOptions: UserFactoryOptions): User => {
+  const user = new User({
+    name: userOptions.email,
+    encryptedPassword: userOptions.encryptedPassword,
+  });
+  return user;
+};
+
+const UserFactory = {
+  build: (userOptions: UserFactoryOptions): User => {
+    return newUser(userOptions);
+  },
 };
 
 const newCategory = (categoryOptions: CategoryFactoryOptions): Category => {
@@ -90,4 +110,4 @@ const ProductFactory = {
   },
 };
 
-export { CategoryFactory, ProductFactory };
+export { CategoryFactory, ProductFactory, UserFactory };

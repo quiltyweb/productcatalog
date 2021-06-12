@@ -119,7 +119,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
         resource: User,
         options: {
           navigation: {
-            name: "Usuarios",
+            name: "Roles",
           },
           properties: {
             encryptedPassword: {

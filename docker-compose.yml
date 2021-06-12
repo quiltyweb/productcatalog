@@ -59,6 +59,7 @@ services:
     build: ./browser_test
     depends_on:
       - client
+      - server
     volumes:
       - ./browser_test:/app
       - /app/node_modules
