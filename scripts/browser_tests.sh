@@ -5,6 +5,7 @@ DOCKER_COMPOSE_FILE="${1:-docker-compose.yml}"
 DEFAULT_NODE_ENV=${NODE_ENV:-""}
 export NODE_ENV=test
 BROWSER_APP="${2}"
+APP_DOMAIN="${3}"
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 docker-compose -f ${DOCKER_COMPOSE_FILE} pull db
@@ -28,7 +29,7 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
   server yarn run ts-node test/fixtures/seed_db.ts
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
-./scripts/wait-for-it.sh localhost:3333 -- echo "App ready"
+./scripts/wait-for-it.sh ${APP_DOMAIN} -- echo "App ready"
 
 sleep 1
 

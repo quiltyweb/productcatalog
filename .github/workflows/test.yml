@@ -29,9 +29,9 @@ jobs:
       - name: Reset containers between test scripts
         run: docker-compose -f docker-compose.ci.yml down
       - name: Run browser end to end tests for client app
-        run: ./scripts/browser_tests.sh docker-compose.ci.yml browser_test
+        run: ./scripts/browser_tests.sh docker-compose.ci.yml browser_test localhost:3000
       - name: Run browser end to end tests for admin app
-        run: ./scripts/browser_tests.sh docker-compose.ci.yml browser_test_admin
+        run: ./scripts/browser_tests.sh docker-compose.ci.yml browser_test_admin localhost:3333
       - uses: actions/upload-artifact@v2
         if: ${{ always() }}
         with:

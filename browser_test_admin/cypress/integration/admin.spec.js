@@ -1,6 +1,6 @@
 describe("Admin page", function(){
   beforeEach(() => {
-    cy.visit("http://localhost:3333/admin/login", { headers: { Connection: "Keep-Alive" }, responseTimeout: 31000 });
+    cy.visit("/admin/login", { headers: { Connection: "Keep-Alive" }, responseTimeout: 31000 });
   });
 
   it("loads login form", () => {
