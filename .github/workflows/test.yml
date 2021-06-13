@@ -28,8 +28,10 @@ jobs:
         run: ./scripts/integration_tests.sh docker-compose.ci.yml
       - name: Reset containers between test scripts
         run: docker-compose -f docker-compose.ci.yml down
-      - name: Run browser end to end tests
-        run: ./scripts/browser_tests.sh docker-compose.ci.yml
+      - name: Run browser end to end tests for client app
+        run: ./scripts/browser_tests.sh docker-compose.ci.yml browser_test
+      - name: Run browser end to end tests for admin app
+        run: ./scripts/browser_tests.sh docker-compose.ci.yml browser_test_admin
       - uses: actions/upload-artifact@v2
         if: ${{ always() }}
         with:
