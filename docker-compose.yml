@@ -66,6 +66,16 @@ services:
     # Need to use 'host' network mode to avoid cross-host errors
     # from Webpack server
     network_mode: "host"
+  browser_test_admin:
+    build: ./browser_test_admin
+    depends_on:
+      - server
+    volumes:
+      - ./browser_test_admin:/app
+      - /app/node_modules
+    # Need to use 'host' network mode to avoid cross-host errors
+    # from Webpack server
+    network_mode: "host"
 volumes:
   productcatalog_server_node_modules:
     external: true
