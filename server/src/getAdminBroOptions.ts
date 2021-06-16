@@ -27,6 +27,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
       : "../../src/admin/";
   const dashboardPath = path.join(componentPath, "Dashboard");
   const statsPath = path.join(componentPath, "Stats");
+  const helpPath = path.join(componentPath, "Help");
 
   const digitalOceanOptions = {
     endpoint: SPACES_ENDPOINT,
@@ -253,6 +254,9 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
           };
         },
         component: AdminBro.bundle(statsPath),
+      },
+      Tutoriales: {
+        component: AdminBro.bundle(helpPath),
       },
     },
     rootPath: "/admin",
