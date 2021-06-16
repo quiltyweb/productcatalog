@@ -27,6 +27,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
       : "../../src/admin/";
   const dashboardPath = path.join(componentPath, "Dashboard");
   const statsPath = path.join(componentPath, "Stats");
+  const helpPath = path.join(componentPath, "Help");
 
   const digitalOceanOptions = {
     endpoint: SPACES_ENDPOINT,
@@ -137,7 +138,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
           },
           actions: {
             new: {
-              isVisible: false,
+              isVisible: true,
               before: async (
                 request: ActionRequest
               ): Promise<ActionRequest> => {
@@ -155,7 +156,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
               },
             },
             edit: { isVisible: false },
-            delete: { isVisible: false },
+            delete: { isVisible: true },
             show: { isVisible: false },
             bulkDelete: { isVisible: false },
           },
@@ -253,6 +254,9 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
           };
         },
         component: AdminBro.bundle(statsPath),
+      },
+      Tutoriales: {
+        component: AdminBro.bundle(helpPath),
       },
     },
     rootPath: "/admin",
