@@ -138,7 +138,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
           },
           actions: {
             new: {
-              isVisible: false,
+              isVisible: true,
               before: async (
                 request: ActionRequest
               ): Promise<ActionRequest> => {
@@ -156,7 +156,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
               },
             },
             edit: { isVisible: false },
-            delete: { isVisible: false },
+            delete: { isVisible: true },
             show: { isVisible: false },
             bulkDelete: { isVisible: false },
           },
