@@ -132,7 +132,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
             },
             password: {
               type: "string",
-              isVisible: false,
+              isVisible: true,
             },
             role: {
               isVisible: true,
