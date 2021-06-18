@@ -66,7 +66,6 @@
     "koa2-formidable": "^1.0.2",
     "mailgun-js": "^0.22.0",
     "pg": "^8.5.1",
-    "reactjs-media": "^1.5.1",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.19",
     "typeorm": "^0.2.31"
