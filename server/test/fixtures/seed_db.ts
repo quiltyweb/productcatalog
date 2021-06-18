@@ -12,7 +12,7 @@ import { User, UserRole } from "../../src/entity/User";
     email: "admin",
     encryptedPassword:
       "$2b$10$rvgafLIdwdfIadM7n.5mRen1Kpm3syocsJjIi7o9O8Z/bwd0kRhTO",
-    role: UserRole.ADMIN
+    role: UserRole.ADMIN,
   });
   await connection.manager.save(User, user);
 
