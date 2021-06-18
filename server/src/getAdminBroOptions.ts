@@ -38,8 +38,8 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
   };
 
   const isRoleAdmin = ({ currentAdmin }) => {
-    return currentAdmin && currentAdmin.role === 'admin';
-  }
+    return currentAdmin && currentAdmin.role === "admin";
+  };
 
   const adminBroOptions = {
     resources: [

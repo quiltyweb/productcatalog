@@ -9,7 +9,7 @@ import {
 
 export enum UserRole {
   ADMIN = "admin",
-  EDITOR = "editor"
+  EDITOR = "editor",
 }
 
 type UserOptions = {
@@ -17,7 +17,6 @@ type UserOptions = {
   encryptedPassword: string;
   role: UserRole;
 };
-
 
 @Entity()
 export class User extends BaseEntity {
@@ -48,7 +47,7 @@ export class User extends BaseEntity {
   @Column({
     type: "enum",
     enum: UserRole,
-    default: UserRole.ADMIN
+    default: UserRole.ADMIN,
   })
   public role: UserRole;
 }
