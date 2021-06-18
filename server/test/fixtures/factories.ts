@@ -2,7 +2,7 @@ import faker from "faker";
 
 import { Category } from "../../src/entity/Category";
 import { Product } from "../../src/entity/Product";
-import { User } from "../../src/entity/User";
+import { User, UserRole } from "../../src/entity/User";
 
 type ProductFactoryOptions = {
   category?: Category;
@@ -23,12 +23,14 @@ type CategoryFactoryOptions = {
 type UserFactoryOptions = {
   email: string;
   encryptedPassword: string;
+  role: UserRole;
 };
 
 const newUser = (userOptions: UserFactoryOptions): User => {
   const user = new User({
     email: userOptions.email,
     encryptedPassword: userOptions.encryptedPassword,
+    role: userOptions.role,
   });
   return user;
 };

@@ -2,7 +2,7 @@ import { createConnection, Connection } from "typeorm";
 import { ProductFactory, CategoryFactory, UserFactory } from "./factories";
 import { Category } from "../../src/entity/Category";
 import { Product } from "../../src/entity/Product";
-import { User } from "../../src/entity/User";
+import { User, UserRole } from "../../src/entity/User";
 
 (async (): Promise<void> => {
   const connection: Connection = await createConnection("test");
@@ -12,6 +12,7 @@ import { User } from "../../src/entity/User";
     email: "admin",
     encryptedPassword:
       "$2b$10$rvgafLIdwdfIadM7n.5mRen1Kpm3syocsJjIi7o9O8Z/bwd0kRhTO",
+    role: UserRole.ADMIN
   });
   await connection.manager.save(User, user);
 
