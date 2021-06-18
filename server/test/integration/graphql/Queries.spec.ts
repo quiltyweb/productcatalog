@@ -65,8 +65,6 @@ describe("GraphQL schema", () => {
         (catEdge) => catEdge.node
       );
 
-      console.log("categories >>>>>", categories);
-
       expect(categories).toContainEqual(
         expect.objectContaining({ name: expect.any(String) })
       );

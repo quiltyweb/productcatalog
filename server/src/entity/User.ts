@@ -7,10 +7,17 @@ import {
   CreateDateColumn,
 } from "typeorm";
 
+export enum UserRole {
+  ADMIN = "admin",
+  EDITOR = "editor",
+}
+
 type UserOptions = {
   email: string;
   encryptedPassword: string;
+  role: UserRole;
 };
+
 @Entity()
 export class User extends BaseEntity {
   constructor(UserOptions: UserOptions) {
@@ -18,6 +25,7 @@ export class User extends BaseEntity {
     if (UserOptions) {
       this.email = UserOptions.email;
       this.encryptedPassword = UserOptions.encryptedPassword;
+      this.role = UserOptions.role;
     }
   }
 
@@ -26,11 +34,20 @@ export class User extends BaseEntity {
 
   @CreateDateColumn()
   public createdAt: Date;
+
   @UpdateDateColumn()
   public updatedAt: Date;
 
   @Column()
   public email: string;
+
   @Column()
   public encryptedPassword: string;
+
+  @Column({
+    type: "enum",
+    enum: UserRole,
+    default: UserRole.ADMIN,
+  })
+  public role: UserRole;
 }

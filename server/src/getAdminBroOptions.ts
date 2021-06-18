@@ -37,6 +37,10 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
     bucket: SPACES_BUCKET,
   };
 
+  const isRoleAdmin = ({ currentAdmin }) => {
+    return currentAdmin && currentAdmin.role === "admin";
+  };
+
   const adminBroOptions = {
     resources: [
       {
@@ -128,17 +132,15 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
             },
             password: {
               type: "string",
-              isVisible: {
-                list: false,
-                edit: false,
-                filter: false,
-                show: false,
-              },
+              isVisible: false,
+            },
+            role: {
+              isVisible: true,
             },
           },
           actions: {
             new: {
-              isVisible: false,
+              isAccessible: isRoleAdmin,
               before: async (
                 request: ActionRequest
               ): Promise<ActionRequest> => {
@@ -155,10 +157,12 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
                 return request;
               },
             },
-            edit: { isVisible: false },
-            delete: { isVisible: false },
-            show: { isVisible: false },
-            bulkDelete: { isVisible: false },
+            edit: { isAccessible: isRoleAdmin },
+            delete: { isAccessible: isRoleAdmin },
+            show: { isAccessible: isRoleAdmin },
+            bulkDelete: { isAccessible: isRoleAdmin },
+            list: { isAccessible: isRoleAdmin },
+            search: { isAccessible: isRoleAdmin },
           },
         },
       },
