@@ -4,14 +4,23 @@ import { Box, Text , Section} from "@admin-bro/design-system";
 const Dashboard= () => {
   const [currentAdmin] = useCurrentAdmin()
 
-  const dashBoardLinks = [{
-    url: "https://www.gattoni.cl",
-    label: "Ir a Gattoni.cl"
-  },
-  {
-   url: "https://www.gmail.com",
-   label: "Ir a Gmail"
- }]
+  const dashBoardLinks = [
+    {
+      url: "/admin/pages/Tutoriales",
+      label: "Ver Tutoriales",
+      target: "_parent"
+    },
+    {
+      url: "https://www.gattoni.cl",
+      label: "Ir a Gattoni.cl",
+      target: "_blank"
+    },
+    {
+      url: "https://www.gmail.com",
+      label: "Ir a Gmail",
+      target: "_blank"
+  }
+]
 
   return (
     <Box variant="grey">
@@ -23,12 +32,16 @@ const Dashboard= () => {
       </Section>
 
       <Box flex flexDirection="row">
+        <ul id="dashboard-quick-access-links">
         {dashBoardLinks.map((item, index)=> (
+          <li>
           <Box key={item.label} variant="white" bg="primary20" m="lg" width={1/3}>
-            <a href={item.url} target="_blank">{item.label}</a>
+            <a href={item.url} target={item.target}>{item.label}</a>
           </Box>
+          </li>
           ))
         }
+        </ul>
       </Box>
     </Box>
   );

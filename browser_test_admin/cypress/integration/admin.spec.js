@@ -7,11 +7,13 @@ describe("Admin page", function(){
   });
 
   it("load to dashboard after login in", () => {
-    cy.contains("Bienvenido/a: ");
+    cy.contains("Bienvenido/a: admin");
     cy.contains("Haga click en el menu lateral para crear, actualizar o borrar productos.");
-    cy.findByText("Ir a Gattoni.cl");
-    cy.findByText("Ir a Gmail");
+    cy.findByText("Ver Tutoriales").closest('a').should('have.attr', 'href').and('include', '/admin/pages/Tutoriales');
+    cy.findByText("Ir a Gattoni.cl").closest('a').should('have.attr', 'href').and('include', 'https://www.gattoni.cl');
+    cy.findByText("Ir a Gmail").closest('a').should('have.attr', 'href').and('include', 'https://www.gmail.com');
   });
+
 
   it("loads products list with translated labels", () => {
     cy.clickMobileMenu();
@@ -48,7 +50,7 @@ describe("Admin page", function(){
     cy.findByText("Filtrar");
   });
 
-  it("loads list users page", () => {
+  it("loads list users page when logged in user is ADMIN", () => {
     cy.clickMobileMenu();
     cy.findByText("Roles").parent().click();
     cy.findByText("Usuarios").parent().click();
@@ -58,8 +60,10 @@ describe("Admin page", function(){
       cy.findByText("Email");
       cy.findByText("Created At");
       cy.findByText("Updated At");
+      cy.findByText("Role");
     })
     cy.findByText("Filtrar");
+    cy.findByText("Create new");
   });
 
   it("loads estadisticas page", () => {
