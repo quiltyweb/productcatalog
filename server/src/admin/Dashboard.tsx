@@ -1,5 +1,16 @@
 import { useCurrentAdmin } from "admin-bro";
 import { Box, Text , Section} from "@admin-bro/design-system";
+import styled from 'styled-components';
+
+const List = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  li {
+    background: white;
+    padding: 2rem;
+    margin: 1rem;
+  }
+`
 
 const Dashboard= () => {
   const [currentAdmin] = useCurrentAdmin()
@@ -32,16 +43,14 @@ const Dashboard= () => {
       </Section>
 
       <Box flex flexDirection="row">
-        <ul id="dashboard-quick-access-links">
+        <List>
         {dashBoardLinks.map((item, index)=> (
           <li>
-          <Box key={item.label} variant="white" bg="primary20" m="lg" width={1/3}>
             <a href={item.url} target={item.target}>{item.label}</a>
-          </Box>
           </li>
           ))
         }
-        </ul>
+        </List>
       </Box>
     </Box>
   );
