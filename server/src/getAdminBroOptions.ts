@@ -64,15 +64,15 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
             imagePath: {
               position: 1,
               isVisible: false,
-              components:{
-                list: AdminBro.bundle(imagePath)
+              components: {
+                list: AdminBro.bundle(imagePath),
               },
             },
             attachmentPath: {
               position: 2,
               isVisible: false,
-              components:{
-                list: AdminBro.bundle(attachmentPath)
+              components: {
+                list: AdminBro.bundle(attachmentPath),
               },
             },
           },
