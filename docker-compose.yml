@@ -19,11 +19,11 @@ services:
       ADMIN_EMAIL: test@test.com
       APP_KEY: supersecretsauce
       API_TOKEN: supersecretspicysauce
-      SPACES_ACCESS_KEY_ID: spaces_access_key
-      SPACES_SECRET_ACCESS_KEY: spaces_secret_key
-      SPACES_REGION: spaces_region
-      SPACES_BUCKET: spaces_bucket
-      SPACES_ENDPOINT: spaces_endpoint
+      SPACES_ACCESS_KEY_ID: ${SPACES_ACCESS_KEY_ID}
+      SPACES_SECRET_ACCESS_KEY: ${SPACES_SECRET_ACCESS_KEY}
+      SPACES_REGION: ${SPACES_REGION}
+      SPACES_BUCKET: ${SPACES_BUCKET}
+      SPACES_ENDPOINT: ${SPACES_ENDPOINT}
     env_file: .env
     stdin_open: true
     tty: true

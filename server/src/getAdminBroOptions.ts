@@ -27,6 +27,8 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
       : "../../src/admin/";
   const dashboardPath = path.join(componentPath, "Dashboard");
   const statsPath = path.join(componentPath, "Stats");
+  const imagePath = path.join(componentPath, "ImagePreview");
+  const attachmentPath = path.join(componentPath, "attachmentPreview");
   const helpPath = path.join(componentPath, "Help");
 
   const digitalOceanOptions = {
@@ -48,20 +50,31 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
         options: {
           listProperties: [
             "id",
-            "name",
-            "description",
-            "createdAt",
-            "updatedAt",
             "imagePath",
             "attachmentPath",
+            "name",
+            "description",
+            "updatedAt",
           ],
           navigation: {
             name: "Contenido",
           },
           properties: {
             id: { isVisible: false },
-            imagePath: { isVisible: false },
-            attachmentPath: { isVisible: false },
+            imagePath: {
+              position: 1,
+              isVisible: false,
+              components:{
+                list: AdminBro.bundle(imagePath)
+              },
+            },
+            attachmentPath: {
+              position: 2,
+              isVisible: false,
+              components:{
+                list: AdminBro.bundle(attachmentPath)
+              },
+            },
           },
           actions: {
             show: { icon: "View" },
