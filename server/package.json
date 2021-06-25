@@ -15,7 +15,7 @@
     "migration:create": "yarn run ts-node ./node_modules/typeorm/cli.js migration:create"
   },
   "devDependencies": {
-    "@shopify/jest-koa-mocks": "^2.2.4",
+    "@shopify/jest-koa-mocks": "^3.0.1",
     "@types/bcrypt": "^3.0.1",
     "@types/faker": "^5.1.4",
     "@types/graphql-relay": "^0.6.0",
