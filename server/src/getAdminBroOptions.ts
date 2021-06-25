@@ -28,7 +28,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
   const dashboardPath = path.join(componentPath, "Dashboard");
   const statsPath = path.join(componentPath, "Stats");
   const imagePath = path.join(componentPath, "ImagePreview");
-  const attachmentPath = path.join(componentPath, "attachmentPreview");
+  const attachmentPath = path.join(componentPath, "AttachmentPreview");
   const helpPath = path.join(componentPath, "Help");
 
   const digitalOceanOptions = {

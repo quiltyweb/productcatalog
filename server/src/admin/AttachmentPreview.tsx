@@ -1,8 +1,6 @@
 import { Box} from "@admin-bro/design-system";
 
-const attachmentPreview = (props) => {
-  console.log(props.record.params);
-
+const AttachmentPreview = (props) => {
   return (
     <Box variant="grey" padding="xs">
       {
@@ -14,4 +12,4 @@ const attachmentPreview = (props) => {
   );
 };
 
-export default attachmentPreview;
+export default AttachmentPreview;
