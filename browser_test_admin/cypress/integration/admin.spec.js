@@ -24,12 +24,11 @@ describe("Admin page", function(){
     cy.findByText("Filtrar");
     cy.get('table').within(() => {
       cy.findByText("Id");
-      cy.findByText("Nombre");
-      cy.findByText("Descripción");
-      cy.findByText("Creación");
-      cy.findByText("Actualizacón");
       cy.findByText("Imagen");
       cy.findByText("Adjunto");
+      cy.findByText("Nombre");
+      cy.findByText("Descripción");
+      cy.findByText("Actualizacón");
     })
   });
 
