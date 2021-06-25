@@ -75,6 +75,10 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
                 list: AdminBro.bundle(attachmentPath),
               },
             },
+            description: {
+              type: "textarea",
+              isVisible: true,
+            },
           },
           actions: {
             show: { icon: "View" },
@@ -136,15 +140,17 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
       {
         resource: User,
         options: {
+          listProperties: ["id", "email", "createdAt", "updatedAt", "role"],
           navigation: {
             name: "Roles",
           },
           properties: {
             encryptedPassword: {
+              type: "password",
               isVisible: false,
             },
             password: {
-              type: "string",
+              type: "password",
               isVisible: true,
             },
             role: {
@@ -189,6 +195,14 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
     locale: {
       language: "es",
       translations: {
+        actions: {
+          new: "Crear nuevo",
+          edit: "Editar",
+          show: "Mostrar",
+          delete: "Eliminar",
+          bulkDelete: "Eliminar todo",
+          list: "Listar",
+        },
         buttons: {
           save: "Guardar",
           addNewItem: "Agregar nuevo Item",
@@ -249,6 +263,37 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
           loginWelcome: "",
           confirmDelete: "Realmente desea eliminar este ítem?",
           invalidCredentials: "Email y/o contraseña incorrectos",
+          successfullyBulkDeleted: "{{count}} registro eliminado exitosamente",
+          successfullyBulkDeleted_plural:
+            "{{count}} registros eliminados exitosamente",
+          successfullyDeleted: "Registro eliminado exitosamente",
+          successfullyUpdated: "Registro actualizado exitosamente",
+          thereWereValidationErrors:
+            "Se encontraron errores de validacion - revise consola de errores.",
+          successfullyCreated: "Registro creado exitosamente",
+          bulkDeleteError:
+            "Hubo un error al eliminar registros, revise consola de error para mas informacion",
+          errorFetchingRecords:
+            "Hubo un error al obtener los registros, revise consola de error para mas informacion",
+          errorFetchingRecord:
+            "Hubo un error al obtener el registro, revise consola de error para mas informacion",
+          noRecordsSelected: "No ha seleccionado ningun registro",
+          theseRecordsWillBeRemoved: "El siguiente registro sera eliminado",
+          theseRecordsWillBeRemoved_plural:
+            "Los siguientes registros seran eliminados",
+          pickSomeFirstToRemove:
+            "Para eliminar registros, debe seleccionarlos primero",
+          error404Resource:
+            "Recurso con ID: {{resourceId}} no se ha encontrado",
+          error404Action:
+            "Recurso con ID: {{resourceId}} no tiene una accion con nombre: {{actionName}}",
+          error404Record:
+            "Recurso con ID: {{resourceId}} no tiene registro con id: {{recordId}}",
+          seeConsoleForMore:
+            "Revise consola de desarrollo para mas detalles...",
+          noActionComponent:
+            "Tiene que implementar un componente de accion para su Accion",
+          noRecordsInResource: "No existen registros para este recurso",
         },
       },
     },
