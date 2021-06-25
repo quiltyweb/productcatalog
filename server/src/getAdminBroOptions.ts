@@ -140,15 +140,17 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
       {
         resource: User,
         options: {
+          listProperties: ["id", "email", "createdAt", "updatedAt", "role"],
           navigation: {
             name: "Roles",
           },
           properties: {
             encryptedPassword: {
+              type: "password",
               isVisible: false,
             },
             password: {
-              type: "string",
+              type: "password",
               isVisible: true,
             },
             role: {

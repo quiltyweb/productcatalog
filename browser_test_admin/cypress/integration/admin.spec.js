@@ -62,7 +62,7 @@ describe("Admin page", function(){
       cy.findByText("Role");
     })
     cy.findByText("Filtrar");
-    cy.findByText("Create new");
+    cy.findByText("Crear nuevo");
   });
 
   it("loads estadisticas page", () => {
