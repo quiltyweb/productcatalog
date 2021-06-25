@@ -5,6 +5,8 @@ node_modules
 node_modules/*
 server/node_modules
 client/node_modules
+browser_test_admin/node_modules
+browser_test/node_modules
 
 # Artifacts
 build
