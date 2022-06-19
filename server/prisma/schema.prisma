@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,57 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        Int       @id(map: "PK_9c4e4a89e3674fc9f382d733f03") @default(autoincrement())
+  createdAt DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt DateTime  @default(now()) @db.Timestamp(6)
+  name      String    @db.VarChar
+  product   Product[]
+
+  @@map("category")
+}
+
+model Migrations {
+  id        Int    @id(map: "PK_8c82d7f526340ab734260ea46be") @default(autoincrement())
+  timestamp BigInt
+  name      String @db.VarChar
+
+  @@map("migrations")
+}
+
+model Product {
+  id             Int       @id(map: "PK_bebc9158e480b949565b4dc7a82") @default(autoincrement())
+  createdAt      DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime  @default(now()) @db.Timestamp(6)
+  name           String    @db.VarChar
+  description    String    @db.VarChar
+  imagePath      String    @default("") @db.VarChar
+  attachmentPath String    @default("") @db.VarChar
+  purchasePrice  Int       @default(0)
+  salePrice      Int       @default(0)
+  supplierName   String    @default("") @db.VarChar
+  categoryId     Int?
+  category       Category? @relation(fields: [categoryId], references: [id], onUpdate: NoAction, map: "FK_ff0c0301a95e517153df97f6812")
+
+  @@map("product")
+}
+
+model User {
+  id                Int      @id(map: "PK_cace4a159ff9f2512dd42373760") @default(autoincrement())
+  createdAt         DateTime @default(now()) @db.Timestamp(6)
+  updatedAt         DateTime @default(now()) @db.Timestamp(6)
+  email             String   @db.VarChar
+  encryptedPassword String   @db.VarChar
+  role              UserRole @default(admin)
+
+  @@map("user")
+}
+
+enum UserRole {
+  admin
+  editor
+
+  @@map("user_role_enum")
 }
