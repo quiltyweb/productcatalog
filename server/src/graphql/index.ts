@@ -1,8 +1,7 @@
 import { GraphQLSchema, GraphQLObjectType } from "graphql";
 import { nodeDefinitions, fromGlobalId } from "graphql-relay";
+import { Category, PrismaClient, Product } from '@prisma/client'
 
-import { Category } from "../entity/Category";
-import { Product } from "../entity/Product";
 import GqlTypes from "./GqlTypes";
 import Queries from "./Queries";
 
@@ -13,11 +12,15 @@ import type { GraphQLFieldConfigMap } from "graphql";
 type GraphQLFieldReturn = GraphQLFieldConfigMap<any, any>;
 type Entity = Category | Product;
 
-async function getObjectFromGlobalId(globalId, ctx): Promise<Entity> {
+
+const prisma = new PrismaClient()
+
+
+async function getObjectFromGlobalId(globalId: string): Promise<Entity> {
   const { type, id } = fromGlobalId(globalId);
 
-  if (type === "Category") return await ctx.entityManager.findOne(Category, id);
-  if (type === "Product") return await ctx.entityManager.findOne(Product, id);
+  if (type === "Category") return await prisma.category.findUnique({where: {id: parseInt(id)}});
+  if (type === "Product") return await prisma.product.findUnique({where: {id: parseInt(id)}});
 }
 
 const { nodeInterface, nodeField } = nodeDefinitions(getObjectFromGlobalId);

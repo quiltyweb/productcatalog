@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function databaseInfo() {
+  console.log(process.env.DATABASE_URL)
   if (process.env.DATABASE_URL) return { url: process.env.DATABASE_URL };
 
   return {

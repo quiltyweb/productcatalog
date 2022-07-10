@@ -5,8 +5,8 @@ import {
   fromGlobalId,
 } from "graphql-relay";
 
-import { Category } from "../entity/Category";
-import { Product } from "../entity/Product";
+// import { Category } from "../entity/Category";
+// import { Product } from "../entity/Product";
 import GQLTypes from "./GqlTypes";
 
 import type { Connection } from "graphql-relay";
@@ -14,6 +14,9 @@ import type { GraphQLFieldConfig } from "graphql";
 
 import type { SendEmailResponse } from "../email";
 import type { TSource, TContext } from "../types";
+import { Category, PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient()
 
 class Queries {
   private types: GQLTypes;
