@@ -16,10 +16,10 @@ export const buildCustomAuthRouter = (adminBro, app, connection): Router => {
   });
 
   let store;
-  if (process.env.REDIS_URL) {
+  if (process.env.REDISCLOUD_URL) {
     // prod
     store = new RedisStore({
-      client: new Redis(process.env.REDIS_URL),
+      client: new Redis(process.env.REDISCLOUD_URL),
     });
   } else {
     // dev
