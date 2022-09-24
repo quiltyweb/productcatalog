@@ -38,6 +38,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "yarn run eslint . --ext=.ts",
     "test:unit": "react-scripts test --env=jsdom --watchAll=false",
     "eject": "react-scripts eject",
     "relay": "yarn run relay-compiler --schema data/schema.graphql --language typescript --src ./src/ --watchman false $@",

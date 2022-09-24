@@ -38,7 +38,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        service: [server]
+        service: [server, client]
     env:
       BRANCH_NAME: ${{ github.ref_name }}
       SERVICE_NAME: ${{ matrix.service }}
