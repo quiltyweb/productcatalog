@@ -1,7 +1,7 @@
 version: "3.2"
 services:
   server:
-    build: ./server
+    image: ${SERVER_IMAGE}
     depends_on:
       - db
     ports:
@@ -32,7 +32,7 @@ services:
     ports:
       - "6379:6379"
   client:
-    build: ./client
+    image: ${CLIENT_IMAGE}
     ports:
       - "3000:3000"
     depends_on:
@@ -42,7 +42,7 @@ services:
       NODE_ENV: test
     command: yarn run start
   browser_test:
-    build: ./browser_test
+    image: ${BROWSER_TEST_IMAGE}
     depends_on:
       - client
     volumes:
@@ -56,7 +56,7 @@ services:
       TERM: dumb
       NODE_ENV: test
   browser_test_admin:
-    build: ./browser_test_admin
+    image: ${BROWSER_TEST_ADMIN_IMAGE}
     depends_on:
       - server
     volumes:
