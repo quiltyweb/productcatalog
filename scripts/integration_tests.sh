@@ -7,7 +7,7 @@ export NODE_ENV=test
 docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 docker-compose -f ${DOCKER_COMPOSE_FILE} pull db
 echo "Creating Docker containers..."
-docker-compose -f ${DOCKER_COMPOSE_FILE} up --no-start
+docker-compose -f ${DOCKER_COMPOSE_FILE} up server --no-start
 echo "Starting DB..."
 docker-compose -f ${DOCKER_COMPOSE_FILE} start db
 
