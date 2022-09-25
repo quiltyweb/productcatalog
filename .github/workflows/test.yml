@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        service: [server]
+        service: [server, client]
     env:
       SERVICE_NAME: ${{ matrix.service }}
     steps:
@@ -18,7 +18,7 @@ jobs:
       - name: Build and export to Docker
         uses: docker/build-push-action@v3
         with:
-          context: ./$SERVICE_NAME
+          context: ./${{ env.SERVICE_NAME }}
           load: true
           tags: ${{ env.SERVICE_NAME }}
       - name: Lint Typescript files
