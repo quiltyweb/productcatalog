@@ -6,6 +6,6 @@ export default {
   component: CartTable,
 };
 
-export const CartTableStory: React.VFC<any> = () => <CartTable />;
+export const CartTableStory = () => <CartTable />;
 
 CartTableStory.storyName = "I am the CartTableStory";

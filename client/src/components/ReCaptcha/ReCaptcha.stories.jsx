@@ -6,7 +6,7 @@ export default {
   component: ReCaptcha,
 };
 
-export const ReCaptchaStory: React.VFC<any> = () => (
+export const ReCaptchaStory = () => (
   <ReCaptcha id="123" onVerifyCaptcha={() => console.log("testing")} />
 );
 

@@ -5,12 +5,26 @@ on: push
 jobs:
   lint:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        service: [server, client]
+    env:
+      SERVICE_NAME: ${{ matrix.service }}
     steps:
       - uses: actions/checkout@v2
-      - name: Build the Docker image
-        run: docker build ./server --tag productcatalog
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and export to Docker
+        uses: docker/build-push-action@v3
+        with:
+          context: ./${{ env.SERVICE_NAME }}
+          load: true
+          tags: ${{ env.SERVICE_NAME }}
+      - name: Check types
+        run: docker run --rm $SERVICE_NAME:latest yarn run typecheck
       - name: Lint Typescript files
-        run: docker run productcatalog:latest yarn run lint
+        run: docker run --rm $SERVICE_NAME:latest yarn run lint
 
   test:
     runs-on: ubuntu-latest

@@ -6,7 +6,7 @@ export default {
   component: QuantityPicker,
 };
 
-export const QuantityPickerStory: React.VFC<any> = () => (
+export const QuantityPickerStory = () => (
   <QuantityPicker productId="123" quantity={10} />
 );
 

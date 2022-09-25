@@ -28,7 +28,7 @@ const mocked_initialValues = {
   recaptcha: "123456",
 };
 
-export const QuoteFormStory: React.VFC<any> = () => (
+export const QuoteFormStory = () => (
   <Router history={history}>
     <QuoteForm cartItems={mocked_cart} initialValues={mocked_initialValues} />
   </Router>

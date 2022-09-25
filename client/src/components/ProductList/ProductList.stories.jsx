@@ -10,7 +10,7 @@ export default {
   component: ProductList,
 };
 
-export const ProductListStory: React.VFC<any> = () => (
+export const ProductListStory = () => (
   <Router history={history}>
     <ProductList
       products={{

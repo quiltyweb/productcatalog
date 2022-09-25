@@ -10,7 +10,7 @@ export default {
   component: CategoryGrid,
 };
 
-export const CategoryGridStory: React.VFC<any> = () => (
+export const CategoryGridStory = () => (
   <Router history={history}>
     <CategoryGrid
       categoryGridItems={{

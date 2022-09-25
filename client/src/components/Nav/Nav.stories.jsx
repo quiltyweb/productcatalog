@@ -10,7 +10,7 @@ export default {
   component: Nav,
 };
 
-export const NavStory: React.VFC<any> = () => (
+export const NavStory = () => (
   <Router history={history}>
     <Nav />
   </Router>

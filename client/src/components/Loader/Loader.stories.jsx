@@ -6,6 +6,6 @@ export default {
   component: Loader,
 };
 
-export const LoaderStory: React.VFC<any> = () => <Loader />;
+export const LoaderStory = () => <Loader />;
 
 LoaderStory.storyName = "I am the LoaderStory";
