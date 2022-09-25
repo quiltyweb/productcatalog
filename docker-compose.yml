@@ -11,9 +11,7 @@ services:
       - db
     environment:
       PORT: 3333
-      DB_HOST: db
-      DB_NAME: ${DB_NAME}
-      DB_PASSWORD: postgres
+      DATABASE_URL: postgresql://root@db:26257/${DB_NAME}?sslmode=disable
       NODE_ENV: ${NODE_ENV:-development}
       HOSTNAME: localhost
       ADMIN_EMAIL: test@test.com
@@ -29,12 +27,17 @@ services:
     tty: true
     command: yarn run dev
   db:
-    image: postgres:12.2
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ${DB_NAME}
+    image: cockroachdb/cockroach:latest
+    volumes:
+      - ./database:/cockroach/database
     ports:
-      - "5432:5432"
+      # Port for connecting to the DB
+      - "26257:26257"
+      # Port for dashboard
+      - "8080:8080"
+    environment:
+      COCKROACH_DATABASE: ${DB_NAME}
+    command: start-single-node --insecure
   redis:
     image: redis:6.2.2
     ports:
