@@ -10,7 +10,7 @@ export default {
   component: ContactForm,
 };
 
-export const ContactFormStory: React.VFC<any> = () => (
+export const ContactFormStory = () => (
   <Router history={history}>
     <ContactForm
       initialValues={{

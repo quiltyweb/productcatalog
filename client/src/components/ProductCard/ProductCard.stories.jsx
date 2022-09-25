@@ -10,7 +10,7 @@ export default {
   component: ProductCard,
 };
 
-export const ProductCardStory: React.VFC<any> = () => (
+export const ProductCardStory = () => (
   <Router history={history}>
     <ProductCard
       productId="test_productId"

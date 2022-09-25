@@ -6,7 +6,7 @@ export default {
   component: ContentList,
 };
 
-export const ContentListStory: React.VFC<any> = () => (
+export const ContentListStory = () => (
   <ContentList
     title="title text"
     description="description text"

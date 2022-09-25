@@ -40,6 +40,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "lint": "yarn run eslint . --ext=.ts",
+    "typecheck": "yarn run tsc",
     "eject": "react-scripts eject",
     "relay": "yarn run relay-compiler --schema data/schema.graphql --language typescript --src ./src/ --watchman false $@",
     "schema": "npx apollo client:download-schema --endpoint=http://server:3333/graphql ./data/schema.graphql",

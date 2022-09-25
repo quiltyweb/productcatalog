@@ -30,7 +30,12 @@ beforeEach(() => {
         variables={{}}
         render={({ error, props }: { error: any; props: any }) => {
           if (props) {
-            return <CategoryGrid categoryGridItems={props.categoryGridItems} />;
+            return (
+              <CategoryGrid
+                categoryGridItems={props.categoryGridItems}
+                isLoading={false}
+              />
+            );
           } else if (error) {
             return error.message;
           }

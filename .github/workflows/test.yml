@@ -21,6 +21,8 @@ jobs:
           context: ./${{ env.SERVICE_NAME }}
           load: true
           tags: ${{ env.SERVICE_NAME }}
+      - name: Check types
+        run: docker run --rm $SERVICE_NAME:latest yarn run typecheck
       - name: Lint Typescript files
         run: docker run --rm $SERVICE_NAME:latest yarn run lint
 

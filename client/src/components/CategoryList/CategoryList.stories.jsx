@@ -10,7 +10,7 @@ export default {
   component: CategoryList,
 };
 
-export const CategoryListStory: React.VFC<any> = () => (
+export const CategoryListStory = () => (
   <Router history={history}>
     <CategoryList
       CategoryListItems={{

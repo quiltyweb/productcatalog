@@ -9,6 +9,7 @@
     "lint": "yarn run eslint . --ext=.ts",
     "test:integration": "yarn run jest ./test/integration",
     "test:unit": "yarn run jest ./test/unit",
+    "typecheck": "yarn run tsc",
     "migration:run": "yarn run ts-node ./node_modules/typeorm/cli.js migration:run",
     "migration:revert": "yarn run ts-node ./node_modules/typeorm/cli.js migration:revert",
     "migration:generate": "yarn run ts-node ./node_modules/typeorm/cli.js migration:generate",
