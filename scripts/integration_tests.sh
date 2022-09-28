@@ -3,6 +3,8 @@
 DOCKER_COMPOSE_FILE="${1:-docker-compose.yml}"
 DEFAULT_NODE_ENV=${NODE_ENV:-""}
 export NODE_ENV=test
+DEFAULT_DB_NAME=${DB_NAME:-""}
+export DB_NAME=test_${DB_NAME}
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 docker-compose -f ${DOCKER_COMPOSE_FILE} pull db
@@ -17,8 +19,8 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} start db
 sleep 4
 
 # Need to create test DB separately because TypeORM won't do it for us
-docker exec -t -u postgres productcatalog_db_1 \
-  psql --command "CREATE DATABASE test_${DB_NAME};"
+docker exec -t productcatalog_db_1 \
+  cockroach sql --execute "CREATE DATABASE ${DB_NAME};" --insecure
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm server \
   yarn run migration:run -c test
@@ -33,11 +35,12 @@ then
 fi
 
 # TEST CLEANUP
-docker exec -t -u postgres productcatalog_db_1 \
-  psql --command "DROP DATABASE IF EXISTS test_${DB_NAME};"
+docker exec -t productcatalog_db_1 \
+  cockroach sql --execute "DROP DATABASE IF EXISTS ${DB_NAME};" --insecure
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 export NODE_ENV=${DEFAULT_NODE_ENV}
+export DB_NAME=${DEFAULT_DB_NAME}
 docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 
 exit ${EXIT_CODE}

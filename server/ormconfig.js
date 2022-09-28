@@ -1,18 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-function databaseInfo() {
-  if (process.env.DATABASE_URL) return { url: process.env.DATABASE_URL };
-
-  return {
-    host: process.env.DB_HOST || "localhost",
-    port: 5432,
-    username: "postgres",
-    password: "postgres",
-    database: process.env.DB_NAME || "",
-  };
-}
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { URL } = require("url");
 
 const baseOrmConfig = {
-  type: "postgres",
+  type: "cockroachdb",
   synchronize: false,
   logging: false,
   entities: ["src/entity/**/*.ts"],
@@ -25,28 +15,32 @@ const baseOrmConfig = {
   },
 };
 
+const dbUrl = new URL(
+  process.env.DATABASE_URL_COCKROACHDB || process.env.DATABASE_URL
+);
+const routingId = dbUrl.searchParams.get("options");
+dbUrl.searchParams.delete("options");
+
 module.exports = [
   {
     ...baseOrmConfig,
-    ...databaseInfo(),
     name: "default",
+    ssl: false,
+    url: process.env.DATABASE_URL,
   },
   {
     ...baseOrmConfig,
-    ...databaseInfo(),
     name: "test",
-    synchronize: false,
-    database: "test_" + (process.env.DB_NAME || ""),
+    ssl: false,
+    url: process.env.DATABASE_URL,
   },
   {
     ...baseOrmConfig,
-    ...databaseInfo(),
     name: "production",
     ssl: true,
+    url: dbUrl.toString(),
     extra: {
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      options: routingId,
     },
     entities: ["dist/src/entity/**/*.js"],
     migrations: ["dist/src/migration/**/*.js"],
