@@ -44,10 +44,6 @@ export class User extends BaseEntity {
   @Column()
   public encryptedPassword: string;
 
-  @Column({
-    type: "enum",
-    enum: UserRole,
-    default: UserRole.ADMIN,
-  })
+  @Column({ default: UserRole.ADMIN })
   public role: UserRole;
 }
