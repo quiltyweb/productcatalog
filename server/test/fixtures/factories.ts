@@ -77,7 +77,7 @@ const newProduct = (productOptions: ProductFactoryOptions): Product => {
   const REASONABLE_MIN_PRICE = 10_000;
   const REASONABLE_MAX_PRICE = 100_000;
 
-  const defaultPurchasePrice = faker.random.number({
+  const defaultPurchasePrice = faker.datatype.number({
     min: REASONABLE_MIN_PRICE,
     max: REASONABLE_MAX_PRICE,
   });

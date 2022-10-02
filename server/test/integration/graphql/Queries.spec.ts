@@ -340,13 +340,13 @@ describe("GraphQL schema", () => {
       expect.assertions(1);
 
       const firstProduct = await connection.manager.findOne(Product);
-      const firstQuantity = faker.random.number({ min: 1, max: 10 });
+      const firstQuantity = faker.datatype.number({ min: 1, max: 10 });
 
       const secondProduct = await connection.manager
         .createQueryBuilder(Product, "products")
         .where("products.id != :id", { id: firstProduct.id })
         .getOne();
-      const secondQuantity = faker.random.number({ min: 1, max: 10 });
+      const secondQuantity = faker.datatype.number({ min: 1, max: 10 });
 
       const productVariables = {
         ...variables,
@@ -366,13 +366,13 @@ describe("GraphQL schema", () => {
       expect.assertions(1);
 
       const firstProduct = await connection.manager.findOne(Product);
-      const firstQuantity = faker.random.number({ min: 1, max: 10 });
+      const firstQuantity = faker.datatype.number({ min: 1, max: 10 });
 
       const secondProduct = await connection.manager
         .createQueryBuilder(Product, "products")
         .where("products.id != :id", { id: firstProduct.id })
         .getOne();
-      const secondQuantity = faker.random.number({ min: 1, max: 10 });
+      const secondQuantity = faker.datatype.number({ min: 1, max: 10 });
 
       const productVariables = {
         ...variables,
