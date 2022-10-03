@@ -31,7 +31,7 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
 docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 ./scripts/wait-for-it.sh ${APP_DOMAIN} -- echo "App ready"
 
-sleep 2
+sleep 4
 
 #### RUN TESTS ####
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
