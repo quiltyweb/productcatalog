@@ -1,5 +1,5 @@
 #!/bin/bash
 
-DB_FILE="${1:-product_catalog.sql}"
+DB_FILEPATH=$1
 
-heroku pg:psql --app=${HEROKU_APP} < ${PWD}/database/backups/${DB_FILE}
+cockroach sql --file ${DB_FILEPATH} --url ${PROD_DATABASE_URL}

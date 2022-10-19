@@ -8,6 +8,7 @@
 - Install Docker
 - Install [`direnv`](https://direnv.net/)
   - Loads env vars from `.env`, which is convenient
+- Install [`cockroachdb`](https://www.cockroachlabs.com/docs/stable/install-cockroachdb-mac.html)
 - Create an env file:
   - `cp .env.example .env`
   - Set the uncommented env var values
