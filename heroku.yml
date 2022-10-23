@@ -7,6 +7,6 @@ build:
 release:
   image: web
   command:
-    - yarn run migration:run
+    - yarn run migration:run -c production
 run:
   web: yarn start
