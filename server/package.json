@@ -25,7 +25,7 @@
     "@types/koa-generic-session": "^2.2.1",
     "@types/koa-helmet": "^5.2.0",
     "@types/koa-session": "^5.10.2",
-    "@types/koa-static": "^4.0.1",
+    "@types/koa-static": "^4.0.2",
     "@types/koa__router": "^8.0.4",
     "@types/node": "^15.0.2",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
