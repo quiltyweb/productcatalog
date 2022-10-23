@@ -7,9 +7,6 @@ export NODE_ENV=test
 DEFAULT_DB_NAME=${DB_NAME:-""}
 export DB_NAME=test_${DB_NAME}
 
-BROWSER_APP="${2}"
-APP_DOMAIN="${3}"
-
 docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 docker-compose -f ${DOCKER_COMPOSE_FILE} pull db
 echo "Creating Docker containers..."
@@ -32,15 +29,17 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
   server yarn run ts-node test/fixtures/seed_db.ts
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
-./scripts/wait-for-it.sh ${APP_DOMAIN} -- echo "App ready"
+./scripts/wait-for-it.sh "http://localhost:3000" -- echo "App ready"
 
 sleep 4
 
+EXIT_CODE=0
+
 #### RUN TESTS ####
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
-  ${BROWSER_APP} npx cypress run
-
-EXIT_CODE=$?
+  browser_test npm run run:catalog || EXIT_CODE=1
+docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
+  browser_test npm run run:admin || EXIT_CODE=1
 
 #### TEST CLEANUP ####
 docker exec -t productcatalog_db_1 \

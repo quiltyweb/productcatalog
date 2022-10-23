@@ -1,4 +1,4 @@
-import terminalLog from '../utils/terminalLog'
+import terminalLog from '../../utils/terminalLog'
 
 describe("Quote page", function(){
   beforeEach(() => {

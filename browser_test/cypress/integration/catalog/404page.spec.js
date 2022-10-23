@@ -1,4 +1,4 @@
-import terminalLog from '../utils/terminalLog'
+import terminalLog from '../../utils/terminalLog'
 
 describe("404 page", function(){
   beforeEach(() => {

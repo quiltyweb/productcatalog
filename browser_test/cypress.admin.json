@@ -1,0 +1,6 @@
+{
+  "baseUrl": "http://localhost:3333",
+  "video": false,
+  "viewportHeight": 2000,
+  "specPattern": "cypress/integration/admin/**/*.spec.{js,ts}"
+}
