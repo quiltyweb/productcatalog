@@ -26,13 +26,13 @@ module.exports = [
     ...baseOrmConfig,
     name: "default",
     ssl: false,
-    url: process.env.DATABASE_URL_COCKROACHDB || process.env.DATABASE_URL,
+    url: dbUrl.toString(),
   },
   {
     ...baseOrmConfig,
     name: "test",
     ssl: false,
-    url: process.env.DATABASE_URL_COCKROACHDB || process.env.DATABASE_URL,
+    url: dbUrl.toString(),
   },
   {
     ...baseOrmConfig,

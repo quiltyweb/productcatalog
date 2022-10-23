@@ -7,7 +7,6 @@ build:
 release:
   image: web
   command:
-    - echo $NODE_ENV
     - yarn run migration:run
 run:
   web: yarn start
