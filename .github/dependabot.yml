@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/server"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/client"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/browser_test"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/browser_test_admin"
+    schedule:
+      interval: "weekly"
