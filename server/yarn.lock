@@ -2018,11 +2018,12 @@
   dependencies:
     "@types/koa" "*"
 
-"@types/koa-generic-session@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@types/koa-generic-session/-/koa-generic-session-1.0.5.tgz#45776431481e3375c99c5752270c756a07630e76"
-  integrity sha512-59FejBbDuQ1JfLVzo0FznuoUIu9nbY0b+NLtUsveTDYCqHlveJluWEFbXOAkxLK0+EPyJ6a+1fCTu3wndbSEcA==
+"@types/koa-generic-session@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@types/koa-generic-session/-/koa-generic-session-2.2.1.tgz#c248e4bdbce0c32087c98068c384e5ea04d10746"
+  integrity sha512-oQAJPIo2PzwKgBcPSBpQSaVVCjSHp6cijhPjDNPnKPYdd6X4sDz8TiV80LUOEOid/Q98laHJ043tL/IvxTwdTA==
   dependencies:
+    "@types/cookies" "*"
     "@types/koa" "*"
 
 "@types/koa-helmet@^5.2.0":
@@ -6441,10 +6442,10 @@ koa-convert@^2.0.0:
     co "^4.6.0"
     koa-compose "^4.1.0"
 
-koa-generic-session@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/koa-generic-session/-/koa-generic-session-2.1.1.tgz#0f5b34ebad9ce635dc710650fb07dcd7fdf3416b"
-  integrity sha512-ZWsq0klIGnsDHcPWETTYVR4FKBRm+hMexJV7HxZdtALO54dQaOGV7GxMZSZNwnNqr9yVPldRUXDcJZsd9AHozw==
+koa-generic-session@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/koa-generic-session/-/koa-generic-session-2.3.0.tgz#46c6cf4614d875aa0c6862e2132618d90bc3017b"
+  integrity sha512-xCg5B8rrUSvvl2RlViQRZI5OMVv/xzpPTZj4/XoNgHTPGhL7eBVTY2XlQHD/3u1wQ/MrHzklL9W1XT4ym7eHVA==
   dependencies:
     copy-to "~2.0.1"
     crc "~3.5.0"
