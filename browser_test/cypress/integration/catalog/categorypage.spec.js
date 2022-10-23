@@ -1,4 +1,4 @@
-import terminalLog from '../utils/terminalLog'
+import terminalLog from '../../utils/terminalLog'
 
 describe("Category page", function(){
   describe("When a product category item is selected", () => {

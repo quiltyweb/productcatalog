@@ -24,3 +24,6 @@ import '@testing-library/cypress/add-commands';
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add('clickMobileMenu', () => {
+  cy.get('.admin-bro_NavBar > .admin-bro_Box > span > svg').click();
+})

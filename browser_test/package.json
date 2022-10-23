@@ -2,6 +2,10 @@
   "name": "product-catalog-browser-test",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "run:catalog": "cypress run --config-file cypress.catalog.json --spec cypress/integration/catalog/**/*.spec.js",
+    "run:admin": "cypress run --config-file cypress.admin.json --spec cypress/integration/admin/**/*.spec.js"
+  },
   "devDependencies": {
     "@cypress/code-coverage": "3.9.2",
     "@testing-library/cypress": "7.0.3",
