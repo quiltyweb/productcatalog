@@ -9,7 +9,7 @@
   "devDependencies": {
     "@cypress/code-coverage": "3.9.2",
     "@testing-library/cypress": "7.0.3",
-    "axe-core": "4.1.2",
+    "axe-core": "4.4.3",
     "cypress": "6.9.1",
     "cypress-axe": "0.12.1",
     "istanbul-lib-coverage": "3.0.0",
