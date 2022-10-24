@@ -7,7 +7,7 @@
     "run:admin": "cypress run --config-file cypress.admin.json --spec cypress/integration/admin/**/*.spec.js"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "3.9.2",
+    "@cypress/code-coverage": "3.10.0",
     "@testing-library/cypress": "7.0.3",
     "axe-core": "4.4.3",
     "cypress": "6.9.1",
