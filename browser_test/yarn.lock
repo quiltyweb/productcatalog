@@ -1959,10 +1959,10 @@ crypto-browserify@^3.0.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
-cypress-axe@0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/cypress-axe/-/cypress-axe-0.12.1.tgz#ec1f0441f4133f7cba2603d6b35658bf64db84ae"
-  integrity sha512-9qyHhD7AW0eP09cWRWDfl6G/VYCrMrlcU6ov91aPmg8WAuRGXx9Fucqw+CDi9dUm7g+hLzH0fJt96zmPLJ5efw==
+cypress-axe@0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/cypress-axe/-/cypress-axe-0.14.0.tgz#5f5e70fb36b8cb3ba73a8ba01e9262ff1268d5e2"
+  integrity sha512-7Rdjnko0MjggCmndc1wECAkvQBIhuy+DRtjF7bd5YPZRFvubfMNvrxfqD8PWQmxm7MZE0ffS4Xr43V6ZmvLopg==
 
 cypress@6.9.1:
   version "6.9.1"
