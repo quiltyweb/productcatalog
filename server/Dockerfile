@@ -1,4 +1,4 @@
-FROM node:15.10.0-alpine
+FROM node:16.13.1-alpine
 
 RUN apk update \
   && apk add git wget ca-certificates curl bash
