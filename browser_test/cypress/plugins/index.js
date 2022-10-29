@@ -12,8 +12,6 @@
 // the project's config changing)
 
 module.exports = (on, config) => {
-  require('@cypress/code-coverage/task')(on, config)
-
   on('task', {
     log(message) {
       console.log(message)
