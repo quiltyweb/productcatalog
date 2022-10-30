@@ -10,16 +10,10 @@
     "typecheck": "yarn run tsc",
     "eject": "react-scripts eject",
     "relay": "yarn run relay-compiler --schema data/schema.graphql --language typescript --src ./src/ --watchman false $@",
-    "schema": "npx apollo client:download-schema --endpoint=http://server:3333/graphql ./data/schema.graphql",
-    "storybook": "start-storybook"
+    "schema": "npx apollo client:download-schema --endpoint=http://server:3333/graphql ./data/schema.graphql"
   },
   "devDependencies": {
     "@babel/helper-call-delegate": "^7.12.1",
-    "@react-theming/storybook-addon": "^1.0.3",
-    "@storybook/addon-a11y": "^6.1.17",
-    "@storybook/addon-viewport": "^6.5.12",
-    "@storybook/preset-create-react-app": "^3.1.5",
-    "@storybook/react": "^6.1.17",
     "@testing-library/jest-dom": "^5.11.2",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.2",
