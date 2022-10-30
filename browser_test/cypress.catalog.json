@@ -2,5 +2,8 @@
   "baseUrl": "http://localhost:3000",
   "video": false,
   "viewportHeight": 2000,
-  "specPattern": "cypress/integration/catalog/**/*.spec.{js,ts}"
+  "specPattern": "cypress/integration/catalog/**/*.spec.{js,ts}",
+  "retries": {
+    "runMode": 2
+  }
 }

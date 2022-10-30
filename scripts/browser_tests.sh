@@ -31,7 +31,7 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
 docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 ./scripts/wait-for-it.sh "http://localhost:3000" -- echo "App ready"
 
-sleep 4
+sleep 5
 
 EXIT_CODE=0
 
