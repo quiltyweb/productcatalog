@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "run:catalog": "cypress run --config-file cypress.catalog.json --spec cypress/integration/catalog/**/*.spec.js",
-    "run:admin": "cypress run --config-file cypress.admin.json --spec cypress/integration/admin/**/*.spec.js"
+    "run:catalog": "cypress run --config-file cypress.catalog.js",
+    "run:admin": "cypress run --config-file cypress.admin.js"
   },
   "devDependencies": {
-    "@testing-library/cypress": "7.0.3",
-    "axe-core": "4.4.3",
-    "cypress": "6.9.1",
-    "cypress-axe": "0.14.0"
+    "@testing-library/cypress": "8.0.3",
+    "axe-core": "4.5.0",
+    "cypress": "10.11.0",
+    "cypress-axe": "1.0.0"
   },
   "dependencies": {
     "lodash": "4.17.15"
