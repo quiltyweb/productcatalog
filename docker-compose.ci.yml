@@ -30,10 +30,6 @@ services:
     environment:
       COCKROACH_DATABASE: ${DB_NAME}
     command: start-single-node --insecure
-  redis:
-    image: redis:6.2.2
-    ports:
-      - "6379:6379"
   client:
     build: ./client
     ports:
