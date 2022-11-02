@@ -1,8 +1,6 @@
 import bcrypt from "bcrypt";
-import session from "koa-generic-session";
-import RedisStore from "koa-redis";
+import session from "koa-session";
 import Router from "@koa/router";
-import Redis from "ioredis";
 import { User } from "./entity/User";
 import type { ParameterizedContext } from "koa";
 import { buildRouter } from "@admin-bro/koa";
@@ -15,25 +13,14 @@ export const buildCustomAuthRouter = (adminBro, app, connection): Router => {
     prefix: adminBro.options.rootPath,
   });
 
-  let store;
-  if (process.env.REDISCLOUD_URL) {
-    // prod
-    store = new RedisStore({
-      client: new Redis(process.env.REDISCLOUD_URL),
-    });
-  } else {
-    // dev
-    store = new RedisStore({
-      host: "redis",
-    });
-  }
-
   router.use(
-    session({
-      key: "gattoni:sess",
-      prefix: "gattoni:sess",
-      store: store,
-    })
+    session(
+      {
+        key: "gattoni:sess",
+        prefix: "gattoni:sess",
+      },
+      app
+    )
   );
 
   const { rootPath } = adminBro.options;
@@ -101,8 +88,6 @@ export const buildCustomAuthRouter = (adminBro, app, connection): Router => {
 
   // source: https://github.com/SoftwareBrothers/admin-bro-koa/blob/master/src/utils.ts#L119
   router.get(logoutPath, async (ctx: ParameterizedContext) => {
-    const cookie = await ctx.cookies.get("gattoni:sess", { signed: true });
-    await store.destroy(cookie);
     ctx.session = null;
     ctx.redirect(rootPath + loginPath);
   });
