@@ -1,7 +1,7 @@
 import { Box, Text, Section, Header } from "@adminjs/design-system";
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/file";
 
-const Help = (): JSX.Element => {
+const Help = (): React.ReactNode => {
   return (
     <Box variant="grey">
       <Header.H1>Tutoriales</Header.H1>
