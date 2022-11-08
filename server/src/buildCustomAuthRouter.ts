@@ -1,16 +1,25 @@
 import bcrypt from "bcrypt";
 import session from "koa-session";
 import Router from "@koa/router";
-import { User } from "./entity/User";
+import AdminJS from "adminjs";
+import AdminJSKoa from "@adminjs/koa";
+import Koa from "koa";
+
 import type { ParameterizedContext } from "koa";
-import { buildRouter } from "@admin-bro/koa";
+import type { Connection } from "typeorm";
+
+import { User } from "./entity/User";
 
 const DEFAULT_ROOT_PATH = "/admin";
 const INVALID_CREDENTIALS_ERROR_MESSAGE = "invalidCredentials";
 
-export const buildCustomAuthRouter = (adminBro, app, connection): Router => {
+export const buildCustomAuthRouter = (
+  admin: AdminJS,
+  app: Koa,
+  connection: Connection
+): Router => {
   const router = new Router({
-    prefix: adminBro.options.rootPath,
+    prefix: admin.options.rootPath,
   });
 
   router.use(
@@ -23,14 +32,14 @@ export const buildCustomAuthRouter = (adminBro, app, connection): Router => {
     )
   );
 
-  const { rootPath } = adminBro.options;
-  let { loginPath, logoutPath } = adminBro.options;
+  const { rootPath } = admin.options;
+  let { loginPath, logoutPath } = admin.options;
   loginPath = loginPath.replace(DEFAULT_ROOT_PATH, "");
   logoutPath = logoutPath.replace(DEFAULT_ROOT_PATH, "");
 
   // source: https://github.com/SoftwareBrothers/admin-bro-koa/blob/master/src/utils.ts#L81
   router.get(loginPath, async (ctx) => {
-    ctx.body = await adminBro.renderLogin({
+    ctx.body = await admin.renderLogin({
       action: rootPath + loginPath,
       errorMessage: null,
     });
@@ -40,7 +49,7 @@ export const buildCustomAuthRouter = (adminBro, app, connection): Router => {
     authenticate: async (
       email: string,
       password: string
-    ): Promise<typeof User> | null => {
+    ): Promise<User> | null => {
       const user = await connection.manager.findOne(User, {
         email: email,
       });
@@ -66,8 +75,8 @@ export const buildCustomAuthRouter = (adminBro, app, connection): Router => {
         await ctx.redirect(rootPath);
       }
     } else {
-      ctx.body = await adminBro.renderLogin({
-        action: adminBro.options.loginPath,
+      ctx.body = await admin.renderLogin({
+        action: admin.options.loginPath,
         errorMessage: INVALID_CREDENTIALS_ERROR_MESSAGE,
       });
     }
@@ -92,5 +101,5 @@ export const buildCustomAuthRouter = (adminBro, app, connection): Router => {
     ctx.redirect(rootPath + loginPath);
   });
 
-  return buildRouter(adminBro, app, router);
+  return AdminJSKoa.buildRouter(admin, app, router);
 };
