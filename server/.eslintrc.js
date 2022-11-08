@@ -13,7 +13,16 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   rules: {
-    "@typescript-eslint/camelcase": ["warn", { allow: [".+_plural"] }],
-    "@typescript-eslint/class-name-casing": ["warn"],
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      {
+        selector: "objectLiteralProperty",
+        format: ["camelCase", "PascalCase", "UPPER_CASE"],
+        filter: {
+          regex: ".+_plural",
+          match: false,
+        },
+      },
+    ],
   },
 };
