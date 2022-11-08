@@ -19,16 +19,19 @@ describe("Email", () => {
       text: faker.lorem.paragraph(),
     };
 
-    const mailgun = mailgunJS({} as any);
-    (mailgun.messages().send as jest.MockedFunction<any>).mockReturnValue(
-      Promise.resolve()
-    );
+    const mailgun = mailgunJS({ apiKey: "apikey", domain: "domain" });
+    const messages = mailgun.messages();
+    const mockSend = jest
+      .spyOn(messages, "send")
+      .mockImplementation(() =>
+        Promise.resolve({ message: "hello world", id: "1234abcd" })
+      );
 
     it("calls Mailgun's send function", async () => {
       await Email.send(sendOptions);
 
-      expect(mailgun.messages().send.mock.calls.length).toEqual(1);
-      expect(mailgun.messages().send).toBeCalledWith(sendOptions);
+      expect(mockSend).toHaveBeenCalledTimes(1);
+      expect(mockSend).toHaveBeenCalledWith(sendOptions);
     });
 
     it("returns a result object", async () => {
