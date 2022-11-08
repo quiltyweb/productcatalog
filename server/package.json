@@ -59,7 +59,6 @@
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "koa-helmet": "^5.2.0",
-    "koa-router": "^10.0.0",
     "koa-send": "^5.0.1",
     "koa-session": "^6.2.0",
     "koa-static": "^5.0.0",
