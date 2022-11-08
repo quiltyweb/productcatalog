@@ -39,7 +39,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
     bucket: SPACES_BUCKET,
   };
 
-  const isRoleAdmin = ({ currentAdmin }) => {
+  const isRoleAdmin = ({ currentAdmin }): boolean => {
     return currentAdmin && currentAdmin.role === "admin";
   };
 
