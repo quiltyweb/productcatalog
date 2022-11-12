@@ -4,7 +4,6 @@ describe("Category page", function(){
   describe("When a product category item is selected", () => {
     it("loads product items of selected category", () => {
       cy.visit("/", { headers: { Connection: "Keep-Alive" }, responseTimeout: 31000 });
-      cy.wait(1000);
       cy.findByRole("main").within(()=> {
         cy.get('a').eq(1).click();
       })
@@ -16,7 +15,6 @@ describe("Category page", function(){
     it.skip('Has no detectable a11y violations on load (custom configuration)', () => {
       cy.visit("/", { headers: { Connection: "Keep-Alive" }, responseTimeout: 31000 });
       cy.injectAxe();
-      cy.wait(1000);
       cy.findByRole("main").within(()=> {
         cy.get('a').eq(1).click();
       })

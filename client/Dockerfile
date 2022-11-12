@@ -1,5 +1,8 @@
 FROM node:16.13.1-alpine
 
+# Need curl to run health checks
+RUN apk update && apk add curl
+
 WORKDIR /app
 
 # Install dependencies

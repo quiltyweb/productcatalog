@@ -14,11 +14,11 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} up --no-start
 echo "Starting DB..."
 docker-compose -f ${DOCKER_COMPOSE_FILE} start db
 
-sleep 4
-
 # Need to create test DB separately because TypeORM won't do it for us
-docker exec -t productcatalog_db_1 \
-  cockroach sql --execute "CREATE DATABASE ${DB_NAME};" --insecure
+./scripts/wait-for-it.sh "http://localhost:8080/health?ready=1" -- \
+  docker-compose exec db cockroach sql --execute "CREATE DATABASE IF NOT EXISTS ${DB_NAME};" --insecure
+
+docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm server \
   yarn run migration:run -c test
@@ -27,11 +27,6 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm server \
 echo "Seeding database..."
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
   server yarn run ts-node test/fixtures/seed_db.ts
-
-docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
-./scripts/wait-for-it.sh "http://localhost:3000" -- echo "App ready"
-
-sleep 5
 
 EXIT_CODE=0
 
@@ -42,8 +37,7 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm \
   browser_test npm run run:admin || EXIT_CODE=1
 
 #### TEST CLEANUP ####
-docker exec -t productcatalog_db_1 \
-  cockroach sql --execute "DROP DATABASE IF EXISTS ${DB_NAME};" --insecure
+docker-compose exec db cockroach sql --execute "DROP DATABASE IF EXISTS ${DB_NAME};" --insecure
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 export NODE_ENV=${DEFAULT_NODE_ENV}
