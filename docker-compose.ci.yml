@@ -44,9 +44,9 @@ services:
     build: ./browser_test
     depends_on:
       - client
+      - server
+    volumes:
+      - ./browser_test/cypress/screenshots:/app/cypress/screenshots
     # Need to use 'host' network mode to avoid cross-host errors
     # from Webpack server
     network_mode: "host"
-    environment:
-      TERM: dumb
-      NODE_ENV: test
