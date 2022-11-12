@@ -1,5 +1,5 @@
 import React from "react";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import QuantityPicker from "./QuantityPicker";
 import { axe, toHaveNoViolations } from "jest-axe";
 import HomePageContext from "../../context/HomePageContext";
@@ -9,6 +9,8 @@ expect.extend(toHaveNoViolations);
 const decrementCartItemSpy = jest.fn();
 const incrementCartItemSpy = jest.fn();
 const updateCartItemSpy = jest.fn();
+
+const user = userEvent.setup();
 
 beforeEach(() => {
   render(
@@ -48,9 +50,7 @@ describe("QuantityPicker Component", () => {
   it("should call decrementCartItem callback", async () => {
     const decrementButton = screen.getByRole("button", { name: "-" });
 
-    act(() => {
-      userEvent.click(decrementButton);
-    });
+    await user.click(decrementButton);
 
     await waitFor(() =>
       expect(decrementCartItemSpy).toHaveBeenCalledWith({ productId: "123" })
@@ -60,9 +60,7 @@ describe("QuantityPicker Component", () => {
   it("should call incrementCartItem callback", async () => {
     const incrementButton = screen.getByRole("button", { name: "+" });
 
-    act(() => {
-      userEvent.click(incrementButton);
-    });
+    await user.click(incrementButton);
 
     await waitFor(() =>
       expect(incrementCartItemSpy).toHaveBeenCalledWith({ productId: "123" })

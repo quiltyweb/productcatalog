@@ -1,7 +1,7 @@
 import React from "react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import QuoteForm from "./QuoteForm";
 import { setQueryResponse } from "./../../utils/test/setQueryResponse";
@@ -27,6 +27,8 @@ const mocked_initialValues = {
   mensaje: "",
   recaptcha: "123456",
 };
+
+const user = userEvent.setup();
 
 describe("QuoteForm Component", () => {
   beforeEach(() => {
@@ -73,21 +75,19 @@ describe("QuoteForm Component", () => {
       name: "Enviar Cotización",
     });
 
-    userEvent.type(nombre, "mock_name");
+    await user.type(nombre, "mock_name");
     expect(nombre).toHaveValue("mock_name");
 
-    userEvent.type(email, "mock_email");
+    await user.type(email, "mock_email");
     expect(email).toHaveValue("mock_email");
 
-    userEvent.type(phone, "mock_phone");
+    await user.type(phone, "mock_phone");
     expect(phone).toHaveValue("mock_phone");
 
-    userEvent.type(message, "mock_message");
+    await user.type(message, "mock_message");
     expect(message).toHaveValue("mock_message");
 
-    act(() => {
-      userEvent.click(submitButton);
-    });
+    await user.click(submitButton);
 
     await waitFor(() =>
       expect(
@@ -114,14 +114,12 @@ describe("QuoteForm Component", () => {
       name: "Enviar Cotización",
     });
 
-    userEvent.type(nombre, "mock_name");
-    userEvent.type(email, "mock_email");
-    userEvent.type(phone, "mock_phone");
-    userEvent.type(message, "mock_message");
+    await user.type(nombre, "mock_name");
+    await user.type(email, "mock_email");
+    await user.type(phone, "mock_phone");
+    await user.type(message, "mock_message");
 
-    act(() => {
-      userEvent.click(submitButton);
-    });
+    await user.click(submitButton);
 
     await waitFor(() =>
       expect(
@@ -146,14 +144,12 @@ describe("QuoteForm Component", () => {
       name: "Enviar Cotización",
     });
 
-    userEvent.type(nombre, "mock_name");
-    userEvent.type(email, "mock_email");
-    userEvent.type(phone, "mock_phone");
-    userEvent.type(message, "mock_message");
+    await user.type(nombre, "mock_name");
+    await user.type(email, "mock_email");
+    await user.type(phone, "mock_phone");
+    await user.type(message, "mock_message");
 
-    act(() => {
-      userEvent.click(submitButton);
-    });
+    await user.click(submitButton);
 
     await waitFor(() =>
       expect(
