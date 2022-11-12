@@ -56,6 +56,7 @@ services:
     depends_on:
       - client
       - server
+      - db
     volumes:
       - ./browser_test:/app
       - /app/node_modules

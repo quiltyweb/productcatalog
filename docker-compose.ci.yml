@@ -3,7 +3,8 @@ services:
   server:
     build: ./server
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "3333:3333"
     environment:
@@ -19,6 +20,12 @@ services:
       SPACES_REGION: spaces_region
       SPACES_BUCKET: spaces_bucket
       SPACES_ENDPOINT: spaces_endpoint
+    healthcheck:
+      test: ["CMD", "curl", "http://server:3333"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
     command: yarn run dev
   db:
     image: cockroachdb/cockroach:latest
@@ -29,6 +36,12 @@ services:
       - "8080:8080"
     environment:
       COCKROACH_DATABASE: ${DB_NAME}
+    healthcheck:
+      test: ["CMD", "curl", "http://db:8080/health?ready=1"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
     command: start-single-node --insecure
   client:
     build: ./client
@@ -39,12 +52,22 @@ services:
     environment:
       API_TOKEN: supersecretspicysauce
       NODE_ENV: test
+    healthcheck:
+      test: ["CMD", "curl", "http://client:3000"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
     command: yarn run start
   browser_test:
     build: ./browser_test
     depends_on:
-      - client
-      - server
+      client:
+        condition: service_healthy
+      server:
+        condition: service_healthy
+      db:
+        condition: service_healthy
     volumes:
       - ./browser_test/cypress/screenshots:/app/cypress/screenshots
     # Need to use 'host' network mode to avoid cross-host errors
