@@ -2,10 +2,10 @@ import React from "react";
 import { Heading, Paragraph, styled } from "bumbag";
 import { CartTable } from "../../components/CartTable/CartTable";
 import { useHomePageContext } from "../../context/HomePageContext";
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 
-const SendQuoteLink = styled((props) => <Link {...props} />)`
+const SendQuoteLink = styled((props: LinkProps) => <Link {...props} />)`
   display: block;
   color: #000;
   font-weight: 600;

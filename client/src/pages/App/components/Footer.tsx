@@ -31,7 +31,11 @@ const FooterComponent = (): JSX.Element => {
   const currDate = new Date();
   return (
     <Footer>
-      <PageContent padding="3rem 0.5rem" breakpoint="widescreen">
+      <PageContent
+        paddingTop="3rem"
+        paddingRight="0.5rem"
+        breakpoint="widescreen"
+      >
         <Columns>
           <Column spread={5}>
             <Heading
@@ -42,7 +46,7 @@ const FooterComponent = (): JSX.Element => {
             >
               Somos seguridad industrial en Atacama.
             </Heading>
-            <Paragraph paddingLeft="0" paddingRight="2rem">
+            <Paragraph paddingLeft="0rem" paddingRight="2rem">
               Somos una empresa con mas de 20 años de experiencia dedicada a la
               venta de artículos de Seguridad Industrial, ofreciendo a nuestros
               clientes productos de la más alta calidad como Botas de Agua,
