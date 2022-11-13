@@ -1,5 +1,5 @@
 import React from "react";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { ProductCard } from "./ProductCard";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { Router } from "react-router-dom";
@@ -12,6 +12,7 @@ const AlertTemplate = () => <div>template</div>;
 
 expect.extend(toHaveNoViolations);
 const history = createMemoryHistory();
+const user = userEvent.setup();
 
 describe("ProductCard Component", () => {
   it("should render", () => {
@@ -82,9 +83,7 @@ describe("ProductCard Component", () => {
       name: "Agregar a cotización",
     });
 
-    act(() => {
-      userEvent.click(addToCartButton);
-    });
+    await user.click(addToCartButton);
 
     await waitFor(() =>
       expect(mockedAddCartItem).toHaveBeenCalledWith({
