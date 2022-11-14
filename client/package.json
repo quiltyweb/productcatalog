@@ -28,7 +28,7 @@
     "@types/relay-test-utils": "^6.0.3",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
-    "@typescript-eslint/parser": "^4.14.1",
+    "@typescript-eslint/parser": "^4.33.0",
     "babel-plugin-relay": "^14.1.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
