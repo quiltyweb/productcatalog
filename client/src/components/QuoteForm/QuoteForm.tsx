@@ -15,9 +15,9 @@ import {
 
 import { Button } from "bumbag";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 
-const SendQuoteLink = styled((props) => <Link {...props} />)`
+const SendQuoteLink = styled((props: LinkProps) => <Link {...props} />)`
   display: block;
   text-align: right;
   color: #000;

@@ -49,7 +49,12 @@ export const ProductsPage: React.FunctionComponent<ProductsPageProps> = ({
             title={`Comercial Gattoni seguridad industrial - Categoria: ${props.fetchCategory.name}`}
           >
             <>
-              <Heading use="h2" fontSize="400" padding="1rem 0">
+              <Heading
+                use="h2"
+                fontSize="400"
+                paddingTop="1rem"
+                paddingRight="0rem"
+              >
                 Categoría seleccionada: {props.fetchCategory.name}
               </Heading>
               <ProductList products={props.fetchCategory.products} />

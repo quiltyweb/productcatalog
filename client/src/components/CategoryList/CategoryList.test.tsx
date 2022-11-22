@@ -84,7 +84,7 @@ describe("CategoryList Fragment Container", () => {
     within(list).getByText("Zapatos");
 
     // select rendered for mobile
-    screen.getByLabelText("Categoría");
+    screen.getByText("Categoría");
     screen.getByRole("option", { name: "Soldador" });
     screen.getByRole("option", { name: "Zapatos" });
   });

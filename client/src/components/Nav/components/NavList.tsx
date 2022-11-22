@@ -76,7 +76,7 @@ export const NavList: React.FunctionComponent<{ cartCount: number }> = ({
     <TopNavigationSection data-testid="top-navigation-section">
       {navListItems.map(({ linkTo, icon, label, component }, index) => {
         return (
-          <TopNav.Item key={linkTo} margin="0 0.8rem">
+          <TopNav.Item key={linkTo} marginTop="0rem" marginRight="0.8rem">
             <ItemLink to={linkTo}>
               {icon && icon()}
               {label && label}
