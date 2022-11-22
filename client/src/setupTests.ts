@@ -4,6 +4,7 @@
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom/extend-expect";
 import "jest-axe/extend-expect";
+import "isomorphic-fetch";
 
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
@@ -17,5 +18,3 @@ jest.mock("react-ga");
 
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
-
-global.fetch = require("node-fetch");
