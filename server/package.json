@@ -55,7 +55,7 @@
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "graphql": "^15.8.0",
-    "graphql-relay": "^0.6.0",
+    "graphql-relay": "^0.10.0",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "koa-helmet": "^5.2.0",
