@@ -76,6 +76,7 @@ AppDataSource.initialize()
       .use(clientRouter.routes())
       .use(clientRouter.allowedMethods());
 
+    await server.start();
     server.applyMiddleware({ app, cors: false });
 
     app.listen(PORT);
