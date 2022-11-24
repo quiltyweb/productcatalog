@@ -1,0 +1,23 @@
+# Artifacts
+build
+tmp
+dist
+
+# JS stuff
+node_modules
+server/node_modules
+client/node_modules
+
+# Secret stuff
+.env
+
+# Local stuff
+.git
+coverage
+.vscode
+.DS_STORE
+*.log
+
+# Data stuff
+database/backups
+*.sql
