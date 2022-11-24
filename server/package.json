@@ -54,7 +54,7 @@
     "aws-sdk": "^2.917.0",
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
-    "graphql": "^15.8.0",
+    "graphql": "^16.2.0",
     "graphql-relay": "^0.10.0",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",

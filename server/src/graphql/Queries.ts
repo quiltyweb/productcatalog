@@ -24,7 +24,7 @@ class Queries {
 
   get fetchCategories(): GraphQLFieldConfig<TSource, TContext> {
     return {
-      type: GraphQLNonNull(this.types.categoryConnectionType),
+      type: new GraphQLNonNull(this.types.categoryConnectionType),
       args: connectionArgs,
       resolve: async (root, args, ctx): Promise<Connection<Category>> => {
         const categories = await ctx.entityManager.find(Category, {
@@ -38,10 +38,10 @@ class Queries {
 
   get fetchCategory(): GraphQLFieldConfig<TSource, TContext> {
     return {
-      type: GraphQLNonNull(this.types.categoryType),
+      type: new GraphQLNonNull(this.types.categoryType),
       args: {
         categoryId: {
-          type: GraphQLNonNull(GraphQLID),
+          type: new GraphQLNonNull(GraphQLID),
           description: "ID of the requested category.",
         },
       },
@@ -58,10 +58,10 @@ class Queries {
 
   get searchProducts(): GraphQLFieldConfig<TSource, TContext> {
     return {
-      type: GraphQLNonNull(this.types.productConnectionType),
+      type: new GraphQLNonNull(this.types.productConnectionType),
       args: {
         searchTerm: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
           description: `
               Search term to use to match products in the DB.
               Matches on name only, converting the search and the names
@@ -88,10 +88,10 @@ class Queries {
 
   get fetchProduct(): GraphQLFieldConfig<TSource, TContext> {
     return {
-      type: GraphQLNonNull(this.types.productType),
+      type: new GraphQLNonNull(this.types.productType),
       args: {
         productId: {
-          type: GraphQLNonNull(GraphQLID),
+          type: new GraphQLNonNull(GraphQLID),
           description: "ID of the requested product.",
         },
       },
@@ -107,18 +107,18 @@ class Queries {
 
   get sendContactMessage(): GraphQLFieldConfig<TSource, TContext> {
     return {
-      type: GraphQLNonNull(this.types.sendMessageResponseType),
+      type: new GraphQLNonNull(this.types.sendMessageResponseType),
       args: {
         personalIdNumber: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
           description: "The ID number of the sender, typically their RUT.",
         },
         emailAddress: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
           description: "The sender's email address.",
         },
         message: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
           description: "The message body to be sent.",
         },
         name: {
@@ -170,10 +170,10 @@ class Queries {
 
   get sendQuoteRequest(): GraphQLFieldConfig<TSource, TContext> {
     return {
-      type: GraphQLNonNull(this.types.sendMessageResponseType),
+      type: new GraphQLNonNull(this.types.sendMessageResponseType),
       args: {
         input: {
-          type: GraphQLNonNull(this.types.quoteRequestInputType),
+          type: new GraphQLNonNull(this.types.quoteRequestInputType),
         },
       },
       resolve: async (root, args, ctx): Promise<SendEmailResponse> => {
