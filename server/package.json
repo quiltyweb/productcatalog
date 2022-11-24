@@ -65,7 +65,7 @@
     "koa-static": "^5.0.0",
     "koa2-formidable": "^1.0.2",
     "mailgun-js": "^0.22.0",
-    "pg": "^8.5.1",
+    "pg": "^8.8.0",
     "react-player": "^2.9.0",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.21",
