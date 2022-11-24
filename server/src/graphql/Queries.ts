@@ -135,13 +135,8 @@ class Queries {
         },
       },
       resolve: async (root, args, ctx): Promise<SendEmailResponse> => {
-        const {
-          personalIdNumber,
-          emailAddress,
-          message,
-          name,
-          phoneNumber,
-        } = args;
+        const { personalIdNumber, emailAddress, message, name, phoneNumber } =
+          args;
 
         const { request } = ctx;
         const { ADMIN_EMAIL: emailTo, HQ_ADMIN_EMAIL: hqEmailTo } = process.env;
