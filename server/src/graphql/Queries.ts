@@ -13,7 +13,7 @@ import type { Connection } from "graphql-relay";
 import type { GraphQLFieldConfig } from "graphql";
 
 import type { SendEmailResponse } from "../email";
-import type { TSource, TContext } from "../types";
+import type { TSource, TContext } from "./types";
 
 class Queries {
   private types: GQLTypes;

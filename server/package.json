@@ -13,9 +13,13 @@
     "migration:run": "yarn run typeorm-ts-node-esm migration:run",
     "migration:revert": "yarn run typeorm-ts-node-esm migration:revert",
     "migration:generate": "yarn run typeorm migration:generate",
-    "migration:create": "yarn run typeorm migration:create"
+    "migration:create": "yarn run typeorm migration:create",
+    "generate": "graphql-codegen"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.13.12",
+    "@graphql-codegen/typescript": "^2.8.2",
+    "@graphql-codegen/typescript-resolvers": "^2.7.7",
     "@shopify/jest-koa-mocks": "^5.0.1",
     "@types/bcrypt": "^3.0.1",
     "@types/faker": "^5.1.4",

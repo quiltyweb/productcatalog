@@ -46,4 +46,4 @@ const queryType = new GraphQLObjectType({
 
 const schema = new GraphQLSchema({ query: queryType });
 
-export { schema, getObjectFromGlobalId };
+export default schema;

@@ -25,7 +25,7 @@ import type {
 } from "graphql";
 import type { Connection } from "graphql-relay";
 
-import type { TSource, TContext } from "../types";
+import type { TSource, TContext } from "./types";
 
 class GqlTypes {
   public quoteRequestInputType: GraphQLInputObjectType;
