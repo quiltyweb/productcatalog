@@ -187,8 +187,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
       },
     ],
     branding: {
-      logo:
-        "https://product-catalog.sfo2.digitaloceanspaces.com/assets/gattoni-admin.png",
+      logo: "https://product-catalog.sfo2.digitaloceanspaces.com/assets/gattoni-admin.png",
       companyName: "Gattoni Admin",
       softwareBrothers: false,
     },
