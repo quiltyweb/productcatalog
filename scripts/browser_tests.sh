@@ -10,7 +10,13 @@ DEFAULT_DB_NAME=${DB_NAME:-""}
 export DB_NAME=test_${DB_NAME}
 EXIT_CODE=0
 
-trap clean_up err exit
+trap log_errors err
+trap clean_up exit
+
+function log_errors() {
+  docker-compose -f ${DOCKER_COMPOSE_FILE} ps
+  docker-compose -f ${DOCKER_COMPOSE_FILE} logs
+}
 
 function clean_up() {
   docker-compose -f ${DOCKER_COMPOSE_FILE} exec -T db cockroach sql --execute "DROP DATABASE IF EXISTS ${DB_NAME};" --insecure
