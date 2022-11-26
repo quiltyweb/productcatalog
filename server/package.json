@@ -74,7 +74,7 @@
     "react-player": "^2.9.0",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.21",
-    "typeorm": "^0.2.45"
+    "typeorm": "^0.3.10"
   },
   "resolutions": {
     "@tiptap/core": "^2.0.0-beta.1",
