@@ -4,15 +4,11 @@ import { Category } from "./entity/Category";
 import { User } from "./entity/User";
 import AdminJS, { ActionRequest, AdminJSOptions } from "adminjs";
 import bcrypt from "bcrypt";
-import { Connection } from "typeorm";
+import { DataSource } from "typeorm";
 import uploadFeature from "@adminjs/upload";
 import { DigitalOceanProvider } from "./DigitalOceanProvider";
 
-export const getAdminOptions = (connection: Connection): AdminJSOptions => {
-  Product.useConnection(connection);
-  Category.useConnection(connection);
-  User.useConnection(connection);
-
+export const getAdminOptions = (dataSource: DataSource): AdminJSOptions => {
   const {
     NODE_ENV,
     SPACES_ENDPOINT,
@@ -306,8 +302,8 @@ export const getAdminOptions = (connection: Connection): AdminJSOptions => {
           categoryCounter: number;
           productCounter: number;
         }> => {
-          const categoryCounter = await connection.manager.count(Category);
-          const productCounter = await connection.manager.count(Product);
+          const categoryCounter = await dataSource.manager.count(Category);
+          const productCounter = await dataSource.manager.count(Product);
           return {
             content: "Panel de Estadisticas de Gattoni.cl",
             categoryCounter: categoryCounter,

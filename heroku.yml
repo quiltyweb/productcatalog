@@ -7,6 +7,6 @@ build:
 release:
   image: web
   command:
-    - yarn run migration:run -c production
+    - yarn run migration:run -d dist/src/dataSource.js
 run:
   web: yarn start

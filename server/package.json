@@ -10,10 +10,10 @@
     "test:integration": "yarn run jest ./test/integration",
     "test:unit": "yarn run jest ./test/unit",
     "typecheck": "yarn run tsc",
-    "migration:run": "yarn run ts-node ./node_modules/typeorm/cli.js migration:run",
-    "migration:revert": "yarn run ts-node ./node_modules/typeorm/cli.js migration:revert",
-    "migration:generate": "yarn run ts-node ./node_modules/typeorm/cli.js migration:generate",
-    "migration:create": "yarn run ts-node ./node_modules/typeorm/cli.js migration:create"
+    "migration:run": "yarn run typeorm-ts-node-esm migration:run",
+    "migration:revert": "yarn run typeorm-ts-node-esm migration:revert",
+    "migration:generate": "yarn run typeorm migration:generate",
+    "migration:create": "yarn run typeorm migration:create"
   },
   "devDependencies": {
     "@shopify/jest-koa-mocks": "^5.0.1",

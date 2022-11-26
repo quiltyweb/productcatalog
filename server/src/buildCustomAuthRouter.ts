@@ -6,7 +6,7 @@ import AdminJSKoa from "@adminjs/koa";
 import Koa from "koa";
 
 import type { ParameterizedContext } from "koa";
-import type { Connection } from "typeorm";
+import type { DataSource } from "typeorm";
 
 import { User } from "./entity/User";
 
@@ -16,7 +16,7 @@ const INVALID_CREDENTIALS_ERROR_MESSAGE = "invalidCredentials";
 export const buildCustomAuthRouter = (
   admin: AdminJS,
   app: Koa,
-  connection: Connection
+  dataSource: DataSource
 ): Router => {
   const router = new Router({
     prefix: admin.options.rootPath,
@@ -50,8 +50,8 @@ export const buildCustomAuthRouter = (
       email: string,
       password: string
     ): Promise<User> | null => {
-      const user = await connection.manager.findOne(User, {
-        email: email,
+      const user = await dataSource.manager.findOne(User, {
+        where: { email },
       });
       if (user) {
         const matched = await bcrypt.compare(password, user.encryptedPassword);

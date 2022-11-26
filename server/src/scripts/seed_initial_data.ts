@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { createConnection } from "typeorm";
 
+import { AppDataSource } from "../dataSource";
 import { Category } from "../entity/Category";
 import { Product } from "../entity/Product";
 
@@ -66,9 +66,9 @@ async function seedInitialData(): Promise<void> {
     "products.json"
   );
 
-  createConnection()
-    .then(async (connection) => {
-      connection.transaction(async (transactionalEntityManager) => {
+  AppDataSource.initialize()
+    .then(async () => {
+      AppDataSource.transaction(async (transactionalEntityManager) => {
         if (!fs.existsSync(categoriesFilePath)) return;
 
         await loadCategories(categoriesFilePath, transactionalEntityManager);
