@@ -3,10 +3,10 @@ describe("Admin page", function(){
     cy.visit("/admin/login");
     cy.get('input[name="email"]').type("admin");
     cy.get('input[name="password"]').type("admin");
-    cy.findByRole("button",{ name:"Login" }).click();
+    cy.findByRole("button",{ name:"Log in" }).click();
   });
 
-  it("load to dashboard after login in", () => {
+  it("load dashboard after logging in", () => {
     cy.contains("Bienvenido/a: admin");
     cy.contains("Haga click en el menu lateral para crear, actualizar o borrar productos.");
     cy.findByText("Ver Tutoriales").closest('a').should('have.attr', 'href').and('include', '/admin/pages/Tutoriales');

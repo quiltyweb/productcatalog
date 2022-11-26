@@ -2,13 +2,13 @@ import path from "path";
 import { Product } from "./entity/Product";
 import { Category } from "./entity/Category";
 import { User } from "./entity/User";
-import AdminBro, { ActionRequest, AdminBroOptions } from "admin-bro";
+import AdminJS, { ActionRequest, AdminJSOptions } from "adminjs";
 import bcrypt from "bcrypt";
 import { Connection } from "typeorm";
-import uploadFeature from "@admin-bro/upload";
+import uploadFeature from "@adminjs/upload";
 import { DigitalOceanProvider } from "./DigitalOceanProvider";
 
-export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
+export const getAdminOptions = (connection: Connection): AdminJSOptions => {
   Product.useConnection(connection);
   Category.useConnection(connection);
   User.useConnection(connection);
@@ -43,7 +43,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
     return currentAdmin && currentAdmin.role === "admin";
   };
 
-  const adminBroOptions = {
+  const adminOptions = {
     resources: [
       {
         resource: Product,
@@ -65,14 +65,14 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
               position: 1,
               isVisible: false,
               components: {
-                list: AdminBro.bundle(imagePath),
+                list: AdminJS.bundle(imagePath),
               },
             },
             attachmentPath: {
               position: 2,
               isVisible: false,
               components: {
-                list: AdminBro.bundle(attachmentPath),
+                list: AdminJS.bundle(attachmentPath),
               },
             },
             description: {
@@ -297,7 +297,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
       },
     },
     dashboard: {
-      component: AdminBro.bundle(dashboardPath),
+      component: AdminJS.bundle(dashboardPath),
     },
     pages: {
       Estadisticas: {
@@ -314,14 +314,14 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
             productCounter: productCounter,
           };
         },
-        component: AdminBro.bundle(statsPath),
+        component: AdminJS.bundle(statsPath),
       },
       Tutoriales: {
-        component: AdminBro.bundle(helpPath),
+        component: AdminJS.bundle(helpPath),
       },
     },
     rootPath: "/admin",
   };
 
-  return adminBroOptions;
+  return adminOptions;
 };
