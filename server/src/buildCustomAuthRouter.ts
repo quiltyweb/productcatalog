@@ -13,6 +13,11 @@ import { User } from "./entity/User";
 const DEFAULT_ROOT_PATH = "/admin";
 const INVALID_CREDENTIALS_ERROR_MESSAGE = "invalidCredentials";
 
+interface loginRequestBody {
+  email?: string;
+  password?: string;
+}
+
 export const buildCustomAuthRouter = (
   admin: AdminJS,
   app: Koa,
@@ -63,10 +68,27 @@ export const buildCustomAuthRouter = (
     },
   };
 
+  const isLoginRequestBody = (
+    maybeLoginRequestBody: unknown
+  ): maybeLoginRequestBody is loginRequestBody =>
+    new Set(Object.keys(maybeLoginRequestBody as loginRequestBody)) ==
+    new Set(["email", "password"]);
+
+  const extractCredentials = (requestBody: unknown): loginRequestBody => {
+    if (isLoginRequestBody) return requestBody;
+
+    return {
+      email: null,
+      password: null,
+    };
+  };
+
   // source: https://github.com/SoftwareBrothers/admin-bro-koa/blob/master/src/utils.ts#L88
   router.post(loginPath, async (ctx: ParameterizedContext) => {
-    const { email, password } = ctx.request.body;
+    const { body } = ctx.request;
+    const { email, password } = extractCredentials(body);
     const adminUser = await auth.authenticate(email, password);
+
     if (adminUser) {
       ctx.session.adminUser = adminUser;
       if (ctx.session.redirectTo) {

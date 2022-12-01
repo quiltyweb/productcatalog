@@ -1,13 +1,14 @@
-import { graphql } from "graphql";
+import { ExecutionResult, graphql } from "graphql";
 import { toGlobalId } from "graphql-relay";
 import faker from "faker";
 import { EntityManager } from "typeorm";
 
-import { schema } from "../../../src/graphql";
+import schema from "../../../src/graphql";
 import { Category, Product } from "../../../src/entity";
 import Email from "../../../src/email";
 import { AppDataSource } from "../../../src/dataSource";
 import { ProductFactory, CategoryFactory } from "../../fixtures/factories";
+import { Query } from "../../../src/graphql/generated/types";
 
 let baseContext: { entityManager: EntityManager };
 
@@ -54,7 +55,11 @@ describe("GraphQL schema", () => {
     it("returns category fields", async () => {
       const context = { ...baseContext };
 
-      const results = await graphql(schema, query, null, context);
+      const results = (await graphql({
+        schema,
+        source: query,
+        contextValue: context,
+      })) as ExecutionResult<Pick<Query, "fetchCategories">>;
       const categories = results.data.fetchCategories.edges.map(
         (catEdge) => catEdge.node
       );
@@ -68,7 +73,11 @@ describe("GraphQL schema", () => {
     it("returns associated products", async () => {
       const context = { ...baseContext };
 
-      const results = await graphql(schema, query, null, context);
+      const results = (await graphql({
+        schema,
+        source: query,
+        contextValue: context,
+      })) as ExecutionResult<Pick<Query, "fetchCategories">>;
       const categories = results.data.fetchCategories.edges.map(
         (catEdge) => catEdge.node
       );
@@ -108,7 +117,12 @@ describe("GraphQL schema", () => {
       const gqlId = toGlobalId("Category", String(category.id));
       const variables = { categoryId: gqlId };
 
-      const results = await graphql(schema, query, null, context, variables);
+      const results = (await graphql({
+        schema,
+        source: query,
+        contextValue: context,
+        variableValues: variables,
+      })) as ExecutionResult<Pick<Query, "fetchCategory">>;
       const queriedCategory = results.data.fetchCategory;
 
       expect(category.name).toEqual(queriedCategory.name);
@@ -123,7 +137,12 @@ describe("GraphQL schema", () => {
       const gqlId = toGlobalId("Category", String(category.id));
       const variables = { categoryId: gqlId };
 
-      const results = await graphql(schema, query, null, context, variables);
+      const results = (await graphql({
+        schema,
+        source: query,
+        contextValue: context,
+        variableValues: variables,
+      })) as ExecutionResult<Pick<Query, "fetchCategory">>;
       const queriedCategory = results.data.fetchCategory;
 
       const products = queriedCategory.products.edges.map(
@@ -164,9 +183,14 @@ describe("GraphQL schema", () => {
         })
       );
 
-      const results = await graphql(schema, query, null, context, {
-        searchTerm: "guantes",
-      });
+      const results = (await graphql({
+        schema,
+        source: query,
+        contextValue: context,
+        variableValues: {
+          searchTerm: "guantes",
+        },
+      })) as ExecutionResult<Pick<Query, "searchProducts">>;
       const products = results.data.searchProducts.edges.map(
         (prodEdge) => prodEdge.node
       );
@@ -180,9 +204,14 @@ describe("GraphQL schema", () => {
       it("returns an empty array", async () => {
         const context = { ...baseContext };
 
-        const results = await graphql(schema, query, null, context, {
-          searchTerm: "something that definitely doesn't exist",
-        });
+        const results = (await graphql({
+          schema,
+          source: query,
+          contextValue: context,
+          variableValues: {
+            searchTerm: "something that definitely doesn't exist",
+          },
+        })) as ExecutionResult<Pick<Query, "searchProducts">>;
         const products = results.data.searchProducts.edges.map(
           (prodEdge) => prodEdge.node
         );
@@ -208,7 +237,12 @@ describe("GraphQL schema", () => {
       const gqlId = toGlobalId("Product", String(product.id));
       const variables = { productId: gqlId };
 
-      const results = await graphql(schema, query, null, context, variables);
+      const results = (await graphql({
+        schema,
+        source: query,
+        contextValue: context,
+        variableValues: variables,
+      })) as ExecutionResult<Pick<Query, "fetchProduct">>;
       console.log(JSON.stringify(results));
       const queriedProduct = results.data.fetchProduct;
 
@@ -253,13 +287,23 @@ describe("GraphQL schema", () => {
     it("sends an email", async () => {
       const context = { ...baseContext, sendEmail: Email.send };
 
-      await graphql(schema, query, null, context, variables);
+      await graphql({
+        schema,
+        source: query,
+        contextValue: context,
+        variableValues: variables,
+      });
       expect(mockSend.mock.calls.length).toBe(1);
     });
 
     it("returns response status info", async () => {
       const context = { ...baseContext, sendEmail: Email.send };
-      const results = await graphql(schema, query, null, context, variables);
+      const results = await graphql({
+        schema,
+        source: query,
+        contextValue: context,
+        variableValues: variables,
+      });
       const messageResponse = results.data.sendContactMessage;
 
       expect(messageResponse).toEqual({
@@ -341,7 +385,12 @@ describe("GraphQL schema", () => {
       };
       const context = { ...baseContext, sendEmail: mockSend };
 
-      await graphql(schema, query, null, context, productVariables);
+      await graphql({
+        schema,
+        source: query,
+        contextValue: context,
+        variableValues: productVariables,
+      });
 
       expect(mockSend.mock.calls.length).toBe(1);
     });
@@ -367,13 +416,12 @@ describe("GraphQL schema", () => {
       };
       const context = { ...baseContext, sendEmail: mockSend };
 
-      const results = await graphql(
+      const results = await graphql({
         schema,
-        query,
-        null,
-        context,
-        productVariables
-      );
+        source: query,
+        contextValue: context,
+        variableValues: productVariables,
+      });
       const messageResponse = results.data.sendQuoteRequest;
 
       expect(messageResponse).toEqual({

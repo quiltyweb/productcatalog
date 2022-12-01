@@ -25,7 +25,7 @@ import type {
 } from "graphql";
 import type { Connection } from "graphql-relay";
 
-import type { TSource, TContext } from "../types";
+import type { TSource, TContext } from "./types";
 
 class GqlTypes {
   public quoteRequestInputType: GraphQLInputObjectType;
@@ -59,11 +59,11 @@ class GqlTypes {
       description: "Input object for sending quote requests.",
       fields: (): GraphQLInputFieldConfigMap => ({
         personalDetails: {
-          type: GraphQLNonNull(this.personalDetailsForQuoteInputType),
+          type: new GraphQLNonNull(this.personalDetailsForQuoteInputType),
         },
         productsToQuote: {
-          type: GraphQLNonNull(
-            GraphQLList(GraphQLNonNull(this.productToQuoteInputType))
+          type: new GraphQLNonNull(
+            new GraphQLList(new GraphQLNonNull(this.productToQuoteInputType))
           ),
         },
       }),
@@ -76,11 +76,11 @@ class GqlTypes {
       description: "Personal details sent with a quote request.",
       fields: (): GraphQLInputFieldConfigMap => ({
         personalIdNumber: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
           description: "The ID number of the sender, typically their RUT.",
         },
         emailAddress: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
           description: "The sender's email address.",
         },
         message: {
@@ -88,7 +88,7 @@ class GqlTypes {
           description: "The message body to be sent.",
         },
         name: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
           description: "The sender's name.",
         },
         companyName: {
@@ -141,7 +141,7 @@ class GqlTypes {
           type: messageStatusEnum,
         },
         message: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
         },
       }),
     });
@@ -156,30 +156,30 @@ class GqlTypes {
       isTypeOf: (obj): boolean => obj instanceof Product,
       fields: (): GraphQLFieldConfigMap<TSource, TContext> => ({
         id: globalIdField(),
-        name: { type: GraphQLNonNull(GraphQLString) },
+        name: { type: new GraphQLNonNull(GraphQLString) },
         description: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
           description: "Detailed description of the product.",
         },
         imagePath: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
           description: "Path to an image file for the product.",
         },
         attachmentPath: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
           description:
             "Path to an attachment file (usually a PDF) for the product.",
         },
         purchasePrice: {
-          type: GraphQLNonNull(GraphQLInt),
+          type: new GraphQLNonNull(GraphQLInt),
           description: "Price at which the store buys the product.",
         },
         salePrice: {
-          type: GraphQLNonNull(GraphQLInt),
+          type: new GraphQLNonNull(GraphQLInt),
           description: "Price at which the store sells the product.",
         },
         supplierName: {
-          type: GraphQLNonNull(GraphQLString),
+          type: new GraphQLNonNull(GraphQLString),
           description: "Name or RUT of the supplier of the product.",
         },
       }),
@@ -202,9 +202,9 @@ class GqlTypes {
       isTypeOf: (obj): boolean => obj instanceof Category,
       fields: (): GraphQLFieldConfigMap<TSource, TContext> => ({
         id: globalIdField(),
-        name: { type: GraphQLNonNull(GraphQLString) },
+        name: { type: new GraphQLNonNull(GraphQLString) },
         products: {
-          type: GraphQLNonNull(productConnectionType),
+          type: new GraphQLNonNull(productConnectionType),
           description: "The products that belong to the category.",
           args: connectionArgs,
           resolve: async (category, args): Promise<Connection<Product>> => {

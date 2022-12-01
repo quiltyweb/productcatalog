@@ -12,7 +12,7 @@ import bodyParser from "koa-bodyparser";
 
 import type { Context as KoaContext } from "koa";
 
-import { schema } from "./graphql/index";
+import schema from "./graphql";
 import Email from "./email";
 import { getAdminOptions } from "./getAdminOptions";
 import { buildCustomAuthRouter } from "./buildCustomAuthRouter";
@@ -76,6 +76,7 @@ AppDataSource.initialize()
       .use(clientRouter.routes())
       .use(clientRouter.allowedMethods());
 
+    await server.start();
     server.applyMiddleware({ app, cors: false });
 
     app.listen(PORT);
