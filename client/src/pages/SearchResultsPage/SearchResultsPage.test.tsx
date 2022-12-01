@@ -2,12 +2,13 @@ import React from "react";
 import {
   createMockEnvironment,
   MockPayloadGenerator,
-  RelayMockEnvironment,
+  MockEnvironment,
 } from "relay-test-utils";
 import { render, screen } from "@testing-library/react";
 import SearchResultsPage from "./SearchResultsPage";
 import { MemoryRouter } from "react-router-dom";
 import { Provider as AlertProvider } from "react-alert";
+import { OperationDescriptor } from "react-relay";
 
 const AlertTemplate = () => <div>template</div>;
 
@@ -19,7 +20,7 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-let environment: RelayMockEnvironment;
+let environment: MockEnvironment;
 beforeEach(() => {
   environment = createMockEnvironment();
   render(
@@ -45,37 +46,38 @@ describe("SearchResultsPage", () => {
   });
 
   test("should render data", async () => {
-    environment.mock.resolveMostRecentOperation((operation) =>
-      MockPayloadGenerator.generate(operation, {
-        Category() {
-          return {
-            id: "1000",
-            name: "Category title Lorem ipsum",
-          };
-        },
-        ProductConnection() {
-          return {
-            edges: [
-              {
-                node: {
-                  id: "1",
-                  name: "Soldador",
-                  imagePath: "imagePath1",
-                  attachmentPath: "attachmentPath1",
+    environment.mock.resolveMostRecentOperation(
+      (operation: OperationDescriptor) =>
+        MockPayloadGenerator.generate(operation, {
+          Category() {
+            return {
+              id: "1000",
+              name: "Category title Lorem ipsum",
+            };
+          },
+          ProductConnection() {
+            return {
+              edges: [
+                {
+                  node: {
+                    id: "1",
+                    name: "Soldador",
+                    imagePath: "imagePath1",
+                    attachmentPath: "attachmentPath1",
+                  },
                 },
-              },
-              {
-                node: {
-                  id: "2",
-                  name: "Zapatos",
-                  imagePath: "imagePath2",
-                  attachmentPath: "attachmentPath2",
+                {
+                  node: {
+                    id: "2",
+                    name: "Zapatos",
+                    imagePath: "imagePath2",
+                    attachmentPath: "attachmentPath2",
+                  },
                 },
-              },
-            ],
-          };
-        },
-      })
+              ],
+            };
+          },
+        })
     );
     screen.getByRole("heading", { name: 'Resultados para: "zapato"' });
     screen.getByRole("heading", { name: "Soldador" });
@@ -85,20 +87,21 @@ describe("SearchResultsPage", () => {
   });
 
   test("should render empty state", async () => {
-    environment.mock.resolveMostRecentOperation((operation) =>
-      MockPayloadGenerator.generate(operation, {
-        Category() {
-          return {
-            id: "1000",
-            name: "Category title Lorem ipsum",
-          };
-        },
-        ProductConnection() {
-          return {
-            edges: [],
-          };
-        },
-      })
+    environment.mock.resolveMostRecentOperation(
+      (operation: OperationDescriptor) =>
+        MockPayloadGenerator.generate(operation, {
+          Category() {
+            return {
+              id: "1000",
+              name: "Category title Lorem ipsum",
+            };
+          },
+          ProductConnection() {
+            return {
+              edges: [],
+            };
+          },
+        })
     );
     screen.getByText(
       "No se encontraron productos. Intente con otra palabra o categoría."

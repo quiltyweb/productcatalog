@@ -1,12 +1,9 @@
 import React from "react";
-import {
-  createMockEnvironment,
-  MockPayloadGenerator,
-  RelayMockEnvironment,
-} from "relay-test-utils";
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils";
 import { render, screen, within } from "@testing-library/react";
 import App from "./App";
 import { MemoryRouter } from "react-router-dom";
+import { OperationDescriptor } from "react-relay";
 
 window.scrollTo = jest.fn();
 
@@ -36,7 +33,7 @@ afterAll(() => {
 
 describe("App", () => {
   test("should render Nav bar and Footer", () => {
-    const environment: RelayMockEnvironment = createMockEnvironment();
+    const environment = createMockEnvironment();
     render(
       <MemoryRouter initialEntries={["/"]}>
         <App environment={environment} />
@@ -52,27 +49,28 @@ describe("App", () => {
   });
 
   test("should render categories", async () => {
-    const environment: RelayMockEnvironment = createMockEnvironment();
+    const environment = createMockEnvironment();
     render(
       <MemoryRouter initialEntries={["/"]}>
         <App environment={environment} />
       </MemoryRouter>
     );
-    environment.mock.resolveMostRecentOperation((operation) =>
-      MockPayloadGenerator.generate(operation, {
-        CategoryConnection() {
-          return {
-            edges: [
-              {
-                node: { id: "1", name: "Soldador" },
-              },
-              {
-                node: { id: "2", name: "Zapatos" },
-              },
-            ],
-          };
-        },
-      })
+    environment.mock.resolveMostRecentOperation(
+      (operation: OperationDescriptor) =>
+        MockPayloadGenerator.generate(operation, {
+          CategoryConnection() {
+            return {
+              edges: [
+                {
+                  node: { id: "1", name: "Soldador" },
+                },
+                {
+                  node: { id: "2", name: "Zapatos" },
+                },
+              ],
+            };
+          },
+        })
     );
 
     screen.getByRole("navigation");
