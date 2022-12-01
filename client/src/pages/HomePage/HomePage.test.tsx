@@ -2,11 +2,12 @@ import React from "react";
 import {
   createMockEnvironment,
   MockPayloadGenerator,
-  RelayMockEnvironment,
+  MockEnvironment,
 } from "relay-test-utils";
 import { render, screen, within } from "@testing-library/react";
 import HomePage from "./HomePage";
 import { MemoryRouter } from "react-router-dom";
+import { OperationDescriptor } from "react-relay";
 
 window.scrollTo = jest.fn();
 
@@ -36,7 +37,7 @@ afterAll(() => {
 
 describe("HomePage", () => {
   test("should render loading state", () => {
-    const environment: RelayMockEnvironment = createMockEnvironment();
+    const environment: MockEnvironment = createMockEnvironment();
     render(
       <MemoryRouter initialEntries={["/"]}>
         <HomePage environment={environment} />
@@ -47,27 +48,28 @@ describe("HomePage", () => {
   });
 
   test("should render category names", async () => {
-    const environment: RelayMockEnvironment = createMockEnvironment();
+    const environment: MockEnvironment = createMockEnvironment();
     render(
       <MemoryRouter initialEntries={["/"]}>
         <HomePage environment={environment} />
       </MemoryRouter>
     );
-    environment.mock.resolveMostRecentOperation((operation) =>
-      MockPayloadGenerator.generate(operation, {
-        CategoryConnection() {
-          return {
-            edges: [
-              {
-                node: { id: "1", name: "Soldador" },
-              },
-              {
-                node: { id: "2", name: "Zapatos" },
-              },
-            ],
-          };
-        },
-      })
+    environment.mock.resolveMostRecentOperation(
+      (operation: OperationDescriptor) =>
+        MockPayloadGenerator.generate(operation, {
+          CategoryConnection() {
+            return {
+              edges: [
+                {
+                  node: { id: "1", name: "Soldador" },
+                },
+                {
+                  node: { id: "2", name: "Zapatos" },
+                },
+              ],
+            };
+          },
+        })
     );
 
     screen.getByRole("heading", { name: "Nuestros Productos" });

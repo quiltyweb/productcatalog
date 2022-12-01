@@ -2,12 +2,13 @@ import React from "react";
 import {
   createMockEnvironment,
   MockPayloadGenerator,
-  RelayMockEnvironment,
+  MockEnvironment,
 } from "relay-test-utils";
 import { render, screen } from "@testing-library/react";
 import SingleProductPage from "./SingleProductPage";
 import { MemoryRouter } from "react-router-dom";
 import { Provider as AlertProvider } from "react-alert";
+import { OperationDescriptor } from "react-relay";
 
 const AlertTemplate = () => <div>template</div>;
 
@@ -19,7 +20,7 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-let environment: RelayMockEnvironment;
+let environment: MockEnvironment;
 beforeEach(() => {
   environment = createMockEnvironment();
   render(
@@ -45,18 +46,19 @@ describe("SingleProductPage", () => {
   });
 
   test("should render data", async () => {
-    environment.mock.resolveMostRecentOperation((operation) =>
-      MockPayloadGenerator.generate(operation, {
-        Product() {
-          return {
-            id: "1",
-            name: "Soldador",
-            description: "description lorem ipsum",
-            imagePath: "imagePath1",
-            attachmentPath: "attachmentPath1",
-          };
-        },
-      })
+    environment.mock.resolveMostRecentOperation(
+      (operation: OperationDescriptor) =>
+        MockPayloadGenerator.generate(operation, {
+          Product() {
+            return {
+              id: "1",
+              name: "Soldador",
+              description: "description lorem ipsum",
+              imagePath: "imagePath1",
+              attachmentPath: "attachmentPath1",
+            };
+          },
+        })
     );
 
     screen.getByRole("button", { name: "← volver a resultados" });

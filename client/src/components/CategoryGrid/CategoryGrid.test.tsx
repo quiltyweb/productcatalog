@@ -1,17 +1,17 @@
 import React from "react";
-import { QueryRenderer } from "react-relay";
+import { OperationDescriptor, QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import {
   createMockEnvironment,
   MockPayloadGenerator,
-  RelayMockEnvironment,
+  MockEnvironment,
 } from "relay-test-utils";
 import { render, screen } from "@testing-library/react";
 import CategoryGrid from "./CategoryGrid";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 
-let environment: RelayMockEnvironment;
+let environment: MockEnvironment;
 const history = createMemoryHistory();
 
 beforeEach(() => {
@@ -53,36 +53,40 @@ afterEach(() => {
 
 describe("CategoryGrid Fragment Container", () => {
   test("should render empty state when there are no categories", () => {
-    environment.mock.resolveMostRecentOperation((operation) => {
-      return MockPayloadGenerator.generate(operation, {
-        CategoryConnection() {
-          return {
-            edges: [],
-          };
-        },
-      });
-    });
+    environment.mock.resolveMostRecentOperation(
+      (operation: OperationDescriptor) => {
+        return MockPayloadGenerator.generate(operation, {
+          CategoryConnection() {
+            return {
+              edges: [],
+            };
+          },
+        });
+      }
+    );
 
     screen.getByText("No hay categorias");
   });
 
   test("should render categories", () => {
-    environment.mock.resolveMostRecentOperation((operation) => {
-      return MockPayloadGenerator.generate(operation, {
-        CategoryConnection() {
-          return {
-            edges: [
-              {
-                node: { id: "1", name: "Soldador" },
-              },
-              {
-                node: { id: "2", name: "Zapatos" },
-              },
-            ],
-          };
-        },
-      });
-    });
+    environment.mock.resolveMostRecentOperation(
+      (operation: OperationDescriptor) => {
+        return MockPayloadGenerator.generate(operation, {
+          CategoryConnection() {
+            return {
+              edges: [
+                {
+                  node: { id: "1", name: "Soldador" },
+                },
+                {
+                  node: { id: "2", name: "Zapatos" },
+                },
+              ],
+            };
+          },
+        });
+      }
+    );
 
     screen.getByRole("heading", { name: "categoría Soldador" });
     screen.getByRole("heading", { name: "categoría Zapatos" });

@@ -1,10 +1,10 @@
 import React from "react";
-import { QueryRenderer } from "react-relay";
+import { OperationDescriptor, QueryRenderer } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import {
   createMockEnvironment,
   MockPayloadGenerator,
-  RelayMockEnvironment,
+  MockEnvironment,
 } from "relay-test-utils";
 import { render, screen } from "@testing-library/react";
 import ProductList from "./ProductList";
@@ -14,7 +14,7 @@ import { Provider as AlertProvider } from "react-alert";
 
 const AlertTemplate = () => <div>template</div>;
 
-let environment: RelayMockEnvironment;
+let environment: MockEnvironment;
 const history = createMemoryHistory();
 
 beforeEach(() => {
@@ -57,15 +57,17 @@ afterEach(() => {
 
 describe("ProductList Fragment Container", () => {
   test("should render empty state when there are no products", () => {
-    environment.mock.resolveMostRecentOperation((operation) => {
-      return MockPayloadGenerator.generate(operation, {
-        ProductConnection() {
-          return {
-            edges: [],
-          };
-        },
-      });
-    });
+    environment.mock.resolveMostRecentOperation(
+      (operation: OperationDescriptor) => {
+        return MockPayloadGenerator.generate(operation, {
+          ProductConnection() {
+            return {
+              edges: [],
+            };
+          },
+        });
+      }
+    );
 
     screen.getByText(
       "No se encontraron productos. Intente con otra palabra o categoría."
@@ -73,32 +75,34 @@ describe("ProductList Fragment Container", () => {
   });
 
   test("should render products", () => {
-    environment.mock.resolveMostRecentOperation((operation) => {
-      return MockPayloadGenerator.generate(operation, {
-        ProductConnection() {
-          return {
-            edges: [
-              {
-                node: {
-                  id: "1",
-                  name: "Soldador",
-                  imagePath: "imagePath1",
-                  attachmentPath: "attachmentPath1",
+    environment.mock.resolveMostRecentOperation(
+      (operation: OperationDescriptor) => {
+        return MockPayloadGenerator.generate(operation, {
+          ProductConnection() {
+            return {
+              edges: [
+                {
+                  node: {
+                    id: "1",
+                    name: "Soldador",
+                    imagePath: "imagePath1",
+                    attachmentPath: "attachmentPath1",
+                  },
                 },
-              },
-              {
-                node: {
-                  id: "2",
-                  name: "Zapatos",
-                  imagePath: "imagePath2",
-                  attachmentPath: "attachmentPath2",
+                {
+                  node: {
+                    id: "2",
+                    name: "Zapatos",
+                    imagePath: "imagePath2",
+                    attachmentPath: "attachmentPath2",
+                  },
                 },
-              },
-            ],
-          };
-        },
-      });
-    });
+              ],
+            };
+          },
+        });
+      }
+    );
     screen.getByRole("heading", { name: "Soldador" });
     screen.getByRole("heading", { name: "Zapatos" });
   });
