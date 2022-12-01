@@ -44,7 +44,7 @@ docker-compose -f ${DOCKER_COMPOSE_FILE} exec -T db cockroach sql --execute "CRE
 docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm server \
-  yarn run migration:run -c test
+  yarn run migration:run -d src/dataSource.ts
 
 #### SEED TEST DB ####
 echo "Seeding database..."

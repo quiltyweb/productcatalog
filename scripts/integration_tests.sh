@@ -23,7 +23,7 @@ docker exec -t productcatalog_db_1 \
   cockroach sql --execute "CREATE DATABASE ${DB_NAME};" --insecure
 
 docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm server \
-  yarn run migration:run -c test
+  yarn run migration:run -d src/dataSource.ts
 
 EXIT_CODE=$?
 

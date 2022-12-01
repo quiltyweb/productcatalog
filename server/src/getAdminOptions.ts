@@ -2,17 +2,13 @@ import path from "path";
 import { Product } from "./entity/Product";
 import { Category } from "./entity/Category";
 import { User } from "./entity/User";
-import AdminBro, { ActionRequest, AdminBroOptions } from "admin-bro";
+import AdminJS, { ActionRequest, AdminJSOptions } from "adminjs";
 import bcrypt from "bcrypt";
-import { Connection } from "typeorm";
-import uploadFeature from "@admin-bro/upload";
+import { DataSource } from "typeorm";
+import uploadFeature from "@adminjs/upload";
 import { DigitalOceanProvider } from "./DigitalOceanProvider";
 
-export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
-  Product.useConnection(connection);
-  Category.useConnection(connection);
-  User.useConnection(connection);
-
+export const getAdminOptions = (dataSource: DataSource): AdminJSOptions => {
   const {
     NODE_ENV,
     SPACES_ENDPOINT,
@@ -43,7 +39,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
     return currentAdmin && currentAdmin.role === "admin";
   };
 
-  const adminBroOptions = {
+  const adminOptions = {
     resources: [
       {
         resource: Product,
@@ -65,14 +61,14 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
               position: 1,
               isVisible: false,
               components: {
-                list: AdminBro.bundle(imagePath),
+                list: AdminJS.bundle(imagePath),
               },
             },
             attachmentPath: {
               position: 2,
               isVisible: false,
               components: {
-                list: AdminBro.bundle(attachmentPath),
+                list: AdminJS.bundle(attachmentPath),
               },
             },
             description: {
@@ -297,7 +293,7 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
       },
     },
     dashboard: {
-      component: AdminBro.bundle(dashboardPath),
+      component: AdminJS.bundle(dashboardPath),
     },
     pages: {
       Estadisticas: {
@@ -306,22 +302,22 @@ export const getAdminBroOptions = (connection: Connection): AdminBroOptions => {
           categoryCounter: number;
           productCounter: number;
         }> => {
-          const categoryCounter = await connection.manager.count(Category);
-          const productCounter = await connection.manager.count(Product);
+          const categoryCounter = await dataSource.manager.count(Category);
+          const productCounter = await dataSource.manager.count(Product);
           return {
             content: "Panel de Estadisticas de Gattoni.cl",
             categoryCounter: categoryCounter,
             productCounter: productCounter,
           };
         },
-        component: AdminBro.bundle(statsPath),
+        component: AdminJS.bundle(statsPath),
       },
       Tutoriales: {
-        component: AdminBro.bundle(helpPath),
+        component: AdminJS.bundle(helpPath),
       },
     },
     rootPath: "/admin",
   };
 
-  return adminBroOptions;
+  return adminOptions;
 };

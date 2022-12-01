@@ -46,13 +46,10 @@ class Queries {
         },
       },
       resolve: async (root, args, ctx): Promise<Category> => {
-        const category = await ctx.entityManager.findOne(
-          Category,
-          fromGlobalId(args.categoryId).id,
-          {
-            relations: ["products"],
-          }
-        );
+        const category = await ctx.entityManager.findOne(Category, {
+          where: { id: parseInt(fromGlobalId(args.categoryId).id) },
+          relations: ["products"],
+        });
 
         return category;
       },
@@ -99,10 +96,9 @@ class Queries {
         },
       },
       resolve: async (root, args, ctx): Promise<Product> => {
-        const product = await ctx.entityManager.findOne(
-          Product,
-          fromGlobalId(args.productId).id
-        );
+        const product = await ctx.entityManager.findOne(Product, {
+          where: { id: parseInt(fromGlobalId(args.productId).id) },
+        });
 
         return product;
       },
@@ -214,7 +210,7 @@ class Queries {
               Product,
               {
                 select: ["name", "salePrice"],
-                where: { id: fromGlobalId(productId).id },
+                where: { id: parseInt(fromGlobalId(productId).id) },
               }
             );
 

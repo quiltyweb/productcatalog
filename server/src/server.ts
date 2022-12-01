@@ -4,34 +4,34 @@ import serveStatic from "koa-static";
 import send from "koa-send";
 import Koa from "koa";
 import Router from "@koa/router";
-import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-koa";
 import helmet from "koa-helmet";
-import { Database, Resource } from "@admin-bro/typeorm";
-import AdminBro from "admin-bro";
+import { Database, Resource } from "@adminjs/typeorm";
+import AdminJS from "adminjs";
+import bodyParser from "koa-bodyparser";
+
+import type { Context as KoaContext } from "koa";
+
 import { schema } from "./graphql/index";
 import Email from "./email";
-import type { Context as KoaContext } from "koa";
-import bodyParser from "koa-bodyparser";
-import { getAdminBroOptions } from "./getAdminBroOptions";
+import { getAdminOptions } from "./getAdminOptions";
 import { buildCustomAuthRouter } from "./buildCustomAuthRouter";
+import { AppDataSource } from "./dataSource";
 
-const { NODE_ENV, APP_KEY, PORT } = process.env;
-const connectionName = NODE_ENV === "development" ? "default" : NODE_ENV;
+const { APP_KEY, PORT } = process.env;
 
-AdminBro.registerAdapter({ Database, Resource });
+AdminJS.registerAdapter({ Database, Resource });
 
-createConnection(connectionName)
-  .then(async (connection) => {
+AppDataSource.initialize()
+  .then(async () => {
     const app = new Koa();
     app.use(bodyParser());
     app.keys = [APP_KEY];
 
-    const adminBroOptions = getAdminBroOptions(connection);
+    const adminOptions = getAdminOptions(AppDataSource);
 
-    const adminBro = new AdminBro(adminBroOptions);
-
-    const adminBroRouter = buildCustomAuthRouter(adminBro, app, connection);
+    const admin = new AdminJS(adminOptions);
+    const adminRouter = buildCustomAuthRouter(admin, app, AppDataSource);
 
     const clientRouter = new Router();
 
@@ -40,7 +40,7 @@ createConnection(connectionName)
       context: ({ ctx }): KoaContext => ({
         ...ctx,
         sendEmail: Email.send,
-        entityManager: connection.manager,
+        entityManager: AppDataSource.manager,
       }),
     });
 
@@ -69,8 +69,8 @@ createConnection(connectionName)
 
     app
       .use(helmet())
-      .use(adminBroRouter.routes())
-      .use(adminBroRouter.allowedMethods());
+      .use(adminRouter.routes())
+      .use(adminRouter.allowedMethods());
     app
       .use(helmet())
       .use(clientRouter.routes())

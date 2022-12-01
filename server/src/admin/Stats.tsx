@@ -1,13 +1,11 @@
-import { Box, Text , Section} from "@admin-bro/design-system";
+import { Box, Text, Section } from "@adminjs/design-system";
 
-const Stats = () => {
+const Stats = (): JSX.Element => {
   return (
     <Box variant="grey">
       <Section mb="xl">
         <Text>Seccion en construccion...</Text>
       </Section>
-
-
     </Box>
   );
 };

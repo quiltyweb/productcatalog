@@ -1,7 +1,7 @@
 import fs from "fs";
 import AWS, { S3 } from "aws-sdk";
-import { UploadedFile } from "admin-bro";
-import { BaseProvider } from "@admin-bro/upload";
+import { UploadedFile } from "adminjs";
+import { BaseProvider } from "@adminjs/upload";
 import { ERROR_MESSAGES, DAY_IN_MINUTES } from "./constants";
 
 type DigitalOceanOptions = {

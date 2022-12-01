@@ -1,38 +1,34 @@
-import { createConnection, Connection } from "typeorm";
 import { graphql } from "graphql";
 import { toGlobalId } from "graphql-relay";
 import faker from "faker";
+import { EntityManager } from "typeorm";
 
 import { schema } from "../../../src/graphql";
-import { Category } from "../../../src/entity/Category";
-import { Product } from "../../../src/entity/Product";
+import { Category, Product } from "../../../src/entity";
 import Email from "../../../src/email";
+import { AppDataSource } from "../../../src/dataSource";
 import { ProductFactory, CategoryFactory } from "../../fixtures/factories";
 
-// Declaring global variables to be able to make a DB connection
-// once instead of inside every 'it' function, because 'describe' functions
-// can't return promises.
-let connection: Connection;
-let baseContext;
+let baseContext: { entityManager: EntityManager };
 
 beforeAll(async () => {
-  connection = await createConnection("test");
-  baseContext = { entityManager: connection.manager };
+  await AppDataSource.initialize();
+  baseContext = { entityManager: AppDataSource.manager };
 
   const recordCount = 5;
 
   const categories = CategoryFactory.buildMany(recordCount);
-  await connection.manager.save(Category, categories);
-  const categoryRecords = await connection.manager.find(Category);
+  await AppDataSource.manager.save(Category, categories);
+  const categoryRecords = await AppDataSource.manager.find(Category);
 
   const products = categoryRecords.flatMap((category: Category) =>
     ProductFactory.buildMany(recordCount, { category })
   );
 
-  await connection.manager.save(Product, products);
+  await AppDataSource.manager.save(Product, products);
 });
 
-afterAll(async () => await connection.close());
+afterAll(async () => await AppDataSource.destroy());
 
 describe("GraphQL schema", () => {
   describe("fetchCategories", () => {
@@ -56,8 +52,6 @@ describe("GraphQL schema", () => {
     `;
 
     it("returns category fields", async () => {
-      expect.assertions(2);
-
       const context = { ...baseContext };
 
       const results = await graphql(schema, query, null, context);
@@ -72,8 +66,6 @@ describe("GraphQL schema", () => {
     });
 
     it("returns associated products", async () => {
-      expect.assertions(1);
-
       const context = { ...baseContext };
 
       const results = await graphql(schema, query, null, context);
@@ -108,11 +100,11 @@ describe("GraphQL schema", () => {
     `;
 
     it("returns category fields", async () => {
-      expect.assertions(1);
-
       const context = { ...baseContext };
 
-      const category = await connection.manager.findOne(Category);
+      const category = await AppDataSource.manager.findOneBy(Category, {
+        id: 1,
+      });
       const gqlId = toGlobalId("Category", String(category.id));
       const variables = { categoryId: gqlId };
 
@@ -123,11 +115,11 @@ describe("GraphQL schema", () => {
     });
 
     it("returns associated products", async () => {
-      expect.assertions(1);
-
       const context = { ...baseContext };
 
-      const category = await connection.manager.findOne(Category);
+      const category = await AppDataSource.manager.findOneBy(Category, {
+        id: 1,
+      });
       const gqlId = toGlobalId("Category", String(category.id));
       const variables = { categoryId: gqlId };
 
@@ -156,15 +148,15 @@ describe("GraphQL schema", () => {
     `;
 
     it("returns any matching products", async () => {
-      expect.assertions(1);
-
       const context = { ...baseContext };
 
-      const category = await connection.manager.findOne(Category);
+      const category = await AppDataSource.manager.findOneBy(Category, {
+        id: 1,
+      });
 
       // Need to create the product in the `it` function, because `describe`
       // callbacks can't be async
-      await connection.manager.save(
+      await AppDataSource.manager.save(
         Product,
         ProductFactory.build({
           category: category,
@@ -186,8 +178,6 @@ describe("GraphQL schema", () => {
 
     describe("when there are no matching products", () => {
       it("returns an empty array", async () => {
-        expect.assertions(1);
-
         const context = { ...baseContext };
 
         const results = await graphql(schema, query, null, context, {
@@ -212,11 +202,9 @@ describe("GraphQL schema", () => {
     `;
 
     it("returns product fields", async () => {
-      expect.assertions(1);
-
       const context = { ...baseContext };
 
-      const product = await connection.manager.findOne(Product);
+      const product = await AppDataSource.manager.findOneBy(Product, { id: 1 });
       const gqlId = toGlobalId("Product", String(product.id));
       const variables = { productId: gqlId };
 
@@ -263,8 +251,6 @@ describe("GraphQL schema", () => {
     };
 
     it("sends an email", async () => {
-      expect.assertions(1);
-
       const context = { ...baseContext, sendEmail: Email.send };
 
       await graphql(schema, query, null, context, variables);
@@ -272,8 +258,6 @@ describe("GraphQL schema", () => {
     });
 
     it("returns response status info", async () => {
-      expect.assertions(1);
-
       const context = { ...baseContext, sendEmail: Email.send };
       const results = await graphql(schema, query, null, context, variables);
       const messageResponse = results.data.sendContactMessage;
@@ -337,12 +321,12 @@ describe("GraphQL schema", () => {
     };
 
     it("sends an email", async () => {
-      expect.assertions(1);
-
-      const firstProduct = await connection.manager.findOne(Product);
+      const firstProduct = await AppDataSource.manager.findOneBy(Product, {
+        id: 1,
+      });
       const firstQuantity = faker.datatype.number({ min: 1, max: 10 });
 
-      const secondProduct = await connection.manager
+      const secondProduct = await AppDataSource.manager
         .createQueryBuilder(Product, "products")
         .where("products.id != :id", { id: firstProduct.id })
         .getOne();
@@ -363,12 +347,12 @@ describe("GraphQL schema", () => {
     });
 
     it("returns response status info", async () => {
-      expect.assertions(1);
-
-      const firstProduct = await connection.manager.findOne(Product);
+      const firstProduct = await AppDataSource.manager.findOneBy(Product, {
+        id: 1,
+      });
       const firstQuantity = faker.datatype.number({ min: 1, max: 10 });
 
-      const secondProduct = await connection.manager
+      const secondProduct = await AppDataSource.manager
         .createQueryBuilder(Product, "products")
         .where("products.id != :id", { id: firstProduct.id })
         .getOne();
