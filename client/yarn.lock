@@ -6918,19 +6918,20 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-focus-trap-react@^8.4.2:
-  version "8.4.2"
-  resolved "https://registry.yarnpkg.com/focus-trap-react/-/focus-trap-react-8.4.2.tgz#5b313605e0789a7beee1467785e455dc63388a98"
-  integrity sha512-yuItOIwgriOBMrbHDqbWMpQjGVs9SbtugYrT0vs0yPjHiPKja3NZ9dBMxDQrV1JhyojGK5d6j7ayqBS7Kcm9xQ==
+focus-trap-react@^10.0.2:
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/focus-trap-react/-/focus-trap-react-10.0.2.tgz#eed4ce5b508bf3a0ce2ce63151c5c0f34a8f8529"
+  integrity sha512-MnN2cmdgpY7NY74ePOio4kbO5A3ILhrg1g5OGbgIQjcWEv1hhcbh6e98K0a+df88hNbE+4i9r8ji9aQnHou6GA==
   dependencies:
-    focus-trap "^6.3.0"
+    focus-trap "^7.2.0"
+    tabbable "^6.0.1"
 
-focus-trap@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-6.3.0.tgz#31c08f0b6099705f71f6e0a16d88fbcc4c012586"
-  integrity sha512-BBzvFfkPg5PqrVVCdQ1YOIVNKGvqG9YNVkiAUQFuDM66N8J9uADhs6mlYKrd30ofDJIzEniBnBKM7GO45iCzKQ==
+focus-trap@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-7.2.0.tgz#25af61b5635d3c18cd2fd176087db7b60be72c6b"
+  integrity sha512-v4wY6HDDYvzkBy4735kW5BUEuw6Yz9ABqMYLuTNbzAFPcBOGiGHwwcNVMvUz4G0kgSYh13wa/7TG3XwTeT4O/A==
   dependencies:
-    tabbable "^5.1.5"
+    tabbable "^6.0.1"
 
 follow-redirects@^1.0.0:
   version "1.13.0"
@@ -13169,10 +13170,10 @@ symbol-tree@^3.2.4:
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
 
-tabbable@^5.1.5:
-  version "5.1.6"
-  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-5.1.6.tgz#dd495abe81d5e41e003fbfa70952e20d5e1e1e89"
-  integrity sha512-KSlGaSX9PbL7FHDTn2dB+zv61prkY8BeGioTsKfeN7dKhw5uz1S4U2iFaWMK4GR8oU+5OFBkFuxbMsaUxVVlrQ==
+tabbable@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.0.1.tgz#427a09b13c83ae41eed3e88abb76a4af28bde1a6"
+  integrity sha512-SYJSIgeyXW7EuX1ytdneO5e8jip42oHWg9xl/o3oTYhmXusZVgiA+VlPvjIN+kHii9v90AmzTZEBcsEvuAY+TA==
 
 table@^6.0.9:
   version "6.8.1"
