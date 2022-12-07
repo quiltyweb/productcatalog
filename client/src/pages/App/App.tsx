@@ -27,7 +27,7 @@ import {
   transitions,
   positions,
   Provider as AlertProvider,
-  AlertComponentPropsWithStyle,
+  AlertTemplateProps,
 } from "react-alert";
 
 const AppContainer = styled.div`
@@ -48,7 +48,7 @@ const alertProviderOptions = {
   },
 };
 
-const AlertTemplate: React.FunctionComponent<AlertComponentPropsWithStyle> = ({
+const AlertTemplate: React.FunctionComponent<AlertTemplateProps> = ({
   style,
   options,
   message,
