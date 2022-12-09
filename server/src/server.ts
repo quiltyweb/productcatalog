@@ -1,16 +1,17 @@
-import "reflect-metadata";
+import http from "http";
 import path from "path";
-import serveStatic from "koa-static";
-import send from "koa-send";
-import Koa from "koa";
-import Router from "@koa/router";
-import { ApolloServer } from "apollo-server-koa";
-import helmet from "koa-helmet";
+
+import "reflect-metadata";
 import { Database, Resource } from "@adminjs/typeorm";
 import AdminJS from "adminjs";
-import bodyParser from "koa-bodyparser";
-
-import type { Context as KoaContext } from "koa";
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import express from "express";
+import cookieParser from "cookie-parser";
+import { urlencoded, json } from "body-parser";
+import helmet from "helmet";
+import cors from "cors";
 
 import schema from "./graphql";
 import Email from "./email";
@@ -21,65 +22,68 @@ import { AppDataSource } from "./dataSource";
 const { APP_KEY, PORT } = process.env;
 
 AdminJS.registerAdapter({ Database, Resource });
+const app = express();
+const httpServer = http.createServer(app);
 
 AppDataSource.initialize()
   .then(async () => {
-    const app = new Koa();
-    app.use(bodyParser());
-    app.keys = [APP_KEY];
+    app.use(cors());
+    app.use(cookieParser(APP_KEY));
 
-    const adminOptions = getAdminOptions(AppDataSource);
-
-    const admin = new AdminJS(adminOptions);
-    const adminRouter = buildCustomAuthRouter(admin, app, AppDataSource);
-
-    const clientRouter = new Router();
-
-    const server = new ApolloServer({
-      schema,
-      context: ({ ctx }): KoaContext => ({
-        ...ctx,
-        sendEmail: Email.send,
-        entityManager: AppDataSource.manager,
-      }),
-    });
+    const clientRouter = express.Router();
 
     if (process.env.NODE_ENV === "production") {
       // Something prepends the workingdirectory '/app' to the static files path,
       // even if we use absolute paths for everything, but this works, so filo
       const buildPath = path.join("dist", "build");
+      app.use(express.static(buildPath));
 
-      app.use(serveStatic(buildPath));
-
-      clientRouter.get("(.*)", async (ctx, next) => {
+      clientRouter.get("(.*)", async (req, res, next) => {
         try {
-          await send(ctx, path.join(buildPath, "index.html"));
+          res.send(path.join(buildPath, "index.html"));
         } catch (err) {
-          ctx.body =
-            "Ha ocurrido un error. Por favor, intente nuevamente. Comercial Gattoni.";
           console.log(err);
-          return next();
+          return next(
+            Error(
+              "Ha ocurrido un error. Por favor, intente nuevamente. Comercial Gattoni."
+            )
+          );
         }
       });
     } else {
-      clientRouter.get("/", async (ctx) => {
-        ctx.body = "Hello World!";
+      clientRouter.get("/", (_, res) => {
+        res.send("Hello World!");
       });
     }
 
-    app
-      .use(helmet())
-      .use(adminRouter.routes())
-      .use(adminRouter.allowedMethods());
-    app
-      .use(helmet())
-      .use(clientRouter.routes())
-      .use(clientRouter.allowedMethods());
+    const adminOptions = getAdminOptions(AppDataSource);
+    const admin = new AdminJS(adminOptions);
+    const adminRouter = buildCustomAuthRouter(admin, AppDataSource);
+    app.use(helmet()).use(admin.options.rootPath, adminRouter);
 
-    await server.start();
-    server.applyMiddleware({ app, cors: false });
+    app.use(urlencoded({ extended: false }));
+    app.use(json());
+    app.use(helmet()).use(clientRouter);
 
-    app.listen(PORT);
+    const apolloServer = new ApolloServer({
+      schema,
+      plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    });
+    await apolloServer.start();
+    app.use(
+      expressMiddleware(apolloServer, {
+        context: async ({ req, res }) => ({
+          req,
+          res,
+          sendEmail: Email.send,
+          entityManager: AppDataSource.manager,
+        }),
+      })
+    );
+
+    await new Promise<void>((resolve) =>
+      httpServer.listen({ port: PORT }, resolve)
+    );
 
     console.log(`Server running on port ${PORT}`);
   })

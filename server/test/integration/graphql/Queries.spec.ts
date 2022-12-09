@@ -243,7 +243,6 @@ describe("GraphQL schema", () => {
         contextValue: context,
         variableValues: variables,
       })) as ExecutionResult<Pick<Query, "fetchProduct">>;
-      console.log(JSON.stringify(results));
       const queriedProduct = results.data.fetchProduct;
 
       expect(product.name).toEqual(queriedProduct.name);

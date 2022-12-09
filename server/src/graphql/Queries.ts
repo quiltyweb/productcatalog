@@ -134,9 +134,9 @@ class Queries {
         const { personalIdNumber, emailAddress, message, name, phoneNumber } =
           args;
 
-        const { request } = ctx;
+        const { req } = ctx;
         const { ADMIN_EMAIL: emailTo, HQ_ADMIN_EMAIL: hqEmailTo } = process.env;
-        const requestHost = request && request.host;
+        const requestHost = req && req.hostname;
         const isInvalidEmailHost =
           !requestHost || requestHost.includes("localhost");
         const host = isInvalidEmailHost ? "productcatalog.com" : requestHost;
@@ -190,9 +190,9 @@ class Queries {
           productsToQuote,
         } = args.input;
 
-        const { request, entityManager } = ctx;
+        const { req, entityManager } = ctx;
         const { ADMIN_EMAIL: emailTo, HQ_ADMIN_EMAIL: hqEmailTo } = process.env;
-        const requestHost = request && request.host;
+        const requestHost = req && req.hostname;
         const isInvalidEmailHost =
           !requestHost ||
           requestHost.includes("localhost") ||
