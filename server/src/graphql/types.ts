@@ -1,4 +1,4 @@
-import type { Context as KoaContext } from "koa";
+import { Request, Response } from "express";
 import type { EntityManager } from "typeorm";
 
 import type { SendEmail } from "../email";
@@ -7,7 +7,9 @@ import type { SendEmail } from "../email";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TSource = any;
 
-export type TContext = KoaContext & {
+export type TContext = {
+  req: Request;
+  res: Response;
   sendEmail: SendEmail;
   entityManager: EntityManager;
 };
