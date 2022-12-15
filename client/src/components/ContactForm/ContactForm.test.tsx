@@ -105,7 +105,7 @@ describe("ContactForm Component", () => {
         )
       ).toBeInTheDocument()
     );
-  });
+  }, 10000);
 
   it("should display error message if response has FAILURE status", async () => {
     setQueryResponse("resolve", {
