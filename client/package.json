@@ -52,7 +52,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "bumbag": "^2.7.21",
     "focus-trap-react": "^10.0.2",
-    "formik": "^2.2.1",
+    "formik": "^2.2.9",
     "react": "^16.13.1",
     "react-alert": "^7.0.3",
     "react-alert-template-basic": "^1.0.2",
