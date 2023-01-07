@@ -28,7 +28,9 @@ docker-compose up -d db
 # Not ideal, but wait-for-it was listening for the port to be ready, but that
 # wasn't enough time for the DB to be ready to accept commands,
 # so we're sleeping instead
-sleep 4
+sleep 10
 
+docker exec -i productcatalog_db_1 \
+  cockroach sql --execute "CREATE DATABASE IF NOT EXISTS ${DB_NAME};" --insecure
 docker exec -i productcatalog_db_1 \
   cockroach sql --file ${DB_PATH} --insecure
