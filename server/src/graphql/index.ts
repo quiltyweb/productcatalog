@@ -16,8 +16,10 @@ type Entity = Category | Product;
 async function getObjectFromGlobalId(globalId, ctx): Promise<Entity> {
   const { type, id } = fromGlobalId(globalId);
 
-  if (type === "Category") return await ctx.entityManager.findOne(Category, id);
-  if (type === "Product") return await ctx.entityManager.findOne(Product, id);
+  if (type === "Category")
+    return await ctx.entityManager.findOneBy(Category, { id });
+  if (type === "Product")
+    return await ctx.entityManager.findOneBy(Product, { id });
 }
 
 const { nodeInterface, nodeField } = nodeDefinitions(getObjectFromGlobalId);
