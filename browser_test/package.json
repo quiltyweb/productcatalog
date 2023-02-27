@@ -10,7 +10,7 @@
     "@testing-library/cypress": "8.0.7",
     "axe-core": "4.6.1",
     "cypress": "11.2.0",
-    "cypress-axe": "1.2.0"
+    "cypress-axe": "1.4.0"
   },
   "dependencies": {
     "lodash": "4.17.15"
