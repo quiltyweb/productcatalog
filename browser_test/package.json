@@ -7,9 +7,9 @@
     "run:admin": "cypress run --config-file cypress.admin.js"
   },
   "devDependencies": {
-    "@testing-library/cypress": "8.0.7",
+    "@testing-library/cypress": "9.0.0",
     "axe-core": "4.6.1",
-    "cypress": "11.2.0",
+    "cypress": "12.8.1",
     "cypress-axe": "1.2.0"
   },
   "dependencies": {
