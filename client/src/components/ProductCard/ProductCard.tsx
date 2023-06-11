@@ -28,17 +28,18 @@ interface ProductCardProps {
   hasPrintCTA?: boolean;
   isSinglePage?: boolean;
 }
+
 const buildURL = (assetPath: string, folderName: string): string => {
   const END_POINT = "https://product-catalog.sfo2.cdn.digitaloceanspaces.com";
 
   if (assetPath.includes("https") && assetPath.includes(folderName)) {
-    return assetPath;
+    return encodeURI(assetPath);
   }
   if (!assetPath.includes("https") && assetPath.includes(folderName)) {
-    return `${END_POINT}/${assetPath}`;
+    return encodeURI(`${END_POINT}/${assetPath}`);
   }
 
-  return `${END_POINT}/${folderName}/${assetPath}`;
+  return encodeURI(`${END_POINT}/${folderName}/${assetPath}`);
 };
 
 const ImgWithFallback: React.FunctionComponent<{
