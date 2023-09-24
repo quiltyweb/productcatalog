@@ -1,26 +1,8 @@
 #!/bin/bash
 
-
 set -euo pipefail
 
 FILE_ARG=${1:-""}
-
-if [ -z ${FILE_ARG} ]
-then
-  DB_FILE=prod_dump_`date +%Y-%m-%d"_"%H_%M_%S`
-  DB_PATH=database/backups/${DB_FILE}
-
-  heroku pg:backups:capture --app=${HEROKU_APP}
-  heroku pg:backups:download --app=${HEROKU_APP} --output=${DB_PATH}.dump
-  # Overwrite Heroku's custom format with plain-text SQL
-  pg_restore --no-owner -f ${DB_PATH}.sql ${DB_PATH}.dump
-  rm ${DB_PATH}.dump
-
-  DB_PATH=${DB_PATH}.sql
-else
-  DB_FILE=${FILE_ARG}
-  DB_PATH=database/backups/${DB_FILE}
-fi
 
 docker-compose rm -s -v db
 docker-compose up -d db
@@ -30,7 +12,21 @@ docker-compose up -d db
 # so we're sleeping instead
 sleep 10
 
-docker exec -i productcatalog_db_1 \
-  cockroach sql --execute "CREATE DATABASE IF NOT EXISTS ${DB_NAME};" --insecure
-docker exec -i productcatalog_db_1 \
-  cockroach sql --file ${DB_PATH} --insecure
+if [ -z ${FILE_ARG} ]
+then
+  BUCKET_URL="s3://product-catalog-backups?AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}&AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}&AWS_REGION=syd1&AWS_ENDPOINT=https://syd1.digitaloceanspaces.com"
+  cockroach sql --url ${PROD_DATABASE_URL} --execute "BACKUP DATABASE ${DB_NAME} INTO '${BUCKET_URL}'"
+
+  docker-compose exec db \
+    cockroach sql --execute "DROP DATABASE IF EXISTS ${DB_NAME}" --insecure
+  docker-compose exec db \
+    cockroach sql --execute "RESTORE DATABASE ${DB_NAME} FROM LATEST IN '${BUCKET_URL}'" --insecure
+else
+  DB_FILE=${FILE_ARG}
+  DB_PATH=database/backups/${DB_FILE}
+
+  docker-compose exec db \
+    cockroach sql --execute "CREATE DATABASE IF NOT EXISTS ${DB_NAME};" --insecure
+  docker-compose exec db \
+    cockroach sql --file ${DB_PATH} --insecure
+fi
