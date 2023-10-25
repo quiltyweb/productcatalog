@@ -52,7 +52,7 @@
     "@adminjs/express": "^5.0.1",
     "@adminjs/typeorm": "^4.0.0",
     "@adminjs/upload": "^3.0.1",
-    "@apollo/server": "^4.0.5",
+    "@apollo/server": "^4.5.0",
     "adminjs": "^6.6.5",
     "aws-sdk": "^2.917.0",
     "bcrypt": "^5.1.0",
