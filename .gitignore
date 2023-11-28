@@ -31,3 +31,4 @@ database/backups
 
 # adminBro stuff
 server/.adminbro
+server/.adminjs
