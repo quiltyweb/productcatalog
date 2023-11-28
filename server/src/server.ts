@@ -21,6 +21,15 @@ import { AppDataSource } from "./dataSource";
 
 const { APP_KEY, PORT } = process.env;
 
+// These are hashes for inline scripts loaded by AdminJS
+// that violate helmet's default content security policies.
+// We add them to the safelist, so we can actually load JS
+// on the admin pages
+const ADMINJS_INLINE_SCRIPT_HASHES = [
+  "'sha256-ROxt2HUekUmX5g60CHlTB7C3zpHOn/gqdFw/oqs3bHg='",
+  "'sha256-pkwpdv1oJEeHRnTwSrHzOZ/jofA8ZDxsjRg5GRkxp4M='",
+];
+
 AdminJS.registerAdapter({ Database, Resource });
 const app = express();
 const httpServer = http.createServer(app);
@@ -59,7 +68,17 @@ AppDataSource.initialize()
     const adminOptions = getAdminOptions(AppDataSource);
     const admin = new AdminJS(adminOptions);
     const adminRouter = buildCustomAuthRouter(admin, AppDataSource);
-    app.use(helmet()).use(admin.options.rootPath, adminRouter);
+    app
+      .use(
+        helmet({
+          contentSecurityPolicy: {
+            directives: {
+              scriptSrc: ["'self'", ...ADMINJS_INLINE_SCRIPT_HASHES],
+            },
+          },
+        })
+      )
+      .use(admin.options.rootPath, adminRouter);
 
     app.use(urlencoded({ extended: false }));
     app.use(json());
