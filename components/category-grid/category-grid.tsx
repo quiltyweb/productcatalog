@@ -1,4 +1,4 @@
-import type { Category } from "../app/db";
+import type { Category } from "../../app/db";
 
 import { Link } from "@nextui-org/link";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
