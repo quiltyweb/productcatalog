@@ -1,10 +1,9 @@
 import CategoryGrid from "../components/category-grid";
 
-async function fetchData() {
-  return [
-    { id: 1, name: "Guantes" },
-    { id: 2, name: "Zapatos" },
-  ];
+import db, { Category } from "./db";
+
+async function fetchData(): Promise<Category[]> {
+  return db.category.findMany();
 }
 
 export default async function HomePage() {

@@ -1,11 +1,9 @@
+import type { Category } from "../app/db";
+
 import { Link } from "@nextui-org/link";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
 
-interface Category {
-  id: number;
-  name: string;
-}
 interface CategoryGridProps {
   categories: Category[];
 }
