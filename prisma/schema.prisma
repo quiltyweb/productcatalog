@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        BigInt    @id(map: "PK_9c4e4a89e3674fc9f382d733f03") @default(sequence())
+  createdAt DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt DateTime  @default(now()) @db.Timestamp(6)
+  name      String
+  products  Product[]
+
+  @@map("category")
+}
+
+model Migration {
+  id        BigInt @id(map: "PK_8c82d7f526340ab734260ea46be") @default(sequence())
+  timestamp BigInt
+  name      String
+
+  @@map("migrations")
+}
+
+model Product {
+  id             BigInt    @id(map: "PK_bebc9158e480b949565b4dc7a82") @default(sequence())
+  createdAt      DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime  @default(now()) @db.Timestamp(6)
+  name           String
+  description    String
+  imagePath      String    @default("")
+  attachmentPath String    @default("")
+  purchasePrice  BigInt    @default(0)
+  salePrice      BigInt    @default(0)
+  supplierName   String    @default("")
+  categoryId     BigInt?
+  categories     Category? @relation(fields: [categoryId], references: [id], onUpdate: NoAction, map: "FK_ff0c0301a95e517153df97f6812")
+
+  @@index([categoryId], map: "IDX_ff0c0301a95e517153df97f681")
+  @@map("product")
+}
+
+model User {
+  id                BigInt   @id(map: "PK_cace4a159ff9f2512dd42373760") @default(sequence())
+  createdAt         DateTime @default(now()) @db.Timestamp(6)
+  updatedAt         DateTime @default(now()) @db.Timestamp(6)
+  email             String
+  encryptedPassword String
+  role              String   @default("admin")
+
+  @@map("user")
+}
