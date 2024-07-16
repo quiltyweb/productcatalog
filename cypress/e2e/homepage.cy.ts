@@ -18,7 +18,7 @@ describe("HomePage", function () {
       // loads a grid with categories
       cy.findByRole("main").within(() => {
         cy.findByRole("heading", { name: "Nuestros Productos" }).should(
-          "exist"
+          "exist",
         );
         cy.findByRole("list").should("exist");
       });
@@ -55,7 +55,7 @@ describe("HomePage", function () {
       cy.findByRole("main").within(() => {
         cy.findByRole("heading", { name: "Ingrese su consulta" });
         cy.findByText(
-          "También puede contactarnos vía nuestro fono ventas llamando al:"
+          "También puede contactarnos vía nuestro fono ventas llamando al:",
         );
         cy.findByText("(52) 2 218056");
         cy.findByLabelText("Nombre");

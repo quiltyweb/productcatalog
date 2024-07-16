@@ -43,9 +43,42 @@ jobs:
       - name: Reset containers between test scripts
         run: docker-compose -f docker-compose.ci.yml down
       - name: Run browser end to end tests for client app
-        run: ./scripts/browser_tests.sh docker-compose.ci.yml
-      - uses: actions/upload-artifact@v2
-        if: ${{ always() }}
+        id: e2e
+        run: ./scripts/browser_tests.sh
+      - uses: actions/upload-artifact@v4
+        if: ${{ failure() && steps.e2e.outcome == 'failure' }}
         with:
-          name: cypress-screenshots
-          path: ./browser_test/cypress/screenshots/
+          name: e2e-screenshots
+          path: browser_test/cypress/screenshots/
+
+  next:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://root@localhost:26257/test?sslmode=disable
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          services: db
+          compose-file: "docker-compose.ci.yml"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install
+      - name: Linting
+        if: ${{ always() }}
+        run: npm run lint
+      - name: Check types
+        if: ${{ always() }}
+        run: npm run typecheck
+      - name: Unit tests
+        run: npm run test
+      - name: Run e2e tests
+        id: e2e
+        run: npm run test:ci
+      - uses: actions/upload-artifact@v4
+        if: ${{ failure() && steps.e2e.outcome == 'failure' }}
+        with:
+          name: e2e-screenshots
+          path: cypress/screenshots/

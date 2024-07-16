@@ -18,3 +18,7 @@ build
 !plopfile.js
 !react-shim.js
 !tsup.config.ts
+
+browser_test
+client
+server
