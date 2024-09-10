@@ -1,15 +1,24 @@
 version: "3"
 services:
+  db:
+    image: cockroachdb/cockroach:latest
+    ports:
+      # Port for connecting to the DB
+      - "26257:26257"
+      # Port for dashboard
+      - "8080:8080"
+    environment:
+      COCKROACH_DATABASE: test
+    command: start-single-node --insecure
   server:
     build: ./server
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     ports:
       - "3333:3333"
     environment:
       PORT: 3333
-      DATABASE_URL: postgresql://root@db:26257/${DB_NAME}?sslmode=disable
+      DATABASE_URL: postgresql://root@db:26257/test?sslmode=disable
       NODE_ENV: test
       HOSTNAME: localhost
       ADMIN_EMAIL: test@test.com
@@ -20,29 +29,7 @@ services:
       SPACES_REGION: spaces_region
       SPACES_BUCKET: spaces_bucket
       SPACES_ENDPOINT: spaces_endpoint
-    healthcheck:
-      test: ["CMD", "curl", "http://server:3333"]
-      interval: 2s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
     command: yarn run dev
-  db:
-    image: cockroachdb/cockroach:latest
-    ports:
-      # Port for connecting to the DB
-      - "26257:26257"
-      # Port for dashboard
-      - "8080:8080"
-    environment:
-      COCKROACH_DATABASE: ${DB_NAME}
-    healthcheck:
-      test: ["CMD", "curl", "http://db:8080/health?ready=1"]
-      interval: 2s
-      timeout: 10s
-      retries: 5
-      start_period: 10s
-    command: start-single-node --insecure
   client:
     build: ./client
     ports:
@@ -52,22 +39,11 @@ services:
     environment:
       API_TOKEN: supersecretspicysauce
       NODE_ENV: test
-    healthcheck:
-      test: ["CMD", "curl", "http://client:3000"]
-      interval: 2s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
     command: yarn run start
   browser_test:
     build: ./browser_test
     depends_on:
-      client:
-        condition: service_healthy
-      server:
-        condition: service_healthy
-      db:
-        condition: service_healthy
+      - client
     volumes:
       - ./browser_test/cypress/screenshots:/app/cypress/screenshots
     # Need to use 'host' network mode to avoid cross-host errors

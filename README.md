@@ -23,7 +23,7 @@
 
 ## Running the app
 
-- `docker-compose up` (add `-d` if you want to run it in the background)
+- `docker-compose start`
 - Open the browser to `localhost:3000`
 
 ### GraphQL Playground
@@ -53,3 +53,9 @@ We deploy automatically to Heroku with every merged PR that passes CI via a GitH
   - `docker volume rm <node_modules volume name>`
   - `docker volume create <node_modules volume name>`
   - `docker-compose build --no-cache`
+
+## NextJS
+
+- After installing NPM packages, run `npx prisma generate`.
+- Only run `docker-compose start db`. The NextJS app doesn't depend on the other services, and `client` would conflict with the app's use of port 3000.
+- Run `npm run dev` to start the app.

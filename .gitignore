@@ -1,34 +1,45 @@
 .idea/
 
-# JS stuff
-node_modules
-node_modules/*
+# dependencies
 server/node_modules
 client/node_modules
 browser_test/node_modules
+/node_modules
+/.pnp
+.pnp.js
 
-# Artifacts
+# testing
+/coverage
+screenshots
+tmp
+
+# production
 build
 dist
-coverage
-tmp
-screenshots
-
-# Local stuff
-.vscode
-.DS_STORE
-yarn-error.log
-.vscode
-
-# Secret stuff
-.env
-
-# Data stuff
-database/backups
-*.sql
-
-.eslintcache
-
-# adminBro stuff
 server/.adminbro
 server/.adminjs
+.vercel
+.next
+
+# misc
+.vscode
+.DS_STORE
+*.pem
+.eslintcache
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env
+.env*.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# data stuff
+database/backups
+*.sql
