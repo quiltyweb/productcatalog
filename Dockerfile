@@ -2,7 +2,7 @@
 # which means we either have to pull images from DockerHub or build them
 # from scratch here. We don't have a DockerHub account set up for this project,
 # so we just build them for now.
-FROM node:16.13.1-alpine AS client
+FROM node:16.18.1-alpine AS client
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN yarn
 COPY ./client .
 RUN yarn build
 
-FROM node:16.13.1-alpine
+FROM node:16.18.1-alpine
 
 WORKDIR /app
 
